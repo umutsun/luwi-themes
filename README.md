@@ -1,0 +1,1 @@
+# Luwi Themes\n\nFree premium themes for LuwiPress.\n\n- **Luwi Gold** — Artisan Heritage\n- **Luwi Emerald** — Botanical Modern\n- **Luwi Ruby** — Bold Luxe\n\nDownload from [Releases](../../releases).

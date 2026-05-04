@@ -26,3 +26,6 @@ if ( is_admin() ) {
 
 // Custom Elementor widgets — registered on `elementor/init`.
 require_once LUWIPRESS_GOLD_DIR . '/inc/widgets/loader.php';
+
+// Customizer panel — Brand / Topbar / Header / Footer / Animation / Performance.
+require_once LUWIPRESS_GOLD_DIR . '/inc/customizer/bootstrap.php';

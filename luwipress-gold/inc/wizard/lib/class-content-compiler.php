@@ -105,7 +105,16 @@ class LuwiPress_Gold_Content_Compiler {
 	 *              → 8 articles concatenated, each with the inner template applied
 	 */
 	private function resolve_string( $str ) {
-		// First pass: loops (they contain | and ::scalar markers that the
+		// First pass: AI slots — `{{LWP:ai:slot[|tone=editorial|max=120]}}`.
+		// Run before loops so that an `ai:hero_lead` inside a loop body
+		// is resolved per-iteration with the correct context.
+		$str = preg_replace_callback(
+			'/\{\{LWP:ai:([a-z_]+)(?:\|([^}]*))?\}\}/i',
+			[ $this, 'resolve_ai' ],
+			$str
+		);
+
+		// Second pass: loops (they contain | and ::scalar markers that the
 		// scalar pass would mis-handle if we did scalars first).
 		$str = preg_replace_callback(
 			'/\{\{LWP:([a-z_]+_loop)(?::(\d+))?\|(.*?)\}\}/s',
@@ -113,7 +122,7 @@ class LuwiPress_Gold_Content_Compiler {
 			$str
 		);
 
-		// Second pass: scalars.
+		// Third pass: scalars.
 		$str = preg_replace_callback(
 			'/\{\{LWP:([a-z_][a-z0-9_.]*)(?::([^}|]*))?\}\}/i',
 			[ $this, 'resolve_scalar' ],
@@ -121,6 +130,39 @@ class LuwiPress_Gold_Content_Compiler {
 		);
 
 		return $str;
+	}
+
+	/**
+	 * AI slot resolver — bridges into LuwiPress_Gold_AI_Content.
+	 * Falls back to the slot's static default text when AI is disabled
+	 * or LuwiPress core isn't installed.
+	 */
+	private function resolve_ai( $matches ) {
+		$slot = $matches[1];
+		$args_str = $matches[2] ?? '';
+		$context = [];
+		// Optional pipe-separated args: tone=editorial|max=120|name=Feramis
+		if ( $args_str !== '' ) {
+			foreach ( explode( '|', $args_str ) as $pair ) {
+				if ( strpos( $pair, '=' ) !== false ) {
+					[ $k, $v ] = explode( '=', $pair, 2 );
+					$context[ trim( $k ) ] = trim( $v );
+				}
+			}
+		}
+		// Lazy-load AI module to avoid require-on-every-call cost.
+		if ( ! class_exists( 'LuwiPress_Gold_AI_Content' ) ) {
+			$ai_path = LUWIPRESS_GOLD_DIR . '/inc/wizard/lib/class-ai-content.php';
+			if ( file_exists( $ai_path ) ) {
+				require_once $ai_path;
+			} else {
+				return $matches[0];
+			}
+		}
+		$text = LuwiPress_Gold_AI_Content::resolve( $slot, $context );
+		// Auto-escape newlines into <br> when the surrounding context is
+		// HTML (cheap heuristic — most Elementor html widgets carry HTML).
+		return $text;
 	}
 
 	/* -------------------------------------------------------------------

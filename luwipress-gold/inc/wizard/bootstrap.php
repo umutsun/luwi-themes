@@ -36,6 +36,7 @@ class LuwiPress_Gold_Wizard {
 		require_once __DIR__ . '/lib/class-mapper.php';
 		require_once __DIR__ . '/lib/class-importer.php';
 		require_once __DIR__ . '/lib/class-tgm-bridge.php';
+		require_once __DIR__ . '/lib/class-ai-content.php';
 
 		// Boot order:
 		add_action( 'after_switch_theme', [ $this, 'on_theme_activate' ] );
@@ -219,6 +220,42 @@ class LuwiPress_Gold_Wizard {
 			case 'plugin_status':
 				$bridge = new LuwiPress_Gold_TGM_Bridge();
 				wp_send_json_success( [ 'plugins' => $bridge->required_plugins_status() ] );
+
+			case 'ai_status':
+				wp_send_json_success( [
+					'available' => LuwiPress_Gold_AI_Content::is_luwipress_available(),
+					'enabled'   => LuwiPress_Gold_AI_Content::is_enabled(),
+					'slots'     => LuwiPress_Gold_AI_Content::slots(),
+					'meta'      => get_option( LuwiPress_Gold_AI_Content::META_OPTION, [] ),
+				] );
+
+			case 'ai_toggle':
+				$enable = ! empty( $payload['enable'] );
+				update_option( LuwiPress_Gold_AI_Content::ENABLED_OPTION, $enable ? 1 : 0 );
+				if ( ! $enable ) {
+					LuwiPress_Gold_AI_Content::flush_cache();
+				}
+				wp_send_json_success( [ 'enabled' => $enable ] );
+
+			case 'ai_generate':
+				if ( ! LuwiPress_Gold_AI_Content::is_luwipress_available() ) {
+					wp_send_json_error( [ 'message' => 'LuwiPress AI engine not installed.' ] );
+				}
+				update_option( LuwiPress_Gold_AI_Content::ENABLED_OPTION, 1 );
+				$results = [];
+				foreach ( LuwiPress_Gold_AI_Content::slots() as $slot => $cfg ) {
+					$text = LuwiPress_Gold_AI_Content::resolve( $slot );
+					$results[ $slot ] = [
+						'label' => $cfg['label'],
+						'text'  => $text,
+						'is_default' => trim( $text ) === trim( $cfg['default'] ),
+					];
+				}
+				wp_send_json_success( [ 'results' => $results ] );
+
+			case 'ai_flush':
+				LuwiPress_Gold_AI_Content::flush_cache();
+				wp_send_json_success();
 
 			case 'apply':
 				$path = isset( $payload['path'] ) ? sanitize_key( $payload['path'] ) : 'use_existing';

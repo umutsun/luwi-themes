@@ -49,6 +49,74 @@
 		brand[key] = val;
 	});
 
+	/* ─── Step 3 — AI toggle + generate ─── */
+	var $aiSlots   = $root.find('#lwp-ai-slots');
+	var $aiActions = $root.find('#lwp-ai-actions');
+	var $aiMsg     = $root.find('#lwp-ai-msg');
+
+	$root.on('change', '#lwp-ai-toggle', function () {
+		var on = !!this.checked;
+		$aiSlots.prop('hidden', !on);
+		$aiActions.prop('hidden', !on);
+		$.post(ajaxurl, {
+			action: 'luwipress_gold_wizard_step',
+			step: 'ai_toggle',
+			_ajax_nonce: nonce,
+			payload: JSON.stringify({ enable: on })
+		}).done(function () {
+			$aiMsg.text(on
+				? 'AI generation enabled. Click "Generate now" to draft your copy.'
+				: 'AI generation disabled, cache cleared.');
+		});
+	});
+	if ($('#lwp-ai-toggle').is(':checked')) {
+		$aiSlots.prop('hidden', false);
+		$aiActions.prop('hidden', false);
+	}
+
+	$root.on('click', '#lwp-ai-generate', function () {
+		var $btn = $(this);
+		$btn.prop('disabled', true).text('Generating…');
+		$aiMsg.text('Sending prompts to LuwiPress AI…');
+		$root.find('.lwp-ai-slot-status').text('…');
+
+		$.post(ajaxurl, {
+			action: 'luwipress_gold_wizard_step',
+			step: 'ai_generate',
+			_ajax_nonce: nonce
+		}).done(function (resp) {
+			$btn.prop('disabled', false).text('Generate again');
+			if (!resp || !resp.success) {
+				$aiMsg.text((resp && resp.data && resp.data.message) || 'AI generation failed.');
+				return;
+			}
+			$aiMsg.text('Done — you can also re-run after editing the brand fields above.');
+			var results = resp.data.results || {};
+			Object.keys(results).forEach(function (slot) {
+				var entry = results[slot];
+				var $slot = $root.find('.lwp-ai-slot[data-slot="' + slot + '"]');
+				$slot.find('[data-status]').text(entry.is_default ? 'fallback' : 'AI');
+				var preview = (entry.text || '').slice(0, 220);
+				$slot.find('[data-text]').html('<em>' + escapeHtml(preview) + (entry.text && entry.text.length > 220 ? '…' : '') + '</em>');
+			});
+		}).fail(function () {
+			$btn.prop('disabled', false).text('Generate now');
+			$aiMsg.text('Network error.');
+		});
+	});
+
+	$root.on('click', '#lwp-ai-flush', function () {
+		$aiMsg.text('Clearing cache…');
+		$.post(ajaxurl, {
+			action: 'luwipress_gold_wizard_step',
+			step: 'ai_flush',
+			_ajax_nonce: nonce
+		}).done(function () {
+			$aiMsg.text('Cache cleared. Next page render will regenerate.');
+			$root.find('.lwp-ai-slot-status').text('—');
+		});
+	});
+
 	/* ─── Step 4 — re-check plugin status ─── */
 	$root.on('click', '#lwp-recheck', function () {
 		refreshPluginStatus();

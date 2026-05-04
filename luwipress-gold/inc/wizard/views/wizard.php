@@ -255,6 +255,60 @@ $plugins   = $bridge->required_plugins_status();
 			</div>
 		</div>
 
+		<?php
+		$lp_available = LuwiPress_Gold_AI_Content::is_luwipress_available();
+		$ai_enabled   = LuwiPress_Gold_AI_Content::is_enabled();
+		$ai_slots     = LuwiPress_Gold_AI_Content::slots();
+		?>
+		<div class="lwp-ai-block" data-ai-block>
+			<div class="lwp-ai-head">
+				<h3 class="serif"><?php esc_html_e( 'AI-generated copy (optional)', 'luwipress-gold' ); ?></h3>
+				<?php if ( $lp_available ) : ?>
+					<span class="lwp-tag" style="background:#fdfaef;border-color:#735c00;color:#735c00"><?php esc_html_e( 'LuwiPress AI detected', 'luwipress-gold' ); ?></span>
+				<?php else : ?>
+					<span class="lwp-tag"><?php esc_html_e( 'LuwiPress not installed', 'luwipress-gold' ); ?></span>
+				<?php endif; ?>
+			</div>
+			<p class="lwp-ai-lead">
+				<?php esc_html_e( 'Your products, posts, categories and menu stay exactly as they are. The few static lines that ship with the theme — hero lead, about story, master bio template, FAQ intro — can be drafted by AI in your brand voice using the LuwiPress AI engine.', 'luwipress-gold' ); ?>
+			</p>
+
+			<label class="lwp-ai-toggle">
+				<input type="checkbox" id="lwp-ai-toggle" <?php echo $ai_enabled ? 'checked' : ''; ?> <?php echo $lp_available ? '' : 'disabled'; ?>>
+				<span class="lwp-ai-toggle-track"><span class="lwp-ai-toggle-knob"></span></span>
+				<span class="lwp-ai-toggle-label">
+					<?php echo $lp_available
+						? esc_html__( 'Generate static text with AI', 'luwipress-gold' )
+						: esc_html__( 'Install LuwiPress to enable AI generation', 'luwipress-gold' );
+					?>
+				</span>
+			</label>
+
+			<div class="lwp-ai-slots" id="lwp-ai-slots" hidden>
+				<?php foreach ( $ai_slots as $slot => $cfg ) : ?>
+					<div class="lwp-ai-slot" data-slot="<?php echo esc_attr( $slot ); ?>">
+						<div class="lwp-ai-slot-head">
+							<strong><?php echo esc_html( $cfg['label'] ); ?></strong>
+							<span class="lwp-ai-slot-status" data-status>—</span>
+						</div>
+						<p class="lwp-ai-slot-text" data-text>
+							<em><?php echo esc_html( wp_trim_words( $cfg['default'], 24 ) ); ?></em>
+						</p>
+					</div>
+				<?php endforeach; ?>
+			</div>
+
+			<div class="lwp-ai-actions" id="lwp-ai-actions" hidden>
+				<button type="button" class="button button-primary" id="lwp-ai-generate">
+					<?php esc_html_e( 'Generate now', 'luwipress-gold' ); ?>
+				</button>
+				<button type="button" class="button button-secondary" id="lwp-ai-flush">
+					<?php esc_html_e( 'Clear AI cache', 'luwipress-gold' ); ?>
+				</button>
+				<span class="lwp-ai-status-msg" id="lwp-ai-msg"></span>
+			</div>
+		</div>
+
 		<footer class="lwp-wizard-actions">
 			<button type="button" class="button button-secondary lwp-back" data-target="2"><?php esc_html_e( '← Back', 'luwipress-gold' ); ?></button>
 			<button type="button" class="button button-primary lwp-next" data-target="4"><?php esc_html_e( 'Continue →', 'luwipress-gold' ); ?></button>

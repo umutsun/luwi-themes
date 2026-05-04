@@ -468,3 +468,123 @@
 	.lwp-wizard-panel { padding: 24px; }
 	.lwp-plugin { flex-direction: column; align-items: flex-start; }
 }
+
+/* ─── AI block (step 3) ─── */
+.lwp-ai-block {
+	margin-top: 36px;
+	padding: 28px;
+	background: linear-gradient(135deg, #fdfaef, #fff);
+	border: 1px solid #e8e2d3;
+	border-radius: 10px;
+	border-left: 4px solid #735c00;
+}
+.lwp-ai-head {
+	display: flex;
+	gap: 14px;
+	align-items: center;
+	margin-bottom: 12px;
+}
+.lwp-ai-head h3 {
+	margin: 0;
+	font-size: 22px;
+	font-weight: 500;
+	letter-spacing: -.01em;
+}
+.lwp-ai-lead {
+	color: #4d4635;
+	font-size: 14px;
+	line-height: 1.65;
+	margin: 0 0 20px;
+	max-width: 70ch;
+}
+.lwp-ai-toggle {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	cursor: pointer;
+	user-select: none;
+}
+.lwp-ai-toggle input[type=checkbox] { display: none; }
+.lwp-ai-toggle-track {
+	width: 44px;
+	height: 24px;
+	background: #e8e2d3;
+	border-radius: 999px;
+	position: relative;
+	transition: background .25s;
+	flex-shrink: 0;
+}
+.lwp-ai-toggle-knob {
+	position: absolute;
+	top: 2px;
+	left: 2px;
+	width: 20px;
+	height: 20px;
+	background: #fff;
+	border-radius: 50%;
+	box-shadow: 0 1px 3px rgba(0,0,0,.2);
+	transition: transform .25s;
+}
+.lwp-ai-toggle input:checked ~ .lwp-ai-toggle-track {
+	background: linear-gradient(135deg, #735c00, #D4AF37);
+}
+.lwp-ai-toggle input:checked ~ .lwp-ai-toggle-track .lwp-ai-toggle-knob { transform: translateX(20px); }
+.lwp-ai-toggle input:disabled ~ .lwp-ai-toggle-track { opacity: .5; cursor: not-allowed; }
+.lwp-ai-toggle-label {
+	font-size: 15px;
+	font-weight: 500;
+	color: #1b1c1c;
+}
+
+.lwp-ai-slots {
+	margin-top: 20px;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: 12px;
+}
+.lwp-ai-slot {
+	background: #fff;
+	border: 1px solid #e8e2d3;
+	border-radius: 8px;
+	padding: 14px 16px;
+}
+.lwp-ai-slot-head {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 8px;
+}
+.lwp-ai-slot-head strong {
+	font-size: 13px;
+	color: #1b1c1c;
+}
+.lwp-ai-slot-status {
+	font-family: 'JetBrains Mono', monospace;
+	font-size: 10px;
+	letter-spacing: .12em;
+	text-transform: uppercase;
+	color: #7f7663;
+	background: #faf6ee;
+	padding: 2px 8px;
+	border-radius: 3px;
+}
+.lwp-ai-slot-text {
+	margin: 0;
+	font-size: 13px;
+	line-height: 1.55;
+	color: #4d4635;
+	font-style: italic;
+}
+
+.lwp-ai-actions {
+	margin-top: 16px;
+	display: flex;
+	gap: 10px;
+	align-items: center;
+	flex-wrap: wrap;
+}
+.lwp-ai-status-msg {
+	font-size: 12.5px;
+	color: #7f7663;
+	font-style: italic;
+}

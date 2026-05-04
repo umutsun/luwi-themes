@@ -1,0 +1,68 @@
+<?php
+/**
+ * Theme support, image sizes, nav menu locations.
+ *
+ * Kept deliberately small — Elementor Theme Builder (or ElementsKit Lite)
+ * handles the actual layout, so the theme only declares what WordPress core
+ * and WooCommerce expect.
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+add_action( 'after_setup_theme', function () {
+	load_theme_textdomain( 'luwipress-gold', LUWIPRESS_GOLD_DIR . '/languages' );
+
+	add_theme_support( 'title-tag' );
+	add_theme_support( 'post-thumbnails' );
+	add_theme_support( 'custom-logo', [
+		'height'      => 60,
+		'width'       => 200,
+		'flex-height' => true,
+		'flex-width'  => true,
+	] );
+	add_theme_support( 'html5', [
+		'search-form', 'comment-form', 'comment-list',
+		'gallery', 'caption', 'style', 'script',
+	] );
+	add_theme_support( 'responsive-embeds' );
+	add_theme_support( 'align-wide' );
+	add_theme_support( 'editor-styles' );
+
+	// WooCommerce — declared so WC delegates the layout to its templates;
+	// we don't override any WC template here. Elementor / ElementsKit Lite
+	// renders cart, checkout, single product, archive.
+	add_theme_support( 'woocommerce', [
+		'thumbnail_image_width' => 600,
+		'single_image_width'    => 1200,
+	] );
+	add_theme_support( 'wc-product-gallery-zoom' );
+	add_theme_support( 'wc-product-gallery-lightbox' );
+	add_theme_support( 'wc-product-gallery-slider' );
+
+	// Nav menu locations are minimal — the Elementor Kit's header / footer
+	// templates use these for fallback when the operator hasn't populated
+	// custom Elementor menu widgets yet.
+	register_nav_menus( [
+		'primary' => __( 'Primary navigation (header fallback)', 'luwipress-gold' ),
+		'mobile'  => __( 'Mobile drawer (header fallback)', 'luwipress-gold' ),
+		'footer'  => __( 'Footer fallback', 'luwipress-gold' ),
+	] );
+
+	// Image sizes used inside Elementor Kit JSONs.
+	add_image_size( 'luwipress-gold-card', 600, 600, true );
+	add_image_size( 'luwipress-gold-cat',  600, 660, true );
+	add_image_size( 'luwipress-gold-hero', 1100, 1100, false );
+	add_image_size( 'luwipress-gold-editorial',      900, 720, true );
+	add_image_size( 'luwipress-gold-editorial-feat', 1100, 880, true );
+}, 5 );
+
+/**
+ * Content width — used by oEmbed and the WP editor to constrain media.
+ */
+add_action( 'after_setup_theme', function () {
+	if ( ! isset( $GLOBALS['content_width'] ) ) {
+		$GLOBALS['content_width'] = 1372;
+	}
+} );

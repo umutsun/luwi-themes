@@ -1,0 +1,48 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 2,
+  "settings": {
+    "appearanceTools": true,
+    "color": {
+      "palette": [
+        { "slug": "primary",       "color": "#735c00", "name": "Gold" },
+        { "slug": "primary-light", "color": "#D4AF37", "name": "Gold bright" },
+        { "slug": "accent",        "color": "#545e76", "name": "Slate accent" },
+        { "slug": "ink",           "color": "#1b1c1c", "name": "Ink" },
+        { "slug": "ink-soft",      "color": "#4d4635", "name": "Ink soft" },
+        { "slug": "muted",         "color": "#7f7663", "name": "Muted" },
+        { "slug": "bg",            "color": "#fcf9f8", "name": "Background" },
+        { "slug": "bg-alt",        "color": "#f6f3f2", "name": "Background alt" },
+        { "slug": "card",          "color": "#ffffff", "name": "Card" },
+        { "slug": "line",          "color": "#e8e2d3", "name": "Line" },
+        { "slug": "sale",          "color": "#a33b3e", "name": "Sale red" },
+        { "slug": "black",         "color": "#0c0c0c", "name": "Deep black" },
+        { "slug": "icon-red",      "color": "#d83131", "name": "Icon red" }
+      ]
+    },
+    "typography": {
+      "fontFamilies": [
+        { "fontFamily": "'Playfair Display', Georgia, serif",  "slug": "serif", "name": "Playfair Display" },
+        { "fontFamily": "'Inter', -apple-system, sans-serif",  "slug": "sans",  "name": "Inter" },
+        { "fontFamily": "'JetBrains Mono', ui-monospace, monospace", "slug": "mono", "name": "JetBrains Mono" }
+      ]
+    },
+    "layout": {
+      "contentSize": "1372px",
+      "wideSize": "1372px"
+    },
+    "spacing": {
+      "units": ["px", "em", "rem", "%"]
+    }
+  },
+  "styles": {
+    "color": {
+      "background": "var(--wp--preset--color--bg)",
+      "text": "var(--wp--preset--color--ink)"
+    },
+    "typography": {
+      "fontFamily": "var(--wp--preset--font-family--sans)",
+      "lineHeight": "1.55"
+    }
+  }
+}

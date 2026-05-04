@@ -1,0 +1,77 @@
+{
+  "version": "0.4",
+  "title": "Tapadum — Contact",
+  "type": "page",
+  "content": [
+    {
+      "id": "tap_ct_main",
+      "elType": "section",
+      "settings": {
+        "structure": "20",
+        "background_background": "classic",
+        "background_color": "#FAF6EE",
+        "padding": { "unit": "px", "top": "100", "right": "32", "bottom": "100", "left": "32", "isLinked": false },
+        "content_width": { "unit": "px", "size": 1372 },
+        "gap": "extended"
+      },
+      "elements": [
+        {
+          "id": "tap_ct_l",
+          "elType": "column",
+          "settings": { "_column_size": 50 },
+          "elements": [
+            {
+              "id": "tap_ct_l_html",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div class=\"tap-breadcrumb\"><a href=\"/\">Home</a> <span>›</span> <span>Contact</span></div><span class=\"tap-eyebrow\" style=\"display:block;margin-top:14px\">— Visit · write · ring</span><h1 class=\"tap-h1\" style=\"font-size:60px\">Three ways to<br>reach the atelier.</h1><div class=\"tap-ct-blocks\"><div><span class=\"eb\">Atelier address</span><strong>Tapadum srl</strong><p>Via della Rocca 14<br>48013 Brisighella RA<br>Italy</p></div><div><span class=\"eb\">Hours</span><strong>Tue–Sat · 10:00 – 18:00</strong><p>By appointment for instrument try-outs. Wednesdays open to walk-ins.</p></div><div><span class=\"eb\">Direct</span><strong>info@tapadum.com</strong><p>+39 0546 81 234<br>WhatsApp · @tapadum</p></div></div><style>.tap-ct-blocks{display:flex;flex-direction:column;gap:24px;margin-top:32px}.tap-ct-blocks > div{padding:18px 0;border-top:1px solid #E8DFC8}.tap-ct-blocks .eb{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#9A7B3A;font-weight:600;display:block;margin-bottom:6px}.tap-ct-blocks strong{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:500;color:#1A1612;display:block;margin-bottom:6px}.tap-ct-blocks p{font-family:'Inter',sans-serif;font-size:14px;line-height:1.6;color:#3a342c;margin:0}</style>"
+              }
+            }
+          ]
+        },
+        {
+          "id": "tap_ct_r",
+          "elType": "column",
+          "settings": { "_column_size": 50 },
+          "elements": [
+            {
+              "id": "tap_ct_form",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<form class=\"tap-form\" onsubmit=\"event.preventDefault();this.querySelector('.tap-form-msg').style.display='block'\">\n  <h3>Send us a note.</h3>\n  <p class=\"sub\">We reply within 1 working day · usually faster.</p>\n  <div class=\"tap-form-row\"><label>Name<input type=\"text\" required></label><label>Email<input type=\"email\" required></label></div>\n  <label>Subject<select><option>General question</option><option>About a specific instrument</option><option>Atelier visit</option><option>Wholesale / partnership</option><option>Press</option></select></label>\n  <label>Message<textarea rows=\"6\" required></textarea></label>\n  <label class=\"chk\"><input type=\"checkbox\"> Subscribe me to the monthly journal newsletter.</label>\n  <button type=\"submit\" class=\"tap-btn-primary\">Send message →</button>\n  <div class=\"tap-form-msg\">Thank you — we'll be in touch within 1 working day.</div>\n</form>\n<style>\n.tap-form{background:#fff;border:1px solid #E8DFC8;border-radius:10px;padding:36px;display:flex;flex-direction:column;gap:18px}\n.tap-form h3{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:30px;margin:0}\n.tap-form .sub{font-family:'Inter',sans-serif;font-size:13px;color:#8b7f6a;margin:0 0 8px}\n.tap-form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}\n.tap-form label{display:flex;flex-direction:column;gap:6px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#1A1612;font-weight:600}\n.tap-form input,.tap-form select,.tap-form textarea{padding:12px 14px;border:1px solid #E8DFC8;border-radius:6px;font-family:'Inter',sans-serif;font-size:14px;color:#1A1612;background:#fff;letter-spacing:0;text-transform:none;font-weight:400}\n.tap-form input:focus,.tap-form select:focus,.tap-form textarea:focus{outline:none;border-color:#9A7B3A;box-shadow:0 0 0 3px rgba(154,123,58,.15)}\n.tap-form textarea{resize:vertical;font-family:'Inter',sans-serif}\n.tap-form .chk{flex-direction:row;align-items:center;gap:10px;text-transform:none;letter-spacing:0;font-family:'Inter',sans-serif;font-size:13px;font-weight:400;color:#3a342c}\n.tap-form .chk input{accent-color:#9A7B3A}\n.tap-form-msg{display:none;background:#F2EAD3;border:1px solid #D4AF37;color:#1A1612;padding:14px;border-radius:6px;font-family:'Inter',sans-serif;font-size:13px;text-align:center}\n@media(max-width:600px){.tap-form{padding:24px}.tap-form-row{grid-template-columns:1fr}}\n</style>"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tap_ct_map",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#FFFFFF",
+        "padding": { "unit": "px", "top": "0", "right": "0", "bottom": "0", "left": "0", "isLinked": true },
+        "content_width": { "unit": "px", "size": 1920 }
+      },
+      "elements": [
+        {
+          "id": "tap_ct_map_col",
+          "elType": "column",
+          "settings": { "_column_size": 100 },
+          "elements": [
+            {
+              "id": "tap_ct_map_html",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": { "html": "<div class=\"tap-map\"><span class=\"pl\">Map · Brisighella, Italy</span></div><style>.tap-map{height:420px;background:linear-gradient(135deg,#3a342c,#1A1612);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.5);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase}</style>" }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "page_settings": { "template": "elementor_canvas", "page_title": "hide" }
+}

@@ -1,0 +1,79 @@
+{
+  "version": "0.4",
+  "title": "Tapadum — Single Product",
+  "type": "single-product",
+  "content": [
+    {
+      "id": "tap_sp_hero",
+      "elType": "section",
+      "settings": {
+        "structure": "20",
+        "background_background": "classic",
+        "background_color": "#FFFFFF",
+        "padding": { "unit": "px", "top": "40", "right": "32", "bottom": "60", "left": "32", "isLinked": false },
+        "content_width": { "unit": "px", "size": 1372 },
+        "gap": "extended"
+      },
+      "elements": [
+        {
+          "id": "tap_sp_l",
+          "elType": "column",
+          "settings": { "_column_size": 55 },
+          "elements": [
+            {
+              "id": "tap_sp_gallery",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div class=\"tap-breadcrumb\" style=\"margin-bottom:18px\"><a href=\"/\">Home</a> <span>›</span> <a href=\"/shop\">Shop</a> <span>›</span> <a href=\"/category/turkish-oud\">Turkish Oud</a> <span>›</span> <span>Sultan Turkish Oud</span></div>\n<div class=\"tap-gallery\">\n  <div class=\"tap-gallery-main\" style=\"background:linear-gradient(135deg,#f0e6d0,#d4c19a)\"><span class=\"tap-badge-sale\">−10%</span><span class=\"pl\">Main image · oud face</span></div>\n  <div class=\"tap-gallery-thumbs\"><div class=\"on\" style=\"background:linear-gradient(135deg,#f0e6d0,#d4c19a)\"></div><div style=\"background:linear-gradient(135deg,#d4b97a,#7a5a2c)\"></div><div style=\"background:linear-gradient(135deg,#3d2f1f,#7a5a2c)\"></div><div style=\"background:linear-gradient(135deg,#8b6a3a,#d4b97a)\"></div><div class=\"video\" style=\"background:linear-gradient(135deg,#1A1612,#3a342c)\"><span>▶</span></div></div>\n</div>\n<style>\n.tap-gallery{display:flex;flex-direction:column;gap:14px}\n.tap-gallery-main{aspect-ratio:1/1;border-radius:8px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}\n.tap-gallery-main .pl{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;color:rgba(0,0,0,.3);text-transform:uppercase}\n.tap-gallery-thumbs{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}\n.tap-gallery-thumbs > div{aspect-ratio:1/1;border-radius:6px;cursor:pointer;border:2px solid transparent;transition:border-color .18s;position:relative;display:flex;align-items:center;justify-content:center}\n.tap-gallery-thumbs > div.on{border-color:#9A7B3A}\n.tap-gallery-thumbs .video span{color:#fff;font-size:14px}\n</style>"
+              }
+            }
+          ]
+        },
+        {
+          "id": "tap_sp_r",
+          "elType": "column",
+          "settings": { "_column_size": 45 },
+          "elements": [
+            {
+              "id": "tap_sp_buy",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div class=\"tap-sp\">\n  <span class=\"tap-eyebrow\">— Turkish Oud · by Yildirim Palabiyik</span>\n  <h1 class=\"tap-sp-title\">Sultan Turkish Oud</h1>\n  <div class=\"tap-sp-rating\"><span class=\"stars\">★★★★★</span><span>4.9 · 142 reviews</span></div>\n  <div class=\"tap-sp-price\"><span class=\"old\">€835</span><span class=\"now\">€799</span><span class=\"save\">Save €36</span></div>\n  <p class=\"tap-sp-desc\">A signature instrument from Yildirim's Istanbul workshop — walnut bowl, spruce face, ebony fingerboard. Each oud is hand-tuned and intonated by Yildirim's team in our Brisighella atelier before dispatch.</p>\n  <div class=\"tap-sp-options\">\n    <div class=\"tap-sp-opt\"><label>Wood</label><div class=\"tap-sp-chips\"><button class=\"on\">Walnut</button><button>Mahogany</button><button>Maple</button></div></div>\n    <div class=\"tap-sp-opt\"><label>Tuning</label><div class=\"tap-sp-chips\"><button class=\"on\">Standard (FADGCF)</button><button>Arabic (CFADGC)</button></div></div>\n    <div class=\"tap-sp-opt\"><label>Hard case</label><div class=\"tap-sp-chips\"><button class=\"on\">Included</button><button>Soft bag (−€60)</button></div></div>\n  </div>\n  <div class=\"tap-sp-cta\"><div class=\"tap-qty\"><button>−</button><span>1</span><button>+</button></div><button class=\"tap-btn-primary\" style=\"flex:1\">Add to cart · €799</button></div>\n  <button class=\"tap-sp-buy-now\">Buy now (1-click) →</button>\n  <ul class=\"tap-sp-perks\">\n    <li><span>✓</span><strong>Hand-tuned</strong> in our atelier before shipping</li>\n    <li><span>✈</span><strong>DHL Express worldwide</strong> · ships in 2 days</li>\n    <li><span>↺</span><strong>14-day returns</strong> · no questions asked</li>\n    <li><span>★</span><strong>2-year free service</strong> · lifetime paid support</li>\n  </ul>\n</div>\n<style>\n.tap-sp{display:flex;flex-direction:column;gap:18px;position:sticky;top:120px}\n.tap-sp-title{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:48px;line-height:1.05;color:#1A1612;margin:0;letter-spacing:-.5px}\n.tap-sp-rating{display:flex;gap:10px;align-items:center;font-family:'Inter',sans-serif;font-size:13px;color:#8b7f6a}\n.tap-sp-rating .stars{color:#D4AF37;letter-spacing:2px;font-size:16px}\n.tap-sp-price{display:flex;align-items:baseline;gap:14px;padding:14px 0;border-top:1px solid #E8DFC8;border-bottom:1px solid #E8DFC8}\n.tap-sp-price .old{font-family:'Inter',sans-serif;font-size:18px;color:#8b7f6a;text-decoration:line-through}\n.tap-sp-price .now{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:500;color:#1A1612}\n.tap-sp-price .save{margin-left:auto;background:#C84B3A;color:#fff;padding:4px 12px;border-radius:20px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.06em}\n.tap-sp-desc{font-family:'Inter',sans-serif;font-size:14px;line-height:1.65;color:#3a342c;margin:0}\n.tap-sp-options{display:flex;flex-direction:column;gap:14px}\n.tap-sp-opt label{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:#8b7f6a;font-weight:600;display:block;margin-bottom:8px}\n.tap-sp-chips{display:flex;flex-wrap:wrap;gap:6px}\n.tap-sp-chips button{padding:8px 14px;border:1px solid #E8DFC8;background:#fff;border-radius:6px;font-family:'Inter',sans-serif;font-size:13px;color:#3a342c;cursor:pointer;transition:all .15s}\n.tap-sp-chips button:hover{border-color:#9A7B3A;color:#9A7B3A}\n.tap-sp-chips button.on{background:#1A1612;border-color:#1A1612;color:#fff}\n.tap-sp-cta{display:flex;gap:10px;margin-top:8px}\n.tap-qty{display:inline-flex;border:1px solid #E8DFC8;border-radius:8px;overflow:hidden}\n.tap-qty button{width:46px;height:46px;border:0;background:#fff;cursor:pointer;color:#1A1612;font-size:16px}\n.tap-qty button:hover{background:#FAF6EE;color:#9A7B3A}\n.tap-qty span{display:inline-flex;align-items:center;justify-content:center;min-width:46px;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;border-left:1px solid #E8DFC8;border-right:1px solid #E8DFC8}\n.tap-sp-buy-now{padding:14px;background:#FAF6EE;border:1px solid #E8DFC8;border-radius:8px;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:#1A1612;cursor:pointer;letter-spacing:.02em}\n.tap-sp-buy-now:hover{background:#1A1612;color:#fff;border-color:#1A1612}\n.tap-sp-perks{list-style:none;padding:18px 0 0;margin:8px 0 0;border-top:1px solid #E8DFC8;display:flex;flex-direction:column;gap:10px}\n.tap-sp-perks li{display:flex;gap:12px;align-items:center;font-family:'Inter',sans-serif;font-size:13px;color:#3a342c}\n.tap-sp-perks li span{width:30px;height:30px;border-radius:50%;background:#FAF6EE;display:inline-flex;align-items:center;justify-content:center;color:#9A7B3A;font-size:14px;flex-shrink:0}\n.tap-sp-perks strong{font-weight:600;color:#1A1612;margin-right:4px}\n@media(max-width:1024px){.tap-sp{position:static}.tap-sp-title{font-size:36px}}\n</style>"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tap_sp_tabs",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#FAF6EE",
+        "padding": { "unit": "px", "top": "80", "right": "32", "bottom": "80", "left": "32", "isLinked": false },
+        "content_width": { "unit": "px", "size": 1372 }
+      },
+      "elements": [
+        {
+          "id": "tap_sp_tabs_col",
+          "elType": "column",
+          "settings": { "_column_size": 100 },
+          "elements": [
+            {
+              "id": "tap_sp_tabs_html",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div class=\"tap-tabs\">\n  <div class=\"tap-tabs-nav\"><button class=\"on\">Description</button><button>Specs</button><button>The luthier</button><button>Reviews (142)</button><button>Shipping</button></div>\n  <div class=\"tap-tabs-content\">\n    <div class=\"tap-tab-grid\">\n      <div><h3>Built for the player who wants the real thing.</h3><p>The Sultan Turkish Oud is Yildirim Palabiyik's signature instrument — a walnut bowl with 23 ribs, a spruce face hand-thinned to 1.8mm, and an ebony fingerboard. The bridge is rosewood; the pegs are boxwood. Each instrument takes 14 days from raw wood to final tuning.</p><p>This particular configuration is set up for standard Turkish tuning (FADGCF) and ships with the original Tapadum hard case. We hand-tune and intonate the instrument in our Brisighella atelier before dispatch.</p></div>\n      <ul class=\"tap-spec-list\"><li><span>Bowl</span>23-rib walnut</li><li><span>Face</span>Spruce, 1.8mm</li><li><span>Fingerboard</span>Ebony</li><li><span>Bridge</span>Rosewood</li><li><span>Pegs</span>Boxwood, 11 pegs</li><li><span>Strings</span>D'Addario nylon · 11 strings</li><li><span>Scale</span>584mm</li><li><span>Total length</span>820mm</li><li><span>Weight</span>1.4 kg</li><li><span>Origin</span>Istanbul, Turkey</li></ul>\n    </div>\n  </div>\n</div>\n<style>\n.tap-tabs-nav{display:flex;gap:4px;border-bottom:1px solid #E8DFC8;margin-bottom:32px;flex-wrap:wrap}\n.tap-tabs-nav button{padding:14px 22px;background:transparent;border:0;border-bottom:2px solid transparent;font-family:'Inter',sans-serif;font-size:14px;color:#8b7f6a;cursor:pointer;font-weight:500;letter-spacing:.02em;margin-bottom:-1px}\n.tap-tabs-nav button:hover{color:#1A1612}\n.tap-tabs-nav button.on{color:#1A1612;border-color:#9A7B3A}\n.tap-tab-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:48px}\n.tap-tab-grid h3{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:28px;color:#1A1612;margin:0 0 14px}\n.tap-tab-grid p{font-family:'Inter',sans-serif;font-size:14px;line-height:1.7;color:#3a342c;margin:0 0 14px}\n.tap-spec-list{list-style:none;padding:0;margin:0;background:#fff;border-radius:8px;border:1px solid #E8DFC8;overflow:hidden}\n.tap-spec-list li{display:flex;justify-content:space-between;padding:14px 18px;border-bottom:1px solid #f0e6d0;font-family:'Inter',sans-serif;font-size:13px;color:#1A1612}\n.tap-spec-list li:last-child{border:0}\n.tap-spec-list span{color:#8b7f6a;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase}\n@media(max-width:768px){.tap-tab-grid{grid-template-columns:1fr}}\n</style>"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "page_settings": { "template": "elementor_canvas", "page_title": "hide" }
+}

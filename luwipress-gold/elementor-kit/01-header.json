@@ -1,0 +1,170 @@
+{
+  "version": "0.4",
+  "title": "Tapadum — Header",
+  "type": "header",
+  "content": [
+    {
+      "id": "tap_topbar",
+      "elType": "section",
+      "settings": {
+        "structure": "20",
+        "background_background": "classic",
+        "background_color": "#1A1612",
+        "padding": { "unit": "px", "top": "8", "right": "32", "bottom": "8", "left": "32", "isLinked": false },
+        "content_width": { "unit": "px", "size": 1372 },
+        "html_tag": "div",
+        "_element_id": "tap-topbar"
+      },
+      "elements": [
+        {
+          "id": "tap_topbar_l",
+          "elType": "column",
+          "settings": { "_column_size": 50, "content_position": "center" },
+          "elements": [
+            {
+              "id": "tap_topbar_text_l",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div class=\"tap-topbar-l\"><span>📍 Atelier Brisighella · Italy</span><a href=\"tel:+393479746257\">+39 347 974 6257</a><a href=\"mailto:info@tapadum.com\">info@tapadum.com</a></div><style>.tap-topbar-l{display:flex;gap:24px;align-items:center;font-family:'JetBrains Mono',monospace;font-size:11px;color:#bbb;letter-spacing:.06em}.tap-topbar-l a{color:#bbb;text-decoration:none}.tap-topbar-l a:hover{color:#D4AF37}@media(max-width:880px){.tap-topbar-l{gap:14px;font-size:10px}.tap-topbar-l span{display:none}}</style>"
+              }
+            }
+          ]
+        },
+        {
+          "id": "tap_topbar_r",
+          "elType": "column",
+          "settings": { "_column_size": 50, "content_position": "center", "align": "right" },
+          "elements": [
+            {
+              "id": "tap_topbar_text_r",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div class=\"tap-topbar-r\"><span class=\"tap-lang\"><a class=\"on\" href=\"#\">EN</a><a href=\"#\">IT</a><a href=\"#\">FR</a><a href=\"#\">ES</a></span><span class=\"sep\">|</span><a class=\"track\" href=\"/track-order\">Track order →</a></div><style>.tap-topbar-r{display:flex;gap:14px;justify-content:flex-end;align-items:center;font-family:'JetBrains Mono',monospace;font-size:11px;color:#bbb;letter-spacing:.06em}.tap-topbar-r .tap-lang{display:flex;gap:8px}.tap-topbar-r .tap-lang a{color:#888;text-decoration:none;padding:0 2px}.tap-topbar-r .tap-lang a.on{color:#D4AF37;font-weight:600}.tap-topbar-r .sep{color:#444}.tap-topbar-r .track{color:#bbb;text-decoration:none}.tap-topbar-r .track:hover{color:#D4AF37}@media(max-width:600px){.tap-topbar-r .track{display:none}}</style>"
+              }
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "tap_header_main",
+      "elType": "section",
+      "settings": {
+        "structure": "30",
+        "background_background": "classic",
+        "background_color": "#FFFFFF",
+        "padding": { "unit": "px", "top": "20", "right": "32", "bottom": "20", "left": "32", "isLinked": false },
+        "content_width": { "unit": "px", "size": 1372 },
+        "css_classes": "tap-header-main",
+        "_element_id": "tap-header"
+      },
+      "elements": [
+        {
+          "id": "tap_header_logo_col",
+          "elType": "column",
+          "settings": { "_column_size": 25, "content_position": "center", "_inline_size": 20 },
+          "elements": [
+            {
+              "id": "tap_logo",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<a href=\"/\" class=\"tap-logo\">tapad<span>u</span>m</a><style>.tap-logo{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:32px;color:#1A1612;text-decoration:none;letter-spacing:-.5px;line-height:1;display:inline-block}.tap-logo span{color:#9A7B3A;font-style:italic}.tap-logo:hover span{color:#D4AF37}.tap-header-main.shrunk .tap-logo{font-size:24px}</style>"
+              }
+            }
+          ]
+        },
+        {
+          "id": "tap_header_nav_col",
+          "elType": "column",
+          "settings": { "_column_size": 50, "content_position": "center", "_inline_size": 55, "css_classes": "tap-nav-col" },
+          "elements": [
+            {
+              "id": "tap_nav",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<nav class=\"tap-nav\" id=\"tapNav\">\n  <div class=\"tap-nav-item\" data-mega=\"string\"><a href=\"/category/string\">String</a></div>\n  <div class=\"tap-nav-item\" data-mega=\"perc\"><a href=\"/category/percussions\">Percussions</a></div>\n  <div class=\"tap-nav-item\" data-mega=\"bowed\"><a href=\"/category/bowed\">Bowed</a></div>\n  <div class=\"tap-nav-item\" data-mega=\"winds\"><a href=\"/category/winds\">Winds</a></div>\n  <div class=\"tap-nav-item\"><a href=\"/category/accessories\">Accessories</a></div>\n  <div class=\"tap-nav-item\"><a href=\"/customs\">Customs</a></div>\n  <div class=\"tap-nav-item\"><a href=\"/academy\">Academy</a></div>\n  <div class=\"tap-nav-item\"><a href=\"/blog\">Blog</a></div>\n</nav>\n\n<div class=\"tap-mega-wrap\" id=\"tapMegaWrap\">\n  <div class=\"tap-mega\" data-mega-panel=\"string\">\n    <div class=\"tap-mega-inner\">\n      <div class=\"tap-mega-col\"><h5>Plucked</h5><ul><li><a href=\"/category/arabic-oud\">Arabic Oud</a></li><li><a href=\"/category/turkish-oud\">Turkish Oud</a></li><li><a href=\"/category/electric-oud\">Electric Oud</a></li><li><a href=\"/category/bouzouki\">Bouzouki</a></li><li><a href=\"/category/lavta\">Lavta</a></li></ul></div>\n      <div class=\"tap-mega-col\"><h5>Long-neck</h5><ul><li><a href=\"/category/saz-baglama\">Saz / Baglama</a></li><li><a href=\"/category/setar\">Setar</a></li><li><a href=\"/category/tanbur\">Tanbur</a></li><li><a href=\"/category/caglama\">Caglama</a></li></ul></div>\n      <div class=\"tap-mega-col\"><h5>Struck &amp; plucked</h5><ul><li><a href=\"/category/santur\">Santur</a></li><li><a href=\"/category/qanun\">Qanun</a></li></ul></div>\n      <a class=\"tap-mega-feat\" href=\"/product/sultan-turkish-oud\"><div class=\"tap-mega-feat-img\" style=\"background:linear-gradient(135deg,#d4b97a,#7a5a2c)\"><span>Master pick</span></div><div class=\"tap-mega-feat-meta\"><span class=\"eb\">Featured</span><span class=\"tt\">Sultan Turkish Oud</span><span class=\"lk\">Shop oud collection →</span></div></a>\n    </div>\n  </div>\n  <div class=\"tap-mega\" data-mega-panel=\"perc\">\n    <div class=\"tap-mega-inner\">\n      <div class=\"tap-mega-col\"><h5>Darbuka</h5><ul><li><a href=\"/category/clay-darbuka\">Clay Darbuka</a></li><li><a href=\"/category/aluminum-darbuka\">Pro Aluminum</a></li><li><a href=\"/category/travel-darbuka\">Travel Darbuka</a></li></ul></div>\n      <div class=\"tap-mega-col\"><h5>Frame drums</h5><ul><li><a href=\"/category/bendir\">Bendir</a></li><li><a href=\"/category/riq\">Riq</a></li></ul></div>\n      <div class=\"tap-mega-col\"><h5>Tuned</h5><ul><li><a href=\"/category/handpan\">Handpan</a></li><li><a href=\"/category/steel-tongue\">Steel Tongue</a></li></ul></div>\n      <a class=\"tap-mega-feat\" href=\"/product/tapadum-pro-12\"><div class=\"tap-mega-feat-img\" style=\"background:linear-gradient(135deg,#3d2f1f,#7a5a2c)\"><span>New</span></div><div class=\"tap-mega-feat-meta\"><span class=\"eb\">Just landed</span><span class=\"tt\">Tapadum Pro 12 Notes</span><span class=\"lk\">Shop handpan →</span></div></a>\n    </div>\n  </div>\n  <div class=\"tap-mega\" data-mega-panel=\"bowed\">\n    <div class=\"tap-mega-inner\">\n      <div class=\"tap-mega-col\"><h5>Kemence</h5><ul><li><a href=\"/category/black-sea-kemence\">Black Sea Kemence</a></li><li><a href=\"/category/classical-kemence\">Classical Kemence</a></li><li><a href=\"/category/kamancheh\">Persian Kamancheh</a></li></ul></div>\n      <div class=\"tap-mega-col\"><h5>Other bowed</h5><ul><li><a href=\"/category/kabak-kemane\">Kabak Kemane</a></li></ul></div>\n      <a class=\"tap-mega-feat\" href=\"/blog/voice-of-kemence\"><div class=\"tap-mega-feat-img\" style=\"background:linear-gradient(135deg,#5a3a2a,#c89a5a)\"><span>Story</span></div><div class=\"tap-mega-feat-meta\"><span class=\"eb\">Journal</span><span class=\"tt\">The voice of the kemence</span><span class=\"lk\">Read →</span></div></a>\n    </div>\n  </div>\n  <div class=\"tap-mega\" data-mega-panel=\"winds\">\n    <div class=\"tap-mega-inner\">\n      <div class=\"tap-mega-col\"><h5>Reed &amp; flute</h5><ul><li><a href=\"/category/ney\">Ney</a></li><li><a href=\"/category/duduk\">Duduk</a></li><li><a href=\"/category/kaval\">Kaval</a></li></ul></div>\n      <div class=\"tap-mega-col\"><h5>Double reed</h5><ul><li><a href=\"/category/mey\">Mey</a></li><li><a href=\"/category/zurna\">Zurna</a></li></ul></div>\n      <a class=\"tap-mega-feat\" href=\"/blog/healing-ney\"><div class=\"tap-mega-feat-img\" style=\"background:linear-gradient(135deg,#2a3d3a,#7aa494)\"><span>Long read</span></div><div class=\"tap-mega-feat-meta\"><span class=\"eb\">Journal</span><span class=\"tt\">Healing effects of the ney</span><span class=\"lk\">Read →</span></div></a>\n    </div>\n  </div>\n</div>\n\n<style>\n.tap-nav{display:flex;gap:28px;justify-content:center;align-items:center}\n.tap-nav-item{position:relative}\n.tap-nav-item > a{font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#1A1612;text-decoration:none;padding:8px 0;display:inline-flex;align-items:center;gap:6px;transition:color .15s}\n.tap-nav-item[data-mega] > a::after{content:'›';display:inline-block;transform:rotate(90deg);font-size:11px;color:#8b7f6a}\n.tap-nav-item:hover > a{color:#9A7B3A}\n.tap-mega-wrap{position:absolute;left:0;right:0;top:100%;background:#fff;border-top:1px solid #E8DFC8;box-shadow:0 24px 48px -16px rgba(0,0,0,.18);opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .22s ease, transform .22s ease, visibility .22s;z-index:90}\n.tap-mega-wrap.open{opacity:1;visibility:visible;transform:translateY(0)}\n.tap-mega{display:none}\n.tap-mega.show{display:block}\n.tap-mega-inner{max-width:1372px;margin:0 auto;padding:36px 32px 40px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) 320px;gap:48px;text-align:left}\n.tap-mega-col h5{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:#8b7f6a;font-weight:600;margin:0 0 14px;border-bottom:1px solid #E8DFC8;padding-bottom:10px}\n.tap-mega-col ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}\n.tap-mega-col a{display:block;text-decoration:none;color:#1A1612;font-size:14px;padding:4px 0;transition:color .15s, padding .15s}\n.tap-mega-col a:hover{color:#9A7B3A;padding-left:6px}\n.tap-mega-feat{display:flex;flex-direction:column;text-decoration:none;color:#1A1612;border-radius:10px;overflow:hidden;background:#FAF6EE;border:1px solid #E8DFC8;transition:transform .25s ease, box-shadow .25s ease}\n.tap-mega-feat:hover{transform:translateY(-3px);box-shadow:0 12px 24px -10px rgba(0,0,0,.18)}\n.tap-mega-feat-img{height:180px;display:flex;align-items:flex-end;padding:14px}\n.tap-mega-feat-img span{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.18em;color:#fff;background:rgba(0,0,0,.3);padding:4px 10px;border-radius:20px}\n.tap-mega-feat-meta{padding:14px 16px 16px;display:flex;flex-direction:column;gap:4px}\n.tap-mega-feat-meta .eb{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.18em;color:#8b7f6a}\n.tap-mega-feat-meta .tt{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:500}\n.tap-mega-feat-meta .lk{font-size:12px;color:#9A7B3A;margin-top:6px;font-weight:600}\n@media(max-width:1024px){.tap-nav{display:none}.tap-mega-wrap{display:none}}\n</style>\n\n<script>\n(function(){\n  const wrap=document.getElementById('tapMegaWrap');\n  if(!wrap||wrap.dataset.bound)return;wrap.dataset.bound='1';\n  let t;\n  document.querySelectorAll('.tap-nav-item[data-mega]').forEach(it=>{\n    it.addEventListener('mouseenter',()=>{clearTimeout(t);document.querySelectorAll('.tap-mega').forEach(m=>m.classList.toggle('show',m.dataset.megaPanel===it.dataset.mega));wrap.classList.add('open');});\n    it.addEventListener('mouseleave',()=>{t=setTimeout(()=>wrap.classList.remove('open'),120);});\n    it.querySelector('a').addEventListener('click',e=>e.preventDefault());\n  });\n  wrap.addEventListener('mouseenter',()=>clearTimeout(t));\n  wrap.addEventListener('mouseleave',()=>{t=setTimeout(()=>wrap.classList.remove('open'),120);});\n  // sticky shrink\n  const hdr=document.querySelector('.tap-header-main');\n  if(hdr){window.addEventListener('scroll',()=>{hdr.classList.toggle('shrunk',window.scrollY>80);},{passive:true});}\n})();\n</script>"
+              }
+            }
+          ]
+        },
+        {
+          "id": "tap_header_actions_col",
+          "elType": "column",
+          "settings": { "_column_size": 25, "content_position": "center", "align": "right", "_inline_size": 25 },
+          "elements": [
+            {
+              "id": "tap_header_actions",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div class=\"tap-actions\">\n  <button class=\"tap-icon\" aria-label=\"Search\" onclick=\"tapOpenSearch()\">\n    <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"m20 20-3.5-3.5\"/></svg>\n  </button>\n  <a href=\"/my-account\" class=\"tap-icon\" aria-label=\"Account\">\n    <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><circle cx=\"12\" cy=\"8\" r=\"4\"/><path d=\"M4 21c0-4 4-7 8-7s8 3 8 7\"/></svg>\n  </a>\n  <a href=\"/cart\" class=\"tap-icon tap-cart-btn\" aria-label=\"Cart\">\n    <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z\"/><path d=\"M3 6h18\"/><path d=\"M16 10a4 4 0 0 1-8 0\"/></svg>\n    <span class=\"tap-badge\" id=\"tapCartCount\">2</span>\n  </a>\n  <a href=\"/birthday-sale\" class=\"tap-cta\">Birthday sale →</a>\n  <button class=\"tap-burger\" aria-label=\"Menu\" onclick=\"tapOpenMobile()\"><span></span><span></span><span></span></button>\n</div>\n<style>\n.tap-actions{display:flex;gap:10px;align-items:center;justify-content:flex-end}\n.tap-icon{width:38px;height:38px;border-radius:50%;border:1px solid #E8DFC8;background:#fff;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;color:#1A1612;position:relative;text-decoration:none;transition:all .18s}\n.tap-icon:hover{border-color:#9A7B3A;color:#9A7B3A;transform:translateY(-1px)}\n.tap-badge{position:absolute;top:-4px;right:-4px;background:#C84B3A;color:#fff;font-size:10px;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-family:'Inter',sans-serif}\n.tap-cta{padding:11px 18px;background:linear-gradient(135deg,#9A7B3A,#D4AF37);color:#fff;border-radius:8px;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;text-decoration:none;letter-spacing:.02em;transition:transform .18s, box-shadow .18s;white-space:nowrap}\n.tap-cta:hover{transform:translateY(-1px);box-shadow:0 8px 18px -8px rgba(154,123,58,.55);color:#fff}\n.tap-burger{display:none;flex-direction:column;gap:4px;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;border:1px solid #E8DFC8;background:#fff;cursor:pointer}\n.tap-burger span{width:18px;height:2px;background:#1A1612;border-radius:2px}\n@media(max-width:1024px){.tap-cta{display:none}.tap-burger{display:flex}}\n</style>"
+              }
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "tap_megabar",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#FFFFFF",
+        "border_border": "solid",
+        "border_width": { "unit": "px", "top": "1", "right": "0", "bottom": "1", "left": "0", "isLinked": false },
+        "border_color": "#E8DFC8",
+        "padding": { "unit": "px", "top": "10", "right": "32", "bottom": "10", "left": "32", "isLinked": false },
+        "content_width": { "unit": "px", "size": 1372 }
+      },
+      "elements": [
+        {
+          "id": "tap_megabar_col",
+          "elType": "column",
+          "settings": { "_column_size": 100, "content_position": "center" },
+          "elements": [
+            {
+              "id": "tap_megabar_html",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div class=\"tap-megabar\"><a href=\"/category/arabic-oud\">Arabic Oud</a><span>·</span><a href=\"/category/turkish-oud\">Turkish Oud</a><span>·</span><a href=\"/category/santur\">Santur</a><span>·</span><a href=\"/category/setar\">Setar</a><span>·</span><a href=\"/category/qanun\">Kanun</a><span>·</span><a href=\"/category/clay-darbuka\">Clay Darbuka</a><span>·</span><a href=\"/category/handpan\">Handpan</a><span>·</span><a href=\"/category/kamancheh\">Persian Kamancheh</a><span>·</span><a href=\"/category/ney\">Ney</a><span>·</span><a href=\"/category/duduk\">Duduk</a></div><style>.tap-megabar{display:flex;gap:18px;align-items:center;justify-content:center;flex-wrap:wrap;font-family:'Inter',sans-serif;font-size:13px}.tap-megabar a{color:#3a342c;text-decoration:none;letter-spacing:.02em}.tap-megabar a:hover{color:#9A7B3A}.tap-megabar span{color:#bbb;font-size:10px}@media(max-width:768px){.tap-megabar{display:none}}</style>"
+              }
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "tap_search_overlay",
+      "elType": "section",
+      "settings": { "padding": { "unit": "px", "top": "0", "right": "0", "bottom": "0", "left": "0", "isLinked": false }, "content_width": { "unit": "px", "size": 1920 } },
+      "elements": [
+        {
+          "id": "tap_search_col",
+          "elType": "column",
+          "settings": { "_column_size": 100 },
+          "elements": [
+            {
+              "id": "tap_search_html",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div class=\"tap-overlay\" id=\"tapSearchOverlay\" onclick=\"if(event.target===this)tapCloseSearch()\">\n  <div class=\"tap-search-panel\">\n    <button class=\"tap-close-btn\" onclick=\"tapCloseSearch()\" aria-label=\"Close\">×</button>\n    <div class=\"tap-search-eyebrow\">Search Tapadum</div>\n    <div class=\"tap-search-input-wrap\">\n      <svg width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#8b7f6a\" stroke-width=\"2\"><circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"m20 20-3.5-3.5\"/></svg>\n      <input type=\"text\" id=\"tapSearchInput\" placeholder=\"Try 'turkish oud', 'handpan d hicaz', 'ney'…\" autocomplete=\"off\" />\n    </div>\n    <div class=\"tap-search-suggest\">\n      <div class=\"tap-sugg-block\"><div class=\"tap-sugg-label\">Trending</div><div class=\"tap-sugg-chips\"><a href=\"/?s=turkish+oud\">Turkish Oud</a><a href=\"/?s=handpan\">Handpan</a><a href=\"/?s=clay+darbuka\">Clay Darbuka</a><a href=\"/?s=ney\">Ney</a><a href=\"/?s=setar\">Setar</a></div></div>\n      <div class=\"tap-sugg-block\"><div class=\"tap-sugg-label\">Masters</div><div class=\"tap-sugg-chips\"><a href=\"/?s=feramis\">Feramis Aktas</a><a href=\"/?s=palabiyik\">Yildirim Palabiyik</a><a href=\"/?s=hamid\">Hamid</a></div></div>\n    </div>\n  </div>\n</div>\n<div class=\"tap-overlay tap-mobile-drawer\" id=\"tapMobileNav\" onclick=\"if(event.target===this)tapCloseMobile()\">\n  <aside class=\"tap-nav-drawer\">\n    <header class=\"tap-drawer-head\"><div class=\"tap-drawer-title\">tapad<span>u</span>m</div><button class=\"tap-close-btn\" onclick=\"tapCloseMobile()\">×</button></header>\n    <nav class=\"tap-drawer-nav\">\n      <details><summary>String<span>›</span></summary><div><a href=\"/category/arabic-oud\">Arabic Oud</a><a href=\"/category/turkish-oud\">Turkish Oud</a><a href=\"/category/saz-baglama\">Saz / Baglama</a><a href=\"/category/setar\">Setar</a><a href=\"/category/santur\">Santur</a><a href=\"/category/qanun\">Qanun</a></div></details>\n      <details><summary>Percussions<span>›</span></summary><div><a href=\"/category/clay-darbuka\">Clay Darbuka</a><a href=\"/category/aluminum-darbuka\">Aluminum</a><a href=\"/category/bendir\">Bendir</a><a href=\"/category/handpan\">Handpan</a></div></details>\n      <details><summary>Bowed<span>›</span></summary><div><a href=\"/category/black-sea-kemence\">Black Sea Kemence</a><a href=\"/category/kamancheh\">Persian Kamancheh</a><a href=\"/category/kabak-kemane\">Kabak Kemane</a></div></details>\n      <details><summary>Winds<span>›</span></summary><div><a href=\"/category/ney\">Ney</a><a href=\"/category/duduk\">Duduk</a><a href=\"/category/mey\">Mey</a><a href=\"/category/zurna\">Zurna</a></div></details>\n      <a class=\"tap-drawer-flat\" href=\"/category/accessories\">Accessories</a>\n      <a class=\"tap-drawer-flat\" href=\"/customs\">Customs</a>\n      <a class=\"tap-drawer-flat\" href=\"/academy\">Academy</a>\n      <a class=\"tap-drawer-flat\" href=\"/blog\">Blog</a>\n    </nav>\n  </aside>\n</div>\n<style>\n.tap-overlay{position:fixed;inset:0;background:rgba(28,22,12,.55);backdrop-filter:blur(6px);z-index:9990;display:none;align-items:flex-start;justify-content:center;padding:80px 24px}\n.tap-overlay.open{display:flex;animation:tapFade .22s ease}\n@keyframes tapFade{from{opacity:0}to{opacity:1}}\n.tap-search-panel{background:#fff;width:100%;max-width:720px;border-radius:14px;padding:40px;position:relative;box-shadow:0 30px 60px -20px rgba(0,0,0,.4)}\n.tap-close-btn{position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;border:1px solid #E8DFC8;background:#fff;font-size:20px;cursor:pointer;color:#3a342c;display:flex;align-items:center;justify-content:center;line-height:1}\n.tap-close-btn:hover{background:#FAF6EE;color:#9A7B3A}\n.tap-search-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.18em;color:#8b7f6a;margin-bottom:14px}\n.tap-search-input-wrap{display:flex;align-items:center;gap:14px;border-bottom:2px solid #1A1612;padding:8px 0 14px;margin-bottom:24px}\n.tap-search-input-wrap input{flex:1;border:0;outline:0;font-family:'Cormorant Garamond',serif;font-size:24px;background:transparent;color:#1A1612}\n.tap-search-input-wrap input::placeholder{color:#8b7f6a;font-style:italic}\n.tap-search-suggest{display:flex;flex-direction:column;gap:18px}\n.tap-sugg-block{display:flex;flex-direction:column;gap:10px}\n.tap-sugg-label{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:#8b7f6a;font-weight:600}\n.tap-sugg-chips{display:flex;flex-wrap:wrap;gap:8px}\n.tap-sugg-chips a{padding:8px 14px;border-radius:20px;border:1px solid #E8DFC8;background:#fff;font-size:13px;color:#1A1612;text-decoration:none;transition:all .15s}\n.tap-sugg-chips a:hover{background:#1A1612;color:#fff;border-color:#1A1612}\n.tap-mobile-drawer{padding:0;justify-content:flex-start;align-items:stretch}\n.tap-nav-drawer{background:#fff;width:340px;max-width:100%;height:100%;display:flex;flex-direction:column;transform:translateX(-100%);transition:transform .32s cubic-bezier(.2,.8,.2,1)}\n.tap-mobile-drawer.open .tap-nav-drawer{transform:translateX(0)}\n.tap-drawer-head{display:flex;justify-content:space-between;align-items:center;padding:22px 24px;border-bottom:1px solid #E8DFC8}\n.tap-drawer-title{font-family:'Cormorant Garamond',serif;font-size:24px;color:#1A1612}\n.tap-drawer-title span{color:#9A7B3A;font-style:italic}\n.tap-drawer-nav{flex:1;overflow-y:auto;padding:8px 0}\n.tap-drawer-nav details{border-bottom:1px solid #E8DFC8}\n.tap-drawer-nav summary{display:flex;justify-content:space-between;padding:16px 24px;font-family:'Cormorant Garamond',serif;font-size:18px;cursor:pointer;list-style:none;color:#1A1612}\n.tap-drawer-nav summary::-webkit-details-marker{display:none}\n.tap-drawer-nav summary span{color:#8b7f6a;transition:transform .2s}\n.tap-drawer-nav details[open] summary span{transform:rotate(90deg);color:#9A7B3A}\n.tap-drawer-nav details > div{display:flex;flex-direction:column;padding:0 24px 14px}\n.tap-drawer-nav details > div a{padding:8px 0;color:#3a342c;text-decoration:none;font-size:14px}\n.tap-drawer-nav details > div a:hover{color:#9A7B3A}\n.tap-drawer-flat{display:block;padding:16px 24px;font-family:'Cormorant Garamond',serif;font-size:18px;color:#1A1612;text-decoration:none;border-bottom:1px solid #E8DFC8}\n.tap-drawer-flat:hover{color:#9A7B3A;background:#FAF6EE}\nbody.tap-locked{overflow:hidden}\n</style>\n<script>\nfunction tapOpenSearch(){document.getElementById('tapSearchOverlay').classList.add('open');document.body.classList.add('tap-locked');setTimeout(()=>document.getElementById('tapSearchInput').focus(),60);}\nfunction tapCloseSearch(){document.getElementById('tapSearchOverlay').classList.remove('open');document.body.classList.remove('tap-locked');}\nfunction tapOpenMobile(){document.getElementById('tapMobileNav').classList.add('open');document.body.classList.add('tap-locked');}\nfunction tapCloseMobile(){document.getElementById('tapMobileNav').classList.remove('open');document.body.classList.remove('tap-locked');}\ndocument.addEventListener('keydown',e=>{if(e.key==='Escape'){tapCloseSearch();tapCloseMobile();}});\ndocument.getElementById('tapSearchInput')?.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.value.trim()){window.location.href='/?s='+encodeURIComponent(e.target.value.trim());}});\n</script>"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "page_settings": {
+    "template": "elementor_header_footer"
+  }
+}

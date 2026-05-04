@@ -1,0 +1,223 @@
+/* LuwiPress Gold — WooCommerce loop card override.
+ *
+ * Restyles the default WC archive cards (`ul.products li.product`) to match
+ * the Gold tokens — italic gold price ladder, sale percentage badge, dark
+ * pill add-to-cart button. Active only when WooCommerce is loaded.
+ */
+
+/* ─── Loop grid wrappers ─── */
+ul.products {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 20px;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+ul.products[class*="columns-3"] { grid-template-columns: repeat(3, 1fr); }
+ul.products[class*="columns-2"] { grid-template-columns: repeat(2, 1fr); }
+
+@media (max-width: 1100px) {
+	ul.products,
+	ul.products[class*="columns-3"],
+	ul.products[class*="columns-4"] { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+	ul.products,
+	ul.products[class*="columns-2"],
+	ul.products[class*="columns-3"],
+	ul.products[class*="columns-4"] { grid-template-columns: 1fr; }
+}
+
+/* ─── Card ─── */
+ul.products li.product {
+	background: var(--card, #fff);
+	border-radius: 8px;
+	overflow: hidden;
+	border: 1px solid var(--line-light, #f0ebe0);
+	position: relative;
+	transition: transform .35s, box-shadow .35s;
+	display: flex;
+	flex-direction: column;
+	width: auto;
+	margin: 0;
+	padding: 0;
+	float: none;
+	clear: none;
+}
+ul.products li.product:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 20px 50px -22px rgba(60, 40, 0, .25);
+}
+
+ul.products li.product a.woocommerce-LoopProduct-link {
+	display: block;
+	text-decoration: none;
+	color: inherit;
+}
+
+/* ─── Image ─── */
+ul.products li.product .attachment-woocommerce_thumbnail,
+ul.products li.product img {
+	width: 100%;
+	aspect-ratio: 1 / 1;
+	object-fit: cover;
+	margin: 0;
+	display: block;
+}
+
+/* ─── Sale badge ─── */
+ul.products li.product .onsale {
+	position: absolute;
+	top: 12px;
+	left: 12px;
+	background: var(--sale, #a33b3e);
+	color: #fff;
+	font-family: var(--mono, 'JetBrains Mono', monospace);
+	font-size: 10px;
+	letter-spacing: .12em;
+	text-transform: uppercase;
+	padding: 5px 10px;
+	font-weight: 600;
+	border-radius: 0;
+	min-width: 0;
+	min-height: 0;
+	line-height: 1.3;
+	z-index: 2;
+}
+
+/* ─── Title + price + button ─── */
+ul.products li.product .woocommerce-loop-product__title {
+	font-family: var(--serif, 'Playfair Display', Georgia, serif);
+	font-size: 17px;
+	font-weight: 500;
+	line-height: 1.3;
+	color: var(--ink, #1b1c1c);
+	padding: 18px 20px 0;
+	margin: 0;
+}
+
+ul.products li.product .price {
+	display: flex;
+	align-items: baseline;
+	gap: 8px;
+	padding: 8px 20px 0;
+	margin: 0;
+	color: var(--primary, #735c00);
+	font-family: var(--serif, 'Playfair Display', Georgia, serif);
+	font-size: 20px;
+	font-weight: 500;
+}
+ul.products li.product .price del {
+	text-decoration: line-through;
+	color: var(--muted, #7f7663);
+	font-size: 13px;
+	font-weight: 400;
+	font-family: var(--sans, 'Inter', sans-serif);
+	opacity: 1;
+}
+ul.products li.product .price ins {
+	color: var(--primary, #735c00);
+	background: transparent;
+	text-decoration: none;
+	font-weight: 500;
+}
+
+ul.products li.product .star-rating { display: none; }
+
+ul.products li.product .button.add_to_cart_button,
+ul.products li.product .button.product_type_simple,
+ul.products li.product .button.product_type_variable {
+	margin: 14px 20px 18px;
+	background: var(--ink, #1b1c1c);
+	color: #fff;
+	border-radius: 999px;
+	padding: 10px 18px;
+	font-size: 12px;
+	font-weight: 600;
+	letter-spacing: .04em;
+	text-transform: uppercase;
+	border: 0;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	width: auto;
+	align-self: flex-start;
+	transition: background .2s, transform .2s;
+}
+ul.products li.product .button.add_to_cart_button:hover,
+ul.products li.product .button.product_type_simple:hover,
+ul.products li.product .button.product_type_variable:hover {
+	background: var(--primary, #735c00);
+	transform: translateY(-1px);
+}
+
+ul.products li.product .button.added_to_cart {
+	margin: 0 20px 18px;
+	font-family: var(--mono, monospace);
+	font-size: 11px;
+	letter-spacing: .12em;
+	color: var(--primary, #735c00);
+	text-decoration: underline;
+}
+
+/* ─── WooCommerce notices (cart messages) — Gold palette ─── */
+.woocommerce-message,
+.woocommerce-info {
+	border-top-color: var(--primary-light, #D4AF37) !important;
+	background: var(--bg-alt, #f6f3f2) !important;
+	color: var(--ink, #1b1c1c) !important;
+	font-family: var(--sans, 'Inter', sans-serif);
+}
+.woocommerce-message::before,
+.woocommerce-info::before { color: var(--primary, #735c00) !important; }
+.woocommerce-error {
+	border-top-color: var(--sale, #a33b3e) !important;
+	background: #fff5f5 !important;
+	color: var(--ink, #1b1c1c) !important;
+}
+
+/* ─── Native cart "View cart" pill (after add-to-cart) ─── */
+.woocommerce a.added_to_cart {
+	background: var(--primary, #735c00);
+	color: #fff;
+	border-radius: 999px;
+	padding: 6px 12px;
+	font-size: 11px;
+	letter-spacing: .08em;
+	text-transform: uppercase;
+}
+
+/* ─── WooCommerce pagination → Gold ─── */
+.woocommerce-pagination ul.page-numbers {
+	display: flex;
+	gap: 8px;
+	list-style: none;
+	padding: 32px 0;
+	margin: 0;
+	justify-content: center;
+}
+.woocommerce-pagination ul.page-numbers li { border: 0; }
+.woocommerce-pagination ul.page-numbers a,
+.woocommerce-pagination ul.page-numbers span {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 38px;
+	height: 38px;
+	padding: 0 10px;
+	border: 1px solid var(--line, #e8e2d3);
+	border-radius: 6px;
+	background: #fff;
+	color: var(--ink, #1b1c1c);
+	font-family: var(--mono, monospace);
+	font-size: 13px;
+	text-decoration: none;
+}
+.woocommerce-pagination ul.page-numbers a:hover { border-color: var(--primary, #735c00); color: var(--primary, #735c00); }
+.woocommerce-pagination ul.page-numbers span.current {
+	background: var(--ink, #1b1c1c);
+	border-color: var(--ink, #1b1c1c);
+	color: #fff;
+}

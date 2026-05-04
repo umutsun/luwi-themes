@@ -1,0 +1,83 @@
+{
+  "version": "0.4",
+  "title": "Tapadum — Master Luthier",
+  "type": "page",
+  "content": [
+    {
+      "id": "tap_ml_hero",
+      "elType": "section",
+      "settings": {
+        "structure": "20",
+        "background_background": "classic",
+        "background_color": "#FAF6EE",
+        "padding": { "unit": "px", "top": "80", "right": "32", "bottom": "80", "left": "32", "isLinked": false },
+        "content_width": { "unit": "px", "size": 1372 },
+        "gap": "extended"
+      },
+      "elements": [
+        {
+          "id": "tap_ml_hero_l",
+          "elType": "column",
+          "settings": { "_column_size": 40 },
+          "elements": [
+            {
+              "id": "tap_ml_hero_l_html",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div class=\"tap-ml-portrait\" style=\"background:linear-gradient(135deg,#9a7b3a,#d4af37)\"><span>F</span></div><style>.tap-ml-portrait{aspect-ratio:1/1;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:200px;font-weight:500;box-shadow:0 30px 60px -20px rgba(60,40,0,.4)}</style>"
+              }
+            }
+          ]
+        },
+        {
+          "id": "tap_ml_hero_r",
+          "elType": "column",
+          "settings": { "_column_size": 60, "content_position": "center" },
+          "elements": [
+            {
+              "id": "tap_ml_hero_r_html",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div class=\"tap-breadcrumb\"><a href=\"/\">Home</a> <span>›</span> <a href=\"/masters\">Masters</a> <span>›</span> <span>Feramis Aktas</span></div><span class=\"tap-eyebrow\" style=\"display:block;margin-top:14px\">— Master luthier · Istanbul, Turkey</span><h1 class=\"tap-h1\" style=\"font-size:72px\">Feramis Aktas</h1><p class=\"tap-lead\" style=\"max-width:680px\">"Each oud takes 14 days. The wood decides when it's ready, not me." — Feramis has been building ouds in his Üsküdar workshop since 1996. Tapadum has worked with him since 2018.</p><div class=\"tap-ml-stats\"><div><span class=\"n\">28</span><span class=\"l\">Years building</span></div><div><span class=\"n\">42</span><span class=\"l\">Instruments at Tapadum</span></div><div><span class=\"n\">3</span><span class=\"l\">Apprentices</span></div></div><div class=\"tap-hero-cta\"><a href=\"/shop?master=feramis\" class=\"tap-btn-primary\">Browse 42 instruments →</a><a href=\"/blog/14-days-with-feramis\" class=\"tap-btn-link\">Read the workshop visit ↗</a></div><style>.tap-ml-stats{display:flex;gap:48px;padding:24px 0;border-top:1px solid #E8DFC8;border-bottom:1px solid #E8DFC8;margin:24px 0}.tap-ml-stats > div{display:flex;flex-direction:column;gap:4px}.tap-ml-stats .n{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:500;color:#1A1612;line-height:1}.tap-ml-stats .l{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#8b7f6a}</style>"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tap_ml_works",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#FFFFFF",
+        "padding": { "unit": "px", "top": "100", "right": "32", "bottom": "100", "left": "32", "isLinked": false },
+        "content_width": { "unit": "px", "size": 1372 }
+      },
+      "elements": [
+        {
+          "id": "tap_ml_works_col",
+          "elType": "column",
+          "settings": { "_column_size": 100 },
+          "elements": [
+            {
+              "id": "tap_ml_works_html",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": { "html": "<div class=\"tap-section-head\"><div><span class=\"tap-eyebrow\">— His work in our catalogue</span><h2 class=\"tap-section-title\">Instruments by Feramis.</h2></div><a href=\"/shop?master=feramis\" class=\"tap-btn-link\">All 42 →</a></div>" }
+            },
+            {
+              "id": "tap_ml_works_grid",
+              "elType": "widget",
+              "widgetType": "shortcode",
+              "settings": { "shortcode": "[products limit=\"4\" columns=\"4\" attribute=\"luthier\" terms=\"feramis-aktas\" class=\"tap-products\"]" }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "page_settings": { "template": "elementor_canvas", "page_title": "hide" }
+}

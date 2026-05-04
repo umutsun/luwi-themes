@@ -114,6 +114,18 @@ class LuwiPress_Gold_Importer {
 		$log['finished'] = current_time( 'mysql' );
 		update_option( 'luwipress_gold_wizard_log', $log, false );
 
+		// Mirror to PHP error log so WP_DEBUG_LOG users can inspect without
+		// digging into wp_options. One line per outcome to keep it greppable.
+		if ( WP_DEBUG && WP_DEBUG_LOG ) {
+			error_log( '[LWP Gold Wizard] path=' . $path . ' actions=' . count( $log['actions'] ) . ' pages=' . count( $log['pages'] ) . ' errors=' . count( $log['errors'] ) );
+			foreach ( $log['actions'] as $a ) {
+				error_log( '[LWP Gold Wizard] action ' . ( $a['op'] ?? '?' ) . ': ' . $a['status'] . ( isset( $a['error'] ) ? ' — ' . $a['error'] : '' ) );
+			}
+			foreach ( $log['pages'] as $p ) {
+				error_log( '[LWP Gold Wizard] page ' . ( $p['slug'] ?? '?' ) . ': ' . $p['status'] . ' — ' . wp_json_encode( $p['result'] ?? $p['error'] ?? null ) );
+			}
+		}
+
 		return $log;
 	}
 
@@ -233,20 +245,40 @@ class LuwiPress_Gold_Importer {
 		}
 
 		// Build the Elementor template post.
+		$content = $json['content'] ?? [];
+		$encoded = wp_json_encode( $content );
 		$post_id = wp_insert_post( [
 			'post_title'  => $action['name'] ?? basename( $file ),
 			'post_status' => 'publish',
 			'post_type'   => 'elementor_library',
-			'meta_input'  => [
-				'_elementor_template_type' => $action['type'] ?? 'page',
-				'_elementor_edit_mode'     => 'builder',
-				'_elementor_data'          => wp_slash( wp_json_encode( $json['content'] ?? [] ) ),
-				'_lwp_gold_managed'        => 1,
-			],
 		] );
 
 		if ( is_wp_error( $post_id ) ) {
 			throw new \RuntimeException( $post_id->get_error_message() );
+		}
+
+		// Write Elementor meta AFTER insert so save_post hooks (Elementor itself,
+		// ElementsKit, plugins) don't strip our values during the insert pass.
+		// `meta_input` was unreliable on Tapadum-class sites (155 MCP tools); split
+		// the writes and verify each one took.
+		update_post_meta( $post_id, '_elementor_template_type', $action['type'] ?? 'page' );
+		update_post_meta( $post_id, '_elementor_edit_mode',     'builder' );
+		update_post_meta( $post_id, '_elementor_version',       defined( 'ELEMENTOR_VERSION' ) ? ELEMENTOR_VERSION : '3.18.0' );
+		update_post_meta( $post_id, '_elementor_data',          wp_slash( $encoded ) );
+		update_post_meta( $post_id, '_lwp_gold_managed',        1 );
+
+		// Verify the write actually landed; some hosts (LiteSpeed object cache)
+		// drop large meta on first write — a re-read forces the cache to settle.
+		$readback = get_post_meta( $post_id, '_elementor_data', true );
+		if ( empty( $readback ) || strlen( $readback ) < 100 ) {
+			// Retry path with raw INSERT into postmeta to bypass any save filters.
+			global $wpdb;
+			$wpdb->replace( $wpdb->postmeta, [
+				'post_id'    => $post_id,
+				'meta_key'   => '_elementor_data',
+				'meta_value' => wp_slash( $encoded ),
+			] );
+			wp_cache_delete( $post_id, 'post_meta' );
 		}
 
 		// Apply Elementor display conditions (Pro only — silently skipped otherwise).
@@ -441,11 +473,41 @@ class LuwiPress_Gold_Importer {
 			$json = $this->compiler->compile( $json );
 		}
 
-		update_post_meta( $page_id, '_elementor_edit_mode', 'builder' );
-		update_post_meta( $page_id, '_elementor_template_type', 'wp-page' );
-		update_post_meta( $page_id, '_elementor_data', wp_slash( wp_json_encode( $json['content'] ?? [] ) ) );
+		$content = $json['content'] ?? [];
+		$encoded = wp_json_encode( $content );
 
-		// Trigger Elementor CSS regen.
+		// Write meta — split + re-read so save_post hooks from other plugins
+		// can't strip the values silently (Tapadum-class sites with 100+ plugins).
+		update_post_meta( $page_id, '_elementor_edit_mode',     'builder' );
+		update_post_meta( $page_id, '_elementor_template_type', 'wp-page' );
+		update_post_meta( $page_id, '_elementor_version',       defined( 'ELEMENTOR_VERSION' ) ? ELEMENTOR_VERSION : '3.18.0' );
+		update_post_meta( $page_id, '_elementor_data',          wp_slash( $encoded ) );
+		update_post_meta( $page_id, '_lwp_gold_managed',        1 );
+
+		// Force the page-template to Elementor Canvas so the theme header/footer
+		// don't double-render alongside our header/footer Theme Builder templates.
+		update_post_meta( $page_id, '_wp_page_template', 'elementor_canvas' );
+
+		// Verify the write actually landed.
+		wp_cache_delete( $page_id, 'post_meta' );
+		clean_post_cache( $page_id );
+		$readback = get_post_meta( $page_id, '_elementor_data', true );
+		if ( empty( $readback ) || strlen( $readback ) < 100 ) {
+			// Retry path with raw DB write to bypass any save_post filters
+			// that might be stripping content (LiteSpeed object cache, security
+			// plugins, etc.).
+			global $wpdb;
+			$wpdb->replace( $wpdb->postmeta, [
+				'post_id'    => $page_id,
+				'meta_key'   => '_elementor_data',
+				'meta_value' => wp_slash( $encoded ),
+			] );
+			wp_cache_delete( $page_id, 'post_meta' );
+			clean_post_cache( $page_id );
+			$readback = get_post_meta( $page_id, '_elementor_data', true );
+		}
+
+		// Trigger Elementor CSS regen so the new content actually renders.
 		if ( class_exists( '\Elementor\Core\Files\CSS\Post' ) ) {
 			try {
 				$css = new \Elementor\Core\Files\CSS\Post( $page_id );
@@ -455,7 +517,13 @@ class LuwiPress_Gold_Importer {
 			}
 		}
 
-		return [ 'page_id' => $page_id, 'template' => $kit_file ];
+		return [
+			'page_id'        => $page_id,
+			'template'       => $kit_file,
+			'sections_count' => is_array( $content ) ? count( $content ) : 0,
+			'meta_size'      => strlen( $readback ),
+			'verified'       => ! empty( $readback ) && strlen( $readback ) >= 100,
+		];
 	}
 
 	/* ------------------------------------------------------------------

@@ -67,10 +67,20 @@ class LuwiPress_Gold_Wizard {
 			self::SLUG,
 			[ $this, 'render_page' ]
 		);
+
+		// Always-visible Tools entry — lets the operator re-run the wizard
+		// after the first activation (the auto-notice only shows once).
+		add_management_page(
+			__( 'LuwiPress Gold setup (re-run)', 'luwipress-gold' ),
+			__( 'LuwiPress Gold', 'luwipress-gold' ),
+			self::CAPABILITY,
+			self::SLUG,
+			[ $this, 'render_page' ]
+		);
 	}
 
 	public function get_url() {
-		return admin_url( 'admin.php?page=' . self::SLUG );
+		return admin_url( 'tools.php?page=' . self::SLUG );
 	}
 
 	public function should_show_notice() {

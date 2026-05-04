@@ -38,6 +38,8 @@ add_action( 'elementor/init', function () {
 			'class-info-bar.php'       => 'LuwiPress_Gold_Widget_Info_Bar',
 			'class-editorial-grid.php' => 'LuwiPress_Gold_Widget_Editorial_Grid',
 			'class-hero.php'           => 'LuwiPress_Gold_Widget_Hero',
+			'class-mega-menu.php'      => 'LuwiPress_Gold_Widget_Mega_Menu',
+			'class-megabar.php'        => 'LuwiPress_Gold_Widget_Megabar',
 		];
 
 		foreach ( $widgets as $file => $class ) {

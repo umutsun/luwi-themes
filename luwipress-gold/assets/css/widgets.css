@@ -711,3 +711,250 @@
 	.lwp-hero--full-bleed .lwp-hero-inner { padding: 80px 20px 100px; }
 	.lwp-hero-stats { grid-template-columns: 1fr 1fr; }
 }
+
+/* ─────────────────────────────────────────────────────────────────── */
+/* Mega Menu                                                           */
+/* ─────────────────────────────────────────────────────────────────── */
+
+.lwp-mm { font-family: var(--sans, 'Inter', sans-serif); }
+.lwp-mm-top {
+	display: flex;
+	gap: 28px;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	align-items: center;
+}
+.lwp-mm-top > li { position: relative; }
+.lwp-mm-top > li > a {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	font-size: 14px;
+	font-weight: 500;
+	letter-spacing: .01em;
+	color: var(--ink, #1b1c1c);
+	text-decoration: none;
+	padding: 18px 0;
+	transition: color .2s;
+}
+.lwp-mm-top > li > a:hover { color: var(--primary, #735c00); }
+.lwp-mm-arrow {
+	font-size: 11px;
+	color: var(--muted, #7f7663);
+	transform: rotate(90deg);
+	display: inline-block;
+	transition: transform .2s;
+}
+.lwp-mm-top > li.is-mega:hover .lwp-mm-arrow,
+.lwp-mm-top > li.has-children:hover .lwp-mm-arrow { transform: rotate(270deg); }
+
+/* Simple dropdown (1-3 items, no 3rd level) */
+.lwp-mm-dropdown {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	min-width: 240px;
+	background: #fff;
+	border: 1px solid var(--line, #e8e2d3);
+	border-top: 0;
+	box-shadow: 0 24px 48px -16px rgba(0, 0, 0, .18);
+	padding: 14px 0;
+	list-style: none;
+	margin: 0;
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(-6px);
+	transition: opacity .22s ease, transform .22s ease, visibility .22s;
+	z-index: 90;
+}
+.lwp-mm-top > li:hover > .lwp-mm-dropdown,
+.lwp-mm-top > li:focus-within > .lwp-mm-dropdown {
+	opacity: 1; visibility: visible; transform: translateY(0);
+}
+.lwp-mm-dropdown a {
+	display: flex;
+	justify-content: space-between;
+	gap: 10px;
+	padding: 10px 18px;
+	color: var(--ink, #1b1c1c);
+	text-decoration: none;
+	font-size: 14px;
+}
+.lwp-mm-dropdown a:hover { color: var(--primary, #735c00); background: var(--bg-alt, #f6f3f2); }
+.lwp-mm-count {
+	font-family: var(--mono, 'JetBrains Mono', monospace);
+	font-size: 11px;
+	color: var(--muted, #7f7663);
+}
+
+/* Full mega panel (4+ kids or 3rd-level present) */
+.lwp-mm-panel {
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	transform: translate(-50%, -6px);
+	background: #fff;
+	border-top: 1px solid var(--line, #e8e2d3);
+	box-shadow: 0 24px 48px -16px rgba(0, 0, 0, .18);
+	min-width: 720px;
+	max-width: min(calc(var(--content-w, 1372px) - 64px), 95vw);
+	padding: 36px 32px 40px;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity .22s ease, transform .22s ease, visibility .22s;
+	z-index: 90;
+}
+.lwp-mm-top > li.is-mega:hover > .lwp-mm-panel,
+.lwp-mm-top > li.is-mega:focus-within > .lwp-mm-panel {
+	opacity: 1; visibility: visible; transform: translate(-50%, 0);
+}
+.lwp-mm-panel-cols {
+	display: grid;
+	gap: 36px;
+	align-items: start;
+}
+.lwp-mm-col h5,
+.lwp-mm-col-head {
+	font-family: var(--mono, monospace);
+	font-size: 11px;
+	letter-spacing: .16em;
+	text-transform: uppercase;
+	color: var(--muted, #7f7663);
+	font-weight: 600;
+	margin: 0 0 12px;
+	border-bottom: 1px solid var(--line, #e8e2d3);
+	padding-bottom: 10px;
+}
+.lwp-mm-col-head a {
+	color: inherit;
+	text-decoration: none;
+}
+.lwp-mm-col-head a:hover { color: var(--primary, #735c00); }
+.lwp-mm-col ul {
+	list-style: none;
+	margin: 0 0 18px;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+.lwp-mm-col ul a {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	color: var(--ink, #1b1c1c);
+	text-decoration: none;
+	font-size: 14px;
+	padding: 4px 0;
+	transition: color .15s, padding .15s;
+}
+.lwp-mm-col ul a:hover { color: var(--primary, #735c00); padding-left: 6px; }
+.lwp-mm-col ul span {
+	font-family: var(--mono, monospace);
+	font-size: 11px;
+	color: var(--muted, #7f7663);
+}
+
+/* Featured slot inside mega panel */
+.lwp-mm-feat {
+	width: 280px;
+	border-radius: 10px;
+	overflow: hidden;
+	background: #faf6ee;
+	border: 1px solid var(--line, #e8e2d3);
+	text-decoration: none;
+	color: inherit;
+	transition: transform .25s, box-shadow .25s;
+	display: flex;
+	flex-direction: column;
+}
+.lwp-mm-feat:hover { transform: translateY(-3px); box-shadow: 0 12px 24px -10px rgba(0, 0, 0, .18); }
+.lwp-mm-feat-img {
+	height: 160px;
+	background: linear-gradient(135deg, #d4b97a, #7a5a2c);
+	background-size: cover;
+	background-position: center;
+	display: flex;
+	align-items: flex-end;
+	padding: 14px;
+}
+.lwp-mm-feat-img span {
+	font-family: var(--mono, monospace);
+	font-size: 10px;
+	letter-spacing: .14em;
+	text-transform: uppercase;
+	color: #fff;
+	background: rgba(0, 0, 0, .3);
+	padding: 4px 10px;
+	border-radius: 20px;
+	backdrop-filter: blur(4px);
+}
+.lwp-mm-feat-meta { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 6px; }
+.lwp-mm-feat-title {
+	font-family: var(--serif, 'Playfair Display', Georgia, serif);
+	font-size: 18px;
+	font-weight: 500;
+	line-height: 1.2;
+}
+.lwp-mm-feat-link {
+	font-size: 12px;
+	color: var(--primary, #735c00);
+	font-weight: 600;
+}
+
+.lwp-mm--placeholder {
+	border: 2px dashed var(--line, #e8e2d3);
+	padding: 32px;
+	border-radius: 6px;
+	text-align: center;
+	color: var(--muted, #7f7663);
+	font-style: italic;
+	background: var(--bg-alt, #f6f3f2);
+}
+
+@media (max-width: 900px) {
+	.lwp-mm-top { display: none; }
+	/* Mobile drawer rendering handled by overlays.css/app.js */
+}
+
+/* ─────────────────────────────────────────────────────────────────── */
+/* Megabar (sub-cat strip)                                             */
+/* ─────────────────────────────────────────────────────────────────── */
+
+.lwp-megabar {
+	border-top: 1px solid var(--line, #e8e2d3);
+	border-bottom: 1px solid var(--line, #e8e2d3);
+	font-size: 13px;
+}
+.lwp-megabar-inner {
+	max-width: var(--content-w, 1372px);
+	margin: 0 auto;
+	padding: 10px 32px;
+	display: flex;
+	gap: 16px;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+.lwp-megabar a {
+	color: var(--ink-soft, #4d4635);
+	text-decoration: none;
+	letter-spacing: .02em;
+	white-space: nowrap;
+	transition: color .15s;
+}
+.lwp-megabar a:hover { color: var(--primary, #735c00); }
+.lwp-megabar-sep { color: var(--line, #e8e2d3); font-weight: 300; }
+
+.lwp-megabar--empty {
+	padding: 14px;
+	text-align: center;
+	color: var(--muted, #7f7663);
+	font-style: italic;
+	font-size: 13px;
+}
+
+@media (max-width: 680px) {
+	.lwp-megabar-inner { gap: 10px; padding: 8px 16px; font-size: 12px; }
+}

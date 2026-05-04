@@ -18,3 +18,8 @@ define( 'LUWIPRESS_GOLD_URI', get_template_directory_uri() );
 require_once LUWIPRESS_GOLD_DIR . '/inc/setup.php';
 require_once LUWIPRESS_GOLD_DIR . '/inc/enqueue.php';
 require_once LUWIPRESS_GOLD_DIR . '/inc/elementor-compat.php';
+
+// Onboarding wizard — admin-only.
+if ( is_admin() ) {
+	require_once LUWIPRESS_GOLD_DIR . '/inc/wizard/bootstrap.php';
+}

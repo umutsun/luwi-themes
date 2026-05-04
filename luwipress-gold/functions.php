@@ -23,3 +23,6 @@ require_once LUWIPRESS_GOLD_DIR . '/inc/elementor-compat.php';
 if ( is_admin() ) {
 	require_once LUWIPRESS_GOLD_DIR . '/inc/wizard/bootstrap.php';
 }
+
+// Custom Elementor widgets — registered on `elementor/init`.
+require_once LUWIPRESS_GOLD_DIR . '/inc/widgets/loader.php';

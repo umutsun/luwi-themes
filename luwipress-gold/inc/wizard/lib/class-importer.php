@@ -15,7 +15,19 @@
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
+require_once __DIR__ . '/class-content-compiler.php';
+
 class LuwiPress_Gold_Importer {
+
+	/**
+	 * @var LuwiPress_Gold_Content_Compiler
+	 */
+	private $compiler;
+
+	/**
+	 * @var array
+	 */
+	private $snapshot;
 
 	/**
 	 * Run the entire plan for a given path.
@@ -28,9 +40,10 @@ class LuwiPress_Gold_Importer {
 	public function apply( $path, $brand = [] ) {
 		// Re-derive plan to ensure it matches the current snapshot at apply-time.
 		$detector = new LuwiPress_Gold_Detector();
-		$snapshot = $detector->snapshot();
+		$this->snapshot = $detector->snapshot();
+		$this->compiler = new LuwiPress_Gold_Content_Compiler( $this->snapshot );
 		$mapper   = new LuwiPress_Gold_Mapper();
-		$plan     = $mapper->plan( $snapshot, $path );
+		$plan     = $mapper->plan( $this->snapshot, $path );
 
 		$log = [
 			'path'    => $path,
@@ -213,6 +226,12 @@ class LuwiPress_Gold_Importer {
 			throw new \RuntimeException( 'Template JSON parse error.' );
 		}
 
+		// Compile placeholders against the live snapshot — populates hero
+		// stats, featured products, category cards, etc. with real data.
+		if ( $this->compiler ) {
+			$json = $this->compiler->compile( $json );
+		}
+
 		// Build the Elementor template post.
 		$post_id = wp_insert_post( [
 			'post_title'  => $action['name'] ?? basename( $file ),
@@ -329,34 +348,55 @@ class LuwiPress_Gold_Importer {
 	 * ---------------------------------------------------------------- */
 
 	private function process_page( $slug, $page ) {
-		// Page already exists → only apply Elementor template content if requested.
+		// Page already exists → update its content with the compiled template
+		// (a revision is auto-saved by WP, so the operator can revert).
 		if ( ! empty( $page['existing_id'] ) && ( $page['action'] ?? '' ) === 'apply_template_only' ) {
-			return $this->apply_template_to_page( (int) $page['existing_id'], $page['kit'] );
+			$applied = $this->apply_template_to_page(
+				(int) $page['existing_id'],
+				$page['kit'],
+				$page['compiler_context'] ?? []
+			);
+			return [
+				'page_id'          => (int) $page['existing_id'],
+				'updated'          => true,
+				'template_applied' => $applied,
+			];
 		}
 
-		// Create new page.
+		// Create new page (incl. parallel "-gold" duplicates and auto-master pages).
 		if ( ( $page['action'] ?? '' ) === 'create_and_import' || ! empty( $page['set_as_home'] ) ) {
-			$existing = get_page_by_path( $slug );
+			$page_slug = $page['slug'] ?? $slug;
+			$existing = get_page_by_path( $page_slug );
 			if ( $existing ) {
 				return [ 'page_id' => $existing->ID, 'reused' => true ];
 			}
 
+			$meta = [ '_lwp_gold_managed' => 1 ];
+			if ( ! empty( $page['parallel_to'] ) ) {
+				$meta['_lwp_gold_parallel_to'] = (int) $page['parallel_to'];
+			}
+			if ( ! empty( $page['compiler_context']['master_slug'] ) ) {
+				$meta['_lwp_gold_master_slug'] = sanitize_title( $page['compiler_context']['master_slug'] );
+			}
+
 			$post_id = wp_insert_post( [
 				'post_title'   => $page['title'],
-				'post_name'    => $slug,
+				'post_name'    => $page_slug,
 				'post_status'  => 'publish',
 				'post_type'    => 'page',
 				'post_content' => '',
-				'meta_input'   => [
-					'_lwp_gold_managed' => 1,
-				],
+				'meta_input'   => $meta,
 			] );
 			if ( is_wp_error( $post_id ) ) {
 				throw new \RuntimeException( $post_id->get_error_message() );
 			}
 
-			// Apply template.
-			$applied = $this->apply_template_to_page( $post_id, $page['kit'] );
+			// Apply template (with optional master-specific context).
+			$applied = $this->apply_template_to_page(
+				$post_id,
+				$page['kit'],
+				$page['compiler_context'] ?? []
+			);
 
 			// Set as home if asked.
 			if ( ! empty( $page['set_as_home'] ) ) {
@@ -364,17 +404,42 @@ class LuwiPress_Gold_Importer {
 				update_option( 'page_on_front', $post_id );
 			}
 
-			return [ 'page_id' => $post_id, 'created' => true, 'template_applied' => $applied ];
+			return [
+				'page_id'          => $post_id,
+				'created'          => true,
+				'template_applied' => $applied,
+				'parallel_to'      => $page['parallel_to'] ?? null,
+			];
 		}
 
 		return [ 'skipped' => true, 'reason' => 'no_action' ];
 	}
 
-	private function apply_template_to_page( $page_id, $kit_file ) {
+	private function apply_template_to_page( $page_id, $kit_file, $context = [] ) {
 		$file = trailingslashit( $this->kit_dir() ) . $kit_file;
 		if ( ! file_exists( $file ) ) return [ 'skipped' => true, 'reason' => 'kit_missing' ];
 		$json = json_decode( file_get_contents( $file ), true );
 		if ( ! $json ) return [ 'skipped' => true, 'reason' => 'parse_error' ];
+
+		// Compile placeholders before writing.
+		// For master profile pages, replace LWP:master_* tags with this
+		// specific master's data via a quick string substitution before
+		// the generic compiler runs.
+		if ( ! empty( $context['master_slug'] ) ) {
+			$json_str = wp_json_encode( $json );
+			$replacements = [
+				'{{LWP:master_name}}'  => addslashes( $context['master_name'] ?? '' ),
+				'{{LWP:master_init}}'  => addslashes( $context['master_init'] ?? '' ),
+				'{{LWP:master_slug}}'  => addslashes( $context['master_slug'] ?? '' ),
+				'{{LWP:master_count}}' => (int) ( $context['master_count'] ?? 0 ),
+			];
+			$json_str = str_replace( array_keys( $replacements ), array_values( $replacements ), $json_str );
+			$json = json_decode( $json_str, true );
+		}
+
+		if ( $this->compiler ) {
+			$json = $this->compiler->compile( $json );
+		}
 
 		update_post_meta( $page_id, '_elementor_edit_mode', 'builder' );
 		update_post_meta( $page_id, '_elementor_template_type', 'wp-page' );

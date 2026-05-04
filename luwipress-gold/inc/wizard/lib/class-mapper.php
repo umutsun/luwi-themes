@@ -98,44 +98,59 @@ class LuwiPress_Gold_Mapper {
 			}
 		}
 
-		// 4. Homepage — only create/import if no front page is set.
+		// 4. Homepage handling — non-destructive policy.
+		//    - If front page exists → UPDATE its content with the compiled
+		//      Gold homepage (operator can revert via post revisions).
+		//    - If no front page → create a new "Home" and set it as front.
 		$has_home = ! empty( $snap['content']['front_page']['page_on_front'] );
-		if ( ! $has_home ) {
+		if ( $has_home ) {
+			$plan['pages']['home'] = [
+				'existing_id' => (int) $snap['content']['front_page']['page_on_front'],
+				'title'       => $snap['content']['front_page']['home_title'] ?: __( 'Home', 'luwipress-gold' ),
+				'kit'         => '03-homepage.json',
+				'reason'      => 'updating_front_page',
+				'action'      => 'apply_template_only',
+				'preserve_revision' => true,
+			];
+		} else {
 			$plan['pages']['home'] = [
 				'slug'        => 'home',
 				'title'       => __( 'Home', 'luwipress-gold' ),
 				'kit'         => '03-homepage.json',
 				'set_as_home' => true,
 				'reason'      => 'no_front_page_set',
-			];
-		} else {
-			// Front page already exists — only import the kit if user opts in (mark as suggested).
-			$plan['warnings'][] = [
-				'kind'    => 'front_page_exists',
-				'page_id' => $snap['content']['front_page']['page_on_front'],
-				'title'   => $snap['content']['front_page']['home_title'],
-				'message' => sprintf(
-					/* translators: %s: existing home page title */
-					__( 'Existing front page detected: "%s". The wizard will leave it alone unless you tick "Replace homepage with the Gold layout" below.', 'luwipress-gold' ),
-					$snap['content']['front_page']['home_title']
-				),
-				'suggestion' => 'optional_replace_home',
+				'action'      => 'create_and_import',
 			];
 		}
 
-		// 5. Static pages — create only if missing.
+		// 5. Static pages — NON-DESTRUCTIVE. If a page with the canonical slug
+		//    already exists we leave it untouched; create a parallel page with
+		//    a `-gold` suffix so the operator can compare side by side.
 		foreach ( $this->static_page_definitions() as $slug => $def ) {
 			$existing = $this->find_page_by_slug( $slug ) ?: $this->find_page_by_title( $def['title'] );
 			if ( $existing ) {
 				$plan['pages'][ $slug ] = [
-					'existing_id' => $existing->ID,
-					'title'       => $existing->post_title,
-					'kit'         => $def['kit'],
-					'reason'      => 'page_exists',
-					'action'      => 'apply_template_only',
+					'preserved_existing_id' => $existing->ID,
+					'preserved_title'       => $existing->post_title,
+					'slug'   => $slug . '-gold',
+					'title'  => $def['title'] . ' (Gold)',
+					'kit'    => $def['kit'],
+					'reason' => 'page_exists_creating_parallel',
+					'action' => 'create_and_import',
+					'parallel_to' => $existing->ID,
+				];
+				$plan['warnings'][] = [
+					'kind'    => 'parallel_page_created',
+					'message' => sprintf(
+						/* translators: 1: existing page title 2: new gold page slug */
+						__( 'Existing "%1$s" left untouched. A parallel "%2$s" page was created so you can compare layouts side by side.', 'luwipress-gold' ),
+						$existing->post_title,
+						$slug . '-gold'
+					),
 				];
 			} else {
 				$plan['pages'][ $slug ] = [
+					'slug'   => $slug,
 					'title'  => $def['title'],
 					'kit'    => $def['kit'],
 					'reason' => 'page_missing',
@@ -144,25 +159,56 @@ class LuwiPress_Gold_Mapper {
 			}
 		}
 
-		// 6. Master Profile template — assign to existing master luthier pages
-		//    OR if pa_luthier taxonomy exists, plan to use the term archive template.
+		// 6. Master Profile pages — auto-generate one page per pa_luthier term,
+		//    each populated with that master's name + portrait + product count.
+		//    Pages live under /masters/{slug}/. If a page already exists at
+		//    that slug, we skip (non-destructive).
 		if ( ! empty( $snap['masters'] ) ) {
+			// Save the template once for Theme Builder Single Page condition (Pro only).
 			$plan['actions'][] = [
 				'op'     => 'import_elementor_template',
 				'kit'    => '07-master-profile.json',
 				'name'   => 'LuwiPress Gold — Master Profile',
 				'type'   => 'page',
 				'note'   => sprintf(
-					'Use as base for %d existing master luthier(s)',
+					/* translators: %d: master count */
+					_n( 'Used as the base layout for %d luthier page', 'Used as the base layout for %d luthier pages', count( $snap['masters'] ), 'luwipress-gold' ),
 					count( $snap['masters'] )
 				),
 			];
+
+			// Generate one page per master. Compiler resolves placeholders against
+			// the matching pa_luthier term — name, portrait, count, etc.
 			foreach ( $snap['masters'] as $m ) {
+				$page_slug = 'masters/' . sanitize_title( $m['slug'] );
+				$existing  = $this->find_page_by_slug( 'masters-' . sanitize_title( $m['slug'] ) );
+				if ( $existing ) {
+					$plan['actions'][] = [
+						'op'    => 'mark_master',
+						'slug'  => $m['slug'],
+						'name'  => $m['name'],
+						'note'  => 'Page already exists — surface in homepage maker grid',
+					];
+					continue;
+				}
+				$plan['pages'][ 'master-' . sanitize_title( $m['slug'] ) ] = [
+					'slug'   => 'masters-' . sanitize_title( $m['slug'] ),
+					'title'  => $m['name'],
+					'kit'    => '07-master-profile.json',
+					'reason' => 'master_profile_auto_generated',
+					'action' => 'create_and_import',
+					'compiler_context' => [
+						'master_slug' => $m['slug'],
+						'master_name' => $m['name'],
+						'master_init' => $m['init'],
+						'master_count' => $m['count'],
+					],
+				];
 				$plan['actions'][] = [
 					'op'    => 'mark_master',
 					'slug'  => $m['slug'],
 					'name'  => $m['name'],
-					'note'  => 'Surface in homepage maker grid',
+					'note'  => 'Surface in homepage maker grid + auto-generated profile page',
 				];
 			}
 		}

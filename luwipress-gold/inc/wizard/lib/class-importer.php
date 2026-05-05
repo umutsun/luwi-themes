@@ -54,6 +54,12 @@ class LuwiPress_Gold_Importer {
 			'errors'  => [],
 		];
 
+		// 0. Cleanup — every Apply re-creates Theme Builder templates with the
+		// latest compiled content, so old `_lwp_gold_managed` templates from
+		// previous runs become orphans. Trash them now to avoid the user seeing
+		// 13+ duplicate "LuwiPress Gold — Header" entries in Templates → Library.
+		$this->cleanup_managed_templates( $log );
+
 		// 1. Brand overrides — always first; they shape everything that follows.
 		$this->apply_brand( $brand, $log );
 
@@ -127,6 +133,50 @@ class LuwiPress_Gold_Importer {
 		}
 
 		return $log;
+	}
+
+	/* ------------------------------------------------------------------
+	 * Cleanup: orphan Theme Builder templates from previous runs
+	 * ---------------------------------------------------------------- */
+
+	/**
+	 * Force-delete every `elementor_library` post tagged with
+	 * `_lwp_gold_managed = 1`. Run at the start of every Apply so the
+	 * Templates → Library doesn't accumulate one extra "LuwiPress Gold —
+	 * Header" per wizard run.
+	 *
+	 * Skip the auto-applied homepage container (id 35754 et al) — anything
+	 * with `_lwp_gold_keep` meta is preserved.
+	 */
+	private function cleanup_managed_templates( &$log ) {
+		$query = new WP_Query( [
+			'post_type'      => 'elementor_library',
+			'post_status'    => 'any',
+			'posts_per_page' => -1,
+			'fields'         => 'ids',
+			'meta_query'     => [
+				[
+					'key'   => '_lwp_gold_managed',
+					'value' => '1',
+				],
+			],
+			'no_found_rows'  => true,
+		] );
+		$deleted = [];
+		foreach ( $query->posts as $tid ) {
+			if ( get_post_meta( $tid, '_lwp_gold_keep', true ) ) continue;
+			if ( wp_delete_post( $tid, true ) ) {
+				$deleted[] = $tid;
+			}
+		}
+		if ( $deleted ) {
+			$log['actions'][] = [
+				'op'     => 'cleanup_managed_templates',
+				'status' => 'ok',
+				'detail' => [ 'deleted' => $deleted ],
+				'result' => [ 'count' => count( $deleted ) ],
+			];
+		}
 	}
 
 	/* ------------------------------------------------------------------
@@ -491,19 +541,36 @@ class LuwiPress_Gold_Importer {
 		//   - Pro missing → use 'default' so the active theme's header.php /
 		//     footer.php still render. Otherwise the page comes through with
 		//     no header at all (canvas mode = no chrome).
-		if ( $this->elementor_pro_active() ) {
-			update_post_meta( $page_id, '_wp_page_template', 'elementor_header_footer' );
-		} else {
-			// Without Pro, force `default` so the theme's header.php / footer.php
-			// fallback render. Critically: also reset `elementor_canvas` (which
-			// suppresses ALL chrome) — earlier wizard runs may have set it.
-			$existing_tpl = get_post_meta( $page_id, '_wp_page_template', true );
-			if ( empty( $existing_tpl )
-			     || $existing_tpl === 'page-template-default'
-			     || $existing_tpl === 'elementor_canvas'
-			     || $existing_tpl === 'elementor_header_footer' ) {
-				update_post_meta( $page_id, '_wp_page_template', 'default' );
-			}
+		// _wp_page_template — drives whether the theme's header.php / footer.php
+		// chrome renders. Three known-good values:
+		//   - default                  → theme renders header + footer
+		//   - elementor_header_footer  → only valid with Elementor Pro Theme
+		//                                Builder; without Pro it suppresses chrome
+		//   - elementor_canvas         → no chrome, full-bleed (only useful for
+		//                                landing pages where we hand-roll header)
+		//
+		// Pro absent (real-world case for new.tapadum.com): force `default`
+		// REGARDLESS of the existing value, so previous wizard runs that
+		// wrote canvas / header_footer get reset. Pro-present sites get
+		// header_footer so Pro's Theme Builder wraps our compiled body.
+		//
+		// We use a raw $wpdb->replace if the meta API write doesn't stick
+		// (LiteSpeed object cache + plugin save_post hooks have been seen
+		// to silently retain old values).
+		$desired_tpl = $this->elementor_pro_active() ? 'elementor_header_footer' : 'default';
+		update_post_meta( $page_id, '_wp_page_template', $desired_tpl );
+		wp_cache_delete( $page_id, 'post_meta' );
+		clean_post_cache( $page_id );
+		$tpl_readback = get_post_meta( $page_id, '_wp_page_template', true );
+		if ( $tpl_readback !== $desired_tpl ) {
+			global $wpdb;
+			$wpdb->replace( $wpdb->postmeta, [
+				'post_id'    => $page_id,
+				'meta_key'   => '_wp_page_template',
+				'meta_value' => $desired_tpl,
+			] );
+			wp_cache_delete( $page_id, 'post_meta' );
+			clean_post_cache( $page_id );
 		}
 
 		// Verify the write actually landed.

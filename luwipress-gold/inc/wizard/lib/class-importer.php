@@ -484,9 +484,27 @@ class LuwiPress_Gold_Importer {
 		update_post_meta( $page_id, '_elementor_data',          wp_slash( $encoded ) );
 		update_post_meta( $page_id, '_lwp_gold_managed',        1 );
 
-		// Force the page-template to Elementor Canvas so the theme header/footer
-		// don't double-render alongside our header/footer Theme Builder templates.
-		update_post_meta( $page_id, '_wp_page_template', 'elementor_canvas' );
+		// Page-template choice depends on whether Elementor Pro / Theme Builder
+		// is going to wrap the page with a Header/Footer template:
+		//   - Pro present → use 'elementor_header_footer' (Pro's theme builder
+		//     wraps the canvas with our Header/Footer Theme Builder templates).
+		//   - Pro missing → use 'default' so the active theme's header.php /
+		//     footer.php still render. Otherwise the page comes through with
+		//     no header at all (canvas mode = no chrome).
+		if ( $this->elementor_pro_active() ) {
+			update_post_meta( $page_id, '_wp_page_template', 'elementor_header_footer' );
+		} else {
+			// Without Pro, force `default` so the theme's header.php / footer.php
+			// fallback render. Critically: also reset `elementor_canvas` (which
+			// suppresses ALL chrome) — earlier wizard runs may have set it.
+			$existing_tpl = get_post_meta( $page_id, '_wp_page_template', true );
+			if ( empty( $existing_tpl )
+			     || $existing_tpl === 'page-template-default'
+			     || $existing_tpl === 'elementor_canvas'
+			     || $existing_tpl === 'elementor_header_footer' ) {
+				update_post_meta( $page_id, '_wp_page_template', 'default' );
+			}
+		}
 
 		// Verify the write actually landed.
 		wp_cache_delete( $page_id, 'post_meta' );

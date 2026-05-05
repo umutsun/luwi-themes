@@ -1,0 +1,117 @@
+<?php
+/**
+ * The Template for displaying a single product. Wraps WC's content-single
+ * template in our Gold PDP chrome (breadcrumb + 2-col grid) but defers
+ * gallery + summary + tabs rendering to the native WC actions so plugin
+ * compatibility (variations, reviews, related, hooks) stays intact.
+ *
+ * @package luwipress-gold
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+get_header( 'shop' );
+?>
+
+<main class="lwp-pdp" id="primary">
+	<div class="lwp-pdp-container">
+
+		<?php while ( have_posts() ) : the_post();
+
+			$primary_cat = null;
+			if ( function_exists( 'wc_get_product' ) ) {
+				$product = wc_get_product( get_the_ID() );
+				if ( $product ) {
+					$cat_ids = $product->get_category_ids();
+					if ( ! empty( $cat_ids ) ) {
+						$primary_cat = get_term( (int) $cat_ids[0], 'product_cat' );
+					}
+				}
+			}
+			?>
+
+			<nav class="lwp-crumb" aria-label="<?php esc_attr_e( 'Breadcrumb', 'luwipress-gold' ); ?>">
+				<a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Home', 'luwipress-gold' ); ?></a>
+				<?php
+				$shop_id = function_exists( 'wc_get_page_id' ) ? wc_get_page_id( 'shop' ) : 0;
+				if ( $shop_id > 0 ) : ?>
+					<span class="sep">›</span>
+					<a href="<?php echo esc_url( get_permalink( $shop_id ) ); ?>"><?php esc_html_e( 'Shop', 'luwipress-gold' ); ?></a>
+				<?php endif; ?>
+				<?php if ( $primary_cat instanceof WP_Term ) : ?>
+					<span class="sep">›</span>
+					<a href="<?php echo esc_url( get_term_link( $primary_cat ) ); ?>"><?php echo esc_html( $primary_cat->name ); ?></a>
+				<?php endif; ?>
+				<span class="sep">›</span>
+				<span class="current"><?php the_title(); ?></span>
+			</nav>
+
+			<?php
+			// Eyebrow / Save badge / Stock pill all wired via hooks in
+			// inc/wc-pdp-hooks.php — they render INSIDE the WC summary
+			// block (above title) so the buy column matches reference
+			// without us reaching into WC's template hierarchy.
+			?>
+
+			<div class="lwp-pdp-grid">
+				<?php
+				// Use WC's standard product wrapper but inject our grid as the layout.
+				wc_get_template_part( 'content', 'single-product' );
+				?>
+			</div>
+
+			<?php
+			// Perks rail under the buy column — speaks the brand promise
+			// (hand-tuned, free shipping, 14-day returns, warranty). The
+			// list is filterable so operator can swap items per language
+			// or per product category.
+			$perks = apply_filters( 'luwipress_gold_pdp_perks', [
+				[ 'icon' => '✓', 'text' => __( 'Hand-tuned in our atelier before dispatch', 'luwipress-gold' ) ],
+				[ 'icon' => '✈', 'text' => __( 'DHL Express worldwide · 3–7 working days', 'luwipress-gold' ) ],
+				[ 'icon' => '↺', 'text' => __( '14-day no-questions-asked return policy', 'luwipress-gold' ) ],
+				[ 'icon' => '★', 'text' => __( '2-year free service & tuning warranty', 'luwipress-gold' ) ],
+			], isset( $product ) ? $product : null );
+
+			if ( ! empty( $perks ) ) : ?>
+				<ul class="lwp-pdp-perks">
+					<?php foreach ( $perks as $perk ) : ?>
+						<li><span class="lwp-pdp-perks__icon" aria-hidden="true"><?php echo esc_html( $perk['icon'] ); ?></span><?php echo esc_html( $perk['text'] ); ?></li>
+					<?php endforeach; ?>
+				</ul>
+			<?php endif; ?>
+
+			<?php if ( isset( $product ) && $product ) : ?>
+				<?php
+				// Sticky add-to-cart bar — appears via IntersectionObserver
+				// in frontend.js when the main `.single_add_to_cart_button`
+				// scrolls off the top. Out-of-stock and `is_purchasable()`
+				// false products skip the bar so we don't tease an
+				// un-clickable CTA.
+				$can_buy = $product->is_purchasable() && $product->is_in_stock();
+				?>
+				<?php if ( $can_buy ) : ?>
+					<div class="lwp-pdp-sticky" aria-hidden="true">
+						<div class="lwp-pdp-sticky__inner">
+							<?php
+							$thumb = $product->get_image( 'thumbnail', [ 'class' => 'lwp-pdp-sticky__thumb' ] );
+							echo $thumb; // phpcs:ignore
+							?>
+							<div class="lwp-pdp-sticky__meta">
+								<span class="lwp-pdp-sticky__title"><?php echo esc_html( $product->get_name() ); ?></span>
+								<span class="lwp-pdp-sticky__price"><?php echo $product->get_price_html(); // phpcs:ignore ?></span>
+							</div>
+							<button type="button" class="lwp-btn-primary lwp-pdp-sticky__cta">
+								<?php echo esc_html( $product->single_add_to_cart_text() ); ?>
+							</button>
+						</div>
+					</div>
+				<?php endif; ?>
+			<?php endif; ?>
+
+		<?php endwhile; ?>
+
+	</div>
+</main>
+
+<?php
+get_footer( 'shop' );

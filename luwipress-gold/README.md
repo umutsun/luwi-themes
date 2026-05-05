@@ -1,10 +1,16 @@
 # LuwiPress Gold
 
-Standalone WordPress theme tuned for **Elementor** (Free or Pro) and
-**WooCommerce**. Designed for ethnic-instrument and craft-driven storefronts —
-black topbar, Playfair Display + Inter + JetBrains Mono pairing, gold accents,
+**The official theme of the LuwiPress ecosystem** — an AI-powered, Elementor-ready
+WordPress theme designed for ethnic-instrument and craft-driven storefronts.
+Black topbar, Playfair Display + Inter + JetBrains Mono pairing, gold accents,
 V32-style info-bar, sticky header, mega menu, slide-in cart drawer, full
 WooCommerce checkout suite + My Account dashboard.
+
+Tightly integrated with the **LuwiPress plugin**: surfaces AI product search,
+sticky customer chat, and Knowledge-Graph-curated related products straight
+from the storefront. Every friendly plugin you activate (WPML, Rank Math,
+Yoast, WP Rocket, FluentCRM, Mailchimp for WP, …) amplifies a feature visible
+on the page — no settings to reconcile.
 
 Ships with a **12-JSON Elementor Kit** that imports every page in one click:
 homepage, shop, single product, about, master profile, journal, contact, 404,
@@ -16,12 +22,14 @@ plus the global header / footer / animations.
 |---|---|---|
 | WordPress | 6.4+ | |
 | PHP | 8.1+ | 8.2 recommended |
+| **LuwiPress plugin** | latest | **Required** — AI engine, chat, knowledge graph, plugin detector |
 | Elementor | 3.18+ | **Free is enough** — no Pro required |
-| ElementsKit Lite | latest | Header builder, mega menu, footer |
-| WooCommerce | latest | E-commerce backbone (cart, checkout, account, shop) |
+| WooCommerce | latest | Strongly recommended — cart, checkout, single product, archive |
 
-The theme runs without WooCommerce, but the bundled Kit's shop / single-product
-/ cart / checkout / account templates expect it.
+`Requires Plugins: elementor, luwipress` is declared in `style.css`, so on
+WordPress 6.5+ the theme refuses to activate when either plugin is missing.
+WooCommerce is a soft dependency — the theme runs without it, but the bundled
+Kit's shop / single-product / cart / checkout / account templates expect it.
 
 ## What ships
 
@@ -156,16 +164,50 @@ Everything no-ops when `prefers-reduced-motion: reduce`.
 The Kit JSONs themselves expose the entire homepage / shop / about / contact
 layout via Elementor's settings — no PHP filters needed; edit visually.
 
-## Pairs with
+## AI surface (1.3.0+)
 
-- **LuwiPress core plugin** — chat widget, knowledge graph, content scheduler.
-  No hard dependency: when LuwiPress is active, its REST API powers customer
-  chat + AI content; without it, the theme runs unchanged.
-- **WPML / Polylang** — translation-ready (TR / EN / IT / FR / ES). The Kit
-  ships English-only; translations are added post-import.
-- **Yoast / Rank Math** — schema-friendly markup, no conflicts.
-- **WP Rocket / LiteSpeed Cache** — exclude `frontend.js` from delay-JS so
-  the loader never traps the page.
+The theme reads from LuwiPress's plugin contract directly — no HTTP round-trips
+when the plugin is in-process. Three storefront features ship as first-class
+parts of the theme:
+
+| Feature | Where | Backed by |
+|---|---|---|
+| **AI search suggestions** | Search overlay (`⌕` icon in the header) | `LuwiPress_AI_Engine::dispatch('customer-chat', …)` with `json_mode`, cached 30 min per query |
+| **Sticky customer chat** | Bottom-right floating bubble + slide-up panel | `POST /wp-json/luwipress/v1/chat/message` (rate-limited per IP); session id in localStorage |
+| **KG-related rail** | Single-product page, below the buy column | Direct PHP query: same `pa_master` / `pa_luthier` term first, then primary `product_cat`. Cached 1 h per product. |
+
+All three self-gate: when LuwiPress is missing or the chat module is off, the
+relevant surface stays dark. Costs visible in the LuwiPress token-tracker.
+
+Turn the chat on at: WP Admin → LuwiPress → Customer Chat → enable + set
+greeting / tone / daily budget.
+
+## Ecosystem dashboard
+
+`Appearance → LuwiPress Gold` shows a single panel that reads from LuwiPress's
+plugin detector + AI engine + chat module + token tracker. The operator sees
+one story — theme + plugin + every friendly plugin — instead of bouncing
+between two admin sections.
+
+## Friendly plugins
+
+LuwiPress brings an ecosystem to the world of popular WordPress plugins. The
+theme amplifies each detected plugin's presence:
+
+- **WPML / Polylang** — topbar language pill auto-detects active languages;
+  hreflang tags emitted in `<head>` when the SEO plugin doesn't already do it.
+- **Rank Math / Yoast** — theme breadcrumb yields to the SEO plugin's
+  rendered breadcrumb (schema attribution + admin-controlled separators).
+- **WooCommerce** — cart drawer, account popover, sale-save badge, stock pill,
+  master/maker eyebrow on single products.
+- **Elementor** — Theme Builder header/footer locations honored when the
+  operator builds custom templates.
+- **Mailchimp for WP / MailPoet / Contact Form 7 / WPForms / FluentForms** —
+  Customizer dropdown picks which shortcode renders in the footer newsletter
+  slot.
+- **WP Rocket / LiteSpeed Cache** — exclude `frontend.js` and `ai-surface.js`
+  from delay-JS so the loader never traps the page; AI surface REST endpoints
+  are marked no-store at the plugin layer.
 
 ## Source
 

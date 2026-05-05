@@ -160,6 +160,38 @@ class LuwiPress_Gold_Widget_Hero extends Widget_Base {
 		);
 		$this->end_controls_section();
 
+		/* Master overlay (split + full-bleed) */
+		$this->start_controls_section( 'section_master', [
+			'label'     => __( 'Master overlay', 'luwipress-gold' ),
+			'condition' => [ 'variant' => [ 'split', 'full-bleed' ] ],
+		] );
+		$this->add_control(
+			'master_avatar',
+			[
+				'label'       => __( 'Master avatar', 'luwipress-gold' ),
+				'type'        => Controls_Manager::MEDIA,
+				'default'     => [ 'url' => '' ],
+				'description' => __( 'Square portrait — anything from 96×96 up. Empty to disable the overlay.', 'luwipress-gold' ),
+			]
+		);
+		$this->add_control(
+			'master_name',
+			[
+				'label'   => __( 'Master name', 'luwipress-gold' ),
+				'type'    => Controls_Manager::TEXT,
+				'default' => __( 'Yıldırım Palabıyık', 'luwipress-gold' ),
+			]
+		);
+		$this->add_control(
+			'master_role',
+			[
+				'label'   => __( 'Master role', 'luwipress-gold' ),
+				'type'    => Controls_Manager::TEXT,
+				'default' => __( 'Master Luthier · Istanbul', 'luwipress-gold' ),
+			]
+		);
+		$this->end_controls_section();
+
 		/* Style */
 		$this->start_controls_section( 'section_style', [
 			'label' => __( 'Style', 'luwipress-gold' ),
@@ -207,8 +239,28 @@ class LuwiPress_Gold_Widget_Hero extends Widget_Base {
 		if ( $variant === 'full-bleed' && $image_url ) {
 			$style = 'style="background-image:url(' . esc_url( $image_url ) . ')"';
 		}
+
+		$master_avatar = $s['master_avatar']['url'] ?? '';
+		$master_name   = trim( (string) ( $s['master_name'] ?? '' ) );
+		$master_role   = trim( (string) ( $s['master_role'] ?? '' ) );
+		$show_master   = $master_avatar && $master_name && in_array( $variant, [ 'split', 'full-bleed' ], true );
+
+		ob_start();
+		if ( $show_master ) : ?>
+			<figure class="lwp-hero-master">
+				<img class="lwp-hero-master__avatar" src="<?php echo esc_url( $master_avatar ); ?>" alt="<?php echo esc_attr( $master_name ); ?>" loading="lazy" />
+				<figcaption class="lwp-hero-master__meta">
+					<span class="lwp-hero-master__name"><?php echo esc_html( $master_name ); ?></span>
+					<?php if ( $master_role ) : ?>
+						<span class="lwp-hero-master__role"><?php echo esc_html( $master_role ); ?></span>
+					<?php endif; ?>
+				</figcaption>
+			</figure>
+		<?php endif;
+		$master_html = ob_get_clean();
 		?>
-		<section class="<?php echo $class; ?>" <?php echo $style; ?>>
+		<section class="<?php echo $class; ?><?php echo $show_master ? ' has-master' : ''; ?>" <?php echo $style; ?>>
+			<?php if ( $show_master && 'full-bleed' === $variant ) echo $master_html; ?>
 			<div class="lwp-hero-inner">
 				<div class="lwp-hero-text">
 					<?php if ( ! empty( $s['eyebrow'] ) ) : ?>
@@ -250,7 +302,9 @@ class LuwiPress_Gold_Widget_Hero extends Widget_Base {
 				</div>
 
 				<?php if ( $variant !== 'full-bleed' && ( $image_url || true ) ) : ?>
-					<div class="lwp-hero-visual" <?php echo $image_url ? 'style="background-image:url(' . esc_url( $image_url ) . ')"' : ''; ?>></div>
+					<div class="lwp-hero-visual" <?php echo $image_url ? 'style="background-image:url(' . esc_url( $image_url ) . ')"' : ''; ?>>
+						<?php if ( $show_master && 'split' === $variant ) echo $master_html; ?>
+					</div>
 				<?php endif; ?>
 			</div>
 		</section>

@@ -127,6 +127,73 @@ body.admin-bar .lwp-fallback-header { top: 32px; }
 	padding: 64px var(--gutter);
 }
 
+/* Elementor-built singular posts (page.php / single.php branch). Zero
+ * width cap, zero padding — Elementor sections own their full layout
+ * including section padding, container max-width, and hero spacing.
+ * Anything we add here would constrain operator's design intent. */
+.lwp-elementor-page {
+	max-width: none;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+}
+.lwp-elementor-page > * { min-width: 0; }
+/* Defence in depth — if a parent sneaks in a width cap (some plugins
+ * add `.entry-content { max-width: 720px }` via theme.json fallbacks),
+ * un-cap any direct Elementor section / container child. */
+body.lwp-elementor-built .elementor,
+body.lwp-elementor-built .elementor-section,
+body.lwp-elementor-built > .elementor {
+	max-width: none !important;
+	width: 100% !important;
+}
+
+/* ────────────────────────────────────────────────────────────────────── */
+/*  Elementor container width default = FULL-WIDTH on theme-controlled    */
+/*  Elementor pages.                                                      */
+/*                                                                        */
+/*  Why: Elementor's own defaults set every new container to "boxed"      */
+/*  with `--container-max-width: 1372px`. That means even after our       */
+/*  page.php Elementor branch removes the theme's 720px reading cap,      */
+/*  the visible content still pinches at 1372 px because of Elementor's   */
+/*  internal default. Operators end up flipping every page to "Elementor  */
+/*  Full Width" template manually to escape this.                         */
+/*                                                                        */
+/*  This override flips the default the OTHER way: any Elementor          */
+/*  container/section nested under our `.lwp-elementor-page` wrapper      */
+/*  goes edge-to-edge by default. Operator can still pick a per-container */
+/*  width inside Elementor's container settings; that adds an inline      */
+/*  style which beats this rule. Acts as a sane default, not a lock-in.   */
+/*                                                                        */
+/*  Covers both Elementor 4.x flexbox containers (`.e-con.e-con-boxed >   */
+/*  .e-con-inner`) and 3.x classic sections (`.elementor-section >        */
+/*  .elementor-container`). `!important` is required because Elementor    */
+/*  emits per-section inline CSS with deeper specificity.                 */
+/* ────────────────────────────────────────────────────────────────────── */
+.lwp-elementor-page .e-con.e-con-boxed > .e-con-inner,
+.lwp-elementor-page .elementor-section.elementor-section-boxed > .elementor-container,
+.lwp-elementor-page .elementor-section > .elementor-container {
+	max-width: 100% !important;
+}
+.lwp-elementor-page .e-con,
+.lwp-elementor-page .elementor-section,
+.lwp-elementor-page .elementor-container {
+	--container-max-width: 100% !important;
+}
+
+/* Operator escape hatch — pages tagged with the `lwp-layout-boxed` body
+ * class (or template) opt back into the boxed Elementor default. Useful
+ * for editorial / journal posts where 1372 px is the right reading
+ * width. Set via Customizer or page meta. */
+body.lwp-layout-boxed .lwp-elementor-page .e-con.e-con-boxed > .e-con-inner,
+body.lwp-layout-boxed .lwp-elementor-page .elementor-section.elementor-section-boxed > .elementor-container {
+	max-width: var(--content-w, 1372px) !important;
+}
+body.lwp-layout-boxed .lwp-elementor-page .e-con,
+body.lwp-layout-boxed .lwp-elementor-page .elementor-section {
+	--container-max-width: var(--content-w, 1372px) !important;
+}
+
 .lwp-fallback-page__title {
 	font-family: var(--serif);
 	font-size: clamp(36px, 4.5vw, 64px);
@@ -285,9 +352,67 @@ body.admin-bar .lwp-fallback-header { top: 32px; }
 	gap: 24px;
 	flex-wrap: wrap;
 }
-.lwp-topbar-l, .lwp-topbar-r { display: flex; gap: 18px; align-items: center; color: #bbb; }
+.lwp-topbar-l, .lwp-topbar-r { display: flex; gap: 18px; align-items: center; color: #bbb; flex-wrap: wrap; }
 .lwp-topbar a { color: #bbb; text-decoration: none; }
 .lwp-topbar a:hover { color: var(--primary-light, #D4AF37); }
+
+/* Language pill — compact "EN · IT · FR · ES" strip with the active
+ * language underlined in gold. Reference design `.lang-pill`. */
+.lwp-lang-pill {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	font-family: var(--mono, 'JetBrains Mono', monospace);
+	font-size: 10.5px;
+	letter-spacing: .16em;
+	color: #aaa;
+}
+.lwp-lang-pill__code {
+	color: #aaa;
+	text-decoration: none;
+	padding: 1px 0 2px;
+	transition: color .15s, border-color .15s;
+}
+.lwp-lang-pill__code:hover { color: #fff; }
+.lwp-lang-pill__code.is-active {
+	color: #fff;
+	border-bottom: 1px solid var(--primary-light, #D4AF37);
+	font-weight: 500;
+}
+.lwp-lang-pill__sep { color: #555; }
+
+/* Track-order link in topbar-r */
+.lwp-topbar-track {
+	color: #ccc !important;
+	font-family: var(--mono, monospace);
+	font-size: 11px;
+	letter-spacing: .12em;
+	text-transform: uppercase;
+	transition: color .15s;
+}
+.lwp-topbar-track:hover { color: var(--primary-light, #D4AF37) !important; }
+
+/* Separator pipe between topbar-r elements (visible #555 line) */
+.lwp-topbar-sep { color: #444; user-select: none; }
+.lwp-topbar-promo { color: #bbb; }
+
+@media (max-width: 720px) {
+	.lwp-topbar-inner { flex-wrap: wrap; gap: 8px 18px; padding: 10px var(--gutter-mobile, 20px); }
+	.lwp-topbar-r { gap: 10px; font-size: 11px; }
+	/* Mobile: hide non-essential — only the language pill stays in topbar-r
+	 * so the row is one tidy line on phones. Track-order returns from the
+	 * sticky bar via the cart icon on mobile. */
+	.lwp-topbar-loc,
+	.lwp-topbar-promo,
+	.lwp-topbar-track { display: none; }
+	.lwp-topbar-sep { display: none; }
+	/* Lang pill — slightly more breathing room on tight viewports. */
+	.lwp-lang-pill { gap: 8px; font-size: 11px; letter-spacing: .14em; }
+	.lwp-lang-pill__code { padding: 2px 0 3px; }
+}
+@media (max-width: 420px) {
+	.lwp-lang-pill { gap: 6px; font-size: 10.5px; }
+}
 
 /* Sticky site header */
 .lwp-site-header {
@@ -300,11 +425,20 @@ body.admin-bar .lwp-fallback-header { top: 32px; }
 .lwp-site-header-inner {
 	max-width: var(--content-w, 1372px);
 	margin: 0 auto;
-	padding: 18px var(--gutter, 32px);
+	padding: 22px var(--gutter, 32px);
 	display: grid;
 	grid-template-columns: auto 1fr auto;
 	align-items: center;
 	gap: 48px;
+	min-width: 0;
+}
+/* Ensure middle nav column shrinks gracefully so logo + actions stay on the
+ * same row even on narrower windows. Without min-width:0, grid items default
+ * to min-content width which can push siblings to wrap. */
+.lwp-site-header-inner > .lwp-mm,
+.lwp-site-header-inner > nav.lwp-mm { min-width: 0; }
+@media (max-width: 1100px) {
+	.lwp-site-header-inner { gap: 24px; padding: 18px var(--gutter, 32px); }
 }
 .lwp-site-header-logo {
 	color: var(--ink, #1b1c1c);
@@ -313,9 +447,67 @@ body.admin-bar .lwp-fallback-header { top: 32px; }
 	font-size: 30px;
 	font-weight: 500;
 	letter-spacing: -.01em;
+	display: inline-flex;
+	align-items: center;
+	line-height: 1;
 }
-.lwp-site-header-logo .custom-logo { max-height: 44px; width: auto; }
-.lwp-wordmark { display: inline-block; }
+/* Constrain WP custom-logo image — apply to ALL descendants since
+ * the_custom_logo() wraps its own <a class="custom-logo-link">. Width auto
+ * + max-height keeps aspect ratio but prevents the 500px PNG from
+ * dominating the header. */
+.lwp-site-header-logo .custom-logo,
+.lwp-site-header-logo .custom-logo-link img,
+.lwp-site-header-logo img {
+	max-height: 44px;
+	width: auto;
+	height: auto;
+	display: block;
+}
+.lwp-site-header-logo .custom-logo-link { display: inline-flex; align-items: center; line-height: 1; }
+
+/* Text wordmark fallback (no custom logo uploaded) — matches the
+ * Tapadum-Gold reference: serif italic accent letter + small red dot
+ * suffix. Renders as `Tapad<em>u</em>m●` with the accent in gold.
+ *
+ * Operator overrides the italic letter via Customizer → Brand →
+ * "Wordmark accent letter" (defaults to 'u'). The dot is purely
+ * decorative (a sale/red color punctuation that became part of the
+ * brand identity in the reference) and can be hidden with a
+ * `.lwp-site-header-logo--no-dot` modifier class if a future operator
+ * wants a plainer mark. */
+.lwp-wordmark {
+	display: inline-flex;
+	align-items: baseline;
+	gap: 0;
+	font-family: var(--serif, 'Playfair Display', Georgia, serif);
+	font-size: 30px;
+	font-weight: 500;
+	letter-spacing: -.01em;
+	line-height: 1;
+	color: var(--ink, #1b1c1c);
+}
+.lwp-wordmark__accent {
+	color: var(--primary, #735c00);
+	font-style: italic;
+	font-weight: 500;
+	font-style: italic; /* explicit even though em defaults to italic */
+}
+.lwp-site-header-logo--text .lwp-wordmark::after {
+	content: '';
+	display: inline-block;
+	width: 5px;
+	height: 5px;
+	border-radius: 50%;
+	background: var(--sale, #a33b3e);
+	margin-left: 6px;
+	align-self: center;
+	flex-shrink: 0;
+}
+.lwp-site-header-logo--text { text-decoration: none; }
+.lwp-site-header-logo--text:hover .lwp-wordmark__accent { color: var(--primary-hover, #574500); }
+@media (max-width: 600px) {
+	.lwp-wordmark { font-size: 24px; }
+}
 .lwp-site-header-actions { display: flex; gap: 12px; align-items: center; }
 .lwp-icon-btn {
 	width: 38px; height: 38px;
@@ -631,4 +823,405 @@ body.admin-bar .lwp-fallback-header { top: 32px; }
 @media (max-width: 460px) {
 	.lwp-shop-container ul.products,
 	.woocommerce-page ul.products { grid-template-columns: 1fr !important; }
+}
+
+/* ─────────────────────────────────────────────────────────────────── */
+/* Page chrome (used by WC archive / single-product / my-account /     */
+/* generic page templates). Mirrors the reference design tokens —      */
+/* breadcrumb + page-title + lead + 260px sidebar grid.                */
+/* ─────────────────────────────────────────────────────────────────── */
+
+.lwp-page {
+	padding: 64px 0 96px;
+	background: var(--bg, #fcf9f8);
+}
+.lwp-page-container {
+	max-width: var(--content-w, 1372px);
+	margin: 0 auto;
+	padding: 0 var(--gutter, 32px);
+}
+.lwp-crumb {
+	font-family: var(--mono, 'JetBrains Mono', monospace);
+	font-size: 11px;
+	letter-spacing: .14em;
+	text-transform: uppercase;
+	color: var(--muted, #7f7663);
+	margin-bottom: 32px;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	flex-wrap: wrap;
+}
+.lwp-crumb a { color: var(--muted, #7f7663); text-decoration: none; }
+.lwp-crumb a:hover { color: var(--primary, #735c00); }
+.lwp-crumb .sep { color: var(--line, #e8e2d3); }
+.lwp-crumb .current { color: var(--ink, #1b1c1c); }
+.lwp-page-title {
+	font-family: var(--serif, 'Playfair Display', Georgia, serif);
+	font-weight: 500;
+	font-size: clamp(40px, 5vw, 72px);
+	line-height: 1.04;
+	letter-spacing: -.025em;
+	margin: 8px 0 0;
+	text-wrap: balance;
+}
+.lwp-page-title em { font-style: italic; color: var(--primary, #735c00); }
+.lwp-page-lead {
+	font-size: 17px;
+	color: var(--ink-soft, #4d4635);
+	max-width: 62ch;
+	line-height: 1.65;
+	margin-top: 24px;
+	text-wrap: pretty;
+}
+
+/* Two-column shop archive: filter sidebar + results */
+.lwp-shop-grid-wrap {
+	display: grid;
+	grid-template-columns: 260px 1fr;
+	gap: 48px;
+	margin-top: 48px;
+	align-items: start;
+}
+.lwp-shop-sidebar {
+	position: sticky;
+	top: 120px;
+	display: flex;
+	flex-direction: column;
+	gap: 28px;
+}
+.lwp-filter-block h5 {
+	font-family: var(--mono, monospace);
+	font-size: 11px;
+	letter-spacing: .18em;
+	text-transform: uppercase;
+	color: var(--ink, #1b1c1c);
+	margin: 0 0 14px;
+	font-weight: 600;
+	border-bottom: 1px solid var(--line, #e8e2d3);
+	padding-bottom: 10px;
+}
+.lwp-filter-block label {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	padding: 6px 0;
+	font-size: 13.5px;
+	color: var(--ink-soft, #4d4635);
+	cursor: pointer;
+}
+.lwp-filter-block label input { margin-right: 8px; accent-color: var(--primary, #735c00); }
+.lwp-filter-block label span {
+	font-family: var(--mono, monospace);
+	font-size: 10.5px;
+	color: var(--muted, #7f7663);
+}
+.lwp-shop-toolbar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-bottom: 1px solid var(--line, #e8e2d3);
+	padding-bottom: 16px;
+	margin-bottom: 32px;
+	font-size: 13px;
+	color: var(--ink-soft, #4d4635);
+	flex-wrap: wrap;
+	gap: 12px;
+}
+.lwp-shop-toolbar strong { color: var(--ink, #1b1c1c); font-weight: 600; }
+.lwp-shop-toolbar select {
+	padding: 8px 14px;
+	border: 1px solid var(--line, #e8e2d3);
+	border-radius: 6px;
+	background: #fff;
+	font-size: 13px;
+	color: var(--ink, #1b1c1c);
+	font-family: var(--sans, 'Inter', sans-serif);
+}
+
+@media (max-width: 900px) {
+	.lwp-shop-grid-wrap { grid-template-columns: 1fr; gap: 32px; }
+	.lwp-shop-sidebar { position: static; }
+}
+
+/* ─────────────────────────────────────────────────────────────────── */
+/* Single-product page (PDP) chrome                                     */
+/* ─────────────────────────────────────────────────────────────────── */
+
+.lwp-pdp { padding: 48px 0 96px; background: var(--bg, #fcf9f8); }
+.lwp-pdp-container {
+	max-width: var(--content-w, 1372px);
+	margin: 0 auto;
+	padding: 0 var(--gutter, 32px);
+}
+.lwp-pdp-grid {
+	display: grid;
+	grid-template-columns: 1.05fr 1fr;
+	gap: 64px;
+	margin-top: 32px;
+	align-items: start;
+}
+/* WC wraps gallery + summary inside <div class="product">. Project that
+ * wrapper's children up to the grid so the 2-column layout actually
+ * lays out gallery LEFT, summary RIGHT (instead of `.product` becoming
+ * one grid cell with empty space beside it). */
+.lwp-pdp-grid > .product {
+	display: contents;
+}
+.lwp-pdp-grid .woocommerce-product-gallery {
+	float: none !important;
+	width: 100% !important;
+	max-width: none !important;
+	grid-column: 1;
+}
+.lwp-pdp-grid .summary {
+	float: none !important;
+	width: 100% !important;
+	margin: 0 !important;
+	grid-column: 2;
+}
+.lwp-pdp-grid .product_title {
+	font-family: var(--serif, 'Playfair Display', Georgia, serif);
+	font-weight: 500;
+	font-size: clamp(32px, 3.4vw, 48px);
+	line-height: 1.05;
+	letter-spacing: -.02em;
+	margin-bottom: 18px;
+}
+.lwp-pdp-grid .price {
+	font-family: var(--serif, 'Playfair Display', Georgia, serif);
+	font-size: 28px;
+	color: var(--primary, #735c00);
+	margin-bottom: 24px;
+	display: flex;
+	align-items: baseline;
+	gap: 12px;
+}
+.lwp-pdp-grid .price del {
+	font-size: 18px;
+	color: var(--muted, #7f7663);
+	font-family: var(--sans, 'Inter', sans-serif);
+}
+.lwp-pdp-grid .woocommerce-product-details__short-description {
+	color: var(--ink-soft, #4d4635);
+	line-height: 1.65;
+	margin-bottom: 28px;
+}
+.lwp-pdp-grid .single_add_to_cart_button {
+	background: linear-gradient(135deg, var(--primary, #735c00), var(--primary-light, #D4AF37)) !important;
+	color: #fff !important;
+	border: 0 !important;
+	border-radius: 8px !important;
+	padding: 16px 28px !important;
+	font-size: 14px !important;
+	font-weight: 600 !important;
+	letter-spacing: .04em !important;
+	text-transform: uppercase !important;
+	font-family: var(--sans, 'Inter', sans-serif) !important;
+	box-shadow: 0 10px 30px -10px rgba(115, 92, 0, .4);
+	transition: box-shadow .2s, transform .2s;
+}
+.lwp-pdp-grid .single_add_to_cart_button:hover {
+	box-shadow: 0 12px 36px -8px rgba(115, 92, 0, .55);
+	transform: translateY(-1px);
+}
+.lwp-pdp-grid .quantity input[type="number"] {
+	border: 1px solid var(--line, #e8e2d3);
+	border-radius: 6px;
+	padding: 12px 10px;
+	font-family: var(--sans, 'Inter', sans-serif);
+}
+.lwp-pdp .product_meta {
+	margin-top: 32px;
+	padding-top: 24px;
+	border-top: 1px solid var(--line, #e8e2d3);
+	font-family: var(--mono, monospace);
+	font-size: 11px;
+	letter-spacing: .14em;
+	text-transform: uppercase;
+	color: var(--muted, #7f7663);
+}
+.lwp-pdp .woocommerce-tabs {
+	margin-top: 80px;
+	padding-top: 48px;
+	border-top: 1px solid var(--line, #e8e2d3);
+}
+.lwp-pdp .woocommerce-tabs ul.tabs {
+	display: flex;
+	gap: 32px;
+	list-style: none;
+	padding: 0 !important;
+	margin: 0 0 32px !important;
+	border-bottom: 1px solid var(--line, #e8e2d3);
+}
+.lwp-pdp .woocommerce-tabs ul.tabs::before,
+.lwp-pdp .woocommerce-tabs ul.tabs::after { display: none !important; }
+.lwp-pdp .woocommerce-tabs ul.tabs li {
+	background: none !important;
+	border: 0 !important;
+	padding: 0 !important;
+	margin: 0 !important;
+	border-radius: 0 !important;
+}
+.lwp-pdp .woocommerce-tabs ul.tabs li a {
+	display: inline-block;
+	padding: 12px 0 16px !important;
+	font-family: var(--mono, monospace) !important;
+	font-size: 11px;
+	letter-spacing: .14em;
+	text-transform: uppercase;
+	color: var(--ink-soft, #4d4635) !important;
+	border-bottom: 2px solid transparent;
+	margin-bottom: -1px;
+	font-weight: 500 !important;
+}
+.lwp-pdp .woocommerce-tabs ul.tabs li.active a {
+	color: var(--primary, #735c00) !important;
+	border-bottom-color: var(--primary, #735c00);
+}
+
+@media (max-width: 900px) {
+	.lwp-pdp-grid { grid-template-columns: 1fr; gap: 32px; }
+	.lwp-pdp-grid .woocommerce-product-gallery,
+	.lwp-pdp-grid .summary { grid-column: 1; }
+}
+
+/* Sibling content (woocommerce-tabs, related-products, upsells) lives as
+ * extra siblings inside .product. With display:contents on .product they
+ * also become grid items — span them across both columns so they don't
+ * squeeze into one. */
+.lwp-pdp-grid > .product > .woocommerce-tabs,
+.lwp-pdp-grid .related,
+.lwp-pdp-grid .upsells,
+.lwp-pdp-grid .product > .clear,
+.lwp-pdp-grid .product > nav { grid-column: 1 / -1; }
+
+/* ─────────────────────────────────────────────────────────────────── */
+/* My-account                                                           */
+/* ─────────────────────────────────────────────────────────────────── */
+
+.lwp-acct-grid {
+	display: grid;
+	grid-template-columns: 260px 1fr;
+	gap: 48px;
+	margin-top: 48px;
+	align-items: start;
+}
+.lwp-acct-side {
+	position: sticky;
+	top: 120px;
+	background: #fff;
+	border: 1px solid var(--line, #e8e2d3);
+	border-radius: 8px;
+	padding: 24px;
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+.lwp-acct-who {
+	padding: 8px 0 18px;
+	border-bottom: 1px solid var(--line, #e8e2d3);
+	margin-bottom: 12px;
+}
+.lwp-acct-who .nm {
+	font-family: var(--serif, 'Playfair Display', Georgia, serif);
+	font-size: 20px;
+	font-weight: 500;
+	letter-spacing: -.01em;
+	display: block;
+}
+.lwp-acct-who .em {
+	font-size: 12px;
+	color: var(--muted, #7f7663);
+	font-family: var(--mono, monospace);
+	letter-spacing: .04em;
+	margin-top: 4px;
+	display: block;
+}
+/* Override WC's default my-account nav to match the design */
+.lwp-acct-side ul.woocommerce-MyAccount-navigation,
+.woocommerce-account .woocommerce-MyAccount-navigation ul {
+	list-style: none !important;
+	padding: 0 !important;
+	margin: 0 !important;
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+.woocommerce-MyAccount-navigation li { margin: 0 !important; }
+.woocommerce-MyAccount-navigation li a {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 11px 12px !important;
+	text-decoration: none !important;
+	color: var(--ink-soft, #4d4635);
+	font-size: 14px;
+	border-radius: 6px;
+	border-left: 2px solid transparent;
+	transition: background .15s, color .15s;
+}
+.woocommerce-MyAccount-navigation li a:hover {
+	background: var(--bg-alt, #f6f3f2);
+	color: var(--ink, #1b1c1c);
+}
+.woocommerce-MyAccount-navigation li.is-active a {
+	background: #fdfaef;
+	color: var(--primary, #735c00);
+	border-left-color: var(--primary, #735c00);
+	font-weight: 600;
+}
+.woocommerce-MyAccount-navigation li--customer-logout a { color: var(--sale, #a33b3e) !important; }
+
+.lwp-acct-main h2,
+.woocommerce-MyAccount-content h2,
+.woocommerce-MyAccount-content h3 {
+	font-family: var(--serif, 'Playfair Display', Georgia, serif);
+	font-size: 28px;
+	font-weight: 500;
+	letter-spacing: -.02em;
+	margin-bottom: 18px;
+}
+.lwp-acct-card,
+.woocommerce-MyAccount-content > p:first-of-type {
+	background: #fff;
+	border: 1px solid var(--line, #e8e2d3);
+	border-radius: 8px;
+	padding: 28px;
+	margin-bottom: 24px;
+}
+
+/* Account orders / addresses tables */
+.woocommerce-orders-table,
+.shop_table {
+	width: 100% !important;
+	border-collapse: collapse !important;
+	font-size: 14px;
+}
+.woocommerce-orders-table th,
+.shop_table th {
+	text-align: left;
+	font-family: var(--mono, monospace);
+	font-size: 10.5px;
+	letter-spacing: .16em;
+	text-transform: uppercase;
+	color: var(--muted, #7f7663);
+	padding: 12px !important;
+	border-bottom: 1px solid var(--line, #e8e2d3);
+	font-weight: 500;
+	background: transparent !important;
+}
+.woocommerce-orders-table td,
+.shop_table td {
+	padding: 16px 12px !important;
+	border-bottom: 1px solid var(--line-light, #f0ebe0);
+	color: var(--ink-soft, #4d4635);
+	vertical-align: middle;
+	background: transparent !important;
+}
+
+@media (max-width: 900px) {
+	.lwp-acct-grid { grid-template-columns: 1fr; gap: 32px; }
+	.lwp-acct-side { position: static; }
 }

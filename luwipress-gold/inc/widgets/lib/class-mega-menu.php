@@ -185,16 +185,58 @@ class LuwiPress_Gold_Widget_Mega_Menu extends Widget_Base {
 		$cols_pref = $s['mega_columns'] ?? 'auto';
 		$show_counts = ( $s['show_counts'] ?? 'yes' ) === 'yes';
 
+		self::render_navigation_html( $menu_id, [
+			'threshold'   => $threshold,
+			'cols_pref'   => $cols_pref,
+			'show_counts' => $show_counts,
+		] );
+	}
+
+	/**
+	 * Public static facade so the theme header (header.php) can render the
+	 * complete mega menu — including featured-product slot, count badges,
+	 * and dropdown variants — without duplicating logic.
+	 *
+	 * @param int   $menu_id WP nav menu term ID.
+	 * @param array $opts    threshold, cols_pref, show_counts.
+	 */
+	public static function render_navigation_html( $menu_id, $opts = [] ) {
+		$items = wp_get_nav_menu_items( $menu_id );
+		if ( empty( $items ) ) return;
+
+		// Strip WPML / Polylang language switcher items — Gold renders the
+		// language pill in the topbar (and in the mobile drawer foot), so
+		// having "Español" pop up as a fake top-level menu entry is double
+		// signalling and looks like a category to the visitor.
+		$items = array_values( array_filter( $items, function ( $it ) {
+			$obj  = isset( $it->object ) ? (string) $it->object : '';
+			$type = isset( $it->type ) ? (string) $it->type : '';
+			$cls  = isset( $it->classes ) && is_array( $it->classes ) ? $it->classes : [];
+			if ( in_array( $obj, [ 'wpml_ls_menu_item', 'pll_ls_menu_item', 'language_switcher' ], true ) ) return false;
+			if ( $type === 'wpml_ls_menu_item' || $type === 'pll_ls_menu_item' ) return false;
+			foreach ( $cls as $c ) {
+				if ( $c === 'wpml-ls-item' || $c === 'wpml-ls-menu-item' || $c === 'pll-parent-menu-item' || $c === 'lang-item' ) return false;
+			}
+			return true;
+		} ) );
+
+		if ( empty( $items ) ) return;
+
+		$tree        = self::build_tree( $items );
+		$threshold   = max( 2, (int) ( $opts['threshold'] ?? 4 ) );
+		$cols_pref   = $opts['cols_pref'] ?? 'auto';
+		$show_counts = ! isset( $opts['show_counts'] ) || $opts['show_counts'] === true || $opts['show_counts'] === 'yes';
+
 		echo '<nav class="lwp-mm" aria-label="' . esc_attr__( 'Primary', 'luwipress-gold' ) . '">';
 		echo '<ul class="lwp-mm-top">';
 		foreach ( $tree as $top ) {
-			$this->render_top_item( $top, $threshold, $cols_pref, $show_counts );
+			self::render_top_item( $top, $threshold, $cols_pref, $show_counts );
 		}
 		echo '</ul>';
 		echo '</nav>';
 	}
 
-	private function render_top_item( $node, $threshold, $cols_pref, $show_counts ) {
+	public static function render_top_item( $node, $threshold, $cols_pref, $show_counts ) {
 		$has_children = ! empty( $node['children'] );
 		$is_mega = self::is_mega_candidate( $node, $threshold );
 
@@ -202,26 +244,47 @@ class LuwiPress_Gold_Widget_Mega_Menu extends Widget_Base {
 		if ( $has_children ) $cls .= ' has-children';
 		if ( $is_mega ) $cls .= ' is-mega';
 
+		// Top-level count — direct term count first, fall back to summing
+		// children when the top-level node points at a parent term (mega panel).
+		$top_count = '';
+		if ( $show_counts ) {
+			$top_count = self::resolve_item_count( $node );
+			if ( ( '' === $top_count || '0' === $top_count ) && $has_children ) {
+				$sum = 0;
+				foreach ( $node['children'] as $child ) {
+					$cn = self::resolve_item_count( $child );
+					if ( '' !== $cn ) $sum += (int) $cn;
+				}
+				$top_count = $sum > 0 ? (string) $sum : '';
+			}
+		}
+
+		$count_html = '';
+		if ( '' !== $top_count ) {
+			$count_html = '<span class="lwp-mm-top-count">' . esc_html( $top_count ) . '</span>';
+		}
+
 		echo '<li class="' . esc_attr( $cls ) . '" data-item-id="' . esc_attr( $node['id'] ) . '">';
 		printf(
-			'<a href="%s"%s>%s%s</a>',
+			'<a href="%s"%s>%s%s%s</a>',
 			esc_url( $node['url'] ),
 			$has_children ? ' aria-haspopup="true" aria-expanded="false"' : '',
 			esc_html( $node['label'] ),
+			$count_html,
 			$has_children ? '<span class="lwp-mm-arrow" aria-hidden="true">›</span>' : ''
 		);
 
 		if ( $has_children ) {
 			if ( $is_mega ) {
-				$this->render_mega_panel( $node, $cols_pref, $show_counts );
+				self::render_mega_panel( $node, $cols_pref, $show_counts );
 			} else {
-				$this->render_simple_dropdown( $node['children'], $show_counts );
+				self::render_simple_dropdown( $node['children'], $show_counts );
 			}
 		}
 		echo '</li>';
 	}
 
-	private function render_simple_dropdown( $children, $show_counts ) {
+	public static function render_simple_dropdown( $children, $show_counts ) {
 		echo '<ul class="lwp-mm-dropdown">';
 		foreach ( $children as $c ) {
 			$count = $show_counts ? self::resolve_item_count( $c ) : '';
@@ -235,7 +298,7 @@ class LuwiPress_Gold_Widget_Mega_Menu extends Widget_Base {
 		echo '</ul>';
 	}
 
-	private function render_mega_panel( $node, $cols_pref, $show_counts ) {
+	public static function render_mega_panel( $node, $cols_pref, $show_counts ) {
 		$cols = self::pick_columns( $node['children'], $cols_pref );
 		echo '<div class="lwp-mm-panel" role="menu">';
 		echo '<div class="lwp-mm-panel-cols" style="grid-template-columns:repeat(' . count( $cols ) . ',1fr) auto">';
@@ -268,12 +331,12 @@ class LuwiPress_Gold_Widget_Mega_Menu extends Widget_Base {
 		// Featured slot — content set via menu item meta `_lwp_gold_mega_featured`.
 		$featured_id = (int) get_post_meta( $node['id'], '_lwp_gold_mega_featured', true );
 		if ( $featured_id ) {
-			$this->render_featured_slot( $featured_id );
+			self::render_featured_slot( $featured_id );
 		} else {
 			// Auto-fallback: pick most-popular product matching the top-level URL slug.
 			$auto_id = self::auto_featured_for_top( $node );
 			if ( $auto_id ) {
-				$this->render_featured_slot( $auto_id );
+				self::render_featured_slot( $auto_id );
 			}
 		}
 
@@ -281,7 +344,7 @@ class LuwiPress_Gold_Widget_Mega_Menu extends Widget_Base {
 		echo '</div>'; // panel
 	}
 
-	private function render_featured_slot( $product_id ) {
+	public static function render_featured_slot( $product_id ) {
 		$post = get_post( $product_id );
 		if ( ! $post ) return;
 		$is_product = $post->post_type === 'product' && function_exists( 'wc_get_product' );
@@ -390,56 +453,100 @@ class LuwiPress_Gold_Widget_Mega_Menu extends Widget_Base {
 	 * categories, regular categories, and pages-listing-sub-pages.
 	 */
 	public static function resolve_item_count( $node ) {
-		if ( empty( $node['object'] ) || empty( $node['object_id'] ) ) return '';
-		switch ( $node['object'] ) {
-			case 'product_cat':
-			case 'category':
-			case 'post_tag':
-				$term = get_term( (int) $node['object_id'] );
-				if ( $term && ! is_wp_error( $term ) ) {
-					return (string) $term->count;
-				}
-				return '';
-			case 'page':
-				$kids = get_pages( [ 'parent' => (int) $node['object_id'], 'number' => 0 ] );
-				return $kids ? (string) count( $kids ) : '';
-			default:
-				return '';
+		// Term-typed menu items — fast path.
+		if ( ! empty( $node['object'] ) && ! empty( $node['object_id'] ) ) {
+			switch ( $node['object'] ) {
+				case 'product_cat':
+				case 'category':
+				case 'post_tag':
+					$term = get_term( (int) $node['object_id'] );
+					if ( $term && ! is_wp_error( $term ) ) {
+						return (string) $term->count;
+					}
+					break;
+				case 'page':
+					$kids = get_pages( [ 'parent' => (int) $node['object_id'], 'number' => 0 ] );
+					if ( $kids ) return (string) count( $kids );
+					break;
+			}
 		}
+		// Fallback: many operators add custom-URL menu items pointing at
+		// product category permalinks (e.g. "/arabic-oud/"). Look the slug
+		// up against `product_cat` and return its count if found.
+		if ( ! empty( $node['url'] ) && taxonomy_exists( 'product_cat' ) ) {
+			$path = wp_parse_url( $node['url'], PHP_URL_PATH );
+			if ( $path ) {
+				$path = trim( $path, '/' );
+				// Permalinks may include the WC base ("product-category/").
+				$segments = array_values( array_filter( explode( '/', $path ) ) );
+				$slug     = end( $segments );
+				if ( $slug ) {
+					$term = get_term_by( 'slug', $slug, 'product_cat' );
+					if ( $term && ! is_wp_error( $term ) ) {
+						return (string) $term->count;
+					}
+				}
+			}
+		}
+		return '';
 	}
 
 	/**
 	 * If no manual featured product was set on this top-level menu item,
 	 * try to derive one — best-selling product whose category matches
-	 * the menu item's URL.
+	 * the menu item's URL or any descendant category. Tapadum-style menus
+	 * use parent categories like "string-instruments" that often have zero
+	 * direct products — all the products live in sub-categories. Walking
+	 * the descendant tree ensures the featured slot fills.
 	 */
 	private static function auto_featured_for_top( $node ) {
 		if ( ! function_exists( 'wc_get_product' ) ) return 0;
-		// If the menu item itself points at a product category, pick its
-		// best-selling product.
-		if ( in_array( $node['object'] ?? '', [ 'product_cat' ], true ) ) {
-			$query = new WP_Query( [
-				'post_type'      => 'product',
-				'posts_per_page' => 1,
-				'tax_query'      => [
-					[
-						'taxonomy' => 'product_cat',
-						'field'    => 'term_id',
-						'terms'    => (int) $node['object_id'],
-					],
-				],
-				'meta_key'       => 'total_sales',
-				'orderby'        => 'meta_value_num',
-				'order'          => 'DESC',
-				'no_found_rows'  => true,
-			] );
-			if ( $query->have_posts() ) {
-				$id = $query->posts[0]->ID;
-				wp_reset_postdata();
-				return (int) $id;
+		if ( ! taxonomy_exists( 'product_cat' ) ) return 0;
+
+		$term_id = 0;
+		if ( in_array( $node['object'] ?? '', [ 'product_cat' ], true ) && ! empty( $node['object_id'] ) ) {
+			$term_id = (int) $node['object_id'];
+		} elseif ( ! empty( $node['url'] ) ) {
+			// Custom-URL menu items: resolve from URL slug.
+			$path = wp_parse_url( $node['url'], PHP_URL_PATH );
+			if ( $path ) {
+				$segments = array_values( array_filter( explode( '/', trim( $path, '/' ) ) ) );
+				$slug     = end( $segments );
+				if ( $slug ) {
+					$term = get_term_by( 'slug', $slug, 'product_cat' );
+					if ( $term && ! is_wp_error( $term ) ) {
+						$term_id = (int) $term->term_id;
+					}
+				}
 			}
-			wp_reset_postdata();
 		}
-		return 0;
+		if ( ! $term_id ) return 0;
+
+		// Pull the term + every descendant — best-selling within that set.
+		$descendants = get_term_children( $term_id, 'product_cat' );
+		$term_ids    = array_merge( [ $term_id ], is_array( $descendants ) ? $descendants : [] );
+
+		$query = new WP_Query( [
+			'post_type'      => 'product',
+			'posts_per_page' => 1,
+			'post_status'    => 'publish',
+			'tax_query'      => [
+				[
+					'taxonomy'         => 'product_cat',
+					'field'            => 'term_id',
+					'terms'            => $term_ids,
+					'include_children' => false,
+				],
+			],
+			'meta_key'       => 'total_sales',
+			'orderby'        => [ 'meta_value_num' => 'DESC', 'date' => 'DESC' ],
+			'no_found_rows'  => true,
+		] );
+		$id = 0;
+		if ( $query->have_posts() ) {
+			$id = (int) $query->posts[0]->ID;
+		}
+		wp_reset_postdata();
+		return $id;
 	}
 }

@@ -66,3 +66,25 @@ add_action( 'after_setup_theme', function () {
 		$GLOBALS['content_width'] = 1372;
 	}
 } );
+
+/**
+ * Tag every Elementor-built singular post with `lwp-elementor-built` so
+ * theme CSS can opt-out of fallback width caps without inspecting per-
+ * template branches. Mirrors the page.php / single.php branch logic so
+ * the marker is reliable in either path.
+ */
+add_filter( 'body_class', function ( $classes ) {
+	if ( ! is_singular() ) {
+		return $classes;
+	}
+	$post_id = get_queried_object_id();
+	if ( ! $post_id ) {
+		return $classes;
+	}
+	$is_el_built = (bool) get_post_meta( $post_id, '_elementor_edit_mode', true );
+	$has_el_data = (bool) get_post_meta( $post_id, '_elementor_data', true );
+	if ( $is_el_built && $has_el_data ) {
+		$classes[] = 'lwp-elementor-built';
+	}
+	return $classes;
+} );

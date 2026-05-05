@@ -144,6 +144,32 @@ function luwipress_gold_customizer_register( $wp_customize ) {
 		'type'        => 'text',
 	] );
 
+	/* Track-order link — typically points at a page hosting the
+	 * [woocommerce_order_tracking] shortcode. Empty value hides the
+	 * link entirely. The label below is the visible text. */
+	$wp_customize->add_setting( 'luwipress_gold_topbar_track_url', [
+		'default'           => '',
+		'transport'         => 'refresh',
+		'sanitize_callback' => 'esc_url_raw',
+	] );
+	$wp_customize->add_control( 'luwipress_gold_topbar_track_url', [
+		'label'       => __( 'Topbar — track-order URL', 'luwipress-gold' ),
+		'description' => __( 'Link to a tracking page (e.g. a page with the [woocommerce_order_tracking] shortcode). Leave empty to hide the link.', 'luwipress-gold' ),
+		'section'     => 'luwipress_gold_topbar',
+		'type'        => 'url',
+	] );
+
+	$wp_customize->add_setting( 'luwipress_gold_topbar_track_label', [
+		'default'           => __( 'Track order', 'luwipress-gold' ),
+		'transport'         => 'refresh',
+		'sanitize_callback' => 'sanitize_text_field',
+	] );
+	$wp_customize->add_control( 'luwipress_gold_topbar_track_label', [
+		'label'       => __( 'Topbar — track-order label', 'luwipress-gold' ),
+		'section'     => 'luwipress_gold_topbar',
+		'type'        => 'text',
+	] );
+
 	/* ─────────────────────────────────────────────────────────────────
 	 * Section 3 — Header
 	 * ─────────────────────────────────────────────────────────────── */

@@ -50,11 +50,18 @@ add_action( 'wp_enqueue_scripts', function () {
 		$ver
 	);
 
+	wp_enqueue_style(
+		'luwipress-gold-widgets',
+		LUWIPRESS_GOLD_URI . '/assets/css/widgets.css',
+		[ 'luwipress-gold-tokens' ],
+		$ver
+	);
+
 	if ( class_exists( 'WooCommerce' ) ) {
 		wp_enqueue_style(
 			'luwipress-gold-woo',
 			LUWIPRESS_GOLD_URI . '/assets/css/woo-overrides.css',
-			[ 'luwipress-gold-tokens' ],
+			[ 'luwipress-gold-widgets' ],
 			$ver
 		);
 	}

@@ -5,31 +5,63 @@
  * pill add-to-cart button. Active only when WooCommerce is loaded.
  */
 
-/* ─── Loop grid wrappers ─── */
-ul.products {
-	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	gap: 20px;
-	list-style: none;
-	margin: 0;
-	padding: 0;
+/* ─── Loop grid wrappers ─────────────────────────────────────────────
+ * `minmax(0, 1fr)` instead of plain `1fr`: WC product loops contain raw
+ * `<img width="600">` markup, and grid `1fr` (== minmax(auto, 1fr))
+ * resolves the auto minimum to the image's intrinsic 600px, blowing
+ * tracks past the container width and forcing the browser into a
+ * min-content fallback (cards collapse to ~70px wide). `minmax(0, 1fr)`
+ * lets columns shrink, then `min-width: 0` on the card + image
+ * neutralises the intrinsic-size pressure entirely.
+ * Marked `!important` to win over any plugin/inline overrides — WC,
+ * WCML, Elementor shortcodes, LiteSpeed combine reorders.
+ */
+.woocommerce ul.products,
+ul.products,
+.tap-products .products {
+	display: grid !important;
+	grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+	gap: 20px !important;
+	list-style: none !important;
+	margin: 0 !important;
+	padding: 0 !important;
 }
-ul.products[class*="columns-3"] { grid-template-columns: repeat(3, 1fr); }
-ul.products[class*="columns-2"] { grid-template-columns: repeat(2, 1fr); }
+/* WooCommerce ships `ul.products::before/::after { content:" "; display:table }`
+ * as a legacy clearfix. With `display: grid` on the parent, those pseudos
+ * become anonymous grid items occupying col1 + (last cell of last row),
+ * which manifests as an empty cell before the first product. Neutralise. */
+.woocommerce ul.products::before,
+.woocommerce ul.products::after,
+ul.products::before,
+ul.products::after,
+.tap-products .products::before,
+.tap-products .products::after {
+	display: none !important;
+	content: none !important;
+}
+.woocommerce ul.products[class*="columns-3"],
+ul.products[class*="columns-3"]                { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+.woocommerce ul.products[class*="columns-2"],
+ul.products[class*="columns-2"]                { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
 
 @media (max-width: 1100px) {
+	.woocommerce ul.products,
 	ul.products,
+	.tap-products .products,
 	ul.products[class*="columns-3"],
-	ul.products[class*="columns-4"] { grid-template-columns: repeat(2, 1fr); }
+	ul.products[class*="columns-4"]            { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
 }
 @media (max-width: 600px) {
+	.woocommerce ul.products,
 	ul.products,
+	.tap-products .products,
 	ul.products[class*="columns-2"],
 	ul.products[class*="columns-3"],
-	ul.products[class*="columns-4"] { grid-template-columns: 1fr; }
+	ul.products[class*="columns-4"]            { grid-template-columns: minmax(0, 1fr) !important; }
 }
 
 /* ─── Card ─── */
+.woocommerce ul.products li.product,
 ul.products li.product {
 	background: var(--card, #fff);
 	border-radius: 8px;
@@ -37,33 +69,42 @@ ul.products li.product {
 	border: 1px solid var(--line-light, #f0ebe0);
 	position: relative;
 	transition: transform .35s, box-shadow .35s;
-	display: flex;
-	flex-direction: column;
-	width: auto;
-	margin: 0;
-	padding: 0;
-	float: none;
-	clear: none;
+	display: flex !important;
+	flex-direction: column !important;
+	width: auto !important;
+	min-width: 0;
+	margin: 0 !important;
+	padding: 0 !important;
+	float: none !important;
+	clear: none !important;
 }
 ul.products li.product:hover {
 	transform: translateY(-3px);
 	box-shadow: 0 20px 50px -22px rgba(60, 40, 0, .25);
 }
 
-ul.products li.product a.woocommerce-LoopProduct-link {
-	display: block;
-	text-decoration: none;
-	color: inherit;
+.woocommerce ul.products li.product a.woocommerce-LoopProduct-link,
+ul.products li.product a.woocommerce-LoopProduct-link,
+ul.products li.product > a {
+	display: block !important;
+	width: 100% !important;
+	min-width: 0;
+	text-decoration: none !important;
+	color: inherit !important;
 }
 
 /* ─── Image ─── */
+.woocommerce ul.products li.product .attachment-woocommerce_thumbnail,
+.woocommerce ul.products li.product img,
 ul.products li.product .attachment-woocommerce_thumbnail,
 ul.products li.product img {
-	width: 100%;
+	width: 100% !important;
+	height: auto !important;
+	min-width: 0;
 	aspect-ratio: 1 / 1;
 	object-fit: cover;
-	margin: 0;
-	display: block;
+	margin: 0 !important;
+	display: block !important;
 }
 
 /* ─── Sale badge ─── */

@@ -63,6 +63,22 @@ class LuwiPress_Gold_Importer {
 		// 1. Brand overrides — always first; they shape everything that follows.
 		$this->apply_brand( $brand, $log );
 
+		// 1b. Elementor Kit sync — pushes Gold colors + fonts into the active
+		// Elementor Site Settings so .elementor-kit-NNN { --e-global-color-* }
+		// inline styles resolve to the Gold palette instead of Elementor's
+		// blue/green defaults. Without this every imported template renders
+		// in the wrong colors regardless of our token CSS.
+		if ( function_exists( 'luwipress_gold_sync_kit' ) ) {
+			$kit_result = luwipress_gold_sync_kit();
+			$log['actions'][] = [
+				'op'     => 'sync_elementor_kit',
+				'status' => is_wp_error( $kit_result ) ? 'error' : 'ok',
+				'detail' => is_wp_error( $kit_result )
+					? [ 'error' => $kit_result->get_error_message() ]
+					: [ 'kit_id' => function_exists( 'luwipress_gold_get_active_kit_id' ) ? luwipress_gold_get_active_kit_id() : null ],
+			];
+		}
+
 		// 2. Process every action in order.
 		foreach ( $plan['actions'] as $action ) {
 			try {

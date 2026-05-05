@@ -11,13 +11,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'LUWIPRESS_GOLD_VERSION', '1.0.4' );
+define( 'LUWIPRESS_GOLD_VERSION', '1.0.5' );
 define( 'LUWIPRESS_GOLD_DIR', get_template_directory() );
 define( 'LUWIPRESS_GOLD_URI', get_template_directory_uri() );
 
 require_once LUWIPRESS_GOLD_DIR . '/inc/setup.php';
 require_once LUWIPRESS_GOLD_DIR . '/inc/enqueue.php';
 require_once LUWIPRESS_GOLD_DIR . '/inc/elementor-compat.php';
+require_once LUWIPRESS_GOLD_DIR . '/inc/elementor-kit-sync.php';
 
 // Onboarding wizard — admin-only.
 if ( is_admin() ) {

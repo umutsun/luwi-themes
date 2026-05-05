@@ -442,94 +442,230 @@
 			document.querySelector( 'nav.main-navigation ul' );
 		if ( ! sourceMenu ) return;
 
+		var siteName = ( document.querySelector( '.lwp-wordmark, .lwp-site-header-logo' ) || {} ).textContent || document.title || 'Menu';
+		siteName = siteName.replace( /\s+/g, ' ' ).trim().slice( 0, 32 );
+
 		var scrim = document.createElement( 'div' );
 		scrim.className = 'lwp-mobile-scrim';
 		document.body.appendChild( scrim );
 
+		// Wordmark with italic-gold accent letter (Tapadum-style)
+		function wordmarkHtml( name ) {
+			var n = name || 'Menu';
+			var pos = Math.max( 1, Math.floor( n.length / 2 ) );
+			var letter = n.charAt( pos );
+			if ( ! letter ) return '<span>' + n + '</span>';
+			return n.slice( 0, pos ) + '<em>' + letter + '</em>' + n.slice( pos + 1 );
+		}
+
 		var drawer = document.createElement( 'nav' );
 		drawer.className = 'lwp-mobile-drawer';
-		drawer.setAttribute( 'aria-label', 'Mobile navigation' );
+		drawer.setAttribute( 'role', 'dialog' );
+		drawer.setAttribute( 'aria-modal', 'true' );
+		drawer.setAttribute( 'aria-label', 'Site menu' );
 		drawer.innerHTML =
-			'<div class="lwp-mobile-drawer__head">' +
-				'<span>Menu</span>' +
-				'<button type="button" class="lwp-mobile-drawer__close" aria-label="Close">×</button>' +
+			'<header class="lwp-mobile-drawer__head">' +
+				'<a href="' + ( window.location.origin || '/' ) + '" class="lwp-mobile-drawer__brand">' + wordmarkHtml( siteName ) + '</a>' +
+				'<button type="button" class="lwp-mobile-drawer__close" aria-label="Close menu">' +
+					'<span class="bar"></span><span class="bar"></span>' +
+				'</button>' +
+			'</header>' +
+			'<div class="lwp-mobile-drawer__search">' +
+				'<label class="lwp-mobile-drawer__search-field">' +
+					'<span class="icon" aria-hidden="true">⌕</span>' +
+					'<input type="search" placeholder="Search instruments, masters…" data-lwp-drw-search />' +
+					'<span class="ai-badge">AI</span>' +
+				'</label>' +
 			'</div>' +
-			'<div class="lwp-mobile-drawer__body"><ul></ul></div>' +
-			'<div class="lwp-mobile-drawer__foot"></div>';
+			'<div class="lwp-mobile-drawer__body">' +
+				'<div class="lwp-mobile-drawer__lbl">Browse</div>' +
+				'<div data-lwp-drw-nav></div>' +
+				'<div data-lwp-drw-utility></div>' +
+				'<div data-lwp-drw-pick></div>' +
+			'</div>' +
+			'<footer class="lwp-mobile-drawer__foot" data-lwp-drw-foot></footer>';
 		document.body.appendChild( drawer );
 
-		var ul = drawer.querySelector( '.lwp-mobile-drawer__body ul' );
+		var navHost  = drawer.querySelector( '[data-lwp-drw-nav]' );
+		var utilHost = drawer.querySelector( '[data-lwp-drw-utility]' );
+		var pickHost = drawer.querySelector( '[data-lwp-drw-pick]' );
+		var footHost = drawer.querySelector( '[data-lwp-drw-foot]' );
+
+		// Build nav rows from source menu — children → <details> accordion,
+		// childless → flat italic row. WPML/Polylang language items already
+		// stripped server-side in the mega-menu walker since 1.5.1.
 		Array.prototype.forEach.call( sourceMenu.children, function ( li ) {
 			var anchor = li.querySelector( ':scope > a' );
 			if ( ! anchor ) return;
-			var label = anchor.textContent.replace( /[▸▾▼+−·]+/g, '' ).trim();
+			var label = anchor.textContent.replace( /[▸▾▼+−·]+|\s+\d+\s*$/g, '' ).trim();
+			if ( ! label ) return;
+
 			var subSource = li.querySelector( '.lwp-mm-panel, .lwp-mm-dropdown' );
-			var subLinks = subSource ? subSource.querySelectorAll( 'a[href]' ) : [];
+			var subLinks  = subSource ? subSource.querySelectorAll( 'a[href]' ) : [];
+			var topCount  = ( anchor.querySelector( '.lwp-mm-top-count' ) || {} ).textContent;
+			topCount = ( topCount || '' ).trim();
 
-			var row = document.createElement( 'li' );
 			if ( subLinks.length ) {
-				var btn = document.createElement( 'button' );
-				btn.type = 'button';
-				btn.className = 'lwp-mobile-acc';
-				btn.setAttribute( 'aria-expanded', 'false' );
-				btn.textContent = label;
-				row.appendChild( btn );
+				var det = document.createElement( 'details' );
+				det.className = 'lwp-drw-acc';
+				var sum = document.createElement( 'summary' );
+				sum.innerHTML =
+					'<span class="nm">' +
+						'<span>' + label + '</span>' +
+						( topCount ? '<span class="ct">' + topCount + '</span>' : '' ) +
+					'</span>' +
+					'<span class="pm" aria-hidden="true"></span>';
+				det.appendChild( sum );
 
-				var sub = document.createElement( 'div' );
-				sub.className = 'lwp-mobile-drawer__sub';
-				var subUl = document.createElement( 'ul' );
+				var panel = document.createElement( 'div' );
+				panel.className = 'lwp-drw-acc-panel';
+				var panelInner = document.createElement( 'div' );
+				var list = document.createElement( 'div' );
+				list.className = 'lwp-drw-acc-list';
+
 				// "All <category>" entry → the parent link itself
 				if ( anchor.getAttribute( 'href' ) && anchor.getAttribute( 'href' ) !== '#' ) {
-					var liAll = document.createElement( 'li' );
 					var aAll = document.createElement( 'a' );
 					aAll.href = anchor.href;
-					aAll.textContent = '↳ ' + label;
-					liAll.appendChild( aAll );
-					subUl.appendChild( liAll );
+					aAll.innerHTML = '<span>↳ ' + label + '</span>';
+					list.appendChild( aAll );
 				}
 				Array.prototype.forEach.call( subLinks, function ( a ) {
-					var t = a.textContent.replace( /\s+\d+\s*$/, '' ).trim();
-					if ( ! t ) return;
-					var subLi = document.createElement( 'li' );
-					var subA = document.createElement( 'a' );
-					subA.href = a.href;
-					subA.textContent = t;
-					subLi.appendChild( subA );
-					subUl.appendChild( subLi );
+					var raw = a.textContent.replace( /\s+/g, ' ' ).trim();
+					if ( ! raw ) return;
+					// Pull trailing count "Arabic Oud 24" → name "Arabic Oud", count "24"
+					var m = raw.match( /^(.+?)\s+(\d+)\s*$/ );
+					var nm = m ? m[1].trim() : raw;
+					var ct = m ? m[2] : '';
+					var aSub = document.createElement( 'a' );
+					aSub.href = a.href;
+					aSub.innerHTML = '<span>' + nm + '</span>' + ( ct ? '<span class="ct">' + ct + '</span>' : '' );
+					list.appendChild( aSub );
 				} );
-				sub.appendChild( subUl );
-				row.appendChild( sub );
-
-				btn.addEventListener( 'click', function () {
-					var open = sub.classList.toggle( 'is-open' );
-					btn.setAttribute( 'aria-expanded', open ? 'true' : 'false' );
-				} );
+				panelInner.appendChild( list );
+				panel.appendChild( panelInner );
+				det.appendChild( panel );
+				navHost.appendChild( det );
 			} else {
-				var a = document.createElement( 'a' );
-				a.href = anchor.href;
-				a.textContent = label;
-				row.appendChild( a );
+				var flat = document.createElement( 'a' );
+				flat.className = 'lwp-drw-flat';
+				flat.href = anchor.href;
+				flat.innerHTML = label + ' <span class="arr" aria-hidden="true">→</span>';
+				navHost.appendChild( flat );
 			}
-			ul.appendChild( row );
 		} );
 
-		// Language pills in foot
+		// Utility row — Account · Cart · Track order
+		var cfg = ( window.LuwiGold && window.LuwiGold.drawer ) || {};
+		var accountUrl = cfg.accountUrl || '/my-account/';
+		var cartUrl    = cfg.cartUrl    || '/cart/';
+		var trackUrl   = cfg.trackUrl   || accountUrl;
+		var cartCount  = parseInt( ( document.querySelector( '.lwp-cart-badge' ) || {} ).textContent || '0', 10 ) || 0;
+		utilHost.outerHTML =
+			'<div class="lwp-drw-utility">' +
+				'<a class="lwp-drw-util" href="' + accountUrl + '">' +
+					'<span class="glyph" aria-hidden="true">a</span><span>Account</span>' +
+				'</a>' +
+				'<a class="lwp-drw-util" href="' + cartUrl + '">' +
+					'<span class="glyph" aria-hidden="true">⌂</span><span>Cart</span>' +
+					( cartCount > 0 ? '<span class="badge">' + cartCount + '</span>' : '' ) +
+				'</a>' +
+				'<a class="lwp-drw-util" href="' + trackUrl + '">' +
+					'<span class="glyph" aria-hidden="true">↗</span><span>Track</span>' +
+				'</a>' +
+			'</div>';
+
+		// Atelier pick — pulled from window.LuwiGold.drawer.pick if present,
+		// otherwise the first product card on the page (cheap heuristic).
+		var pick = cfg.pick;
+		if ( ! pick ) {
+			var fallbackCard = document.querySelector( '.lwp-pcard a[href]' );
+			if ( fallbackCard ) {
+				var thumb = fallbackCard.querySelector( 'img' );
+				var name  = ( fallbackCard.querySelector( '.lwp-pcard-title' ) || {} ).textContent || '';
+				var price = ( fallbackCard.querySelector( '.lwp-pcard-price' ) || {} ).textContent || '';
+				var maker = ( fallbackCard.querySelector( '.lwp-pcard-maker' ) || {} ).textContent || '';
+				if ( name ) {
+					pick = {
+						url: fallbackCard.href,
+						img: thumb ? thumb.src : '',
+						name: name.trim(),
+						maker: maker.trim(),
+						price: price.replace( /\s+/g, ' ' ).trim(),
+						label: 'This week'
+					};
+				}
+			}
+		}
+		if ( pick ) {
+			var imgStyle = pick.img ? ' style="background-image:url(' + pick.img + ');background-size:cover;background-position:center;"' : '';
+			pickHost.outerHTML =
+				'<a class="lwp-drw-pick" href="' + ( pick.url || '#' ) + '">' +
+					'<div class="img"' + imgStyle + '><span class="stamp">' + ( pick.label || 'Pick' ) + '</span></div>' +
+					'<div class="meta">' +
+						'<span class="lbl">Atelier pick</span>' +
+						'<h4>' + pick.name + '</h4>' +
+						( pick.maker ? '<span class="mk">' + pick.maker + '</span>' : '' ) +
+						( pick.price ? '<span class="px">' + pick.price + '</span>' : '' ) +
+					'</div>' +
+				'</a>';
+		} else {
+			pickHost.outerHTML = '';
+		}
+
+		// Foot — language switcher + social row + contact line
 		var langSrc = document.querySelector( '.lwp-lang-pill' );
-		var foot    = drawer.querySelector( '.lwp-mobile-drawer__foot' );
-		if ( langSrc && foot ) {
-			var langWrap = document.createElement( 'div' );
-			langWrap.className = 'lwp-mobile-drawer__lang';
+		var langHtml = '';
+		if ( langSrc ) {
+			var langInner = '';
 			Array.prototype.forEach.call( langSrc.querySelectorAll( 'a' ), function ( a ) {
-				var c = a.cloneNode( true );
-				c.classList.toggle( 'is-active', a.classList.contains( 'is-active' ) );
-				langWrap.appendChild( c );
+				var on = a.classList.contains( 'is-active' ) ? ' is-active' : '';
+				var code = ( a.textContent || '' ).trim();
+				if ( ! code ) return;
+				langInner += '<a href="' + a.href + '" class="' + on.replace( ' ', '' ) + '">' + code + '</a>';
 			} );
-			foot.appendChild( langWrap );
+			if ( langInner ) {
+				langHtml =
+					'<div class="lwp-drw-foot-row">' +
+						'<span class="lwp-drw-foot-lbl">Language</span>' +
+						'<div class="lwp-mobile-drawer__lang">' + langInner + '</div>' +
+					'</div>';
+			}
+		}
+
+		var social = cfg.social || [];
+		var socialHtml = '';
+		if ( social.length ) {
+			var socialInner = '';
+			social.forEach( function ( s ) {
+				socialInner += '<a href="' + s.url + '" aria-label="' + s.label + '" target="_blank" rel="noopener">' + s.code + '</a>';
+			} );
+			socialHtml =
+				'<div class="lwp-drw-foot-row">' +
+					'<span class="lwp-drw-foot-lbl">Follow</span>' +
+					'<div class="lwp-drw-social">' + socialInner + '</div>' +
+				'</div>';
+		}
+
+		var contact = cfg.contact || {};
+		var contactHtml = '';
+		if ( contact.phone || contact.email || contact.location ) {
+			contactHtml = '<div class="lwp-drw-contact">';
+			if ( contact.phone )    contactHtml += '<a href="tel:' + contact.phone.replace( /\s+/g, '' ) + '">' + contact.phone + '</a>';
+			if ( contact.email )    contactHtml += '<a href="mailto:' + contact.email + '">' + contact.email + '</a>';
+			if ( contact.location ) contactHtml += '<span>' + contact.location + '</span>';
+			contactHtml += '</div>';
+		}
+
+		footHost.innerHTML = langHtml + socialHtml + contactHtml;
+		if ( ! footHost.innerHTML ) {
+			drawer.removeChild( footHost );
 		}
 
 		function close() {
 			drawer.classList.remove( 'is-open' );
 			scrim.classList.remove( 'is-open' );
+			document.body.classList.remove( 'lwp-drw-locked' );
 			document.body.style.overflow = '';
 			var t = document.querySelector( '.lwp-mobile-toggle' );
 			if ( t ) { t.classList.remove( 'is-open' ); t.setAttribute( 'aria-expanded', 'false' ); }

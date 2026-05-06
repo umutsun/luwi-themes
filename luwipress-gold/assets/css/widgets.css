@@ -3855,7 +3855,7 @@ body.lwp-yt-open { overflow: hidden; }
 	max-width: 372px;
 	background: var(--lwp-drw-bg);
 	color: var(--ink, #1b1c1c);
-	z-index: 110;
+	z-index: 100010;
 	display: flex;
 	flex-direction: column;
 	transform: translateX(-101%);
@@ -4410,14 +4410,28 @@ body.lwp-yt-open { overflow: hidden; }
 .lwp-mobile-drawer.is-open .lwp-drw-flat:nth-of-type(3) { transition-delay: .34s; }
 .lwp-mobile-drawer.is-open .lwp-drw-flat:nth-of-type(4) { transition-delay: .38s; }
 
-/* Scrim — soft fade-in, slightly faster than the drawer transform */
+/* Scrim — soft fade-in, slightly faster than the drawer transform.
+ * Sits ABOVE the WP admin bar (32px sticky at top) and ABOVE any sticky
+ * theme header so the drawer panel is the topmost UI when open. */
 .lwp-mobile-scrim {
 	position: fixed;
 	inset: 0;
 	background: rgba(27, 28, 28, 0);
-	z-index: 105;
+	z-index: 100005;
 	pointer-events: none;
 	transition: background .32s var(--lwp-drw-ease-soft, cubic-bezier(.22, .61, .36, 1));
+}
+
+/* Hide / dim the host page's sticky header while the drawer is open so
+ * its logo + icons don't peek through. Also dim the admin bar (logged-in
+ * preview) so the operator sees the drawer cleanly on mobile sims. */
+body.lwp-drw-locked .lwp-site-header,
+body.lwp-drw-locked header.elementor-location-header,
+body.lwp-drw-locked header.site-header,
+body.lwp-drw-locked #masthead,
+body.lwp-drw-locked #wpadminbar {
+	z-index: 1 !important;
+	pointer-events: none;
 }
 .lwp-mobile-scrim.is-open {
 	background: rgba(27, 28, 28, .42);

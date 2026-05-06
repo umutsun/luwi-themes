@@ -716,6 +716,7 @@
 			scrim.classList.toggle( 'is-open', open );
 			trig.classList.toggle( 'is-open', open );
 			trig.setAttribute( 'aria-expanded', open ? 'true' : 'false' );
+			document.body.classList.toggle( 'lwp-drw-locked', open );
 			document.body.style.overflow = open ? 'hidden' : '';
 		} );
 	}

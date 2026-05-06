@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'LUWIPRESS_GOLD_VERSION', '1.5.1' );
+define( 'LUWIPRESS_GOLD_VERSION', '1.5.2' );
 define( 'LUWIPRESS_GOLD_DIR', get_template_directory() );
 define( 'LUWIPRESS_GOLD_URI', get_template_directory_uri() );
 

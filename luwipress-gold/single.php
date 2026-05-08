@@ -31,6 +31,7 @@ $elementor_post = $is_el_built && $has_el_data;
 
 <?php else : ?>
 
+	<div class="lwp-reading-progress" aria-hidden="true"><i></i></div>
 	<main class="lwp-page lwp-journal-single" id="primary">
 		<?php while ( have_posts() ) : the_post();
 			$cats = get_the_category();

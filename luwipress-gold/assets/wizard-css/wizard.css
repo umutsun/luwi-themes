@@ -588,3 +588,83 @@
 	color: #7f7663;
 	font-style: italic;
 }
+
+/* ─── Slug-conflict transparency card (Detect step) ───────────── */
+.lwp-card.lwp-card--alert {
+	border-left: 4px solid #d97706;
+	background: #fffbeb;
+}
+.lwp-card--alert h3 {
+	color: #92400e;
+	margin: 0 0 6px;
+}
+.lwp-alert-lead {
+	margin: 0 0 14px;
+	font-size: 13.5px;
+	line-height: 1.5;
+	color: #78350f;
+}
+.lwp-conflict-table {
+	width: 100%;
+	border-collapse: collapse;
+	background: #fff;
+	border: 1px solid #f3e8d5;
+	border-radius: 6px;
+	overflow: hidden;
+}
+.lwp-conflict-table th,
+.lwp-conflict-table td {
+	padding: 8px 10px;
+	text-align: left;
+	font-size: 13px;
+	border-bottom: 1px solid #f3e8d5;
+}
+.lwp-conflict-table th {
+	background: #fef3c7;
+	color: #78350f;
+	font-weight: 600;
+}
+.lwp-conflict-table tr:last-child td { border-bottom: 0; }
+.lwp-conflict-table code {
+	background: #fff7ed;
+	padding: 2px 6px;
+	border-radius: 4px;
+	font-size: 12px;
+}
+.lwp-conflict-table a {
+	color: #735c00;
+	text-decoration: none;
+	border-bottom: 1px dotted #735c00;
+}
+
+/* ─── Apply-step opt-in toggle ───────────────────────────────── */
+.lwp-apply-opts {
+	margin: 0 0 18px;
+	padding: 14px 16px;
+	background: #f9fafb;
+	border-radius: 8px;
+	border: 1px solid #e7e3d6;
+}
+.lwp-apply-opt {
+	display: flex;
+	gap: 12px;
+	cursor: pointer;
+	align-items: flex-start;
+}
+.lwp-apply-opt input[type="checkbox"] {
+	margin-top: 4px;
+	transform: scale(1.2);
+}
+.lwp-apply-opt__label strong {
+	display: block;
+	font-size: 14px;
+	color: #1b1c1c;
+	font-weight: 600;
+}
+.lwp-apply-opt__label small {
+	display: block;
+	margin-top: 4px;
+	font-size: 12.5px;
+	color: #5b5247;
+	line-height: 1.5;
+}

@@ -270,8 +270,11 @@ class LuwiPress_Gold_Wizard {
 			case 'apply':
 				$path = isset( $payload['path'] ) ? sanitize_key( $payload['path'] ) : 'use_existing';
 				$brand = isset( $payload['brand'] ) ? (array) $payload['brand'] : [];
+				$opts  = [
+					'resolve_slug_conflicts' => ! empty( $payload['resolve_slug_conflicts'] ),
+				];
 				$importer = new LuwiPress_Gold_Importer();
-				$result = $importer->apply( $path, $brand );
+				$result = $importer->apply( $path, $brand, $opts );
 				if ( is_wp_error( $result ) ) {
 					wp_send_json_error( [ 'message' => $result->get_error_message() ] );
 				}
@@ -280,6 +283,52 @@ class LuwiPress_Gold_Wizard {
 			case 'complete':
 				update_option( self::COMPLETED_OPTION, time() );
 				wp_send_json_success();
+
+			// ── Theme Bridge proxy steps (1.7.0+) ────────────────────────────
+			// Lets the wizard wrap the same maintenance tools the operator
+			// sees under LuwiPress → Theme. Each tool runs as a dedicated
+			// step so the wizard can show per-tool scan results inline.
+
+			case 'tools_list':
+				if ( ! class_exists( 'LuwiPress_Theme_Bridge' ) ) {
+					wp_send_json_error( [ 'message' => 'Theme Bridge unavailable — requires LuwiPress 3.1.48+.' ] );
+				}
+				$bridge = LuwiPress_Theme_Bridge::get_instance();
+				$tools  = array();
+				foreach ( $bridge->get_tools() as $t ) {
+					unset( $t['callbacks'] );
+					$tools[] = $t;
+				}
+				wp_send_json_success( [ 'tools' => $tools ] );
+
+			case 'tool_scan':
+				if ( ! class_exists( 'LuwiPress_Theme_Bridge' ) ) {
+					wp_send_json_error( [ 'message' => 'Theme Bridge unavailable.' ] );
+				}
+				$tool_id = isset( $payload['tool_id'] ) ? sanitize_key( $payload['tool_id'] ) : '';
+				$bridge  = LuwiPress_Theme_Bridge::get_instance();
+				$res     = $bridge->run_tool( $tool_id, 'scan', isset( $payload['args'] ) ? (array) $payload['args'] : [] );
+				if ( is_wp_error( $res ) ) {
+					wp_send_json_error( [ 'message' => $res->get_error_message() ] );
+				}
+				wp_send_json_success( $res );
+
+			case 'tool_execute':
+				if ( ! class_exists( 'LuwiPress_Theme_Bridge' ) ) {
+					wp_send_json_error( [ 'message' => 'Theme Bridge unavailable.' ] );
+				}
+				$tool_id  = isset( $payload['tool_id'] ) ? sanitize_key( $payload['tool_id'] ) : '';
+				$post_ids = isset( $payload['post_ids'] ) ? array_map( 'intval', (array) $payload['post_ids'] ) : [];
+				$bridge   = LuwiPress_Theme_Bridge::get_instance();
+				$args     = isset( $payload['args'] ) ? (array) $payload['args'] : [];
+				if ( $post_ids ) {
+					$args['post_ids'] = $post_ids;
+				}
+				$res = $bridge->run_tool( $tool_id, 'execute', $args );
+				if ( is_wp_error( $res ) ) {
+					wp_send_json_error( [ 'message' => $res->get_error_message() ] );
+				}
+				wp_send_json_success( $res );
 
 			default:
 				wp_send_json_error( [ 'message' => 'unknown step' ], 400 );

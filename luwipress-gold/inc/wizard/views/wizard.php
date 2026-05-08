@@ -140,6 +140,61 @@ $plugins   = $bridge->required_plugins_status();
 			</div>
 		</div>
 
+		<?php
+		// Slug-conflict transparency card. Renders only when at least one
+		// page slug collides with a non-empty product_cat term — i.e.
+		// visitors landing on /<slug>/ today reach the static page even
+		// though commerce content lives at /product-category/<slug>/.
+		$conflicts = isset( $snapshot['slug_conflicts'] ) && is_array( $snapshot['slug_conflicts'] )
+			? $snapshot['slug_conflicts']
+			: [];
+		if ( ! empty( $conflicts ) ) :
+		?>
+			<div class="lwp-card lwp-card--alert" id="lwp-slug-conflicts-card">
+				<h3>
+					<?php
+					/* translators: %d: number of slug conflicts */
+					printf(
+						esc_html( _n(
+							'%d page-vs-category slug collision detected',
+							'%d page-vs-category slug collisions detected',
+							count( $conflicts ),
+							'luwipress-gold'
+						) ),
+						(int) count( $conflicts )
+					);
+					?>
+				</h3>
+				<p class="lwp-alert-lead">
+					<?php esc_html_e( 'These pages share their URL with a WooCommerce category. Visitors clicking the menu reach the page, not the live commerce archive — so the category template never renders. The Apply step can 301-redirect each one to its matching /product-category/ archive. The original page posts are kept editable in admin.', 'luwipress-gold' ); ?>
+				</p>
+				<table class="lwp-conflict-table widefat">
+					<thead>
+						<tr>
+							<th><?php esc_html_e( 'Slug', 'luwipress-gold' ); ?></th>
+							<th><?php esc_html_e( 'Page', 'luwipress-gold' ); ?></th>
+							<th><?php esc_html_e( 'Will redirect to', 'luwipress-gold' ); ?></th>
+							<th><?php esc_html_e( 'Products', 'luwipress-gold' ); ?></th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php foreach ( $conflicts as $c ) : ?>
+							<tr>
+								<td><code>/<?php echo esc_html( $c['slug'] ); ?>/</code></td>
+								<td>
+									<a href="<?php echo esc_url( get_edit_post_link( (int) $c['page_id'] ) ); ?>" target="_blank">
+										<?php echo esc_html( $c['page_title'] ); ?>
+									</a>
+								</td>
+								<td><code>/product-category/<?php echo esc_html( $c['slug'] ); ?>/</code></td>
+								<td><?php echo (int) $c['term_count']; ?></td>
+							</tr>
+						<?php endforeach; ?>
+					</tbody>
+				</table>
+			</div>
+		<?php endif; ?>
+
 		<footer class="lwp-wizard-actions">
 			<button type="button" class="button button-primary lwp-next" data-target="2">
 				<?php esc_html_e( 'Continue →', 'luwipress-gold' ); ?>
@@ -354,6 +409,39 @@ $plugins   = $bridge->required_plugins_status();
 	<!-- ─── STEP 5 — APPLY ─────────────────────────────────────── -->
 	<section class="lwp-wizard-panel" data-panel="5">
 		<h2 class="serif"><?php esc_html_e( 'Applying changes…', 'luwipress-gold' ); ?></h2>
+
+		<?php
+		// Repeat the conflict count here so the operator decides at the
+		// last gate, with the redirect toggle adjacent. Default ON when
+		// any conflict is present — operator unchecks to skip.
+		$conflict_count = isset( $snapshot['slug_conflicts'] ) && is_array( $snapshot['slug_conflicts'] )
+			? count( $snapshot['slug_conflicts'] )
+			: 0;
+		if ( $conflict_count > 0 ) :
+		?>
+			<div class="lwp-apply-opts">
+				<label class="lwp-apply-opt">
+					<input type="checkbox" id="lwp-resolve-conflicts" checked>
+					<span class="lwp-apply-opt__label">
+						<strong>
+							<?php
+							/* translators: %d: number of slug conflicts */
+							printf(
+								esc_html( _n(
+									'Auto-redirect %d slug conflict (recommended)',
+									'Auto-redirect %d slug conflicts (recommended)',
+									$conflict_count,
+									'luwipress-gold'
+								) ),
+								(int) $conflict_count
+							);
+							?>
+						</strong>
+						<small><?php esc_html_e( 'Each /<slug>/ URL 301-redirects to /product-category/<slug>/. Pages stay editable in admin.', 'luwipress-gold' ); ?></small>
+					</span>
+				</label>
+			</div>
+		<?php endif; ?>
 
 		<div class="lwp-apply-status" data-status="idle">
 			<div class="lwp-apply-progress">

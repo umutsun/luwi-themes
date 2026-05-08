@@ -12,6 +12,15 @@
 
 defined( 'ABSPATH' ) || exit;
 
+// Empty-cart branch — without it the foreach below iterates nothing and
+// the page renders as a blank middle between header + footer, which
+// looks like the theme is broken. Defers to our branded cart-empty.php
+// when present; falls through to WC core's default otherwise.
+if ( WC()->cart->is_empty() ) {
+	wc_get_template( 'cart/cart-empty.php' );
+	return;
+}
+
 do_action( 'woocommerce_before_cart' ); ?>
 
 <form class="woocommerce-cart-form lwp-cart-form" action="<?php echo esc_url( wc_get_cart_url() ); ?>" method="post">
@@ -154,3 +163,25 @@ do_action( 'woocommerce_before_cart' ); ?>
 </form>
 
 <?php do_action( 'woocommerce_after_cart' ); ?>
+
+<?php
+/**
+ * Mobile sticky checkout bar — Mobile Spec Preview §09.
+ * Rendered outside the main form so the iOS keyboard doesn't shift it.
+ * CSS is gated to ≤767px in woo-overrides.css.
+ */
+$cart_total    = WC()->cart ? WC()->cart->get_total() : '';
+$cart_count    = WC()->cart ? WC()->cart->get_cart_contents_count() : 0;
+$checkout_url  = wc_get_checkout_url();
+?>
+<div class="lwp-sticky-cart-bar" role="region" aria-label="<?php esc_attr_e( 'Cart total and checkout', 'luwipress-gold' ); ?>">
+	<div class="px">
+		<span class="lbl"><?php
+			/* translators: %d: cart item count */
+			printf( esc_html( _n( 'Total · %d item', 'Total · %d items', $cart_count, 'luwipress-gold' ) ), $cart_count );
+		?></span>
+		<span class="v"><?php echo wp_kses_post( $cart_total ); ?></span>
+	</div>
+	<a href="<?php echo esc_url( $checkout_url ); ?>" class="button"><?php esc_html_e( 'Checkout →', 'luwipress-gold' ); ?></a>
+</div>
+<script>document.body.classList.add('has-lwp-sticky-bar');</script>

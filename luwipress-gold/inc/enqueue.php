@@ -34,6 +34,66 @@ add_action( 'wp_enqueue_scripts', function () {
 }, 20 );
 
 /**
+ * Localise the WooCommerce category tree on its own dedicated hook
+ * (priority 30 — runs AFTER the priority-20 enqueue + the customizer
+ * bootstrap.php's `LWP_GOLD_ANIM` localise at priority 25). Both
+ * localise calls APPEND to the same `-js-extra` script block, so the
+ * frontend gets `var LWP_GOLD_ANIM = {...}; var LuwiGold = {...};`.
+ *
+ * Used by `setupTapPills()` in frontend.js to power client-side
+ * filtering on operator-built `.tap-pills` blocks (e.g. the homepage
+ * "All / String / Percussions / Bowed / Winds" tabs above the WC
+ * product grid). No operator data attributes needed: pill labels are
+ * slugified and matched against the localised tree.
+ *
+ * Skipped when WC is inactive (no product_cat taxonomy) or when the
+ * frontend script never ended up enqueued (some other handler killed
+ * it). Map shape: `{ "<top-level-slug>": [ "self-slug", "child-1",
+ * "child-2", ... ], ... }`.
+ */
+add_action( 'wp_enqueue_scripts', function () {
+	if ( ! wp_script_is( 'luwipress-gold-frontend', 'enqueued' ) ) {
+		return;
+	}
+	if ( ! taxonomy_exists( 'product_cat' ) ) {
+		return;
+	}
+
+	$top_level = get_terms( [
+		'taxonomy'   => 'product_cat',
+		'hide_empty' => true,
+		'parent'     => 0,
+		'fields'     => 'all',
+	] );
+	if ( is_wp_error( $top_level ) || empty( $top_level ) ) {
+		return;
+	}
+
+	$cat_tree = [];
+	foreach ( $top_level as $top ) {
+		$slugs = [ (string) $top->slug ];
+		$descendants = get_term_children( (int) $top->term_id, 'product_cat' );
+		if ( is_array( $descendants ) ) {
+			foreach ( $descendants as $desc_id ) {
+				$d = get_term( (int) $desc_id );
+				if ( $d instanceof \WP_Term && $d->count > 0 ) {
+					$slugs[] = (string) $d->slug;
+				}
+			}
+		}
+		$cat_tree[ (string) $top->slug ] = array_values( array_unique( $slugs ) );
+	}
+
+	wp_localize_script(
+		'luwipress-gold-frontend',
+		'LuwiGold',
+		[
+			'catTree' => $cat_tree,
+		]
+	);
+}, 30 );
+
+/**
  * THEME CSS at priority 9999 — ensures our stylesheets land AFTER every
  * plugin's CSS (WooCommerce, WCML, ElementsKit Lite, Yoast, etc.) and
  * AFTER any LiteSpeed CSS combine ordering. Specificity wars are won by

@@ -16,37 +16,140 @@
 	/*  1. Page loader — SVG spinning arc + brand mark + progress bar     */
 	/* ───────────────────────────────────────────────────────────────── */
 	function buildLoader() {
-		if ( prefersReduced ) return;
-		if ( document.body.classList.contains( 'elementor-editor-active' ) ) return;
-		if ( document.querySelector( '.lwp-loader' ) ) return;
+		// 1.6.4+: the loader overlay is now server-rendered (see
+		// inc/page-loader.php) and the boot class is set on <html> via
+		// an inline script in <head>. JS only handles dismissal here.
+		if ( document.body.classList.contains( 'elementor-editor-active' ) ) {
+			document.documentElement.classList.remove( 'lwp-booting' );
+			return;
+		}
 
-		var loader = document.createElement( 'div' );
-		loader.className = 'lwp-loader';
-		loader.id = 'lwp-loader';
-		loader.setAttribute( 'aria-hidden', 'true' );
-		loader.innerHTML =
-			'<div class="lwp-loader-inner">' +
-				'<svg class="lwp-loader-mark" viewBox="0 0 60 60" width="60" height="60" aria-hidden="true">' +
-					'<circle cx="30" cy="30" r="26" fill="none" stroke="currentColor" stroke-width="2" opacity=".25"/>' +
-					'<circle class="lwp-loader-arc" cx="30" cy="30" r="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="40 200"/>' +
-				'</svg>' +
-				'<span class="lwp-loader-text">Loading</span>' +
-				'<span class="lwp-loader-bar"><span></span></span>' +
-			'</div>';
-		document.body.insertBefore( loader, document.body.firstChild );
+		// Find or build the loader. Server-rendered path (recommended)
+		// hits the early-return; the legacy fallback below covers
+		// installs where the page-loader.php hooks didn't fire (e.g.
+		// custom Elementor canvas without wp_body_open, or filter
+		// suppression mid-flight).
+		var loader = document.querySelector( '.lwp-loader' );
+		if ( ! loader ) {
+			if ( prefersReduced ) {
+				document.documentElement.classList.remove( 'lwp-booting' );
+				return;
+			}
+			loader = document.createElement( 'div' );
+			loader.className = 'lwp-loader';
+			loader.id = 'lwp-loader';
+			loader.setAttribute( 'aria-hidden', 'true' );
+			loader.innerHTML =
+				'<div class="lwp-loader-inner">' +
+					'<svg class="lwp-loader-mark" viewBox="0 0 60 60" width="60" height="60" aria-hidden="true">' +
+						'<circle cx="30" cy="30" r="26" fill="none" stroke="currentColor" stroke-width="2" opacity=".25"/>' +
+						'<circle class="lwp-loader-arc" cx="30" cy="30" r="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="40 200"/>' +
+					'</svg>' +
+					'<span class="lwp-loader-text">Loading</span>' +
+					'<span class="lwp-loader-bar"><span></span></span>' +
+				'</div>';
+			document.body.insertBefore( loader, document.body.firstChild );
+		}
 
 		var hide = function () {
+			// 1.6.7: BEFORE fading the loader, force-reveal every element
+			// auto-tagged with [data-lwp-reveal] / [data-lwp-stagger]. Why:
+			// the loader signals "page ready" to the visitor — that
+			// promise is broken if scrolling below-the-fold uncovers
+			// `opacity: 0` sections waiting for IntersectionObserver to
+			// fire. Operator reported "I see the loader gone, scroll, and
+			// content suddenly appears halfway down — feels broken."
+			// The IO-driven fade-in is fine for content added LATER (AJAX,
+			// Elementor lazy sections), but everything already in the DOM
+			// when the page is "ready" should be visible immediately.
+			document.querySelectorAll( '[data-lwp-reveal]:not(.in), [data-lwp-stagger]:not(.in)' )
+				.forEach( function ( el ) { el.classList.add( 'in' ); } );
+
+			document.documentElement.classList.remove( 'lwp-booting' );
 			loader.classList.add( 'lwp-loaded' );
 			setTimeout( function () {
 				loader.parentNode && loader.parentNode.removeChild( loader );
 			}, 600 );
 		};
-		if ( document.readyState === 'complete' ) {
-			setTimeout( hide, 250 );
-		} else {
-			window.addEventListener( 'load', function () { setTimeout( hide, 250 ); } );
-			setTimeout( hide, 4000 ); /* hard cap */
+
+		// Reduced-motion: hide as soon as the DOM is parseable so the
+		// overlay never lingers — the visitor doesn't want decorative
+		// chrome.
+		if ( prefersReduced ) {
+			if ( document.readyState !== 'loading' ) {
+				hide();
+			} else {
+				document.addEventListener( 'DOMContentLoaded', hide, { once: true } );
+			}
+			return;
 		}
+
+		// 1.6.7: dismissal driven by REAL page-ready events, not a fixed
+		// timer. Operator: "loading sayfanın yüklenmesi ile entegre olsun,
+		// sadece timer olmasın". Sequence:
+		//   1) window.load fires (DOM + critical CSS + sync scripts done)
+		//   2) document.fonts.ready resolves (no FOIT/FOUT shift mid-read)
+		//   3) above-the-fold <img> elements all `.complete === true`
+		//   4) small stabilization tick (100ms) so layout settles
+		// Each gate has its OWN per-stage timeout (1500ms) so a single
+		// stalled font / image doesn't keep the visitor staring at the
+		// overlay forever. The hard ceiling lives in page-loader.php's
+		// inline `<head>` script (5s) — only fires if frontend.js itself
+		// breaks, never during normal rendering.
+		whenPageReady( hide );
+	}
+
+	function whenPageReady( cb ) {
+		var done = false;
+		var fire = function () {
+			if ( done ) return;
+			done = true;
+			cb();
+		};
+
+		function step3_aboveFoldImages() {
+			var imgs = document.querySelectorAll( 'img' );
+			var pending = [];
+			var vh = window.innerHeight;
+			for ( var i = 0; i < imgs.length; i++ ) {
+				var img = imgs[ i ];
+				if ( img.complete ) continue;
+				var r;
+				try { r = img.getBoundingClientRect(); } catch ( e ) { continue; }
+				// Only wait for images currently visible in initial viewport.
+				if ( r.bottom > 0 && r.top < vh ) {
+					pending.push( new Promise( function ( resolve ) {
+						var settle = function () { resolve(); };
+						img.addEventListener( 'load',  settle, { once: true } );
+						img.addEventListener( 'error', settle, { once: true } );
+						// per-image timeout — slow CDN shouldn't hold the page
+						setTimeout( settle, 1500 );
+					} ) );
+				}
+			}
+			Promise.all( pending ).then( function () {
+				setTimeout( fire, 100 );
+			} );
+		}
+
+		function step2_fontsReady() {
+			if ( document.fonts && document.fonts.ready && typeof document.fonts.ready.then === 'function' ) {
+				var fontsTimeout = new Promise( function ( resolve ) { setTimeout( resolve, 1500 ); } );
+				Promise.race( [ document.fonts.ready, fontsTimeout ] ).then( step3_aboveFoldImages );
+			} else {
+				step3_aboveFoldImages();
+			}
+		}
+
+		function step1_windowLoad() {
+			if ( document.readyState === 'complete' ) {
+				step2_fontsReady();
+			} else {
+				window.addEventListener( 'load', step2_fontsReady, { once: true } );
+			}
+		}
+
+		step1_windowLoad();
 	}
 
 	/* ───────────────────────────────────────────────────────────────── */
@@ -280,6 +383,111 @@
 	}
 
 	/* ───────────────────────────────────────────────────────────────── */
+	/*  9. Operator-built `.tap-pills` filter — client-side category      */
+	/*  filtering for HTML-widget pill bars sitting above a WC product   */
+	/*  grid. No operator data attributes required: each pill's text is  */
+	/*  slugified and matched against the localised category tree.       */
+	/*  Designed so a hand-coded Elementor section (`.tap-pills` + the   */
+	/*  next `ul.products` grid) becomes interactive without any         */
+	/*  operator-side JS or markup additions.                            */
+	/* ───────────────────────────────────────────────────────────────── */
+	function setupTapPills() {
+		var containers = document.querySelectorAll( '.tap-pills' );
+		if ( ! containers.length ) return;
+		var tree = ( window.LuwiGold && window.LuwiGold.catTree ) || {};
+
+		function slugify( text ) {
+			return ( text || '' ).toString().toLowerCase().trim()
+				.replace( /[^a-z0-9]+/g, '-' )
+				.replace( /^-+|-+$/g, '' );
+		}
+
+		// Find the slug-set the pill represents. "All" / empty → null
+		// (show everything). Otherwise: exact key, then plural variants,
+		// then prefix match. Returns null when no top-level branch fits.
+		function resolvePill( label ) {
+			var s = slugify( label );
+			if ( s === '' || s === 'all' ) return null;
+			if ( tree[ s ] ) return tree[ s ];
+			if ( tree[ s + 's' ] ) return tree[ s + 's' ];
+			if ( tree[ s + 'es' ] ) return tree[ s + 'es' ];
+			// Prefix: pill "Bowed" → top-level "bowed-instruments".
+			for ( var key in tree ) {
+				if ( ! tree.hasOwnProperty( key ) ) continue;
+				if ( key === s || key.indexOf( s + '-' ) === 0 ) return tree[ key ];
+			}
+			// Inverse prefix: pill "String Instruments" → "string-instruments".
+			for ( var key2 in tree ) {
+				if ( ! tree.hasOwnProperty( key2 ) ) continue;
+				if ( s.indexOf( key2 ) === 0 || s === key2 ) return tree[ key2 ];
+			}
+			return null;
+		}
+
+		containers.forEach( function ( container ) {
+			var pills = container.querySelectorAll( 'a' );
+			if ( ! pills.length ) return;
+
+			// Find the closest product grid downstream of the pill bar.
+			// Walk up to find a common ancestor that also contains a
+			// `ul.products`, then descend to it.
+			var grid = null;
+			var ancestor = container.parentElement;
+			while ( ancestor && ! grid ) {
+				grid = ancestor.querySelector( 'ul.products' );
+				if ( ! grid ) ancestor = ancestor.parentElement;
+				if ( ancestor === document.body ) break;
+			}
+			if ( ! grid ) return;
+
+			var items = grid.querySelectorAll( 'li.product' );
+			if ( ! items.length ) return;
+
+			// Cache each item's class slug-set once so click handler is fast.
+			var itemSlugs = [];
+			items.forEach( function ( li ) {
+				var slugs = [];
+				li.classList.forEach( function ( c ) {
+					if ( c.indexOf( 'product_cat-' ) === 0 ) {
+						slugs.push( c.substring( 12 ) );
+					}
+				} );
+				itemSlugs.push( slugs );
+			} );
+
+			pills.forEach( function ( pill ) {
+				pill.addEventListener( 'click', function ( e ) {
+					e.preventDefault();
+					pills.forEach( function ( p ) { p.classList.remove( 'on' ); } );
+					pill.classList.add( 'on' );
+
+					var allowed = resolvePill( pill.textContent );
+
+					items.forEach( function ( li, idx ) {
+						if ( allowed === null ) {
+							li.style.display = '';
+							return;
+						}
+						var match = false;
+						var slugs = itemSlugs[ idx ];
+						for ( var i = 0; i < slugs.length; i++ ) {
+							if ( allowed.indexOf( slugs[ i ] ) !== -1 ) {
+								match = true;
+								break;
+							}
+						}
+						li.style.display = match ? '' : 'none';
+					} );
+
+					// Smooth fade — leverages existing transition on
+					// .lwp-pcard. No layout jump because flex/grid
+					// reflows once items disappear.
+				} );
+			} );
+		} );
+	}
+
+	/* ───────────────────────────────────────────────────────────────── */
 	/*  Boot                                                              */
 	/* ───────────────────────────────────────────────────────────────── */
 	function boot() {
@@ -293,6 +501,7 @@
 		setupCartDrawer();
 		setupAccountPopover();
 		setupStickyPdp();
+		setupTapPills();
 	}
 
 	if ( document.readyState === 'loading' ) {
@@ -470,13 +679,6 @@
 					'<span class="bar"></span><span class="bar"></span>' +
 				'</button>' +
 			'</header>' +
-			'<div class="lwp-mobile-drawer__search">' +
-				'<label class="lwp-mobile-drawer__search-field">' +
-					'<span class="icon" aria-hidden="true">⌕</span>' +
-					'<input type="search" placeholder="Search instruments, masters…" data-lwp-drw-search />' +
-					'<span class="ai-badge">AI</span>' +
-				'</label>' +
-			'</div>' +
 			'<div class="lwp-mobile-drawer__body">' +
 				'<div class="lwp-mobile-drawer__lbl">Browse</div>' +
 				'<div data-lwp-drw-nav></div>' +
@@ -494,26 +696,38 @@
 		// Build nav rows from source menu — children → <details> accordion,
 		// childless → flat italic row. WPML/Polylang language items already
 		// stripped server-side in the mega-menu walker since 1.5.1.
+		// Strip mega-menu count chips, chevrons and trailing fused digits from any anchor's
+		// textContent so the drawer never shows duplicated counts ("Foo47> 47" → "Foo").
+		// Mobile Spec Preview design: drawer rows show category name only.
+		var cleanLabel = function ( a ) {
+			if ( ! a ) return '';
+			var clone = a.cloneNode( true );
+			clone.querySelectorAll(
+				'.lwp-mm-top-count, .lwp-mm-sub-count, .lwp-mm-chev, .lwp-mm-arrow, ' +
+				'.menu-item-count, .count, .badge, sup, svg'
+			).forEach( function ( el ) { el.remove(); } );
+			return clone.textContent
+				.replace( /[▸▾▼►▶+−·›»>]+/g, '' )
+				.replace( /\s*\d+\s*$/, '' )
+				.replace( /\s+/g, ' ' )
+				.trim();
+		};
+
 		Array.prototype.forEach.call( sourceMenu.children, function ( li ) {
 			var anchor = li.querySelector( ':scope > a' );
 			if ( ! anchor ) return;
-			var label = anchor.textContent.replace( /[▸▾▼+−·]+|\s+\d+\s*$/g, '' ).trim();
+			var label = cleanLabel( anchor );
 			if ( ! label ) return;
 
 			var subSource = li.querySelector( '.lwp-mm-panel, .lwp-mm-dropdown' );
 			var subLinks  = subSource ? subSource.querySelectorAll( 'a[href]' ) : [];
-			var topCount  = ( anchor.querySelector( '.lwp-mm-top-count' ) || {} ).textContent;
-			topCount = ( topCount || '' ).trim();
 
 			if ( subLinks.length ) {
 				var det = document.createElement( 'details' );
 				det.className = 'lwp-drw-acc';
 				var sum = document.createElement( 'summary' );
 				sum.innerHTML =
-					'<span class="nm">' +
-						'<span>' + label + '</span>' +
-						( topCount ? '<span class="ct">' + topCount + '</span>' : '' ) +
-					'</span>' +
+					'<span class="nm"><span>' + label + '</span></span>' +
 					'<span class="pm" aria-hidden="true"></span>';
 				det.appendChild( sum );
 
@@ -531,15 +745,11 @@
 					list.appendChild( aAll );
 				}
 				Array.prototype.forEach.call( subLinks, function ( a ) {
-					var raw = a.textContent.replace( /\s+/g, ' ' ).trim();
-					if ( ! raw ) return;
-					// Pull trailing count "Arabic Oud 24" → name "Arabic Oud", count "24"
-					var m = raw.match( /^(.+?)\s+(\d+)\s*$/ );
-					var nm = m ? m[1].trim() : raw;
-					var ct = m ? m[2] : '';
+					var nm = cleanLabel( a );
+					if ( ! nm ) return;
 					var aSub = document.createElement( 'a' );
 					aSub.href = a.href;
-					aSub.innerHTML = '<span>' + nm + '</span>' + ( ct ? '<span class="ct">' + ct + '</span>' : '' );
+					aSub.innerHTML = '<span>' + nm + '</span>';
 					list.appendChild( aSub );
 				} );
 				panelInner.appendChild( list );
@@ -724,5 +934,112 @@
 		document.addEventListener( 'DOMContentLoaded', initMobileDrawer );
 	} else {
 		initMobileDrawer();
+	}
+
+	/* ─────────────────────────────────────────────────────────── */
+	/* Reading-progress bar — single-post only. rAF-throttled.     */
+	/* Source: Mobile Spec Preview §07                              */
+	/* ─────────────────────────────────────────────────────────── */
+	function initReadingProgress() {
+		var bar = document.querySelector( '.lwp-reading-progress > i' );
+		if ( ! bar ) return;
+		var article = document.querySelector( '.lwp-journal-article, article.type-post, article.post' ) || document.documentElement;
+		var ticking = false;
+		var update = function () {
+			ticking = false;
+			var rect = article.getBoundingClientRect();
+			var viewportH = window.innerHeight || document.documentElement.clientHeight;
+			var scrollable = rect.height - viewportH;
+			if ( scrollable <= 0 ) { bar.style.width = '100%'; return; }
+			var passed = Math.min( Math.max( -rect.top, 0 ), scrollable );
+			bar.style.width = ( passed / scrollable * 100 ).toFixed( 2 ) + '%';
+		};
+		var onScroll = function () {
+			if ( ticking ) return;
+			ticking = true;
+			window.requestAnimationFrame( update );
+		};
+		window.addEventListener( 'scroll', onScroll, { passive: true } );
+		window.addEventListener( 'resize', onScroll, { passive: true } );
+		update();
+	}
+	if ( document.readyState === 'loading' ) {
+		document.addEventListener( 'DOMContentLoaded', initReadingProgress );
+	} else {
+		initReadingProgress();
+	}
+
+	/* ─────────────────────────────────────────────────────────── */
+	/* Audio card — Mobile Spec §05 (Master Profile sample player) */
+	/* ─────────────────────────────────────────────────────────── */
+	function initAudioCards() {
+		var cards = document.querySelectorAll( '.lwp-audio-card' );
+		var fmt = function ( s ) {
+			if ( ! isFinite( s ) ) return '--:--';
+			var m = Math.floor( s / 60 );
+			var r = Math.floor( s % 60 );
+			return m + ':' + ( r < 10 ? '0' : '' ) + r;
+		};
+		cards.forEach( function ( card ) {
+			var audio = card.querySelector( 'audio' );
+			var btn   = card.querySelector( '.play' );
+			var bar   = card.querySelector( '.bar > i' );
+			var cur   = card.querySelector( '.cur' );
+			var dur   = card.querySelector( '.dur' );
+			if ( ! audio || ! btn ) return;
+			btn.addEventListener( 'click', function () {
+				if ( audio.paused ) {
+					document.querySelectorAll( '.lwp-audio-card audio' ).forEach( function ( a ) { if ( a !== audio ) a.pause(); } );
+					audio.play();
+					btn.textContent = '❚❚';
+				} else {
+					audio.pause();
+					btn.textContent = '▶';
+				}
+			} );
+			audio.addEventListener( 'loadedmetadata', function () {
+				if ( dur ) dur.textContent = fmt( audio.duration );
+			} );
+			audio.addEventListener( 'timeupdate', function () {
+				if ( cur ) cur.textContent = fmt( audio.currentTime );
+				if ( bar && audio.duration ) bar.style.width = ( audio.currentTime / audio.duration * 100 ) + '%';
+			} );
+			audio.addEventListener( 'ended', function () {
+				btn.textContent = '▶';
+				if ( bar ) bar.style.width = '0%';
+			} );
+		} );
+	}
+	if ( document.readyState === 'loading' ) {
+		document.addEventListener( 'DOMContentLoaded', initAudioCards );
+	} else {
+		initAudioCards();
+	}
+
+	/* ─────────────────────────────────────────────────────────── */
+	/* Reason chips — Mobile Spec §08 (Contact)                    */
+	/* ─────────────────────────────────────────────────────────── */
+	function initReasonChips() {
+		var groups = document.querySelectorAll( '.lwp-reason-chips' );
+		groups.forEach( function ( g ) {
+			g.addEventListener( 'click', function ( e ) {
+				var btn = e.target.closest( 'button[data-reason], [data-reason]' );
+				if ( ! btn ) return;
+				g.querySelectorAll( '[data-reason]' ).forEach( function ( b ) {
+					b.classList.remove( 'is-active' );
+					b.setAttribute( 'aria-checked', 'false' );
+				} );
+				btn.classList.add( 'is-active' );
+				btn.setAttribute( 'aria-checked', 'true' );
+				// Mirror to a hidden form field if present (#lwp-reason-input).
+				var sink = document.getElementById( 'lwp-reason-input' );
+				if ( sink ) sink.value = btn.getAttribute( 'data-reason' );
+			} );
+		} );
+	}
+	if ( document.readyState === 'loading' ) {
+		document.addEventListener( 'DOMContentLoaded', initReasonChips );
+	} else {
+		initReasonChips();
 	}
 })();

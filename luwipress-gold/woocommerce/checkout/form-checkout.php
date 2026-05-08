@@ -23,6 +23,24 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 }
 ?>
 
+<div class="lwp-checkout-steps" role="presentation" aria-hidden="true">
+	<span class="done"></span>
+	<span class="current"></span>
+	<span></span>
+</div>
+
+<details class="lwp-order-summary-collapsible" open>
+	<summary>
+		<span class="lbl"><?php
+			$cart_count = WC()->cart ? WC()->cart->get_cart_contents_count() : 0;
+			/* translators: %d: cart item count */
+			printf( esc_html( _n( 'Order summary · %d item', 'Order summary · %d items', $cart_count, 'luwipress-gold' ) ), $cart_count );
+		?></span>
+		<span class="v"><?php echo wp_kses_post( WC()->cart ? WC()->cart->get_total() : '' ); ?></span>
+	</summary>
+</details>
+
+
 <form name="checkout" method="post" class="checkout woocommerce-checkout lwp-co-form" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data">
 
 	<div class="lwp-co-grid">
@@ -141,3 +159,15 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 </form>
 
 <?php do_action( 'woocommerce_after_checkout_form', $checkout ); ?>
+
+<?php
+// Sticky pay-total bar — Mobile Spec §10. Mirrors Woo's #place_order via JS click.
+?>
+<div class="lwp-sticky-cart-bar" role="region" aria-label="<?php esc_attr_e( 'Pay total and place order', 'luwipress-gold' ); ?>">
+	<div class="px">
+		<span class="lbl"><?php esc_html_e( 'Pay total', 'luwipress-gold' ); ?></span>
+		<span class="v"><?php echo wp_kses_post( WC()->cart ? WC()->cart->get_total() : '' ); ?></span>
+	</div>
+	<button type="button" class="button" onclick="var b=document.getElementById('place_order');if(b){b.click();}"><?php esc_html_e( 'Place order →', 'luwipress-gold' ); ?></button>
+</div>
+<script>document.body.classList.add('has-lwp-sticky-bar');</script>

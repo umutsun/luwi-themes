@@ -17,18 +17,78 @@ class LuwiPress_Gold_Detector {
 	 */
 	public function snapshot() {
 		return [
-			'site'        => $this->detect_site(),
-			'wc'          => $this->detect_woocommerce(),
-			'content'     => $this->detect_content(),
-			'i18n'        => $this->detect_languages(),
-			'menus'       => $this->detect_menus(),
-			'theme_state' => $this->detect_theme_state(),
-			'plugins'     => $this->detect_plugins(),
-			'seo'         => $this->detect_seo(),
-			'top_sellers' => $this->detect_top_sellers(),
-			'top_terms'   => $this->detect_top_terms(),
-			'masters'     => $this->detect_master_luthiers(),
+			'site'           => $this->detect_site(),
+			'wc'             => $this->detect_woocommerce(),
+			'content'        => $this->detect_content(),
+			'i18n'           => $this->detect_languages(),
+			'menus'          => $this->detect_menus(),
+			'theme_state'    => $this->detect_theme_state(),
+			'plugins'        => $this->detect_plugins(),
+			'seo'            => $this->detect_seo(),
+			'top_sellers'    => $this->detect_top_sellers(),
+			'top_terms'      => $this->detect_top_terms(),
+			'masters'        => $this->detect_master_luthiers(),
+			'slug_conflicts' => $this->detect_slug_conflicts(),
 		];
+	}
+
+	/**
+	 * Find page slugs that collide with non-empty product_cat term slugs.
+	 *
+	 * Returns one row per conflict: page details + matching term details +
+	 * the proposed redirect URL. Empty array when:
+	 *   - WooCommerce is inactive
+	 *   - No published page shares a slug with a product category
+	 *
+	 * Used by the wizard "Detect" panel to show the operator a transparent
+	 * preview of what will be redirected if they opt into auto-resolution
+	 * on the Apply step.
+	 *
+	 * Read-only — only SELECTs, no writes.
+	 *
+	 * @return array<int,array{slug:string,page_id:int,page_title:string,page_url:string,term_id:int,term_name:string,term_count:int,target_url:string}>
+	 */
+	public function detect_slug_conflicts() {
+		if ( ! taxonomy_exists( 'product_cat' ) ) {
+			return [];
+		}
+		global $wpdb;
+		// One row per (page, matching term). LEFT-fielding the page first
+		// so we get a proper INNER join only when the term exists.
+		$rows = $wpdb->get_results(
+			"SELECT p.ID AS page_id, p.post_title AS page_title, p.post_name AS slug,
+			        t.term_id AS term_id, t.name AS term_name, tt.count AS term_count
+			   FROM {$wpdb->posts} p
+			   INNER JOIN {$wpdb->terms} t ON p.post_name = t.slug
+			   INNER JOIN {$wpdb->term_taxonomy} tt ON t.term_id = tt.term_id
+			  WHERE p.post_type = 'page'
+			    AND p.post_status = 'publish'
+			    AND tt.taxonomy = 'product_cat'
+			    AND tt.count > 0
+			  ORDER BY tt.count DESC, p.post_title ASC",
+			ARRAY_A
+		);
+		if ( ! is_array( $rows ) || empty( $rows ) ) {
+			return [];
+		}
+		$out = [];
+		foreach ( $rows as $r ) {
+			$slug = (string) $r['slug'];
+			if ( $slug === '' ) {
+				continue;
+			}
+			$out[] = [
+				'slug'       => $slug,
+				'page_id'    => (int) $r['page_id'],
+				'page_title' => (string) $r['page_title'],
+				'page_url'   => home_url( '/' . $slug . '/' ),
+				'term_id'    => (int) $r['term_id'],
+				'term_name'  => (string) $r['term_name'],
+				'term_count' => (int) $r['term_count'],
+				'target_url' => home_url( '/product-category/' . $slug . '/' ),
+			];
+		}
+		return $out;
 	}
 
 	/* --------------------------------------------------------------------

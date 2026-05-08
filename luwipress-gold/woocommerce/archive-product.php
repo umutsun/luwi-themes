@@ -170,31 +170,15 @@ if ( $is_term && 'product_cat' === $current_obj->taxonomy ) {
 
 			<aside class="lwp-shop-sidebar" aria-label="<?php esc_attr_e( 'Filters', 'luwipress-gold' ); ?>">
 				<?php
-				// Render sidebar widgets if the operator has set them up; otherwise show
-				// a minimal cat-tree filter so the column isn't empty.
+				// Operator-configured sidebar wins. Otherwise fall back to
+				// the generic smart filter sidebar (price + attributes +
+				// tags + on-sale/in-stock toggles). The legacy "Categories"
+				// list was removed in 1.6.1 — it duplicated the mega menu
+				// and added no real filtering value.
 				if ( is_active_sidebar( 'shop-sidebar' ) ) {
 					dynamic_sidebar( 'shop-sidebar' );
-				} else {
-					$cats = get_terms( [
-						'taxonomy'   => 'product_cat',
-						'parent'     => 0,
-						'hide_empty' => true,
-						'number'     => 8,
-					] );
-					if ( ! empty( $cats ) && ! is_wp_error( $cats ) ) :
-						?>
-						<div class="lwp-filter-block">
-							<h5><?php esc_html_e( 'Categories', 'luwipress-gold' ); ?></h5>
-							<?php foreach ( $cats as $c ) : ?>
-								<label>
-									<a href="<?php echo esc_url( get_term_link( $c ) ); ?>" style="text-decoration:none;color:inherit;flex:1;">
-										<?php echo esc_html( $c->name ); ?>
-									</a>
-									<span><?php echo (int) $c->count; ?></span>
-								</label>
-							<?php endforeach; ?>
-						</div>
-					<?php endif;
+				} elseif ( function_exists( 'luwipress_gold_render_smart_filters' ) ) {
+					luwipress_gold_render_smart_filters( $is_term ? $current_obj : null );
 				}
 				?>
 			</aside>

@@ -72,11 +72,29 @@ $recent_orders = wc_get_orders( [
 ] );
 ?>
 
-<h2><?php
-	/* translators: %s: customer first name */
-	printf( esc_html__( 'Hello, %s.', 'luwipress-gold' ), esc_html( $current_user->first_name ?: $current_user->display_name ) );
-?></h2>
-<p class="lwp-acct-sub"><?php esc_html_e( "Welcome back. Here's a snapshot of your atelier — recent orders, saved addresses, and the instruments you've been watching.", 'luwipress-gold' ); ?></p>
+<header class="lwp-account-greeting">
+	<span class="eyebrow" style="font-family:var(--mono);font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)"><?php esc_html_e( 'Account', 'luwipress-gold' ); ?></span>
+	<h1><?php
+		/* translators: %s: customer first name (wrapped <em> for italic accent) */
+		printf(
+			wp_kses( __( 'Welcome back, <em>%s</em>.', 'luwipress-gold' ), [ 'em' => [] ] ),
+			esc_html( $current_user->first_name ?: $current_user->display_name )
+		);
+	?></h1>
+	<p class="meta lwp-acct-sub"><?php
+		$member_year = $current_user->user_registered ? gmdate( 'Y', strtotime( $current_user->user_registered ) ) : '';
+		$bits = [];
+		if ( $member_year ) {
+			/* translators: %s: registration year */
+			$bits[] = sprintf( esc_html__( 'Member since %s', 'luwipress-gold' ), esc_html( $member_year ) );
+		}
+		/* translators: %d: total orders */
+		$bits[] = sprintf( esc_html( _n( '%d order', '%d orders', $total_orders, 'luwipress-gold' ) ), $total_orders );
+		/* translators: %d: saved instruments count */
+		$bits[] = sprintf( esc_html( _n( '%d favorite', '%d favorites', $saved_count, 'luwipress-gold' ) ), $saved_count );
+		echo esc_html( implode( ' · ', $bits ) );
+	?></p>
+</header>
 
 <div class="lwp-acct-stats">
 	<div class="lwp-acct-stat">

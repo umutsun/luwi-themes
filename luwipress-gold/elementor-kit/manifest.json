@@ -23,6 +23,8 @@
     "about": { "file": "06-about.json", "type": "page", "slug": "about" },
     "master_profile": { "file": "07-master-profile.json", "type": "page", "slug": "masters/_template" },
     "journal": { "file": "08-journal.json", "type": "page", "slug": "journal" },
+    "journal_archive": { "file": "08a-journal-archive.json", "type": "archive", "location": "archive", "_note": "Theme Builder Archive — overrides default category/tag/date archives. Falls back to 08-journal.json if Theme Builder unavailable." },
+    "journal_single": { "file": "08b-journal-single.json", "type": "single", "location": "single-post", "_note": "Theme Builder Single — applied to all blog posts. Requires [tapadum_post_meta] + [tapadum_author_card] shortcodes registered in functions.php." },
     "contact": { "file": "09-contact.json", "type": "page", "slug": "contact" },
     "404": { "file": "10-404.json", "type": "404", "location": "404" }
   },

@@ -34,10 +34,14 @@ class LuwiPress_Gold_Importer {
 	 *
 	 * @param string $path    use_existing | tapadum_demo | empty
 	 * @param array  $brand   { logo_id, primary_color, accent_color, phone, email }
+	 * @param array  $opts    Apply-time toggles. Currently:
+	 *                        - resolve_slug_conflicts (bool) — when true and
+	 *                          slug conflicts exist, sets the theme_mod that
+	 *                          activates auto-redirects.
 	 *
 	 * @return array|WP_Error  Per-action log + counts, or WP_Error on hard failure.
 	 */
-	public function apply( $path, $brand = [] ) {
+	public function apply( $path, $brand = [], $opts = [] ) {
 		// Re-derive plan to ensure it matches the current snapshot at apply-time.
 		$detector = new LuwiPress_Gold_Detector();
 		$this->snapshot = $detector->snapshot();
@@ -125,6 +129,27 @@ class LuwiPress_Gold_Importer {
 		foreach ( $plan['options'] as $name => $value ) {
 			update_option( $name, $value );
 			$log['options'][] = $name;
+		}
+
+		// 4b. Slug-conflict resolution opt-in. Operator confirmed at the
+		// Apply step that they want auto-301 from /<slug>/ to
+		// /product-category/<slug>/ for every detected page-vs-term
+		// collision. Persist the theme_mod; the runtime module
+		// (inc/template-redirects.php) discovers conflicts dynamically
+		// and applies the redirects on every front-end hit.
+		if ( ! empty( $opts['resolve_slug_conflicts'] ) ) {
+			$conflicts = isset( $this->snapshot['slug_conflicts'] ) && is_array( $this->snapshot['slug_conflicts'] )
+				? $this->snapshot['slug_conflicts']
+				: [];
+			set_theme_mod( 'luwipress_gold_resolve_slug_conflicts', true );
+			$log['actions'][] = [
+				'op'     => 'resolve_slug_conflicts',
+				'status' => 'ok',
+				'detail' => [
+					'count' => count( $conflicts ),
+					'slugs' => array_map( function ( $c ) { return $c['slug']; }, $conflicts ),
+				],
+			];
 		}
 
 		// 5. Menu suggestions — only if the operator has chosen to apply.

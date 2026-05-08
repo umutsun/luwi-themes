@@ -37,22 +37,28 @@ $elementor_header_active =
 
 if ( ! $elementor_header_active ) :
 
-	$primary_menu_id = 0;
-	$locations = get_nav_menu_locations();
-	if ( ! empty( $locations['primary'] ) ) {
-		$primary_menu_id = (int) $locations['primary'];
-	} else {
-		// Fall back to the largest registered menu.
-		$menus = wp_get_nav_menus();
-		$best  = null;
-		foreach ( $menus as $m ) {
-			$items = wp_get_nav_menu_items( $m->term_id );
-			$count = is_array( $items ) ? count( $items ) : 0;
-			if ( ! $best || $count > $best['count'] ) {
-				$best = [ 'id' => $m->term_id, 'count' => $count ];
+	// Resolution order for the header mega menu:
+	//   1. Customizer override   → theme_mod luwipress_gold_mega_menu_id
+	//   2. WP "primary" location → registered theme menu location
+	//   3. Largest registered menu (failsafe so a fresh install still
+	//      surfaces something rather than a blank header).
+	$primary_menu_id = (int) get_theme_mod( 'luwipress_gold_mega_menu_id', 0 );
+	if ( ! $primary_menu_id ) {
+		$locations = get_nav_menu_locations();
+		if ( ! empty( $locations['primary'] ) ) {
+			$primary_menu_id = (int) $locations['primary'];
+		} else {
+			$menus = wp_get_nav_menus();
+			$best  = null;
+			foreach ( $menus as $m ) {
+				$items = wp_get_nav_menu_items( $m->term_id );
+				$count = is_array( $items ) ? count( $items ) : 0;
+				if ( ! $best || $count > $best['count'] ) {
+					$best = [ 'id' => $m->term_id, 'count' => $count ];
+				}
 			}
+			$primary_menu_id = $best ? (int) $best['id'] : 0;
 		}
-		$primary_menu_id = $best ? (int) $best['id'] : 0;
 	}
 
 	$site_url = esc_url( home_url( '/' ) );
@@ -217,10 +223,15 @@ if ( ! $elementor_header_active ) :
 
 		<?php
 		if ( $primary_menu_id && class_exists( 'LuwiPress_Gold_Widget_Mega_Menu' ) ) {
+			// Pull defaults from Customizer → LuwiPress Gold → Mega menu so
+			// the operator can change behaviour without editing the header
+			// template.
 			LuwiPress_Gold_Widget_Mega_Menu::render_navigation_html( $primary_menu_id, [
-				'threshold'   => 4,
-				'cols_pref'   => 'auto',
-				'show_counts' => true,
+				'threshold'   => max( 2, min( 12, (int) get_theme_mod( 'luwipress_gold_mega_threshold', 4 ) ) ),
+				'cols_pref'   => in_array( (string) get_theme_mod( 'luwipress_gold_mega_columns', 'auto' ), [ 'auto', '2', '3', '4' ], true )
+					? (string) get_theme_mod( 'luwipress_gold_mega_columns', 'auto' )
+					: 'auto',
+				'show_counts' => (bool) get_theme_mod( 'luwipress_gold_mega_show_counts', true ),
 			] );
 		}
 		?>

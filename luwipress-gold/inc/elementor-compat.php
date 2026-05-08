@@ -56,9 +56,29 @@ add_filter( 'body_class', function ( $classes ) {
 } );
 
 /* ---------------------------------------------------------------------------
- * 3. Auto-pick Elementor "Canvas" page template when the post meta says so.
- *    Set _lwp_canvas = 1 on a page (or use the Kit JSON) and the Elementor
- *    Canvas template kicks in — full-bleed, no header/footer wrapper.
+ * 3. Template-include resolution — runs at priority 99 so it overrides
+ *    Elementor's own page-templates module (which hooks at default 10).
+ *
+ *    Two routing rules, in priority order:
+ *
+ *    a) `_lwp_canvas = 1` post meta → load Elementor's bundled Canvas
+ *       template (full-bleed, no header/footer wrapper). Set this via
+ *       Kit JSON import or manually on a landing page.
+ *
+ *    b) `_wp_page_template = elementor_header_footer` (with or without
+ *       `.php` extension) → load OUR `elementor_header_footer.php`
+ *       template, NOT Elementor's bundled `header-footer.php`.
+ *
+ *       Why we override Elementor's bundled file: it's a bare
+ *       `get_header() + the_content() + get_footer()` — emits no
+ *       `<main>` wrapper, no `<article>`, no breadcrumb, no
+ *       reading-progress hook. Posts migrated from Hello Elementor
+ *       carry this template meta, so Elementor's bare file kicks in
+ *       and the post renders without theme chrome — exactly the
+ *       "single post gelmiyor" symptom. Our version wraps the content
+ *       in `<main class="lwp-elementor-page lwp-elementor-page--canvas"
+ *       id="primary">` so accessibility, reading-progress, and Gold
+ *       chrome all stay intact.
  * ------------------------------------------------------------------------- */
 add_filter( 'template_include', function ( $template ) {
 	if ( ! did_action( 'elementor/loaded' ) ) return $template;
@@ -66,11 +86,25 @@ add_filter( 'template_include', function ( $template ) {
 	$post = get_queried_object();
 	if ( ! $post || ! isset( $post->ID ) ) return $template;
 
+	// (a) _lwp_canvas → Elementor bare canvas
 	$canvas = get_post_meta( $post->ID, '_lwp_canvas', true );
 	if ( $canvas ) {
 		$canvas_path = WP_PLUGIN_DIR . '/elementor/modules/page-templates/templates/canvas.php';
 		if ( file_exists( $canvas_path ) ) {
 			return $canvas_path;
+		}
+	}
+
+	// (b) _wp_page_template = elementor_header_footer → OUR canvas with
+	//     theme chrome. Match both `elementor_header_footer` (legacy
+	//     Hello Elementor migration shape) and `elementor_header_footer.php`.
+	if ( is_singular() ) {
+		$page_tpl = (string) get_post_meta( $post->ID, '_wp_page_template', true );
+		if ( $page_tpl === 'elementor_header_footer' || $page_tpl === 'elementor_header_footer.php' ) {
+			$ours = LUWIPRESS_GOLD_DIR . '/elementor_header_footer.php';
+			if ( file_exists( $ours ) ) {
+				return $ours;
+			}
 		}
 	}
 

@@ -56,6 +56,48 @@ $archive_desc  = get_the_archive_description();
 			<?php endif; ?>
 		</header>
 
+		<?php
+		/**
+		 * Category chip strip — opt-in (default OFF since 1.6.2).
+		 *
+		 * Most stores already expose blog categories in the mega menu
+		 * (the theme's mega menu auto-injects them under the BLOG top
+		 * item), so rendering them a second time above every archive
+		 * grid is redundant noise. Sites that prefer the chip rail can
+		 * flip the filter to true:
+		 *
+		 *   add_filter( 'luwipress_gold_show_archive_category_chips', '__return_true' );
+		 */
+		$show_chips = (bool) apply_filters(
+			'luwipress_gold_show_archive_category_chips',
+			false,
+			is_archive() ? get_queried_object() : null
+		);
+		if ( $show_chips && ( is_home() || is_category() || is_tag() || is_post_type_archive( 'post' ) ) ) :
+			$chip_terms = get_terms( [
+				'taxonomy'   => 'category',
+				'hide_empty' => true,
+				'number'     => 12,
+				'orderby'    => 'count',
+				'order'      => 'DESC',
+			] );
+			if ( ! is_wp_error( $chip_terms ) && $chip_terms ) :
+				$current_cat_id = is_category() ? get_queried_object_id() : 0;
+				$total_posts    = (int) wp_count_posts( 'post' )->publish;
+		?>
+		<nav class="lwp-cat-chips" aria-label="<?php esc_attr_e( 'Filter by category', 'luwipress-gold' ); ?>">
+			<a href="<?php echo esc_url( get_post_type_archive_link( 'post' ) ?: home_url( '/' ) ); ?>" class="<?php echo ( ! $current_cat_id ) ? 'is-active' : ''; ?>"><?php
+				/* translators: %d: total post count */
+				printf( esc_html__( 'All · %d', 'luwipress-gold' ), $total_posts );
+			?></a>
+			<?php foreach ( $chip_terms as $term ) : ?>
+				<a href="<?php echo esc_url( get_term_link( $term ) ); ?>" class="<?php echo ( (int) $term->term_id === $current_cat_id ) ? 'is-active' : ''; ?>"><?php
+					echo esc_html( $term->name . ' · ' . $term->count );
+				?></a>
+			<?php endforeach; ?>
+		</nav>
+		<?php endif; endif; ?>
+
 		<?php if ( have_posts() ) : ?>
 
 			<div class="lwp-jnl-grid">

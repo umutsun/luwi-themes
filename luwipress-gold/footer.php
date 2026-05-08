@@ -24,12 +24,9 @@ if ( ! $elementor_footer_active ) :
 		__( 'Hand-tuned in our atelier · Shipped worldwide', 'luwipress-gold' )
 	);
 
-	$social = [
-		'instagram' => [ 'icon' => '◎', 'label' => 'Instagram' ],
-		'youtube'   => [ 'icon' => '▶', 'label' => 'YouTube' ],
-		'facebook'  => [ 'icon' => 'f', 'label' => 'Facebook' ],
-		'whatsapp'  => [ 'icon' => 'w', 'label' => 'WhatsApp' ],
-	];
+	// Social-icon rendering moved to inc/footer-enhancements.php where the
+	// full SVG icon set + Customizer wiring live. Footer.php just calls
+	// the helper. The helper renders nothing when no social URL is set.
 
 	// Customer care + explore menus from registered nav menus, or auto-build.
 	$has_care    = has_nav_menu( 'footer' );
@@ -46,16 +43,11 @@ if ( ! $elementor_footer_active ) :
 			<?php if ( $blurb ) : ?>
 				<p class="lwp-site-footer-blurb"><?php echo esc_html( $blurb ); ?></p>
 			<?php endif; ?>
-			<div class="lwp-site-footer-social">
-				<?php foreach ( $social as $key => $cfg ) :
-					$url = get_theme_mod( 'luwipress_gold_social_' . $key, '' );
-					if ( ! $url ) continue;
-				?>
-					<a href="<?php echo esc_url( $url ); ?>" target="_blank" rel="noopener" aria-label="<?php echo esc_attr( $cfg['label'] ); ?>">
-						<?php echo esc_html( $cfg['icon'] ); ?>
-					</a>
-				<?php endforeach; ?>
-			</div>
+			<?php
+			if ( function_exists( 'luwipress_gold_footer_render_social_icons' ) ) {
+				luwipress_gold_footer_render_social_icons();
+			}
+			?>
 		</div>
 
 		<div class="lwp-site-footer-col">
@@ -104,6 +96,15 @@ if ( ! $elementor_footer_active ) :
 			} ?>
 		</div>
 
+		<?php
+		// Shop column — auto-generated WC product category list. Renders
+		// nothing when WC is inactive or operator opted out via
+		// Customizer, keeping the layout unchanged for content sites.
+		if ( function_exists( 'luwipress_gold_footer_render_shop_categories' ) ) {
+			luwipress_gold_footer_render_shop_categories();
+		}
+		?>
+
 		<div class="lwp-site-footer-col">
 			<h4><?php esc_html_e( 'Atelier', 'luwipress-gold' ); ?></h4>
 			<?php
@@ -120,6 +121,15 @@ if ( ! $elementor_footer_active ) :
 
 	</div>
 
+	<?php
+	if ( function_exists( 'luwipress_gold_footer_render_newsletter' ) ) {
+		luwipress_gold_footer_render_newsletter();
+	}
+	if ( function_exists( 'luwipress_gold_footer_render_trust_strip' ) ) {
+		luwipress_gold_footer_render_trust_strip();
+	}
+	?>
+
 	<div class="lwp-site-footer-bottom">
 		<span>
 			&copy; <?php echo esc_html( date( 'Y' ) ); ?> <?php echo esc_html( $site_name ); ?>
@@ -128,6 +138,11 @@ if ( ! $elementor_footer_active ) :
 		<?php if ( $byline ) : ?>
 			<span><?php echo esc_html( $byline ); ?></span>
 		<?php endif; ?>
+		<?php
+		if ( function_exists( 'luwipress_gold_footer_render_payment_row' ) ) {
+			luwipress_gold_footer_render_payment_row();
+		}
+		?>
 	</div>
 </footer>
 

@@ -156,6 +156,11 @@
 
 		var path = $root.find('input[name="lwp_path"]:checked').val() || 'use_existing';
 
+		// Slug-conflict resolution opt-in. Checkbox renders only when
+		// detector found at least one collision; treat absence as off.
+		var $resolveCb = $root.find('#lwp-resolve-conflicts');
+		var resolveSlugConflicts = $resolveCb.length > 0 ? !!$resolveCb.prop('checked') : false;
+
 		setProgress(8);
 		log(i18n.detecting || 'Scanning…', 'info');
 
@@ -163,7 +168,11 @@
 			action:      'luwipress_gold_wizard_step',
 			step:        'apply',
 			_ajax_nonce: nonce,
-			payload:     JSON.stringify({ path: path, brand: brand })
+			payload:     JSON.stringify({
+				path: path,
+				brand: brand,
+				resolve_slug_conflicts: resolveSlugConflicts
+			})
 		}).done(function (resp) {
 			if (!resp || !resp.success) {
 				log((resp && resp.data && resp.data.message) || (i18n.errored || 'Error'), 'err');

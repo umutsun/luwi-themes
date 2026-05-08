@@ -298,11 +298,23 @@ add_action( 'wp_footer', function () {
  * ──────────────────────────────────────────────────────────────────── */
 
 /**
- * Render a "Curated by Luwi" rail of related products on single-product
- * pages. Sits at priority 15 — after the summary block (which ends ~10)
- * and before WooCommerce's own related products at priority 20. We don't
- * remove the WC default; ours sits ABOVE it, framed as the editorial
- * recommendation while WC's stays as the broader "you may also like".
+ * Render a "Pieces with the same hand" rail of related products on
+ * single-product pages — strictly when the current product matches a
+ * master / luthier taxonomy (`pa_master` or `pa_luthier`). The plain
+ * "category fallback" branch was removed in 1.6.2 because WooCommerce's
+ * own related products section (priority 20, just below this hook)
+ * already covers the broad "more like this" surface and rendering both
+ * produced a visible duplicate to visitors.
+ *
+ * The rail still adds value for master matches because that taxonomy
+ * isn't surfaced anywhere else — visitors get an editorial cross-sell
+ * to other pieces by the same craftsperson, which WC's tag/category
+ * fallback can't reproduce.
+ *
+ * Filter `luwipress_gold_show_kg_related_rail` lets a child theme or
+ * sister plugin force the rail back on for category fallback if they
+ * also remove the WC default. Default behavior keeps the duplicate
+ * suppressed.
  */
 add_action( 'woocommerce_after_single_product_summary', function () {
 	if ( ! function_exists( 'wc_get_product' ) || ! is_product() ) {
@@ -319,22 +331,21 @@ add_action( 'woocommerce_after_single_product_summary', function () {
 	}
 
 	$by_master = ! empty( $related['master_name'] );
-	$rail_eyebrow = $by_master
-		/* translators: %s: master / luthier name */
-		? sprintf( esc_html__( 'More from %s', 'luwipress-gold' ), $related['master_name'] )
-		: esc_html__( 'Curated by Luwi', 'luwipress-gold' );
+
+	// Suppress the rail unless we have a master/luthier match. WC's
+	// default related products handles the broader fallback below.
+	if ( ! apply_filters( 'luwipress_gold_show_kg_related_rail', $by_master, $product, $related ) ) {
+		return;
+	}
+
+	/* translators: %s: master / luthier name */
+	$rail_eyebrow = sprintf( esc_html__( 'More from %s', 'luwipress-gold' ), $related['master_name'] );
 	?>
 	<section class="lwp-related-rail" aria-labelledby="lwp-related-rail-title">
 		<header class="lwp-related-rail__head">
 			<span class="lwp-eyebrow lwp-related-rail__eyebrow">— <?php echo esc_html( $rail_eyebrow ); ?></span>
 			<h2 id="lwp-related-rail-title" class="lwp-related-rail__title">
-				<?php
-				echo esc_html(
-					$by_master
-						? __( 'Pieces with the same hand', 'luwipress-gold' )
-						: __( 'You may also enjoy', 'luwipress-gold' )
-				);
-				?>
+				<?php esc_html_e( 'Pieces with the same hand', 'luwipress-gold' ); ?>
 			</h2>
 			<?php if ( ! empty( $related['cat_url'] ) ) : ?>
 				<a class="lwp-related-rail__more lwp-ulink" href="<?php echo esc_url( $related['cat_url'] ); ?>">

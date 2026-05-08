@@ -35,6 +35,8 @@ Import in the order below. Each file is self-contained; later files reference st
 | 7 | `06-about.json` | Pages → `About` → Import Template | — |
 | 8 | `07-master-profile.json` | Pages → save as **Master Profile** template | Use as base when creating each master's page |
 | 9 | `08-journal.json` | Pages → `Journal` → Import Template | Set as Posts page in Reading Settings |
+| 9a | `08a-journal-archive.json` | Templates → Theme Builder → **Archive** → Add New → Import | Display: All Archives (excl. product). Overrides default archive.php. |
+| 9b | `08b-journal-single.json` | Templates → Theme Builder → **Single** → Add New → Single Post → Import | Display: All Posts. Requires `[tapadum_post_meta]` + `[tapadum_author_card]` shortcodes (see 08b-journal-single.json `_luwipress_notes`). |
 | 10 | `09-contact.json` | Pages → `Contact` → Import Template | — |
 | 11 | `10-404.json` | Templates → Theme Builder → **404** → Add New → Import | — |
 
@@ -152,7 +154,9 @@ elementor-kit/
 ├── 05-single-product.json    ← gallery + buy column + tabs
 ├── 06-about.json             ← story + timeline
 ├── 07-master-profile.json    ← single luthier page
-├── 08-journal.json           ← blog index
+├── 08-journal.json           ← blog index page (landing)
+├── 08a-journal-archive.json  ← Theme Builder Archive: chips + featured + posts loop
+├── 08b-journal-single.json   ← Theme Builder Single Post: cover + drop-cap + pull-quote + author + related
 ├── 09-contact.json           ← three-column contact + form + map
 └── 10-404.json               ← brand-aware not-found page
 ```

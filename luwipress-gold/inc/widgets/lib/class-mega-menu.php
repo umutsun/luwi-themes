@@ -168,9 +168,17 @@ class LuwiPress_Gold_Widget_Mega_Menu extends Widget_Base {
 
 	protected function render() {
 		$s = $this->get_settings_for_display();
+
+		// Fall back to Customizer (Görünüm → Customize → LuwiPress Gold →
+		// Mega menu) when the widget instance has no explicit selection.
+		// Lets the operator manage the global mega-menu config in one place
+		// without re-opening every header template.
 		$menu_id = (int) ( $s['menu_id'] ?? 0 );
 		if ( ! $menu_id ) {
-			$this->placeholder( __( 'Pick a menu in the panel →', 'luwipress-gold' ) );
+			$menu_id = (int) get_theme_mod( 'luwipress_gold_mega_menu_id', 0 );
+		}
+		if ( ! $menu_id ) {
+			$this->placeholder( __( 'Pick a menu in the panel → (or set the global default in Customize → LuwiPress Gold → Mega menu)', 'luwipress-gold' ) );
 			return;
 		}
 
@@ -180,10 +188,17 @@ class LuwiPress_Gold_Widget_Mega_Menu extends Widget_Base {
 			return;
 		}
 
-		$tree = self::build_tree( $items );
-		$threshold = max( 2, (int) ( $s['mega_threshold'] ?? 4 ) );
-		$cols_pref = $s['mega_columns'] ?? 'auto';
-		$show_counts = ( $s['show_counts'] ?? 'yes' ) === 'yes';
+		$threshold = isset( $s['mega_threshold'] ) && (int) $s['mega_threshold'] > 0
+			? max( 2, (int) $s['mega_threshold'] )
+			: max( 2, (int) get_theme_mod( 'luwipress_gold_mega_threshold', 4 ) );
+
+		$cols_pref = ! empty( $s['mega_columns'] )
+			? $s['mega_columns']
+			: (string) get_theme_mod( 'luwipress_gold_mega_columns', 'auto' );
+
+		$show_counts = isset( $s['show_counts'] )
+			? ( $s['show_counts'] === 'yes' )
+			: (bool) get_theme_mod( 'luwipress_gold_mega_show_counts', true );
 
 		self::render_navigation_html( $menu_id, [
 			'threshold'   => $threshold,
@@ -227,6 +242,25 @@ class LuwiPress_Gold_Widget_Mega_Menu extends Widget_Base {
 		$cols_pref   = $opts['cols_pref'] ?? 'auto';
 		$show_counts = ! isset( $opts['show_counts'] ) || $opts['show_counts'] === true || $opts['show_counts'] === 'yes';
 
+		// Auto-inject post-category children into a top-level "Blog" /
+		// "Journal" / "News" menu item that the operator left flat. Lets
+		// the mega menu surface blog categories without forcing the
+		// operator to maintain a parallel hierarchy in Appearance →
+		// Menus. Skipped when the operator already added children — we
+		// respect manual configuration. Operator can disable globally
+		// from Customize → LuwiPress Gold → Mega menu.
+		if ( (bool) get_theme_mod( 'luwipress_gold_mega_auto_inject_blog', true ) ) {
+			foreach ( $tree as &$top_node ) {
+				if ( empty( $top_node['children'] ) ) {
+					$injected = self::maybe_inject_blog_categories( $top_node );
+					if ( ! empty( $injected ) ) {
+						$top_node['children'] = $injected;
+					}
+				}
+			}
+			unset( $top_node );
+		}
+
 		echo '<nav class="lwp-mm" aria-label="' . esc_attr__( 'Primary', 'luwipress-gold' ) . '">';
 		echo '<ul class="lwp-mm-top">';
 		foreach ( $tree as $top ) {
@@ -234,6 +268,109 @@ class LuwiPress_Gold_Widget_Mega_Menu extends Widget_Base {
 		}
 		echo '</ul>';
 		echo '</nav>';
+	}
+
+	/**
+	 * If a top-level menu item points at the site's blog (Posts page) or
+	 * a slug in the blog-name allowlist, return synthetic children
+	 * representing every non-empty `category` taxonomy term — excluding
+	 * the default "Uncategorized" term. Returns empty array when the
+	 * node isn't a blog hub or no useful categories exist.
+	 *
+	 * Children use synthetic negative IDs (-1, -2…) so they never clash
+	 * with real menu_item IDs in any downstream lookup, and `object` is
+	 * set to 'category' so resolve_item_count() can read the count.
+	 *
+	 * @param array $node Top-level tree node.
+	 * @return array
+	 */
+	public static function maybe_inject_blog_categories( $node ) {
+		if ( ! taxonomy_exists( 'category' ) ) {
+			return [];
+		}
+
+		$is_blog_hub = false;
+
+		// 1) Direct match: URL equals the WP "Posts page" permalink.
+		$blog_page_id = (int) get_option( 'page_for_posts' );
+		if ( $blog_page_id > 0 ) {
+			$blog_url = get_permalink( $blog_page_id );
+			if ( $blog_url && ! empty( $node['url'] ) ) {
+				$node_url_norm = untrailingslashit( wp_parse_url( $node['url'], PHP_URL_PATH ) ?: '' );
+				$blog_url_norm = untrailingslashit( wp_parse_url( $blog_url, PHP_URL_PATH ) ?: '' );
+				if ( $node_url_norm !== '' && $node_url_norm === $blog_url_norm ) {
+					$is_blog_hub = true;
+				}
+			}
+		}
+
+		// 2) Slug match against the blog-name allowlist.
+		if ( ! $is_blog_hub && ! empty( $node['url'] ) ) {
+			$path     = (string) wp_parse_url( $node['url'], PHP_URL_PATH );
+			$segments = array_values( array_filter( explode( '/', trim( $path, '/' ) ) ) );
+			$last     = end( $segments );
+			if ( $last !== false && $last !== '' ) {
+				$slugs = function_exists( 'luwipress_gold_get_blog_page_slugs' )
+					? luwipress_gold_get_blog_page_slugs()
+					: [ 'blog', 'journal', 'news', 'magazine' ];
+				$slugs = array_map( 'strtolower', $slugs );
+				if ( in_array( strtolower( $last ), $slugs, true ) ) {
+					$is_blog_hub = true;
+				}
+			}
+		}
+
+		if ( ! $is_blog_hub ) {
+			return [];
+		}
+
+		// Discover categories — exclude the WP default "Uncategorized".
+		$default_cat = (int) get_option( 'default_category' );
+		$cats = get_terms( [
+			'taxonomy'   => 'category',
+			'hide_empty' => true,
+			'orderby'    => 'count',
+			'order'      => 'DESC',
+			'exclude'    => $default_cat > 0 ? [ $default_cat ] : [],
+			'number'     => 12,
+		] );
+
+		// Operators / sister plugins may extend the exclude list (for
+		// taxonomies localised by WPML / Polylang there can be multiple
+		// "Uncategorized" terms — slug `uncategorized-en`, `senza-categoria`…).
+		$cats = (array) apply_filters( 'luwipress_gold_blog_menu_categories', $cats, $node );
+
+		if ( empty( $cats ) || is_wp_error( $cats ) ) {
+			return [];
+		}
+
+		$children = [];
+		$i = 0;
+		foreach ( $cats as $cat ) {
+			if ( ! ( $cat instanceof WP_Term ) ) {
+				continue;
+			}
+			$slug = strtolower( (string) $cat->slug );
+			// Belt-and-braces filter for localised "Uncategorized" variants.
+			if ( strpos( $slug, 'uncategorized' ) === 0
+				|| strpos( $slug, 'senza-categoria' ) === 0
+				|| strpos( $slug, 'sin-categoria' ) === 0
+				|| strpos( $slug, 'non-classe' ) === 0 ) {
+				continue;
+			}
+			$i++;
+			$children[] = [
+				'id'        => -1 * $i, // synthetic, won't collide with real menu_item IDs
+				'parent'    => (int) $node['id'],
+				'order'     => $i,
+				'label'     => $cat->name,
+				'url'       => get_term_link( $cat ),
+				'object'    => 'category',
+				'object_id' => (int) $cat->term_id,
+				'children'  => [],
+			];
+		}
+		return $children;
 	}
 
 	public static function render_top_item( $node, $threshold, $cols_pref, $show_counts ) {
@@ -244,12 +381,18 @@ class LuwiPress_Gold_Widget_Mega_Menu extends Widget_Base {
 		if ( $has_children ) $cls .= ' has-children';
 		if ( $is_mega ) $cls .= ' is-mega';
 
-		// Top-level count — direct term count first, fall back to summing
-		// children when the top-level node points at a parent term (mega panel).
+		// Resolve the top-level node to a product_cat term when its URL or
+		// object type matches one — lets us rewrite the href to the live
+		// archive (instead of any legacy page sitting at the same slug) AND
+		// surface the term's product count inside the mega panel header.
+		$top_term  = self::resolve_to_product_cat( $node );
+		$top_url   = self::resolve_target_url( $node );
+
 		$top_count = '';
 		if ( $show_counts ) {
-			$top_count = self::resolve_item_count( $node );
-			if ( ( '' === $top_count || '0' === $top_count ) && $has_children ) {
+			if ( $top_term ) {
+				$top_count = (string) $top_term->count;
+			} elseif ( $has_children ) {
 				$sum = 0;
 				foreach ( $node['children'] as $child ) {
 					$cn = self::resolve_item_count( $child );
@@ -259,24 +402,22 @@ class LuwiPress_Gold_Widget_Mega_Menu extends Widget_Base {
 			}
 		}
 
-		$count_html = '';
-		if ( '' !== $top_count ) {
-			$count_html = '<span class="lwp-mm-top-count">' . esc_html( $top_count ) . '</span>';
-		}
-
 		echo '<li class="' . esc_attr( $cls ) . '" data-item-id="' . esc_attr( $node['id'] ) . '">';
 		printf(
-			'<a href="%s"%s>%s%s%s</a>',
-			esc_url( $node['url'] ),
+			'<a href="%s"%s>%s%s</a>',
+			esc_url( $top_url ),
 			$has_children ? ' aria-haspopup="true" aria-expanded="false"' : '',
 			esc_html( $node['label'] ),
-			$count_html,
 			$has_children ? '<span class="lwp-mm-arrow" aria-hidden="true">›</span>' : ''
 		);
 
 		if ( $has_children ) {
 			if ( $is_mega ) {
-				self::render_mega_panel( $node, $cols_pref, $show_counts );
+				self::render_mega_panel( $node, $cols_pref, $show_counts, [
+					'top_url'   => $top_url,
+					'top_label' => $node['label'],
+					'top_count' => $top_count,
+				] );
 			} else {
 				self::render_simple_dropdown( $node['children'], $show_counts );
 			}
@@ -290,7 +431,7 @@ class LuwiPress_Gold_Widget_Mega_Menu extends Widget_Base {
 			$count = $show_counts ? self::resolve_item_count( $c ) : '';
 			printf(
 				'<li><a href="%s">%s%s</a></li>',
-				esc_url( $c['url'] ),
+				esc_url( self::resolve_target_url( $c ) ),
 				esc_html( $c['label'] ),
 				$count !== '' ? '<span class="lwp-mm-count">' . esc_html( $count ) . '</span>' : ''
 			);
@@ -298,18 +439,46 @@ class LuwiPress_Gold_Widget_Mega_Menu extends Widget_Base {
 		echo '</ul>';
 	}
 
-	public static function render_mega_panel( $node, $cols_pref, $show_counts ) {
+	public static function render_mega_panel( $node, $cols_pref, $show_counts, $head_meta = [] ) {
 		$cols = self::pick_columns( $node['children'], $cols_pref );
 		echo '<div class="lwp-mm-panel" role="menu">';
+
+		// Panel header — moves the parent-category count out of the top-level
+		// menu link (where it crowded the typography) into the dropdown
+		// itself. Only renders when we have a count or a "view all" link.
+		$top_url   = (string) ( $head_meta['top_url']   ?? ( $node['url'] ?? '' ) );
+		$top_label = (string) ( $head_meta['top_label'] ?? ( $node['label'] ?? '' ) );
+		$top_count = (string) ( $head_meta['top_count'] ?? '' );
+		if ( $top_url !== '' && ( $top_count !== '' || $top_label !== '' ) ) {
+			echo '<div class="lwp-mm-panel-head">';
+			if ( $top_count !== '' ) {
+				printf(
+					'<span class="lwp-mm-panel-head-count" aria-label="%s">%s</span>',
+					esc_attr( sprintf( /* translators: %s: count */ _n( '%s item in this collection', '%s items in this collection', (int) $top_count, 'luwipress-gold' ), $top_count ) ),
+					esc_html( $top_count )
+				);
+			}
+			printf(
+				'<a class="lwp-mm-panel-head-link" href="%s"><span class="lwp-mm-panel-head-title">%s</span><em>%s</em></a>',
+				esc_url( $top_url ),
+				esc_html( $top_label ),
+				esc_html__( 'View all →', 'luwipress-gold' )
+			);
+			echo '</div>';
+		}
+
 		echo '<div class="lwp-mm-panel-cols" style="grid-template-columns:repeat(' . count( $cols ) . ',1fr) auto">';
 
 		foreach ( $cols as $col ) {
 			echo '<div class="lwp-mm-col">';
 			foreach ( $col as $entry ) {
+				$entry_url   = self::resolve_target_url( $entry );
+				$entry_count = $show_counts ? self::resolve_item_count( $entry ) : '';
 				printf(
-					'<h5 class="lwp-mm-col-head"><a href="%s">%s</a></h5>',
-					esc_url( $entry['url'] ),
-					esc_html( $entry['label'] )
+					'<h5 class="lwp-mm-col-head"><a href="%s">%s%s</a></h5>',
+					esc_url( $entry_url ),
+					esc_html( $entry['label'] ),
+					$entry_count !== '' ? '<span class="lwp-mm-col-head-count">' . esc_html( $entry_count ) . '</span>' : ''
 				);
 				if ( ! empty( $entry['children'] ) ) {
 					echo '<ul>';
@@ -317,7 +486,7 @@ class LuwiPress_Gold_Widget_Mega_Menu extends Widget_Base {
 						$count = $show_counts ? self::resolve_item_count( $c ) : '';
 						printf(
 							'<li><a href="%s">%s%s</a></li>',
-							esc_url( $c['url'] ),
+							esc_url( self::resolve_target_url( $c ) ),
 							esc_html( $c['label'] ),
 							$count !== '' ? '<span>' . esc_html( $count ) . '</span>' : ''
 						);
@@ -451,17 +620,28 @@ class LuwiPress_Gold_Widget_Mega_Menu extends Widget_Base {
 	/**
 	 * Resolve the count to show next to a menu link — works for product
 	 * categories, regular categories, and pages-listing-sub-pages.
+	 *
+	 * Backed by the same product_cat resolver used to rewrite menu URLs,
+	 * so any item that resolves to a category for navigation also picks
+	 * up its count for free. Items that don't resolve return '' (we never
+	 * render "0" — empty pills look broken).
 	 */
 	public static function resolve_item_count( $node ) {
-		// Term-typed menu items — fast path.
+		// Product taxonomy resolution — covers object='product_cat', exact
+		// URL slug, and plural variants (darbuka → darbukas).
+		$term = self::resolve_to_product_cat( $node );
+		if ( $term ) {
+			return (string) $term->count;
+		}
+
+		// Native post category / tag — direct term-id path.
 		if ( ! empty( $node['object'] ) && ! empty( $node['object_id'] ) ) {
 			switch ( $node['object'] ) {
-				case 'product_cat':
 				case 'category':
 				case 'post_tag':
-					$term = get_term( (int) $node['object_id'] );
-					if ( $term && ! is_wp_error( $term ) ) {
-						return (string) $term->count;
+					$t = get_term( (int) $node['object_id'] );
+					if ( $t instanceof \WP_Term && $t->count > 0 ) {
+						return (string) $t->count;
 					}
 					break;
 				case 'page':
@@ -470,25 +650,160 @@ class LuwiPress_Gold_Widget_Mega_Menu extends Widget_Base {
 					break;
 			}
 		}
-		// Fallback: many operators add custom-URL menu items pointing at
-		// product category permalinks (e.g. "/arabic-oud/"). Look the slug
-		// up against `product_cat` and return its count if found.
-		if ( ! empty( $node['url'] ) && taxonomy_exists( 'product_cat' ) ) {
-			$path = wp_parse_url( $node['url'], PHP_URL_PATH );
-			if ( $path ) {
-				$path = trim( $path, '/' );
-				// Permalinks may include the WC base ("product-category/").
-				$segments = array_values( array_filter( explode( '/', $path ) ) );
-				$slug     = end( $segments );
-				if ( $slug ) {
-					$term = get_term_by( 'slug', $slug, 'product_cat' );
-					if ( $term && ! is_wp_error( $term ) ) {
-						return (string) $term->count;
+		return '';
+	}
+
+	/**
+	 * Resolve a menu node to a non-empty `product_cat` term when one
+	 * matches. Used by both the URL-rewriter (so `/string-instruments/`
+	 * page-slug menu items go to `/product-category/string-instruments/`
+	 * instead of the legacy page) and `resolve_item_count` (so plural-form
+	 * menu items still get a count badge).
+	 *
+	 * Resolution order:
+	 *   1. Direct: `object === 'product_cat'` with non-empty term.
+	 *   2. URL last-segment slug match.
+	 *   3. Plural variants: slug + 's', slug + 'es'.
+	 *
+	 * Returns null on failure — callers must NOT render a fallback URL or
+	 * "0" badge from a null. Per-request memoised so a 50-item menu only
+	 * does one lookup per unique slug.
+	 *
+	 * @param array $node Menu tree node.
+	 * @return \WP_Term|null
+	 */
+	public static function resolve_to_product_cat( $node ) {
+		static $cache = [];
+		if ( ! taxonomy_exists( 'product_cat' ) ) {
+			return null;
+		}
+
+		// Direct fast path — operator picked the category in Appearance → Menus.
+		if ( ! empty( $node['object'] ) && $node['object'] === 'product_cat' && ! empty( $node['object_id'] ) ) {
+			$cache_key = 'id:' . (int) $node['object_id'];
+			if ( array_key_exists( $cache_key, $cache ) ) {
+				return $cache[ $cache_key ];
+			}
+			$t = get_term( (int) $node['object_id'] );
+			$resolved = ( $t instanceof \WP_Term && $t->count > 0 ) ? $t : null;
+			$cache[ $cache_key ] = $resolved;
+			if ( $resolved ) return $resolved;
+		}
+
+		if ( empty( $node['url'] ) ) {
+			return null;
+		}
+
+		$path = (string) wp_parse_url( $node['url'], PHP_URL_PATH );
+		$segments = array_values( array_filter( explode( '/', trim( $path, '/' ) ) ) );
+		$slug = is_array( $segments ) && ! empty( $segments ) ? (string) end( $segments ) : '';
+		if ( $slug === '' ) {
+			return null;
+		}
+
+		$cache_key = 'slug:' . $slug;
+		if ( array_key_exists( $cache_key, $cache ) ) {
+			return $cache[ $cache_key ];
+		}
+
+		// Exact slug, then plural variants. Stop on the first non-empty term.
+		foreach ( [ $slug, $slug . 's', $slug . 'es' ] as $candidate ) {
+			$t = get_term_by( 'slug', $candidate, 'product_cat' );
+			if ( $t instanceof \WP_Term && $t->count > 0 ) {
+				$cache[ $cache_key ] = $t;
+				return $t;
+			}
+		}
+
+		// WPML / Polylang cross-language fallback. The slug-conflict map
+		// (built in template-redirects.php) records every page slug —
+		// including translated ones (`percusiones` ES, `vents` FR) —
+		// against the canonical product_cat term. Plural-fuzzy match
+		// can't catch these because no in-language term has the
+		// translated slug, but the WPML translation table does.
+		if ( function_exists( 'luwipress_gold_get_hub_redirects' ) ) {
+			$redirects = luwipress_gold_get_hub_redirects();
+			if ( ! empty( $redirects ) && isset( $redirects[ $slug ] ) ) {
+				$rule = $redirects[ $slug ];
+				if ( is_int( $rule ) || ( is_string( $rule ) && ctype_digit( $rule ) ) ) {
+					$t = get_term( (int) $rule );
+					if ( $t instanceof \WP_Term ) {
+						$cache[ $cache_key ] = $t;
+						return $t;
 					}
 				}
 			}
 		}
-		return '';
+
+		$cache[ $cache_key ] = null;
+		return null;
+	}
+
+	/**
+	 * Pick the URL the visitor should actually land on when clicking a
+	 * menu entry. When the entry resolves to a non-empty product_cat
+	 * term we use the term's permalink — bypasses any legacy page that
+	 * happens to share the same slug, removing one hop from the journey
+	 * and keeping the visitor inside the live commerce flow.
+	 *
+	 * Resolution order:
+	 *   1. Direct + plural slug match (in-language fast path).
+	 *   2. WPML / Polylang cross-language slug-conflict map. Catches
+	 *      menus where the page slug is translated (`/es/percusiones/`,
+	 *      `/fr/vents/`) but the term slug stayed in English. Without
+	 *      this fallback the rewrite would silently no-op on multi-
+	 *      lingual stores. The map is built once per request by
+	 *      `template-redirects.php` and cached in a transient.
+	 *
+	 * @param array $node Menu tree node.
+	 * @return string Always returns a non-empty URL (falls back to the
+	 *                operator-set URL when no term matches).
+	 */
+	public static function resolve_target_url( $node ) {
+		$term = self::resolve_to_product_cat( $node );
+		if ( $term ) {
+			$link = get_term_link( $term );
+			if ( ! is_wp_error( $link ) && $link ) {
+				return (string) $link;
+			}
+		}
+
+		// Cross-language fallback via the slug-conflict map.
+		if ( ! empty( $node['url'] ) && function_exists( 'luwipress_gold_get_hub_redirects' ) ) {
+			$slug = self::extract_last_slug( (string) $node['url'] );
+			if ( $slug !== '' ) {
+				$redirects = luwipress_gold_get_hub_redirects();
+				if ( ! empty( $redirects ) && isset( $redirects[ $slug ] ) ) {
+					$rule = $redirects[ $slug ];
+					if ( is_int( $rule ) || ( is_string( $rule ) && ctype_digit( $rule ) ) ) {
+						$tlink = get_term_link( (int) $rule );
+						if ( ! is_wp_error( $tlink ) && $tlink ) {
+							return (string) $tlink;
+						}
+					} elseif ( is_string( $rule ) && strpos( $rule, 'http' ) === 0 ) {
+						return $rule;
+					}
+				}
+			}
+		}
+
+		return (string) ( $node['url'] ?? '' );
+	}
+
+	/**
+	 * Pull the last URL path segment (the slug). WPML/Polylang language
+	 * directory prefixes (`/it/`, `/fr/`) are absorbed by `end()` since
+	 * the slug we want is always the trailing segment, not the prefix.
+	 *
+	 * @param string $url
+	 * @return string Last slug, or '' when the URL has no path.
+	 */
+	private static function extract_last_slug( $url ) {
+		if ( $url === '' ) return '';
+		$path = (string) wp_parse_url( $url, PHP_URL_PATH );
+		$segments = array_values( array_filter( explode( '/', trim( $path, '/' ) ) ) );
+		if ( empty( $segments ) ) return '';
+		return (string) end( $segments );
 	}
 
 	/**

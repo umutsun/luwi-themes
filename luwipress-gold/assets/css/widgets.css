@@ -854,29 +854,139 @@
 	color: var(--muted, #7f7663);
 }
 
-/* Top-level count badge — sits between label and arrow on parent items
- * that point at a product_cat (or sum children when the top is a mega
- * panel). Same gold-pill DNA as the sub-item count for visual cohesion. */
-.lwp-mm-top-count {
+/* Top-level count badge — DEPRECATED 1.6.4. Counts now render inside the
+ * mega panel header (.lwp-mm-panel-head-count) for cleaner top-level
+ * typography. Hidden defensively in case a stale render path still emits
+ * the markup. */
+.lwp-mm-top-count { display: none !important; }
+
+/* Mega panel header (1.6.5 polish) — bigger visual presence so it reads
+ * as a banner, not a thin strip. Houses the category title in serif
+ * display, a strong accent-coloured count pill, and a "View all" CTA
+ * with a hairline arrow. Anchors the dropdown to its archive
+ * destination so the panel feels like a navigable place. */
+.lwp-mm-panel-head {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	margin: -44px -52px 28px;
+	padding: 22px 52px;
+	border-bottom: 1px solid var(--line, #e8e2d3);
+	background: linear-gradient(180deg, rgba(115, 92, 0, 0.06) 0%, rgba(115, 92, 0, 0) 100%), var(--bg-alt, #f6f3f2);
+}
+.lwp-mm-panel-head-count {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	margin-left: 8px;
-	padding: 2px 8px;
-	min-width: 22px;
-	height: 18px;
+	min-width: 40px;
+	height: 28px;
+	padding: 0 12px;
+	font-family: var(--mono, 'JetBrains Mono', monospace);
+	font-size: 12px;
+	font-weight: 600;
+	letter-spacing: .04em;
+	color: #fff;
+	background: var(--primary, #735c00);
+	border-radius: 999px;
+	flex-shrink: 0;
+	box-shadow: 0 2px 6px rgba(115, 92, 0, .25);
+}
+.lwp-mm-panel-head-link {
+	display: inline-flex;
+	align-items: baseline;
+	gap: 16px;
+	color: var(--ink, #1b1c1c);
+	text-decoration: none;
+	margin-left: 4px;
+	flex: 1 1 auto;
+	min-width: 0;
+}
+.lwp-mm-panel-head-title {
+	font-family: var(--serif, 'Playfair Display', Georgia, serif);
+	font-size: 22px;
+	font-weight: 600;
+	letter-spacing: -.005em;
+	line-height: 1.1;
+	color: var(--ink, #1b1c1c);
+	flex: 1 1 auto;
+	min-width: 0;
+}
+.lwp-mm-panel-head-link em {
+	font-style: normal;
 	font-family: var(--mono, 'JetBrains Mono', monospace);
 	font-size: 10.5px;
-	font-weight: 500;
+	letter-spacing: .18em;
+	text-transform: uppercase;
+	color: var(--primary, #735c00);
+	transition: transform .18s ease, color .18s ease;
+	flex-shrink: 0;
+	white-space: nowrap;
+	border-bottom: 1px solid currentColor;
+	padding-bottom: 2px;
+}
+.lwp-mm-panel-head-link:hover .lwp-mm-panel-head-title { color: var(--primary, #735c00); }
+.lwp-mm-panel-head-link:hover em { transform: translateX(4px); }
+
+/* Column-head wrapper — flex layout so the count badge sits on the
+ * right edge with its own column space, not jammed against the label.
+ * Replaces the prior inline-span treatment that visually merged into
+ * the heading on letter-spaced caps. */
+.lwp-mm-col-head {
+	display: flex !important;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 10px;
+	margin: 0 0 10px !important;
+	padding-bottom: 8px !important;
+}
+.lwp-mm-col-head + .lwp-mm-col-head { margin-top: 18px !important; }
+.lwp-mm-col-head a {
+	flex: 1 1 auto;
+	min-width: 0;
+	display: inline-flex;
+	align-items: baseline;
+	gap: 10px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.lwp-mm-col-head-count {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 1px 8px;
+	min-width: 22px;
+	height: 16px;
+	font-family: var(--mono, 'JetBrains Mono', monospace);
+	font-size: 10px;
+	font-weight: 600;
 	letter-spacing: .04em;
 	color: var(--primary, #735c00);
 	background: var(--bg-alt, #f6f3f2);
 	border-radius: 999px;
-	transition: background .15s, color .15s;
+	flex-shrink: 0;
 }
-.lwp-mm-top > li > a:hover .lwp-mm-top-count {
-	background: var(--primary, #735c00);
+.lwp-mm-col-head a:hover .lwp-mm-col-head-count {
 	color: #fff;
+	background: var(--primary, #735c00);
+}
+/* Header-only columns (no <ul> children) get a subtle "→" affordance
+ * so they read as clickable destinations, not orphaned labels. */
+.lwp-mm-col-head:not(:has(+ ul))::after,
+.lwp-mm-col-head:has(+ .lwp-mm-col-head)::after {
+	content: '→';
+	font-family: var(--mono, monospace);
+	font-size: 11px;
+	color: var(--muted, #8b7f6a);
+	opacity: 0;
+	transition: opacity .15s ease, transform .15s ease;
+	flex-shrink: 0;
+	margin-left: 4px;
+}
+.lwp-mm-col-head:not(:has(+ ul)):hover::after,
+.lwp-mm-col-head:has(+ .lwp-mm-col-head):hover::after {
+	opacity: 1;
+	transform: translateX(2px);
 }
 
 /* Full mega panel (4+ kids or 3rd-level present) */
@@ -3851,8 +3961,8 @@ body.lwp-yt-open { overflow: hidden; }
 	left: 0;
 	top: 0;
 	bottom: 0;
-	width: 86vw;
-	max-width: 372px;
+	width: min(92vw, 420px);
+	max-width: 420px;
 	background: var(--lwp-drw-bg);
 	color: var(--ink, #1b1c1c);
 	z-index: 100010;
@@ -3945,47 +4055,6 @@ body.lwp-yt-open { overflow: hidden; }
 .lwp-mobile-drawer__close .bar:nth-child(1) { transform: translate(-50%, -50%) rotate(45deg); }
 .lwp-mobile-drawer__close .bar:nth-child(2) { transform: translate(-50%, -50%) rotate(-45deg); }
 
-/* Search field — AI-aware, gold focus ring */
-.lwp-mobile-drawer__search { padding: 14px 20px 8px; flex: none; }
-.lwp-mobile-drawer__search-field {
-	display: flex;
-	align-items: center;
-	gap: 10px;
-	padding: 13px 16px;
-	background: var(--lwp-drw-bg-card);
-	border: 1px solid var(--lwp-drw-line);
-	border-radius: 32px;
-	transition: border-color .2s ease;
-}
-.lwp-mobile-drawer__search-field:focus-within { border-color: var(--primary-light, #D4AF37); }
-.lwp-mobile-drawer__search-field .icon {
-	font-family: var(--mono, monospace);
-	font-size: 13px;
-	color: var(--muted, #8a8780);
-}
-.lwp-mobile-drawer__search-field input {
-	flex: 1;
-	border: 0;
-	outline: none;
-	background: transparent;
-	font-family: var(--sans, 'Inter', sans-serif);
-	font-size: 14px;
-	color: var(--ink, #1b1c1c);
-	min-width: 0;
-}
-.lwp-mobile-drawer__search-field input::placeholder { color: var(--muted, #8a8780); }
-.lwp-mobile-drawer__search-field .ai-badge {
-	font-family: var(--mono, monospace);
-	font-size: 9px;
-	letter-spacing: .18em;
-	text-transform: uppercase;
-	color: var(--primary, #735c00);
-	background: rgba(212, 175, 55, .14);
-	padding: 3px 7px;
-	border-radius: 3px;
-	flex: none;
-}
-
 /* Body — scrollable region between head and foot */
 .lwp-mobile-drawer__body {
 	flex: 1;
@@ -4021,20 +4090,24 @@ body.lwp-yt-open { overflow: hidden; }
 .lwp-mobile-drawer details.lwp-drw-acc { border-bottom: 1px solid var(--lwp-drw-line-soft); }
 .lwp-mobile-drawer details.lwp-drw-acc > summary {
 	list-style: none;
+	box-sizing: border-box;
 	width: 100%;
+	max-width: 100%;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	gap: 12px;
-	padding: 16px 22px;
+	gap: 10px;
+	padding: 16px 18px;
 	font-family: var(--serif, 'Playfair Display', serif);
-	font-size: 21px;
+	font-size: 19px;
 	font-weight: 500;
 	letter-spacing: -.012em;
 	color: var(--ink, #1b1c1c);
 	cursor: pointer;
 	-webkit-tap-highlight-color: transparent;
 	transition: color .2s ease, background .2s ease;
+	overflow-wrap: anywhere;
+	word-break: break-word;
 }
 .lwp-mobile-drawer details.lwp-drw-acc > summary::-webkit-details-marker { display: none; }
 .lwp-mobile-drawer details.lwp-drw-acc > summary:hover,
@@ -4046,10 +4119,14 @@ body.lwp-yt-open { overflow: hidden; }
 .lwp-mobile-drawer details.lwp-drw-acc[open] > summary { color: var(--primary, #735c00); }
 .lwp-mobile-drawer details.lwp-drw-acc .nm {
 	display: flex;
+	flex-wrap: wrap;
 	align-items: baseline;
-	gap: 8px;
-	flex: 1;
+	gap: 4px 8px;
+	flex: 1 1 auto;
 	min-width: 0;
+	overflow-wrap: anywhere;
+	word-break: break-word;
+	line-height: 1.2;
 }
 .lwp-mobile-drawer details.lwp-drw-acc .ct {
 	font-family: var(--mono, monospace);
@@ -4103,23 +4180,32 @@ body.lwp-yt-open { overflow: hidden; }
 .lwp-mobile-drawer details.lwp-drw-acc[open] .lwp-drw-acc-panel { grid-template-rows: 1fr; }
 .lwp-mobile-drawer .lwp-drw-acc-panel > div { overflow: hidden; }
 .lwp-mobile-drawer .lwp-drw-acc-list {
-	padding: 2px 22px 18px 38px;
+	padding: 2px 20px 18px 28px;
 	display: flex;
 	flex-direction: column;
 	border-left: 1px solid var(--lwp-drw-line);
-	margin-left: 22px;
+	margin-left: 20px;
 }
 .lwp-mobile-drawer .lwp-drw-acc-list a {
 	display: flex;
 	justify-content: space-between;
 	align-items: baseline;
+	gap: 8px;
 	padding: 11px 0;
 	font-size: 15px;
 	color: var(--ink-soft, #4a4a48);
 	text-decoration: none;
 	transition: color .15s ease, padding-left .25s var(--lwp-drw-ease-snap);
 	position: relative;
+	overflow-wrap: anywhere;
+	word-break: break-word;
 }
+.lwp-mobile-drawer .lwp-drw-acc-list a > span:first-child,
+.lwp-mobile-drawer .lwp-drw-acc-list a:not(:has(.ct)) {
+	min-width: 0;
+	flex: 1 1 auto;
+}
+.lwp-mobile-drawer .lwp-drw-acc-list a .ct { flex: none; }
 .lwp-mobile-drawer .lwp-drw-acc-list a::before {
 	content: "";
 	position: absolute;

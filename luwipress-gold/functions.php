@@ -45,7 +45,9 @@ require_once LUWIPRESS_GOLD_DIR . '/inc/maintenance/class-elementor-shell-tool.p
 require_once LUWIPRESS_GOLD_DIR . '/inc/maintenance/class-maintenance-tools.php';
 require_once LUWIPRESS_GOLD_DIR . '/inc/maintenance/class-fix-tools.php';
 require_once LUWIPRESS_GOLD_DIR . '/inc/maintenance/class-extra-audit-tools.php';
+require_once LUWIPRESS_GOLD_DIR . '/inc/maintenance/class-seo-audit-tools.php';
 require_once LUWIPRESS_GOLD_DIR . '/inc/maintenance/elementor-template-force.php';
+require_once LUWIPRESS_GOLD_DIR . '/inc/maintenance/seo-enforcement.php';
 
 // LuwiPress bridge — single point of contact for the AI engine, chat,
 // plugin detector, and ecosystem helpers. Loaded unconditionally so the

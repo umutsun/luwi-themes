@@ -488,6 +488,82 @@ add_filter( 'luwipress_theme_tools', function ( $tools, $slug ) {
 		);
 	}
 
+	// ─── SEO + Redirects audit pack (1.7.0) ──────────────────────────────────
+	if ( class_exists( 'LuwiPress_Gold_Canonical_Audit_Tool' ) ) {
+		$tools[] = array(
+			'id'          => 'canonical_audit',
+			'label'       => __( 'Canonical URL Audit', 'luwipress-gold' ),
+			'description' => __( 'Per-URL rel=canonical health: present, self-pointing, same domain, target resolves 200 without chain. Surfaces SEO-plugin overrides that point off-page.', 'luwipress-gold' ),
+			'category'    => 'audit',
+			'capability'  => 'manage_options',
+			'wpml_aware'  => false,
+			'destructive' => false,
+			'callbacks'   => array(
+				'scan' => array( 'LuwiPress_Gold_Canonical_Audit_Tool', 'scan' ),
+			),
+		);
+	}
+
+	if ( class_exists( 'LuwiPress_Gold_Hreflang_Reciprocity_Tool' ) ) {
+		$tools[] = array(
+			'id'          => 'hreflang_reciprocity_audit',
+			'label'       => __( 'Hreflang Reciprocity Audit', 'luwipress-gold' ),
+			'description' => __( 'Verify every translated page emits the full hreflang set (incl. x-default) AND each alternate reciprocates. Catches WPML/Polylang drift after translations are unlinked.', 'luwipress-gold' ),
+			'category'    => 'audit',
+			'capability'  => 'manage_options',
+			'wpml_aware'  => false,
+			'destructive' => false,
+			'callbacks'   => array(
+				'scan' => array( 'LuwiPress_Gold_Hreflang_Reciprocity_Tool', 'scan' ),
+			),
+		);
+	}
+
+	if ( class_exists( 'LuwiPress_Gold_Redirect_Chain_Detector_Tool' ) ) {
+		$tools[] = array(
+			'id'          => 'redirect_chain_detector',
+			'label'       => __( 'Redirect Chain Detector', 'luwipress-gold' ),
+			'description' => __( 'Walk every URL in the slug-conflict redirect map plus a sample of internal hrefs; flag 2+ hop chains and any 4xx/5xx final status. Single-hop 200 endings are healthy.', 'luwipress-gold' ),
+			'category'    => 'audit',
+			'capability'  => 'manage_options',
+			'wpml_aware'  => false,
+			'destructive' => false,
+			'callbacks'   => array(
+				'scan' => array( 'LuwiPress_Gold_Redirect_Chain_Detector_Tool', 'scan' ),
+			),
+		);
+	}
+
+	if ( class_exists( 'LuwiPress_Gold_Sitemap_Indexation_Parity_Tool' ) ) {
+		$tools[] = array(
+			'id'          => 'sitemap_indexation_parity',
+			'label'       => __( 'Sitemap Indexation Parity', 'luwipress-gold' ),
+			'description' => __( 'Discover the active sitemap (Rank Math / Yoast / AIOSEO / WP core), HEAD-check up to 80 entries, flag any URL that\'s 301/4xx or sits in the slug-conflict redirect map. Resolve at the SEO plugin level.', 'luwipress-gold' ),
+			'category'    => 'audit',
+			'capability'  => 'manage_options',
+			'wpml_aware'  => false,
+			'destructive' => false,
+			'callbacks'   => array(
+				'scan' => array( 'LuwiPress_Gold_Sitemap_Indexation_Parity_Tool', 'scan' ),
+			),
+		);
+	}
+
+	if ( class_exists( 'LuwiPress_Gold_SEO_Triangle_Health_Tool' ) ) {
+		$tools[] = array(
+			'id'          => 'seo_triangle_health',
+			'label'       => __( 'SEO Triangle Health', 'luwipress-gold' ),
+			'description' => __( 'Single-call audit over six SEO pillars (canonical, hreflang, redirect chains, sitemap parity, broken internal links, slug-conflict map). Returns a weighted 0-100 score plus per-pillar drill-downs that link to the dedicated tool.', 'luwipress-gold' ),
+			'category'    => 'audit',
+			'capability'  => 'manage_options',
+			'wpml_aware'  => false,
+			'destructive' => false,
+			'callbacks'   => array(
+				'scan' => array( 'LuwiPress_Gold_SEO_Triangle_Health_Tool', 'scan' ),
+			),
+		);
+	}
+
 	return $tools;
 }, 10, 2 );
 
@@ -640,6 +716,51 @@ add_filter( 'luwipress_theme_settings', function ( $settings, $slug ) {
 		'default'   => 0,
 		'min'       => 0,
 		'group'     => 'wpml',
+	);
+
+	// ─── SEO + Redirects (1.7.0) ─────────────────────────────────────────────
+	$settings[] = array(
+		'id'        => 'seo_strict_canonical',
+		'theme_mod' => 'luwipress_gold_seo_strict_canonical',
+		'label'     => __( 'Strict canonical = permalink', 'luwipress-gold' ),
+		'description' => __( 'Override Rank Math / Yoast / AIOSEO canonical with the page\'s own permalink. Stops cross-page canonicals that hurt indexation.', 'luwipress-gold' ),
+		'type'      => 'checkbox',
+		'default'   => false,
+		'group'     => 'seo',
+	);
+
+	$settings[] = array(
+		'id'        => 'seo_force_trailing_slash',
+		'theme_mod' => 'luwipress_gold_seo_force_trailing_slash',
+		'label'     => __( 'Force trailing-slash consistency', 'luwipress-gold' ),
+		'description' => __( '301-redirect URLs to match the site\'s permalink_structure (with or without trailing slash). Skips REST, sitemap, and asset paths.', 'luwipress-gold' ),
+		'type'      => 'checkbox',
+		'default'   => false,
+		'group'     => 'seo',
+	);
+
+	$settings[] = array(
+		'id'        => 'seo_noindex_empty_archives',
+		'theme_mod' => 'luwipress_gold_seo_noindex_empty_archives',
+		'label'     => __( 'noindex empty term archives', 'luwipress-gold' ),
+		'description' => __( 'Emit <meta name="robots" content="noindex,follow"> on product_cat archives flagged by the empty_term_archives audit. Cached 6h; busts on tool execute.', 'luwipress-gold' ),
+		'type'      => 'checkbox',
+		'default'   => false,
+		'group'     => 'seo',
+	);
+
+	// `block_orphan_landings` already exists under the `wpml` group as
+	// `luwipress_gold_block_orphan_landings`. The duplicate registration here
+	// (under `seo` group) gives operators a discoverable "SEO" home for it
+	// while keeping the existing theme_mod key — no migration needed.
+	$settings[] = array(
+		'id'        => 'seo_block_orphan_landings',
+		'theme_mod' => 'luwipress_gold_block_orphan_landings',
+		'label'     => __( 'Block orphan SEO landings (410 Gone)', 'luwipress-gold' ),
+		'description' => __( 'Same toggle as under WPML — duplicated here so operators discover it under SEO. Pages flagged by the unwanted_landing_pages audit return 410 instead of rendering.', 'luwipress-gold' ),
+		'type'      => 'checkbox',
+		'default'   => false,
+		'group'     => 'seo',
 	);
 
 	return $settings;

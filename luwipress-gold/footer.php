@@ -44,7 +44,12 @@ if ( ! $elementor_footer_active ) :
 				<p class="lwp-site-footer-blurb"><?php echo esc_html( $blurb ); ?></p>
 			<?php endif; ?>
 			<?php
-			if ( function_exists( 'luwipress_gold_footer_render_social_icons' ) ) {
+			// Social icons opt-in (1.7.0+). Default OFF — atelier-style design
+			// puts the social row in the bottom bar context instead, leaving
+			// the brand column visually quiet. Operator can flip this back
+			// on in Customizer → LuwiPress Gold → Footer.
+			if ( get_theme_mod( 'luwipress_gold_footer_show_socials', false ) &&
+				 function_exists( 'luwipress_gold_footer_render_social_icons' ) ) {
 				luwipress_gold_footer_render_social_icons();
 			}
 			?>
@@ -105,16 +110,17 @@ if ( ! $elementor_footer_active ) :
 		}
 		?>
 
-		<div class="lwp-site-footer-col">
+		<div class="lwp-site-footer-col lwp-site-footer-atelier">
 			<h4><?php esc_html_e( 'Atelier', 'luwipress-gold' ); ?></h4>
 			<?php
-			$loc   = get_theme_mod( 'luwipress_gold_topbar_location', '' );
-			$phone = get_theme_mod( 'luwipress_gold_topbar_phone', '' );
-			$email = get_theme_mod( 'luwipress_gold_topbar_email', get_option( 'admin_email' ) );
+			$simple = (bool) get_theme_mod( 'luwipress_gold_footer_atelier_simple', true );
+			$loc    = get_theme_mod( 'luwipress_gold_topbar_location', '' );
+			$phone  = get_theme_mod( 'luwipress_gold_topbar_phone', '' );
+			$email  = get_theme_mod( 'luwipress_gold_topbar_email', get_option( 'admin_email' ) );
 			?>
 			<ul>
-				<?php if ( $loc !== '' ) : ?><li><?php echo esc_html( $loc ); ?></li><?php endif; ?>
-				<?php if ( $phone !== '' ) : ?><li><a href="<?php echo esc_url( 'tel:' . preg_replace( '/\s+/', '', $phone ) ); ?>"><?php echo esc_html( $phone ); ?></a></li><?php endif; ?>
+				<?php if ( ! $simple && $loc !== '' ) : ?><li><?php echo esc_html( $loc ); ?></li><?php endif; ?>
+				<?php if ( ! $simple && $phone !== '' ) : ?><li><a href="<?php echo esc_url( 'tel:' . preg_replace( '/\s+/', '', $phone ) ); ?>"><?php echo esc_html( $phone ); ?></a></li><?php endif; ?>
 				<?php if ( $email !== '' ) : ?><li><a href="<?php echo esc_url( 'mailto:' . $email ); ?>"><?php echo esc_html( $email ); ?></a></li><?php endif; ?>
 			</ul>
 		</div>
@@ -131,12 +137,12 @@ if ( ! $elementor_footer_active ) :
 	?>
 
 	<div class="lwp-site-footer-bottom">
-		<span>
+		<span class="lwp-site-footer-bottom__copy">
 			&copy; <?php echo esc_html( date( 'Y' ) ); ?> <?php echo esc_html( $site_name ); ?>
 			<?php if ( $legal ) echo ' · ' . esc_html( $legal ); ?>
 		</span>
 		<?php if ( $byline ) : ?>
-			<span><?php echo esc_html( $byline ); ?></span>
+			<span class="lwp-site-footer-bottom__byline"><?php echo esc_html( $byline ); ?></span>
 		<?php endif; ?>
 		<?php
 		if ( function_exists( 'luwipress_gold_footer_render_payment_row' ) ) {

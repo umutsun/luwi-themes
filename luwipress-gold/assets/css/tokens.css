@@ -673,6 +673,41 @@ body.lwp-layout-boxed .lwp-elementor-page .elementor-section {
 	flex-wrap: wrap;
 	gap: 14px;
 }
+/* Bottom bar — three-area layout: left (©), middle (byline), right (payments) */
+.lwp-site-footer-bottom__copy { flex: 0 0 auto; }
+.lwp-site-footer-bottom__byline {
+	flex: 1 1 auto;
+	text-align: center;
+	color: #888;
+	letter-spacing: .14em;
+}
+.lwp-site-footer-bottom .lwp-site-footer-payments {
+	margin: 0;
+	flex: 0 0 auto;
+	justify-content: flex-end;
+	gap: 8px;
+}
+.lwp-site-footer-bottom .lwp-site-footer-payments li {
+	font-size: 11.5px;
+	letter-spacing: .04em;
+	color: rgba(255, 255, 255, .58);
+	background: rgba(255, 255, 255, .04);
+	border: 1px solid rgba(255, 255, 255, .06);
+	padding: 5px 12px;
+	border-radius: 6px;
+	white-space: nowrap;
+}
+.lwp-site-footer-atelier ul { gap: 6px; }
+.lwp-site-footer-atelier a { color: #ddd; }
+
+@media (max-width: 900px) {
+	.lwp-site-footer-bottom {
+		flex-direction: column;
+		text-align: center;
+	}
+	.lwp-site-footer-bottom__byline { text-align: center; }
+	.lwp-site-footer-bottom .lwp-site-footer-payments { justify-content: center; }
+}
 
 @media (max-width: 1100px) {
 	.lwp-site-footer-inner,

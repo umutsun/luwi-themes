@@ -640,6 +640,26 @@ add_filter( 'luwipress_theme_settings', function ( $settings, $slug ) {
 	);
 
 	$settings[] = array(
+		'id'        => 'footer_show_socials',
+		'theme_mod' => 'luwipress_gold_footer_show_socials',
+		'label'     => __( 'Footer — social icons in brand column', 'luwipress-gold' ),
+		'description' => __( 'Atelier-style design keeps the brand column quiet. Turn ON to expose the social icon row again.', 'luwipress-gold' ),
+		'type'      => 'checkbox',
+		'default'   => false,
+		'group'     => 'footer',
+	);
+
+	$settings[] = array(
+		'id'        => 'footer_atelier_simple',
+		'theme_mod' => 'luwipress_gold_footer_atelier_simple',
+		'label'     => __( 'Footer — simple Atelier column (email only)', 'luwipress-gold' ),
+		'description' => __( 'Hides location and phone in the Atelier column; shows email only. Turn OFF to surface the full address line.', 'luwipress-gold' ),
+		'type'      => 'checkbox',
+		'default'   => true,
+		'group'     => 'footer',
+	);
+
+	$settings[] = array(
 		'id'        => 'mega_menu_id',
 		'theme_mod' => 'luwipress_gold_mega_menu_id',
 		'label'     => __( 'Mega menu — menu ID', 'luwipress-gold' ),

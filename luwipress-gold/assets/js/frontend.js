@@ -602,6 +602,75 @@
 		ytOpen( id );
 	} );
 
+	/**
+	 * Auto-decorate YouTube embeds inside post content (1.7.0+).
+	 *
+	 * WP block-editor YouTube oEmbed renders an iframe; bare YouTube link
+	 * shortcodes / paragraph links render as <a>. Both leave the visitor
+	 * one click away from leaving the site to youtube.com. We swap them
+	 * for a "lite-stub" trigger element that opens the existing
+	 * `[data-lwp-yt]` modal in-place, keeping the visitor on the post.
+	 *
+	 * Scope: any element matched by the BLOG_SCOPES list. Skips Elementor
+	 * widgets that already manage their own playback.
+	 */
+	function decorateBlogYouTubeEmbeds() {
+		var BLOG_SCOPES = '.entry-content, .post-content, .luwipress-gold-single, article.post';
+		var roots = document.querySelectorAll( BLOG_SCOPES );
+		if ( ! roots.length ) { return; }
+
+		roots.forEach( function ( root ) {
+			// (1) Replace YouTube oEmbed iframes with lite-stubs.
+			root.querySelectorAll( 'iframe[src*="youtube.com/embed/"], iframe[src*="youtube-nocookie.com/embed/"]' ).forEach( function ( iframe ) {
+				var src = iframe.getAttribute( 'src' ) || '';
+				var id  = ytExtractId( src );
+				if ( ! id ) { return; }
+				if ( iframe.dataset.lwpYtSwapped === '1' ) { return; }
+				var stub = buildYtStub( id, iframe.getAttribute( 'title' ) || 'YouTube video' );
+				// Preserve the iframe's wrapper (figure/div) — replace inline.
+				iframe.parentNode.replaceChild( stub, iframe );
+			} );
+
+			// (2) Promote raw YouTube anchors to modal triggers.
+			root.querySelectorAll( 'a[href*="youtube.com/watch"], a[href*="youtu.be/"], a[href*="youtube.com/shorts/"]' ).forEach( function ( a ) {
+				if ( a.hasAttribute( 'data-lwp-yt' ) ) { return; }
+				var id = ytExtractId( a.getAttribute( 'href' ) );
+				if ( ! id ) { return; }
+				a.setAttribute( 'data-lwp-yt', id );
+				a.setAttribute( 'rel', ( a.getAttribute( 'rel' ) || '' ).replace( /\b(noopener|noreferrer|external)\b/g, '' ).trim() );
+			} );
+		} );
+	}
+
+	function buildYtStub( id, title ) {
+		var a = document.createElement( 'a' );
+		a.className = 'lwp-yt-stub';
+		a.href = 'https://youtu.be/' + encodeURIComponent( id );
+		a.setAttribute( 'data-lwp-yt', id );
+		a.setAttribute( 'data-lwp-yt-swapped', '1' );
+		a.setAttribute( 'aria-label', 'Play video — ' + title );
+		a.style.backgroundImage = 'url("https://i.ytimg.com/vi/' + encodeURIComponent( id ) + '/hqdefault.jpg")';
+
+		var play = document.createElement( 'span' );
+		play.className = 'lwp-yt-stub__play';
+		play.setAttribute( 'aria-hidden', 'true' );
+		play.textContent = '▶'; // ▶
+
+		var caption = document.createElement( 'span' );
+		caption.className = 'lwp-yt-stub__caption';
+		caption.textContent = title;
+
+		a.appendChild( play );
+		a.appendChild( caption );
+		return a;
+	}
+
+	if ( document.readyState === 'loading' ) {
+		document.addEventListener( 'DOMContentLoaded', decorateBlogYouTubeEmbeds );
+	} else {
+		decorateBlogYouTubeEmbeds();
+	}
+
 	/* ───────────────────────────────────────────────────────────────── */
 	/* UI-FIXES — float bar ↔ footer smooth handoff + mobile drawer       */
 	/* ───────────────────────────────────────────────────────────────── */

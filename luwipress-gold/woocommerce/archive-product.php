@@ -209,6 +209,31 @@ if ( $is_term && 'product_cat' === $current_obj->taxonomy ) {
 
 					woocommerce_product_loop_end();
 					woocommerce_pagination();
+
+					/**
+					 * Load-more sentinel + button (1.7.0+).
+					 *
+					 * Always rendered when the toggle is on AND the query has
+					 * more than one page. The JS handler (loadmore.js) hides
+					 * the woocommerce_pagination output via the
+					 * `lwp-loadmore-active` class on the shop wrapper.
+					 */
+					if ( get_theme_mod( 'luwipress_gold_shop_loadmore', false ) ) {
+						global $wp_query;
+						$current_page = max( 1, (int) get_query_var( 'paged', 1 ) );
+						$max_pages    = isset( $wp_query->max_num_pages ) ? (int) $wp_query->max_num_pages : 1;
+						if ( $max_pages > 1 ) {
+							printf(
+								'<div class="lwp-loadmore-wrap" data-current="%d" data-max="%d">'
+									. '<button type="button" class="lwp-loadmore-btn" data-action="loadmore">%s</button>'
+									. '<span class="lwp-loadmore-status" aria-live="polite"></span>'
+									. '</div>',
+								$current_page,
+								$max_pages,
+								esc_html__( 'Load more products', 'luwipress-gold' )
+							);
+						}
+					}
 				} else {
 					/**
 					 * Hook: woocommerce_no_products_found.

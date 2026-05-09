@@ -31,6 +31,36 @@ add_action( 'wp_enqueue_scripts', function () {
 		$ver,
 		true
 	);
+
+	// Shop archive surfaces — price slider script + load-more (1.7.0+).
+	// the_widget() doesn't trigger the WC widget's automatic enqueue path,
+	// so the slider track JS never loads on our smart-filters sidebar.
+	// Enqueue it explicitly when we're on an archive that actually shows
+	// the smart-filters widget.
+	if ( function_exists( 'is_woocommerce' ) && ( is_shop() || is_product_taxonomy() || is_product_category() || is_product_tag() ) ) {
+		wp_enqueue_script( 'wc-price-slider' );
+
+		if ( get_theme_mod( 'luwipress_gold_shop_loadmore', false ) ) {
+			$lm_path = get_template_directory() . '/assets/js/loadmore.js';
+			$lm_ver  = $ver . '.' . ( file_exists( $lm_path ) ? filemtime( $lm_path ) : '0' );
+			wp_enqueue_script(
+				'luwipress-gold-loadmore',
+				LUWIPRESS_GOLD_URI . '/assets/js/loadmore.js',
+				[],
+				$lm_ver,
+				true
+			);
+			wp_localize_script( 'luwipress-gold-loadmore', 'LWP_GOLD_LM', [
+				'i18n' => [
+					'load_more' => __( 'Load more products', 'luwipress-gold' ),
+					'loading'   => __( 'Loading…', 'luwipress-gold' ),
+					'no_more'   => __( 'You\'ve reached the end.', 'luwipress-gold' ),
+					'error'     => __( 'Couldn\'t load more — try again.', 'luwipress-gold' ),
+				],
+				'mode' => (string) get_theme_mod( 'luwipress_gold_shop_loadmore_mode', 'button' ), // button | infinite
+			] );
+		}
+	}
 }, 20 );
 
 /**

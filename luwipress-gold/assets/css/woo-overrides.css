@@ -230,38 +230,295 @@ ul.products li.product .button.added_to_cart {
 	text-transform: uppercase;
 }
 
-/* ─── WooCommerce pagination → Gold ─── */
-.woocommerce-pagination ul.page-numbers {
+/* ─── WooCommerce pagination → Gold (1.7.x redesign) ─────────────────
+   Single source of truth — supersedes the older `.lwp-shop-container`
+   variant in tokens.css (still kept for backward-compat but inert when
+   this block is loaded; same selector specificity and these rules sit
+   later in the cascade). Tighter sizing, ink-on-cream palette, reserved
+   "›" / "‹" chevrons for prev/next, mobile flex-wrap. */
+.woocommerce-pagination,
+.lwp-shop-container .woocommerce-pagination {
+	margin: 36px 0 8px;
+	padding: 4px 0 20px;
+	border-top: 1px solid var(--line, #e8e2d3);
+}
+.woocommerce-pagination ul.page-numbers,
+.lwp-shop-container .woocommerce-pagination ul.page-numbers {
 	display: flex;
-	gap: 8px;
+	flex-wrap: wrap;
+	gap: 6px;
 	list-style: none;
-	padding: 32px 0;
+	padding: 24px 0 0;
 	margin: 0;
 	justify-content: center;
+	border: 0;
 }
-.woocommerce-pagination ul.page-numbers li { border: 0; }
+.woocommerce-pagination ul.page-numbers li,
+.lwp-shop-container .woocommerce-pagination ul.page-numbers li {
+	border: 0;
+	margin: 0;
+	padding: 0;
+	background: transparent;
+}
 .woocommerce-pagination ul.page-numbers a,
-.woocommerce-pagination ul.page-numbers span {
+.woocommerce-pagination ul.page-numbers span,
+.lwp-shop-container .woocommerce-pagination ul.page-numbers a,
+.lwp-shop-container .woocommerce-pagination ul.page-numbers span {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	min-width: 38px;
-	height: 38px;
-	padding: 0 10px;
+	min-width: 34px;
+	height: 34px;
+	padding: 0 11px;
 	border: 1px solid var(--line, #e8e2d3);
 	border-radius: 6px;
 	background: #fff;
 	color: var(--ink, #1b1c1c);
-	font-family: var(--mono, monospace);
-	font-size: 13px;
+	font-family: var(--mono, ui-monospace, monospace);
+	font-size: 12px;
+	font-weight: 500;
+	letter-spacing: .02em;
 	text-decoration: none;
+	box-shadow: none;
+	transition: border-color .14s ease, color .14s ease, background .14s ease;
 }
-.woocommerce-pagination ul.page-numbers a:hover { border-color: var(--primary, #735c00); color: var(--primary, #735c00); }
-.woocommerce-pagination ul.page-numbers span.current {
+.woocommerce-pagination ul.page-numbers a.next,
+.woocommerce-pagination ul.page-numbers a.prev {
+	padding: 0 14px;
+	font-size: 0; /* hide the default "Next →" / "← Previous" text label */
+}
+.woocommerce-pagination ul.page-numbers a.next::after { content: '\203A'; font-size: 16px; line-height: 1; } /* › */
+.woocommerce-pagination ul.page-numbers a.prev::after { content: '\2039'; font-size: 16px; line-height: 1; } /* ‹ */
+.woocommerce-pagination ul.page-numbers a:hover,
+.woocommerce-pagination ul.page-numbers a:focus-visible {
+	border-color: var(--primary, #735c00);
+	color: var(--primary, #735c00);
+	background: var(--bg-alt, #f7f4ec);
+	outline: 0;
+}
+.woocommerce-pagination ul.page-numbers span.current,
+.woocommerce-pagination ul.page-numbers li span.current,
+.lwp-shop-container .woocommerce-pagination .page-numbers.current {
 	background: var(--ink, #1b1c1c);
 	border-color: var(--ink, #1b1c1c);
 	color: #fff;
 }
+.woocommerce-pagination ul.page-numbers span.dots {
+	background: transparent;
+	border-color: transparent;
+	color: var(--ink-soft, #4d4635);
+	min-width: auto;
+	padding: 0 4px;
+}
+
+/* ─── Smart-filters sidebar (smart-filters.php) ─────────────────────── */
+.lwp-smart-filters .lwp-filter-block {
+	background: #fff;
+	border: 1px solid var(--line, #e8e2d3);
+	border-radius: 10px;
+	padding: 14px 16px 16px;
+	margin-bottom: 14px;
+}
+.lwp-smart-filters .lwp-filter-block__title {
+	font-family: var(--mono, ui-monospace, monospace);
+	font-size: 11px;
+	letter-spacing: .12em;
+	text-transform: uppercase;
+	color: var(--ink-soft, #4d4635);
+	margin: 0 0 12px;
+	padding: 0;
+	border: 0;
+}
+
+/* Tag cloud pills — fix the hover-on-pill-bg invisible-text bug */
+.lwp-smart-filters .lwp-tag-cloud,
+ul.lwp-tag-cloud {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+}
+.lwp-smart-filters .lwp-tag-cloud li,
+ul.lwp-tag-cloud li {
+	margin: 0;
+	padding: 0;
+	background: transparent;
+	border: 0;
+}
+.lwp-smart-filters .lwp-tag-cloud li a,
+ul.lwp-tag-cloud li a {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 5px 10px;
+	background: var(--bg-alt, #f7f4ec);
+	color: var(--ink, #1b1c1c);
+	border: 1px solid var(--line, #e8e2d3);
+	border-radius: 999px;
+	font-size: 12px;
+	font-weight: 500;
+	text-decoration: none;
+	transition: background .14s ease, color .14s ease, border-color .14s ease;
+}
+.lwp-smart-filters .lwp-tag-cloud li a:hover,
+.lwp-smart-filters .lwp-tag-cloud li a:focus-visible,
+ul.lwp-tag-cloud li a:hover,
+ul.lwp-tag-cloud li a:focus-visible {
+	/* Ink fill, white text — never same-tone-on-tone */
+	background: var(--ink, #1b1c1c);
+	color: #fff;
+	border-color: var(--ink, #1b1c1c);
+	outline: 0;
+}
+.lwp-smart-filters .lwp-tag-cloud li a span,
+ul.lwp-tag-cloud li a span {
+	color: var(--ink-soft, #4d4635);
+	font-family: var(--mono, ui-monospace, monospace);
+	font-size: 10px;
+	font-weight: 400;
+}
+.lwp-smart-filters .lwp-tag-cloud li a:hover span,
+ul.lwp-tag-cloud li a:hover span {
+	color: rgba(255, 255, 255, .75);
+}
+
+/* Quick filter toggles — pill consistent with tag cloud + active state ink-fill */
+ul.lwp-quick-toggles {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+ul.lwp-quick-toggles li { margin: 0; padding: 0; }
+ul.lwp-quick-toggles li a.lwp-quick-toggle {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 8px 14px;
+	background: var(--bg-alt, #f7f4ec);
+	color: var(--ink, #1b1c1c);
+	border: 1px solid var(--line, #e8e2d3);
+	border-radius: 999px;
+	font-size: 13px;
+	font-weight: 500;
+	text-decoration: none;
+	transition: background .14s ease, color .14s ease, border-color .14s ease;
+}
+ul.lwp-quick-toggles li a.lwp-quick-toggle:hover,
+ul.lwp-quick-toggles li a.lwp-quick-toggle:focus-visible {
+	border-color: var(--primary, #735c00);
+	color: var(--primary, #735c00);
+	outline: 0;
+}
+ul.lwp-quick-toggles li a.lwp-quick-toggle.is-active {
+	background: var(--ink, #1b1c1c);
+	color: #fff;
+	border-color: var(--ink, #1b1c1c);
+}
+.lwp-quick-toggle__check {
+	display: inline-flex;
+	font-size: 12px;
+	color: inherit;
+}
+
+/* WC native price slider — restore the slider track+handles when WC enqueues
+   wc-price-slider on the archive (see inc/enqueue.php). The default WC styles
+   work but the track is invisible inside our cream/ink palette. */
+.price_slider_wrapper { padding: 0 4px; }
+.price_slider {
+	position: relative;
+	height: 4px;
+	margin: 14px 6px 24px;
+	background: var(--line, #e8e2d3);
+	border-radius: 2px;
+}
+.price_slider .ui-slider-range {
+	position: absolute;
+	top: 0;
+	height: 100%;
+	background: var(--primary, #735c00);
+	border-radius: 2px;
+}
+.price_slider .ui-slider-handle {
+	position: absolute;
+	top: 50%;
+	width: 18px;
+	height: 18px;
+	margin-left: -9px;
+	background: #fff;
+	border: 2px solid var(--ink, #1b1c1c);
+	border-radius: 50%;
+	cursor: grab;
+	transform: translateY(-50%);
+	box-shadow: 0 1px 4px rgba(0, 0, 0, .12);
+}
+.price_slider .ui-slider-handle:focus-visible { outline: 2px solid var(--primary, #735c00); outline-offset: 2px; }
+.price_slider_amount {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	flex-wrap: wrap;
+	margin-top: 4px;
+}
+.price_slider_amount .price_label {
+	font-family: var(--mono, ui-monospace, monospace);
+	font-size: 11px;
+	letter-spacing: .04em;
+	color: var(--ink-soft, #4d4635);
+}
+.price_slider_amount .button {
+	background: var(--ink, #1b1c1c) !important;
+	color: #fff !important;
+	border: 0 !important;
+	padding: 6px 14px !important;
+	font-family: var(--mono, ui-monospace, monospace) !important;
+	font-size: 11px !important;
+	letter-spacing: .08em !important;
+	text-transform: uppercase !important;
+	border-radius: 999px !important;
+}
+
+/* ─── Load More (theme-side, JS-driven) ─────────────────────────────── */
+.lwp-loadmore-wrap {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 12px;
+	padding: 28px 0 12px;
+}
+.lwp-loadmore-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 26px;
+	background: var(--ink, #1b1c1c);
+	color: #fff;
+	border: 0;
+	border-radius: 999px;
+	font-family: var(--mono, ui-monospace, monospace);
+	font-size: 12px;
+	letter-spacing: .12em;
+	text-transform: uppercase;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background .14s ease, transform .14s ease;
+}
+.lwp-loadmore-btn:hover { background: var(--primary, #735c00); }
+.lwp-loadmore-btn:disabled { opacity: .55; cursor: progress; }
+.lwp-loadmore-btn[hidden] { display: none; }
+.lwp-loadmore-status {
+	font-family: var(--mono, ui-monospace, monospace);
+	font-size: 11px;
+	color: var(--ink-soft, #4d4635);
+	letter-spacing: .04em;
+	min-height: 14px;
+}
+.lwp-loadmore-active .woocommerce-pagination { display: none; }
 
 /* ============================================================== */
 /* Mobile Spec Preview — Shop / Archive (≤767px)                  */
@@ -441,15 +698,30 @@ ul.products li.product .button.added_to_cart {
 		display: none !important;
 	}
 
-	/* Pagination — center, full-width row */
-	.woocommerce-pagination { padding: 18px 16px 28px; }
-	.woocommerce-pagination ul.page-numbers { gap: 6px; padding: 8px 0; flex-wrap: wrap; }
+	/* Pagination mobile — tighter row, allow wrap */
+	.woocommerce-pagination { padding: 12px 14px 22px; margin-top: 24px; }
+	.woocommerce-pagination ul.page-numbers { gap: 5px; padding: 14px 0 0; flex-wrap: wrap; }
 	.woocommerce-pagination ul.page-numbers a,
 	.woocommerce-pagination ul.page-numbers span {
-		min-width: 36px;
-		height: 36px;
+		min-width: 32px;
+		height: 32px;
+		padding: 0 8px;
 		font-size: 12px;
 	}
+	.woocommerce-pagination ul.page-numbers a.next,
+	.woocommerce-pagination ul.page-numbers a.prev { padding: 0 10px; }
+
+	/* Smart-filters sidebar mobile — single block per row, narrower padding */
+	.lwp-smart-filters .lwp-filter-block {
+		padding: 12px 14px 14px;
+		margin-bottom: 10px;
+	}
+	.lwp-smart-filters .lwp-tag-cloud li a { font-size: 11.5px; padding: 4px 9px; }
+	ul.lwp-quick-toggles li a.lwp-quick-toggle { padding: 7px 12px; font-size: 12.5px; }
+
+	/* Load-more block — full-width tap target */
+	.lwp-loadmore-wrap { padding: 22px 14px 12px; }
+	.lwp-loadmore-btn { width: 100%; max-width: 320px; padding: 14px 22px; }
 }
 
 /* ============================================================== */

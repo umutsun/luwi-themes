@@ -763,5 +763,30 @@ add_filter( 'luwipress_theme_settings', function ( $settings, $slug ) {
 		'group'     => 'seo',
 	);
 
+	// ─── Shop archive UX (1.7.0) ─────────────────────────────────────────────
+	$settings[] = array(
+		'id'        => 'shop_loadmore',
+		'theme_mod' => 'luwipress_gold_shop_loadmore',
+		'label'     => __( 'Shop — Load More instead of pagination', 'luwipress-gold' ),
+		'description' => __( 'Replaces the page-numbers pagination on shop / category / tag archives with a Load More flow (theme-side, no Elementor dep). The pagination markup is kept in the DOM (visually hidden) so SEO crawlers still discover paginated URLs.', 'luwipress-gold' ),
+		'type'      => 'checkbox',
+		'default'   => false,
+		'group'     => 'shop',
+	);
+
+	$settings[] = array(
+		'id'        => 'shop_loadmore_mode',
+		'theme_mod' => 'luwipress_gold_shop_loadmore_mode',
+		'label'     => __( 'Shop — Load More mode', 'luwipress-gold' ),
+		'description' => __( 'Button: visitor clicks "Load more". Infinite: auto-fetch when the sentinel scrolls into view. prefers-reduced-motion users always get the button regardless.', 'luwipress-gold' ),
+		'type'      => 'select',
+		'default'   => 'button',
+		'choices'   => array(
+			'button'   => __( 'Button (recommended)', 'luwipress-gold' ),
+			'infinite' => __( 'Infinite scroll', 'luwipress-gold' ),
+		),
+		'group'     => 'shop',
+	);
+
 	return $settings;
 }, 10, 2 );

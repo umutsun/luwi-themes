@@ -2447,6 +2447,11 @@ ul.lwp-quick-toggles li a.lwp-quick-toggle.is-active {
 		color: var(--ink, #1b1c1c);
 		margin: 0 0 12px;
 	}
+	/* The single-post body wrapper is `<article class="lwp-journal-article">`
+	   in our single.php — NOT `.entry-content` (that's the WP/page-builder
+	   convention). Both selectors are listed so the same rules cover any
+	   downstream override that swaps the wrapper. */
+	body.single-post .lwp-journal-article,
 	body.single-post .entry-content {
 		padding: 0 20px 24px;
 		font-size: 15px;
@@ -2456,9 +2461,11 @@ ul.lwp-quick-toggles li a.lwp-quick-toggle.is-active {
 	/* Descendant selector — covers AI-generated content where paragraphs
 	   sit inside <ul><li>, <div>, <figure>, etc (the > child selector
 	   missed those and let the browser default margin add up). */
+	body.single-post .lwp-journal-article p,
 	body.single-post .entry-content p {
 		margin: 0 0 10px;
 	}
+	body.single-post .lwp-journal-article > p:first-of-type,
 	body.single-post .entry-content > p:first-of-type {
 		font-size: 16px;
 		line-height: 1.5;
@@ -2466,6 +2473,7 @@ ul.lwp-quick-toggles li a.lwp-quick-toggle.is-active {
 		margin-bottom: 12px;
 	}
 	/* Drop-cap on first paragraph; suppress in RTL */
+	body.single-post .lwp-journal-article > p:first-of-type::first-letter,
 	body.single-post .entry-content > p:first-of-type::first-letter {
 		font-family: var(--serif, 'Playfair Display', serif);
 		font-size: 44px;
@@ -2474,9 +2482,12 @@ ul.lwp-quick-toggles li a.lwp-quick-toggle.is-active {
 		margin: 4px 7px -2px 0;
 		color: var(--primary, #735c00);
 	}
+	html[dir="rtl"] body.single-post .lwp-journal-article > p:first-of-type::first-letter,
 	html[dir="rtl"] body.single-post .entry-content > p:first-of-type::first-letter {
 		all: unset;
 	}
+	body.single-post .lwp-journal-article h2,
+	body.single-post .lwp-journal-article h3,
 	body.single-post .entry-content h2,
 	body.single-post .entry-content h3 {
 		font-family: var(--serif, 'Playfair Display', serif);
@@ -2485,34 +2496,67 @@ ul.lwp-quick-toggles li a.lwp-quick-toggle.is-active {
 		margin: 22px 0 8px;
 		letter-spacing: -.005em;
 	}
+	body.single-post .lwp-journal-article h2,
 	body.single-post .entry-content h2 { font-size: 22px; }
+	body.single-post .lwp-journal-article h3,
 	body.single-post .entry-content h3 { font-size: 19px; }
 	/* Tight spacing INSIDE list items + after lists — AI exports often
 	   wrap each bullet in <p>, doubling the gap. Reduce to a clean rhythm. */
+	body.single-post .lwp-journal-article ul,
+	body.single-post .lwp-journal-article ol,
 	body.single-post .entry-content ul,
 	body.single-post .entry-content ol {
 		margin: 4px 0 12px;
 		padding-left: 22px;
 	}
+	body.single-post .lwp-journal-article li,
 	body.single-post .entry-content li {
 		margin-bottom: 4px;
 	}
+	body.single-post .lwp-journal-article li > p,
 	body.single-post .entry-content li > p {
 		margin: 0 0 4px;
 	}
+	body.single-post .lwp-journal-article li > p:last-child,
 	body.single-post .entry-content li > p:last-child {
 		margin-bottom: 0;
 	}
+	body.single-post .lwp-journal-article li ul,
+	body.single-post .lwp-journal-article li ol,
 	body.single-post .entry-content li ul,
 	body.single-post .entry-content li ol {
 		margin: 4px 0 6px;
 	}
+	/* Reduce the giant gaps that WP block-editor injects between figures
+	   (oEmbed wrappers, image galleries) and surrounding paragraphs. The
+	   default block-library CSS adds margin-block 1em — combined with our
+	   p/h2 margins, that produces ~80px of dead space around media. */
+	body.single-post .lwp-journal-article figure,
+	body.single-post .lwp-journal-article .wp-block-embed,
+	body.single-post .lwp-journal-article .wp-block-image,
+	body.single-post .entry-content figure,
+	body.single-post .entry-content .wp-block-embed,
+	body.single-post .entry-content .wp-block-image {
+		margin: 16px 0;
+	}
+	body.single-post .lwp-journal-article figure + h2,
+	body.single-post .lwp-journal-article figure + h3,
+	body.single-post .lwp-journal-article .wp-block-embed + h2,
+	body.single-post .lwp-journal-article .wp-block-embed + h3,
+	body.single-post .entry-content figure + h2,
+	body.single-post .entry-content figure + h3,
+	body.single-post .entry-content .wp-block-embed + h2,
+	body.single-post .entry-content .wp-block-embed + h3 {
+		margin-top: 18px;
+	}
+	body.single-post .lwp-journal-article blockquote,
 	body.single-post .entry-content blockquote {
 		background: var(--bg-alt, #f6f3f2);
 		margin: 16px -20px;
 		padding: 20px 20px;
 		border: 0;
 	}
+	body.single-post .lwp-journal-article blockquote p,
 	body.single-post .entry-content blockquote p {
 		font-family: var(--serif, 'Playfair Display', serif);
 		font-style: italic;

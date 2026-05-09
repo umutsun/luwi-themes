@@ -141,7 +141,9 @@ class LuwiPress_Gold_Legacy_Canvas_Tool {
 
 	const LEGACY_TEMPLATES = array(
 		'elementor_canvas.php',
+		'elementor_canvas',
 		'elementor_header_footer.php',
+		'elementor_header_footer',
 	);
 
 	public static function scan( $args = array(), $tool = array() ) {
@@ -160,20 +162,111 @@ class LuwiPress_Gold_Legacy_Canvas_Tool {
 
 		$candidates = array();
 		foreach ( (array) $rows as $row ) {
-			// If the theme ships its own copy of the template, the post will
-			// render fine; only flag where our theme has NOT taken over.
 			$resolved = locate_template( array( $row->template ) );
 			$ours     = $resolved && strpos( $resolved, get_stylesheet_directory() ) === 0;
+			// Posts route to single.php at request time via the
+			// `template_include` filter in elementor-template-force.php (1.7.0+);
+			// flag pages separately since pages legitimately use canvas builds.
+			$is_post = $row->post_type === 'post';
 			$candidates[] = array(
 				'id'    => (int) $row->ID,
 				'title' => $row->post_title,
-				'meta'  => sprintf( '%s · %s · %s', $row->post_type, $row->template, $ours ? 'theme overrides ✓' : 'theme missing ✗' ),
+				'meta'  => sprintf(
+					'%s · %s · %s%s',
+					$row->post_type,
+					$row->template,
+					$ours ? 'theme overrides ✓' : 'theme missing ✗',
+					$is_post ? ' · execute will delete meta (single.php takes over)' : ''
+				),
 			);
 		}
 
 		return array(
 			'candidates' => $candidates,
 			'count'      => count( $candidates ),
+		);
+	}
+
+	/**
+	 * Strip the legacy `_wp_page_template` meta from selected posts. This is
+	 * the DB-level companion to the request-time `template_include` filter:
+	 * the filter neutralises the symptom invisibly per-render, this tool
+	 * removes the root cause so the meta no longer pollutes WP exports +
+	 * any tooling that reads it directly.
+	 *
+	 * Only `post_type=post` is mutated by default — pages may legitimately
+	 * use Elementor canvas. Pass `args[allow_page]=true` to opt pages in.
+	 */
+	public static function execute( $args = array(), $tool = array() ) {
+		$ids = array_map( 'intval', (array) ( $args['post_ids'] ?? array() ) );
+		$ids = array_values( array_unique( array_filter( $ids ) ) );
+		if ( empty( $ids ) ) {
+			return new WP_Error( 'no_post_ids', 'Provide at least one post_id.', array( 'status' => 400 ) );
+		}
+		$allow_page = ! empty( $args['allow_page'] );
+
+		$mutated = 0;
+		$skipped = array();
+		$backup  = array();
+
+		foreach ( $ids as $pid ) {
+			$post = get_post( $pid );
+			if ( ! $post ) {
+				$skipped[] = array( 'id' => $pid, 'reason' => 'not_found' );
+				continue;
+			}
+			if ( $post->post_type !== 'post' && ! $allow_page ) {
+				$skipped[] = array( 'id' => $pid, 'reason' => 'not_post_type=post (pass allow_page=true to override)' );
+				continue;
+			}
+			$tpl = get_post_meta( $pid, '_wp_page_template', true );
+			if ( ! in_array( (string) $tpl, self::LEGACY_TEMPLATES, true ) ) {
+				$skipped[] = array( 'id' => $pid, 'reason' => 'meta not legacy (' . (string) $tpl . ')' );
+				continue;
+			}
+			$backup[ $pid ] = array( '_wp_page_template' => $tpl );
+			delete_post_meta( $pid, '_wp_page_template' );
+			$mutated++;
+		}
+
+		// Bust Elementor per-post CSS cache for affected posts.
+		if ( $mutated > 0 && class_exists( '\\Elementor\\Plugin' ) ) {
+			try {
+				$ele = \Elementor\Plugin::$instance;
+				if ( $ele && isset( $ele->files_manager ) && method_exists( $ele->files_manager, 'clear_cache' ) ) {
+					$ele->files_manager->clear_cache();
+				}
+			} catch ( \Throwable $e ) {}
+		}
+
+		return array(
+			'mutated'         => $mutated,
+			'skipped'         => $skipped,
+			'post_ids'        => $ids,
+			'_backup_payload' => $backup,
+		);
+	}
+
+	public static function restore( $args = array(), $tool = array() ) {
+		$bridge    = LuwiPress_Theme_Bridge::get_instance();
+		$entry     = $bridge->load_backup( sanitize_text_field( $args['backup_id'] ?? '' ) );
+		if ( ! $entry || $entry['tool_id'] !== 'legacy_canvas_migration' ) {
+			return new WP_Error( 'backup_not_found', 'Backup not found.', array( 'status' => 404 ) );
+		}
+		$payload  = is_array( $entry['payload'] ) ? $entry['payload'] : array();
+		$restored = 0;
+		foreach ( $payload as $pid => $meta_set ) {
+			$pid = (int) $pid;
+			if ( ! get_post( $pid ) || ! is_array( $meta_set ) ) { continue; }
+			foreach ( $meta_set as $key => $val ) {
+				if ( $val === '' || $val === null ) { continue; }
+				update_post_meta( $pid, $key, wp_slash( $val ) );
+			}
+			$restored++;
+		}
+		return array(
+			'restored' => $restored,
+			'backup_id'=> sanitize_text_field( $args['backup_id'] ?? '' ),
 		);
 	}
 }

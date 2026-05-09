@@ -261,13 +261,15 @@ add_filter( 'luwipress_theme_tools', function ( $tools, $slug ) {
 		$tools[] = array(
 			'id'          => 'legacy_canvas_migration',
 			'label'       => __( 'Legacy Canvas Migration', 'luwipress-gold' ),
-			'description' => __( 'Find posts assigned the Hello Elementor canvas / header-footer page templates and confirm whether the active theme overrides them.', 'luwipress-gold' ),
+			'description' => __( 'Find posts/pages assigned the Hello Elementor canvas / header-footer page templates. The theme already routes post_type=post to single.php at request time via a template_include filter, but execute strips the legacy meta entirely so it stops polluting exports + 3rd-party tooling. Pages are skipped by default (canvas builds use those legitimately) — pass args[allow_page]=true to include them.', 'luwipress-gold' ),
 			'category'    => 'migration',
 			'capability'  => 'manage_options',
 			'wpml_aware'  => false,
-			'destructive' => false,
+			'destructive' => true,
 			'callbacks'   => array(
-				'scan' => array( 'LuwiPress_Gold_Legacy_Canvas_Tool', 'scan' ),
+				'scan'    => array( 'LuwiPress_Gold_Legacy_Canvas_Tool', 'scan' ),
+				'execute' => array( 'LuwiPress_Gold_Legacy_Canvas_Tool', 'execute' ),
+				'restore' => array( 'LuwiPress_Gold_Legacy_Canvas_Tool', 'restore' ),
 			),
 		);
 	}

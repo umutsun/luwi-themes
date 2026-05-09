@@ -19,6 +19,52 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Force `single.php` for blog posts that carry a legacy `_wp_page_template`
+ * meta from Hello Elementor / page-builder migrations.
+ *
+ * Symptom this fixes: post saved as `post_type=post` with
+ * `_wp_page_template = elementor_header_footer.php` (or `elementor_canvas.php`)
+ * renders through the Elementor template instead of our cream/atelier
+ * single-post layout (sidebar, breadcrumb, reading-progress, related rail).
+ *
+ * Pages are intentionally NOT touched — page builders rely on those
+ * templates for Elementor canvas authoring. Only `post_type=post` is
+ * promoted back to single.php.
+ *
+ * Tapadum case (2026-05-09): 10/12 Buying Guide posts had this meta from
+ * the WP migration; saving in the WP block editor restored content but
+ * the legacy meta survived. This filter neutralises the meta at request
+ * time without requiring a DB migration.
+ */
+add_filter( 'template_include', function ( $template ) {
+	if ( is_admin() ) {
+		return $template;
+	}
+	if ( ! is_singular( 'post' ) ) {
+		return $template;
+	}
+	$queried = get_queried_object_id();
+	if ( ! $queried ) {
+		return $template;
+	}
+	$assigned = (string) get_post_meta( $queried, '_wp_page_template', true );
+	if ( $assigned === '' || $assigned === 'default' ) {
+		return $template;
+	}
+	$legacy = array(
+		'elementor_header_footer.php',
+		'elementor_header_footer',
+		'elementor_canvas.php',
+		'elementor_canvas',
+	);
+	if ( ! in_array( $assigned, $legacy, true ) ) {
+		return $template;
+	}
+	$single = locate_template( array( 'single.php' ) );
+	return $single ? $single : $template;
+}, 99 );
+
 add_filter( 'elementor/theme/get_location_templates/template_id', function ( $template_id, $location ) {
 	// Single Product (PDP).
 	if ( in_array( $location, array( 'single', 'product' ), true ) || ( is_string( $location ) && false !== strpos( $location, 'single-product' ) ) ) {

@@ -131,28 +131,41 @@ add_action( 'wp_enqueue_scripts', function () {
  * plugin stack consistently overrode .lwp-mm li, .lwp-site-header etc.
  */
 add_action( 'wp_enqueue_scripts', function () {
-	$ver = LUWIPRESS_GOLD_VERSION;
+	$base_ver = LUWIPRESS_GOLD_VERSION;
+	$dir      = LUWIPRESS_GOLD_DIR;
+	$uri      = LUWIPRESS_GOLD_URI;
+
+	/**
+	 * Cache-bust by filemtime (1.7.0+). Same theme version with edited CSS
+	 * still produces a fresh `?ver=` query string so browsers + edge caches
+	 * (Apache's 7-day max-age) miss correctly. The kernel-cached file stat
+	 * is cheap; performance impact is negligible.
+	 */
+	$asset_ver = function ( $rel_path ) use ( $base_ver, $dir ) {
+		$abs = $dir . $rel_path;
+		return $base_ver . '.' . ( file_exists( $abs ) ? filemtime( $abs ) : '0' );
+	};
 
 	wp_enqueue_style(
 		'luwipress-gold-tokens',
-		LUWIPRESS_GOLD_URI . '/assets/css/tokens.css',
+		$uri . '/assets/css/tokens.css',
 		[ 'luwipress-gold-fonts' ],
-		$ver
+		$asset_ver( '/assets/css/tokens.css' )
 	);
 
 	wp_enqueue_style(
 		'luwipress-gold-widgets',
-		LUWIPRESS_GOLD_URI . '/assets/css/widgets.css',
+		$uri . '/assets/css/widgets.css',
 		[ 'luwipress-gold-tokens' ],
-		$ver
+		$asset_ver( '/assets/css/widgets.css' )
 	);
 
 	if ( class_exists( 'WooCommerce' ) ) {
 		wp_enqueue_style(
 			'luwipress-gold-woo',
-			LUWIPRESS_GOLD_URI . '/assets/css/woo-overrides.css',
+			$uri . '/assets/css/woo-overrides.css',
 			[ 'luwipress-gold-widgets' ],
-			$ver
+			$asset_ver( '/assets/css/woo-overrides.css' )
 		);
 	}
 }, 9999 );

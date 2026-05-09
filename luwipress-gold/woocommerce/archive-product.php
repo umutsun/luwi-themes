@@ -218,7 +218,7 @@ if ( $is_term && 'product_cat' === $current_obj->taxonomy ) {
 					 * the woocommerce_pagination output via the
 					 * `lwp-loadmore-active` class on the shop wrapper.
 					 */
-					if ( get_theme_mod( 'luwipress_gold_shop_loadmore', false ) ) {
+					if ( get_theme_mod( 'luwipress_gold_shop_loadmore', true ) ) {
 						global $wp_query;
 						$current_page = max( 1, (int) get_query_var( 'paged', 1 ) );
 						$max_pages    = isset( $wp_query->max_num_pages ) ? (int) $wp_query->max_num_pages : 1;

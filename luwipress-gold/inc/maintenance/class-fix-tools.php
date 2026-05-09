@@ -505,6 +505,141 @@ class LuwiPress_Gold_Product_Translation_Tool {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// Elementor → Default Editor — for blog posts whose Elementor build hijacks
+// our atelier single-post layout (sidebar, breadcrumb, reading-progress,
+// related rail). The fix mirrors the WP admin "Use Default Editor" toggle:
+// strip ONLY `_elementor_edit_mode`. `_elementor_data` is preserved so the
+// switch is fully reversible — re-adding edit_mode='builder' restores the
+// Elementor render. WPML siblings get their own post IDs (separate scans).
+//
+// Distinct from `elementor_shell_cleanup`: that tool targets EMPTY skeletons
+// hiding Gutenberg content (Persian Tar pattern) — strips all Elementor
+// metas + any legacy template meta. This tool targets POPULATED Elementor
+// builds where the operator wants atelier rendering, not removal of the
+// Elementor data itself.
+// ─────────────────────────────────────────────────────────────────────────────
+
+class LuwiPress_Gold_Elementor_To_Default_Editor_Tool {
+
+	public static function scan( $args = array(), $tool = array() ) {
+		$post_types = isset( $args['post_types'] ) && is_array( $args['post_types'] )
+			? array_map( 'sanitize_key', $args['post_types'] )
+			: array( 'post' );
+
+		$limit = isset( $args['limit'] ) ? max( 1, min( 200, (int) $args['limit'] ) ) : 100;
+
+		global $wpdb;
+		$placeholders = implode( ',', array_fill( 0, count( $post_types ), '%s' ) );
+
+		// Posts with BOTH meta keys present — the body_class condition our
+		// theme uses to flip into Elementor render mode. Single SQL JOIN is
+		// the cheapest discovery path; meta_value not inspected (any non-
+		// empty edit_mode is a builder flag).
+		$rows = $wpdb->get_results( $wpdb->prepare(
+			"SELECT p.ID, p.post_title, p.post_type, m1.meta_value AS edit_mode, LENGTH(m2.meta_value) AS data_size
+			   FROM {$wpdb->posts} p
+			   INNER JOIN {$wpdb->postmeta} m1 ON m1.post_id = p.ID AND m1.meta_key = '_elementor_edit_mode'
+			   INNER JOIN {$wpdb->postmeta} m2 ON m2.post_id = p.ID AND m2.meta_key = '_elementor_data'
+			  WHERE p.post_status = 'publish'
+			    AND p.post_type IN ($placeholders)
+			    AND m1.meta_value <> ''
+			  ORDER BY p.ID DESC
+			  LIMIT %d",
+			array_merge( $post_types, array( $limit ) )
+		) );
+
+		$candidates = array();
+		foreach ( (array) $rows as $row ) {
+			$candidates[] = array(
+				'id'        => (int) $row->ID,
+				'title'     => $row->post_title ?: ( '#' . $row->ID ),
+				'post_type' => $row->post_type,
+				'meta'      => sprintf( 'edit_mode=%s · _elementor_data=%s · execute strips edit_mode only (data preserved)',
+					$row->edit_mode,
+					size_format( (int) $row->data_size, 1 )
+				),
+			);
+		}
+
+		return array(
+			'candidates' => $candidates,
+			'count'      => count( $candidates ),
+			'meta'       => array(
+				'post_types' => $post_types,
+				'note'       => 'Reversible. Backup captures the edit_mode value (typically "builder"); restore re-adds it and Elementor takes back over rendering. _elementor_data is never modified.',
+			),
+		);
+	}
+
+	public static function execute( $args = array(), $tool = array() ) {
+		$ids = array_map( 'intval', (array) ( $args['post_ids'] ?? array() ) );
+		$ids = array_values( array_unique( array_filter( $ids ) ) );
+		if ( empty( $ids ) ) {
+			return new WP_Error( 'no_post_ids', 'Provide at least one post_id.', array( 'status' => 400 ) );
+		}
+
+		$mutated = 0;
+		$skipped = array();
+		$backup  = array();
+
+		foreach ( $ids as $pid ) {
+			$post = get_post( $pid );
+			if ( ! $post ) {
+				$skipped[] = array( 'id' => $pid, 'reason' => 'not_found' );
+				continue;
+			}
+			$edit_mode = get_post_meta( $pid, '_elementor_edit_mode', true );
+			if ( $edit_mode === '' || $edit_mode === null ) {
+				$skipped[] = array( 'id' => $pid, 'reason' => 'no_edit_mode_meta' );
+				continue;
+			}
+			$backup[ $pid ] = array( '_elementor_edit_mode' => $edit_mode );
+			delete_post_meta( $pid, '_elementor_edit_mode' );
+			$mutated++;
+		}
+
+		if ( $mutated > 0 && class_exists( '\\Elementor\\Plugin' ) ) {
+			try {
+				$ele = \Elementor\Plugin::$instance;
+				if ( $ele && isset( $ele->files_manager ) && method_exists( $ele->files_manager, 'clear_cache' ) ) {
+					$ele->files_manager->clear_cache();
+				}
+			} catch ( \Throwable $e ) {}
+		}
+
+		return array(
+			'mutated'         => $mutated,
+			'skipped'         => $skipped,
+			'post_ids'        => $ids,
+			'_backup_payload' => $backup,
+		);
+	}
+
+	public static function restore( $args = array(), $tool = array() ) {
+		$bridge    = LuwiPress_Theme_Bridge::get_instance();
+		$entry     = $bridge->load_backup( sanitize_text_field( $args['backup_id'] ?? '' ) );
+		if ( ! $entry || $entry['tool_id'] !== 'elementor_to_default_editor' ) {
+			return new WP_Error( 'backup_not_found', 'Backup not found.', array( 'status' => 404 ) );
+		}
+		$payload  = is_array( $entry['payload'] ) ? $entry['payload'] : array();
+		$restored = 0;
+		foreach ( $payload as $pid => $meta_set ) {
+			$pid = (int) $pid;
+			if ( ! get_post( $pid ) || ! is_array( $meta_set ) ) { continue; }
+			foreach ( $meta_set as $key => $val ) {
+				if ( $val === '' || $val === null ) { continue; }
+				update_post_meta( $pid, $key, $val );
+			}
+			$restored++;
+		}
+		return array(
+			'restored' => $restored,
+			'backup_id'=> sanitize_text_field( $args['backup_id'] ?? '' ),
+		);
+	}
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Template Assignment — read-only; outputs current Elementor Pro PDP/archive
 // template binding per language. Real enforcement happens via the
 // `pdp_template_id` / `archive_template_id` settings + filter wired in

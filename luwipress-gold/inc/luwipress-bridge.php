@@ -415,6 +415,23 @@ add_filter( 'luwipress_theme_tools', function ( $tools, $slug ) {
 		);
 	}
 
+	if ( class_exists( 'LuwiPress_Gold_Elementor_To_Default_Editor_Tool' ) ) {
+		$tools[] = array(
+			'id'          => 'elementor_to_default_editor',
+			'label'       => __( 'Elementor → Default Editor', 'luwipress-gold' ),
+			'description' => __( 'Strip _elementor_edit_mode from posts whose Elementor build hijacks the atelier single-post layout. _elementor_data is preserved (reversible). Equivalent to clicking "Use Default Editor" in WP admin, but for many posts at once. Targets post_type=post by default.', 'luwipress-gold' ),
+			'category'    => 'migration',
+			'capability'  => 'edit_others_posts',
+			'wpml_aware'  => false,
+			'destructive' => true,
+			'callbacks'   => array(
+				'scan'    => array( 'LuwiPress_Gold_Elementor_To_Default_Editor_Tool', 'scan' ),
+				'execute' => array( 'LuwiPress_Gold_Elementor_To_Default_Editor_Tool', 'execute' ),
+				'restore' => array( 'LuwiPress_Gold_Elementor_To_Default_Editor_Tool', 'restore' ),
+			),
+		);
+	}
+
 	if ( class_exists( 'LuwiPress_Gold_Template_Assignment_Tool' ) ) {
 		$tools[] = array(
 			'id'          => 'wc_template_assignment',
@@ -772,7 +789,7 @@ add_filter( 'luwipress_theme_settings', function ( $settings, $slug ) {
 		'label'     => __( 'Shop — Load More instead of pagination', 'luwipress-gold' ),
 		'description' => __( 'Replaces the page-numbers pagination on shop / category / tag archives with a Load More flow (theme-side, no Elementor dep). The pagination markup is kept in the DOM (visually hidden) so SEO crawlers still discover paginated URLs.', 'luwipress-gold' ),
 		'type'      => 'checkbox',
-		'default'   => false,
+		'default'   => true,
 		'group'     => 'shop',
 	);
 
@@ -780,12 +797,12 @@ add_filter( 'luwipress_theme_settings', function ( $settings, $slug ) {
 		'id'        => 'shop_loadmore_mode',
 		'theme_mod' => 'luwipress_gold_shop_loadmore_mode',
 		'label'     => __( 'Shop — Load More mode', 'luwipress-gold' ),
-		'description' => __( 'Button: visitor clicks "Load more". Infinite: auto-fetch when the sentinel scrolls into view. prefers-reduced-motion users always get the button regardless.', 'luwipress-gold' ),
+		'description' => __( 'Infinite: auto-fetch when the sentinel scrolls into view (prefers-reduced-motion users always see the button instead). Button: visitor clicks "Load more" each time.', 'luwipress-gold' ),
 		'type'      => 'select',
-		'default'   => 'button',
+		'default'   => 'infinite',
 		'choices'   => array(
-			'button'   => __( 'Button (recommended)', 'luwipress-gold' ),
-			'infinite' => __( 'Infinite scroll', 'luwipress-gold' ),
+			'infinite' => __( 'Infinite scroll (default)', 'luwipress-gold' ),
+			'button'   => __( 'Button — manual click', 'luwipress-gold' ),
 		),
 		'group'     => 'shop',
 	);

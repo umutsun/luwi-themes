@@ -267,12 +267,12 @@ ul.products li.product .button.added_to_cart {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	min-width: 34px;
-	height: 34px;
-	padding: 0 11px;
+	min-width: 32px;
+	height: 32px;
+	padding: 0 10px;
 	border: 1px solid var(--line, #e8e2d3);
-	border-radius: 6px;
-	background: #fff;
+	border-radius: 999px; /* pill — softer than 6px square */
+	background: transparent;
 	color: var(--ink, #1b1c1c);
 	font-family: var(--mono, ui-monospace, monospace);
 	font-size: 12px;
@@ -2450,24 +2450,28 @@ ul.lwp-quick-toggles li a.lwp-quick-toggle.is-active {
 	body.single-post .entry-content {
 		padding: 0 20px 24px;
 		font-size: 15px;
-		line-height: 1.7;
+		line-height: 1.6;
 		color: var(--ink-soft, #4a4a48);
 	}
-	body.single-post .entry-content > p {
-		margin: 0 0 14px;
+	/* Descendant selector — covers AI-generated content where paragraphs
+	   sit inside <ul><li>, <div>, <figure>, etc (the > child selector
+	   missed those and let the browser default margin add up). */
+	body.single-post .entry-content p {
+		margin: 0 0 10px;
 	}
 	body.single-post .entry-content > p:first-of-type {
-		font-size: 17px;
-		line-height: 1.55;
+		font-size: 16px;
+		line-height: 1.5;
 		color: var(--ink, #1b1c1c);
+		margin-bottom: 12px;
 	}
 	/* Drop-cap on first paragraph; suppress in RTL */
 	body.single-post .entry-content > p:first-of-type::first-letter {
 		font-family: var(--serif, 'Playfair Display', serif);
-		font-size: 48px;
+		font-size: 44px;
 		float: left;
 		line-height: .85;
-		margin: 6px 8px -2px 0;
+		margin: 4px 7px -2px 0;
 		color: var(--primary, #735c00);
 	}
 	html[dir="rtl"] body.single-post .entry-content > p:first-of-type::first-letter {
@@ -2478,21 +2482,41 @@ ul.lwp-quick-toggles li a.lwp-quick-toggle.is-active {
 		font-family: var(--serif, 'Playfair Display', serif);
 		font-weight: 500;
 		color: var(--ink, #1b1c1c);
-		margin: 18px 0 8px;
+		margin: 22px 0 8px;
 		letter-spacing: -.005em;
 	}
 	body.single-post .entry-content h2 { font-size: 22px; }
 	body.single-post .entry-content h3 { font-size: 19px; }
+	/* Tight spacing INSIDE list items + after lists — AI exports often
+	   wrap each bullet in <p>, doubling the gap. Reduce to a clean rhythm. */
+	body.single-post .entry-content ul,
+	body.single-post .entry-content ol {
+		margin: 4px 0 12px;
+		padding-left: 22px;
+	}
+	body.single-post .entry-content li {
+		margin-bottom: 4px;
+	}
+	body.single-post .entry-content li > p {
+		margin: 0 0 4px;
+	}
+	body.single-post .entry-content li > p:last-child {
+		margin-bottom: 0;
+	}
+	body.single-post .entry-content li ul,
+	body.single-post .entry-content li ol {
+		margin: 4px 0 6px;
+	}
 	body.single-post .entry-content blockquote {
 		background: var(--bg-alt, #f6f3f2);
-		margin: 18px -20px;
-		padding: 24px 20px;
+		margin: 16px -20px;
+		padding: 20px 20px;
 		border: 0;
 	}
 	body.single-post .entry-content blockquote p {
 		font-family: var(--serif, 'Playfair Display', serif);
 		font-style: italic;
-		font-size: 24px;
+		font-size: 22px;
 		line-height: 1.35;
 		color: var(--primary, #735c00);
 		text-wrap: balance;

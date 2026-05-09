@@ -40,7 +40,7 @@ add_action( 'wp_enqueue_scripts', function () {
 	if ( function_exists( 'is_woocommerce' ) && ( is_shop() || is_product_taxonomy() || is_product_category() || is_product_tag() ) ) {
 		wp_enqueue_script( 'wc-price-slider' );
 
-		if ( get_theme_mod( 'luwipress_gold_shop_loadmore', false ) ) {
+		if ( get_theme_mod( 'luwipress_gold_shop_loadmore', true ) ) {
 			$lm_path = get_template_directory() . '/assets/js/loadmore.js';
 			$lm_ver  = $ver . '.' . ( file_exists( $lm_path ) ? filemtime( $lm_path ) : '0' );
 			wp_enqueue_script(
@@ -57,7 +57,7 @@ add_action( 'wp_enqueue_scripts', function () {
 					'no_more'   => __( 'You\'ve reached the end.', 'luwipress-gold' ),
 					'error'     => __( 'Couldn\'t load more — try again.', 'luwipress-gold' ),
 				],
-				'mode' => (string) get_theme_mod( 'luwipress_gold_shop_loadmore_mode', 'button' ), // button | infinite
+				'mode' => (string) get_theme_mod( 'luwipress_gold_shop_loadmore_mode', 'infinite' ), // infinite (default) | button
 			] );
 		}
 	}

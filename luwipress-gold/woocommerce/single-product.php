@@ -80,33 +80,13 @@ get_header( 'shop' );
 				</ul>
 			<?php endif; ?>
 
-			<?php if ( isset( $product ) && $product ) : ?>
-				<?php
-				// Sticky add-to-cart bar — appears via IntersectionObserver
-				// in frontend.js when the main `.single_add_to_cart_button`
-				// scrolls off the top. Out-of-stock and `is_purchasable()`
-				// false products skip the bar so we don't tease an
-				// un-clickable CTA.
-				$can_buy = $product->is_purchasable() && $product->is_in_stock();
-				?>
-				<?php if ( $can_buy ) : ?>
-					<div class="lwp-pdp-sticky" aria-hidden="true">
-						<div class="lwp-pdp-sticky__inner">
-							<?php
-							$thumb = $product->get_image( 'thumbnail', [ 'class' => 'lwp-pdp-sticky__thumb' ] );
-							echo $thumb; // phpcs:ignore
-							?>
-							<div class="lwp-pdp-sticky__meta">
-								<span class="lwp-pdp-sticky__title"><?php echo esc_html( $product->get_name() ); ?></span>
-								<span class="lwp-pdp-sticky__price"><?php echo $product->get_price_html(); // phpcs:ignore ?></span>
-							</div>
-							<button type="button" class="lwp-btn-primary lwp-pdp-sticky__cta">
-								<?php echo esc_html( $product->single_add_to_cart_text() ); ?>
-							</button>
-						</div>
-					</div>
-				<?php endif; ?>
-			<?php endif; ?>
+			<?php // PDP sticky add-to-cart bar removed 2026-05-12 — operator
+				// feedback: bar was covering functional content (chat launcher,
+				// cart drawer trigger, payment buttons) and wasn't useful since
+				// the main `.single_add_to_cart_button` stays in viewport on
+				// reasonably-sized screens. CSS rules in widgets.css + the
+				// `setupStickyPdp` / `initFloatBarFooterHandoff` JS handlers are
+				// now no-ops (no `.lwp-pdp-sticky` element to observe). ?>
 
 		<?php endwhile; ?>
 

@@ -223,14 +223,24 @@ if ( $is_term && 'product_cat' === $current_obj->taxonomy ) {
 						$current_page = max( 1, (int) get_query_var( 'paged', 1 ) );
 						$max_pages    = isset( $wp_query->max_num_pages ) ? (int) $wp_query->max_num_pages : 1;
 						if ( $max_pages > 1 ) {
+							/* Loading indicator is purely symbolic — a rotating ring
+							   for the active state, "X / Y" numeric pagination for the
+							   resting state, "✓" for end-of-list, "⚠" for error. No text
+							   labels means zero i18n work for FR/IT/ES/DE/etc. The button
+							   keeps a textual label since it's only visible in button-mode
+							   (operator opt-in); infinite mode hides it via JS. */
 							printf(
 								'<div class="lwp-loadmore-wrap" data-current="%d" data-max="%d">'
 									. '<button type="button" class="lwp-loadmore-btn" data-action="loadmore">%s</button>'
+									. '<div class="lwp-loadmore-spinner" role="status" aria-label="%s" hidden>'
+										. '<span class="lwp-loadmore-spinner__ring"></span>'
+									. '</div>'
 									. '<span class="lwp-loadmore-status" aria-live="polite"></span>'
 									. '</div>',
 								$current_page,
 								$max_pages,
-								esc_html__( 'Load more products', 'luwipress-gold' )
+								esc_html__( 'Load more products', 'luwipress-gold' ),
+								esc_attr__( 'Loading', 'luwipress-gold' )
 							);
 						}
 					}

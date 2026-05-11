@@ -145,7 +145,11 @@ if ( ! function_exists( 'luwipress_gold_footer_customizer' ) ) {
 		/* --- Payment row toggle ----------------------------------- */
 		$wp_customize->add_setting( 'luwipress_gold_show_payment_row', [
 			'type'              => 'theme_mod',
-			'default'           => true,
+			// 1.7.5: default flipped to false. Long gateway labels (often
+			// language-dependent like "MyBank · a través de PayPal") added
+			// noise to the bottom strip, and the same info is already
+			// surfaced at checkout where it actually matters.
+			'default'           => false,
 			'sanitize_callback' => function ( $v ) { return ! empty( $v ); },
 			'transport'         => 'refresh',
 		] );
@@ -430,7 +434,7 @@ if ( ! function_exists( 'luwipress_gold_footer_render_payment_row' ) ) {
 	 * Hidden when WC is inactive or no gateway is enabled.
 	 */
 	function luwipress_gold_footer_render_payment_row() {
-		if ( ! (bool) get_theme_mod( 'luwipress_gold_show_payment_row', true ) ) {
+		if ( ! (bool) get_theme_mod( 'luwipress_gold_show_payment_row', false ) ) {
 			return;
 		}
 		if ( ! function_exists( 'WC' ) ) {

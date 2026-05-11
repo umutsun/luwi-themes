@@ -1,5 +1,24 @@
 /* LuwiPress Gold — custom Elementor widget styles. */
 
+/* ─── Global horizontal overflow safety net ──────────────────────────
+ * Prevents the storefront from ever showing a horizontal scrollbar
+ * on mobile when a single rogue widget (long product title with
+ * letter-spacing, a 100vw section that doesn't account for scrollbar
+ * width, a flex row that doesn't allow shrinking, etc.) would
+ * otherwise push the body past the viewport. `overflow-x: clip` is
+ * preferred over `hidden` because it does NOT establish a new
+ * scroll container — `position: sticky` inside still works as
+ * expected. BOTH html and body must use `clip` (not `hidden`) or the
+ * root scroll context kicks in and sticky descendants stop sticking
+ * (regression hit the category hero in 1.7.9). Both lines declare
+ * hidden first then clip so older browsers degrade to hidden (sticky
+ * breaks there but they're a vanishingly small share of mobile
+ * traffic); modern browsers honour `clip` and sticky works.
+ */
+html { overflow-x: hidden; overflow-x: clip; }
+html, body { max-width: 100vw; }
+body { overflow-x: hidden; overflow-x: clip; }
+
 /* ─────────────────────────────────────────────────────────────────── */
 /* Product Card                                                        */
 /* ─────────────────────────────────────────────────────────────────── */
@@ -938,17 +957,28 @@
 	gap: 10px;
 	margin: 0 0 10px !important;
 	padding-bottom: 8px !important;
+	position: relative; /* anchor for the absolutely-positioned ::after arrow */
 }
 .lwp-mm-col-head + .lwp-mm-col-head { margin-top: 18px !important; }
 .lwp-mm-col-head a {
-	flex: 1 1 auto;
+	flex: 1 1 100%;
+	width: 100%;
 	min-width: 0;
-	display: inline-flex;
+	display: flex;
 	align-items: baseline;
+	justify-content: space-between;
 	gap: 10px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+}
+/* Push the count to the anchor's right edge regardless of label length,
+ * so badges form a single vertical column down the panel.
+ * `margin-left: auto` is the belt-and-braces fallback for browsers that
+ * compute the space-between differently when the parent has a sibling
+ * pseudo-element (the ::after hover arrow, see below). */
+.lwp-mm-col-head a .lwp-mm-col-head-count {
+	margin-left: auto;
 }
 .lwp-mm-col-head-count {
 	display: inline-flex;
@@ -971,7 +1001,13 @@
 	background: var(--primary, #735c00);
 }
 /* Header-only columns (no <ul> children) get a subtle "→" affordance
- * so they read as clickable destinations, not orphaned labels. */
+ * so they read as clickable destinations, not orphaned labels.
+ *
+ * Positioned absolutely so it does NOT consume flex space in the parent
+ * — otherwise the count pill gets pushed left of the column right edge
+ * (even at opacity:0 the arrow's box still occupied a slice of the
+ * row, breaking vertical alignment of pills across rows).
+ */
 .lwp-mm-col-head:not(:has(+ ul))::after,
 .lwp-mm-col-head:has(+ .lwp-mm-col-head)::after {
 	content: '→';
@@ -980,13 +1016,16 @@
 	color: var(--muted, #8b7f6a);
 	opacity: 0;
 	transition: opacity .15s ease, transform .15s ease;
-	flex-shrink: 0;
-	margin-left: 4px;
+	position: absolute;
+	right: -16px;
+	top: 50%;
+	transform: translateY(-50%);
+	pointer-events: none;
 }
 .lwp-mm-col-head:not(:has(+ ul)):hover::after,
 .lwp-mm-col-head:has(+ .lwp-mm-col-head):hover::after {
 	opacity: 1;
-	transform: translateX(2px);
+	transform: translate(2px, -50%);
 }
 
 /* Full mega panel (4+ kids or 3rd-level present) */
@@ -1048,9 +1087,9 @@
 	text-decoration: none;
 	font-size: 14px;
 	padding: 4px 0;
-	transition: color .15s, padding .15s;
+	transition: color .15s, transform .15s;
 }
-.lwp-mm-col ul a:hover { color: var(--primary, #735c00); padding-left: 6px; }
+.lwp-mm-col ul a:hover { color: var(--primary, #735c00); transform: translateX(6px); }
 .lwp-mm-col ul span {
 	font-family: var(--mono, monospace);
 	font-size: 11px;
@@ -1443,12 +1482,38 @@ li.lwp-pcard .star-rating { display: none !important; }
 
 /* ─── Cart layout ────────────────────────────────────────────────────── */
 
+/* Wrap the whole cart form so its grid never escapes the brand content
+ * width when the cart page is rendered inside an Elementor container
+ * (or any other parent) that exposes a wider max-width. Without this
+ * cap, `1fr + 380px` could push the right column off-screen when the
+ * Elementor wrapper grew to a custom width via container settings. */
+.lwp-cart-form {
+	max-width: var(--content-w, 1372px);
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+	box-sizing: border-box;
+	padding-left: 16px;
+	padding-right: 16px;
+}
+
 .lwp-cart-grid {
 	display: grid;
-	grid-template-columns: 1fr 380px;
-	gap: 48px;
+	grid-template-columns: minmax(0, 1fr) 480px;
+	gap: 40px;
 	margin-top: 32px;
 	align-items: start;
+	max-width: 100%;
+}
+
+/* Sticky cart bar is mobile-only — hide by default; mobile @media inside
+ * woo-overrides.css turns it into a fixed bottom bar at ≤767px. Without
+ * this default the element renders inline as a block between the cart
+ * form and footer on desktop, leaking the red mobile checkout button
+ * into the desktop layout. */
+.lwp-sticky-cart-bar { display: none; }
+@media (max-width: 767px) {
+	.lwp-sticky-cart-bar { display: grid; }
 }
 .lwp-cart-list {
 	background: #fff;
@@ -1606,6 +1671,19 @@ li.lwp-pcard .star-rating { display: none !important; }
 	position: sticky;
 	top: 120px;
 }
+/* WC ships `.cart-collaterals { width: 48%; float: right }` by default — that
+ * pushes the totals card into the right half of our `.lwp-cart-summary`
+ * aside, leaving the left half empty. Force full width + no float so the
+ * card fills the grid column edge to edge on desktop. Mobile already gets
+ * the same override at the @media (max-width: 1024px) block below. */
+.lwp-cart-summary .cart-collaterals,
+.lwp-cart-grid .cart-collaterals,
+.woocommerce-cart .cart-collaterals {
+	width: 100% !important;
+	max-width: 100% !important;
+	float: none !important;
+	margin: 0 !important;
+}
 .cart-collaterals h2 {
 	font-family: var(--serif, 'Playfair Display', Georgia, serif);
 	font-size: 22px;
@@ -1641,15 +1719,51 @@ li.lwp-pcard .star-rating { display: none !important; }
 	padding-top: 18px !important;
 	margin-top: 14px;
 	font-size: 16px;
+	white-space: nowrap;
 }
 .cart-collaterals .shop_table tr.order-total .amount,
 .cart-collaterals .shop_table tr.order-total bdi {
 	font-family: var(--serif, 'Playfair Display', Georgia, serif);
-	font-size: 24px;
+	font-size: 22px;
 	color: var(--primary, #735c00);
 	font-weight: 500;
+	white-space: nowrap;
+}
+.cart-collaterals .shop_table tr.order-total .amount .woocommerce-Price-currencySymbol {
+	margin-right: 1px;
 }
 .cart-collaterals .wc-proceed-to-checkout { padding: 0 !important; margin-top: 18px; }
+
+/* Cart totals tightening — WC ships a shipping destination + calculator block
+ * inside `.cart_totals` that, when empty or partially-filled, leaves a large
+ * vertical gap between the "Cart totals" heading and the first row. Force
+ * inline + compact layout for shipping rows and hide the empty cross-sells
+ * placeholder that WC keeps in the DOM. */
+.cart-collaterals .woocommerce-shipping-destination,
+.cart-collaterals .woocommerce-shipping-totals,
+.cart-collaterals .shipping-calculator-button,
+.cart-collaterals .shipping {
+	font-size: 13px !important;
+	line-height: 1.45 !important;
+	margin: 0 !important;
+	padding: 8px 0 !important;
+}
+.cart-collaterals .woocommerce-shipping-destination strong { font-weight: 500; }
+.cart-collaterals .woocommerce-shipping-calculator { margin-top: 6px !important; padding: 0 !important; }
+.cart-collaterals .shipping-calculator-button {
+	display: inline-block;
+	color: var(--primary, #735c00);
+	text-decoration: underline;
+	text-underline-offset: 2px;
+}
+/* Hide WC cross-sells slot when it's empty — saves the 60-120px gap between
+ * the totals table and the checkout button. WC keeps a `<div class="cross-sells">`
+ * placeholder even when no related products are configured. */
+.cart-collaterals .cross-sells:empty,
+.cart-collaterals .woocommerce-additional-fields:empty { display: none !important; }
+/* Tighten the form-level wrapper that WC adds for the coupon + update-cart
+ * row when shipping calculator is collapsed. */
+.cart-collaterals form.woocommerce-shipping-calculator { margin: 6px 0 0 !important; }
 .cart-collaterals .checkout-button {
 	width: 100% !important;
 	background: linear-gradient(135deg, var(--primary, #735c00), var(--primary-light, #D4AF37)) !important;
@@ -1667,6 +1781,54 @@ li.lwp-pcard .star-rating { display: none !important; }
 .cart-collaterals .checkout-button:hover {
 	box-shadow: 0 12px 36px -8px rgba(115, 92, 0, .55) !important;
 	transform: translateY(-1px) !important;
+	color: #fff !important;
+}
+
+/* Higher-specificity guardrails — WooCommerce ships `button.alt` with a
+ * theme-accent red on some installs, and WooPayments injects its own
+ * red Express Checkout button. Lock the proceed button to the brand
+ * gold gradient regardless of which classes the merchant plugins add. */
+body.woocommerce .cart-collaterals a.checkout-button,
+body.woocommerce-cart .cart-collaterals a.checkout-button,
+body.woocommerce-cart .cart-collaterals .button.alt,
+body.woocommerce-cart .cart-collaterals .button.alt.wc-forward,
+body.woocommerce-cart .cart-collaterals .wc-proceed-to-checkout > .button {
+	background: linear-gradient(135deg, var(--primary, #735c00), var(--primary-light, #D4AF37)) !important;
+	color: #fff !important;
+	border: 0 !important;
+	box-shadow: 0 10px 30px -10px rgba(115, 92, 0, .4) !important;
+}
+
+/* Cart-totals: anchor color brand-aligned. WP/WC default link blue
+ * clashes with the warm gold + cream palette. */
+.cart-collaterals a,
+.cart-collaterals a:visited,
+.lwp-cart-summary a,
+.lwp-cart-summary a:visited {
+	color: var(--primary, #735c00);
+	text-decoration: underline;
+	text-decoration-thickness: 1px;
+	text-underline-offset: 2px;
+}
+.cart-collaterals a:hover,
+.lwp-cart-summary a:hover {
+	color: var(--primary-dark, #5a4700);
+}
+/* Express-checkout buttons (WooPayments / PayPal SDK / Apple Pay /
+ * Google Pay) enforce their own brand colors and clash with the warm
+ * palette inside the cart sidebar. Hide them in the cart totals card;
+ * shoppers still see them on the checkout page itself where mixed
+ * payment-method branding is accepted UX. */
+.cart-collaterals .wc-payments-payment-request-wrapper,
+.cart-collaterals .wcpay-payment-request-button-separator,
+.cart-collaterals .wc-payments-payment-request-button-separator,
+.cart-collaterals #wc-payments-express-checkout-element,
+.cart-collaterals .wcpay-express-checkout-wrapper,
+.cart-collaterals .paypal-buttons,
+.cart-collaterals .wc-stripe-payment-request-button-separator,
+.cart-collaterals .applepay-button,
+.cart-collaterals .gpay-button {
+	display: none !important;
 }
 
 @media (max-width: 1024px) {
@@ -2837,7 +2999,7 @@ body.lwp-locked { overflow: hidden; }
 .lwp-pdp-sticky__inner {
 	max-width: var(--content-w, 1372px);
 	margin: 0 auto;
-	padding: 14px 32px;
+	padding: 14px 96px 14px 32px; /* extra right padding so CTA clears the 56×56 chat launcher (right:20, bottom:20) */
 	display: flex;
 	gap: 18px;
 	align-items: center;
@@ -2877,12 +3039,51 @@ body.lwp-locked { overflow: hidden; }
 	flex-shrink: 0;
 	white-space: nowrap;
 }
+@media (max-width: 767px) {
+	/* Mobile: drop the full-width bar look and ship the sticky as a
+	 * compact floating gold pill on the bottom-left. Thumb + meta are
+	 * hidden because the user is already on the PDP — they know which
+	 * product they're buying, so the bar's only useful payload is the
+	 * CTA itself. The chat launcher (56×56 circle, bottom:20 right:20)
+	 * keeps its slot on the right; the pill sits opposite at
+	 * bottom:20 left:20. */
+	.lwp-pdp-sticky {
+		left: 16px;
+		right: auto;
+		bottom: 20px;
+		background: transparent;
+		border-top: 0;
+		box-shadow: none;
+		pointer-events: none;
+		width: auto;
+	}
+	.lwp-pdp-sticky__inner {
+		padding: 0;
+		margin: 0;
+		max-width: none;
+		gap: 0;
+	}
+	.lwp-pdp-sticky__thumb,
+	.lwp-pdp-sticky__meta { display: none; }
+	.lwp-pdp-sticky__cta {
+		padding: 12px 22px !important;
+		font-size: 12px !important;
+		font-family: var(--sans, 'Inter', sans-serif) !important;
+		font-weight: 600 !important;
+		letter-spacing: .06em !important;
+		text-transform: uppercase !important;
+		color: #fff !important;
+		background: linear-gradient(135deg, var(--primary, #735c00), var(--primary-light, #D4AF37)) !important;
+		border: 0 !important;
+		border-radius: var(--radius-pill, 999px) !important;
+		box-shadow: 0 10px 28px -10px rgba(115, 92, 0, .45),
+		            0 4px 12px -4px rgba(20, 16, 8, .25) !important;
+		pointer-events: auto;
+	}
+	.lwp-pdp-sticky.is-visible { transform: translateY(0); }
+}
 @media (max-width: 600px) {
-	.lwp-pdp-sticky__inner { padding: 10px 16px; gap: 10px; }
-	.lwp-pdp-sticky__thumb { width: 44px; height: 44px; }
-	.lwp-pdp-sticky__title { font-size: 13px; }
-	.lwp-pdp-sticky__price { font-size: 13px; }
-	.lwp-pdp-sticky__cta { padding: 10px 14px !important; font-size: 11px !important; }
+	.lwp-pdp-sticky__cta { padding: 11px 18px !important; font-size: 11px !important; }
 }
 
 /* ─── Apply lift utility to all our card components automatically ────── */
@@ -3413,10 +3614,13 @@ body.lwp-locked { overflow: hidden; }
 }
 
 /* ─── Single journal post (single.php editorial branch) ──────────────── */
-.lwp-journal-single { padding-top: 48px; padding-bottom: 96px; }
+/* 1.7.2: tightened spacing — pre-1.7.2 sum was top 56 + crumb 36 + head 36
+   + cover 48 = ~176px dead space before first paragraph (over-bumped in 1.6.7).
+   Now ~108px so editorial blogs read tight without losing voice. */
+.lwp-journal-single { padding-top: 32px; padding-bottom: 64px; }
 .lwp-journal-head {
 	max-width: 820px;
-	margin: 0 auto 36px;
+	margin: 0 auto 24px;
 	text-align: center;
 }
 .lwp-journal-head .lwp-eyebrow {
@@ -3431,7 +3635,7 @@ body.lwp-locked { overflow: hidden; }
 }
 .lwp-journal-head .lwp-page-title {
 	font-size: clamp(32px, 4.5vw, 64px);
-	margin: 0 0 24px;
+	margin: 0 0 18px;
 }
 .lwp-journal-meta {
 	display: flex;
@@ -3448,7 +3652,7 @@ body.lwp-locked { overflow: hidden; }
 .lwp-journal-meta .sep { color: var(--line, #e8e2d3); }
 .lwp-journal-meta__author { color: var(--ink, #1b1c1c); font-weight: 500; }
 .lwp-journal-cover {
-	margin: 0 0 48px;
+	margin: 0 0 32px;
 	max-width: 1372px;
 	padding: 0 32px;
 	margin-left: auto;
@@ -3478,23 +3682,28 @@ body.lwp-locked { overflow: hidden; }
 	line-height: 1.75;
 	color: var(--ink-soft, #4d4635);
 }
-.lwp-journal-body > * { margin: 0 0 1.4em; }
+.lwp-journal-body > * { margin: 0 0 1.1em; }
 .lwp-journal-body h2,
 .lwp-journal-body h3,
 .lwp-journal-body h4 {
 	font-family: var(--serif, 'Playfair Display', Georgia, serif);
 	color: var(--ink, #1b1c1c);
-	margin: 1.8em 0 .6em;
+	margin: 1.4em 0 .5em;
 	font-weight: 500;
 	letter-spacing: -.01em;
+	/* Playfair Display's tall ascenders + low descenders collapse when a
+	 * heading wraps to two lines and the default `line-height: normal`
+	 * (~1.1) leaves them. 1.25 gives the descender clearance the serif
+	 * actually needs without making short headings feel airy. */
+	line-height: 1.25;
 }
 .lwp-journal-body h2 { font-size: 32px; }
 .lwp-journal-body h3 { font-size: 26px; }
 .lwp-journal-body h4 { font-size: 20px; }
 .lwp-journal-body blockquote {
 	border-left: 3px solid var(--primary, #735c00);
-	padding: 12px 24px;
-	margin: 2em 0;
+	padding: 10px 22px;
+	margin: 1.6em 0;
 	font-family: var(--serif, 'Playfair Display', Georgia, serif);
 	font-style: italic;
 	font-size: 22px;
@@ -3505,7 +3714,7 @@ body.lwp-locked { overflow: hidden; }
 	max-width: 100%;
 	height: auto;
 	border-radius: 8px;
-	margin: 2em auto;
+	margin: 1.4em auto;
 	display: block;
 }
 .lwp-journal-body a {
@@ -3718,7 +3927,7 @@ body.lwp-yt-open { overflow: hidden; }
 	display: grid;
 	grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
 	gap: 48px;
-	align-items: center;
+	align-items: start;
 	margin: 0 0 48px;
 }
 .lwp-archive-header__copy {
@@ -3730,6 +3939,8 @@ body.lwp-yt-open { overflow: hidden; }
 	overflow: hidden;
 	background: var(--bg-alt, #f6f3f2);
 	aspect-ratio: 4 / 3;
+	position: sticky;
+	top: 88px;
 }
 .lwp-archive-header__img {
 	width: 100%;
@@ -3751,7 +3962,43 @@ body.lwp-yt-open { overflow: hidden; }
 	.lwp-archive-header__media {
 		aspect-ratio: 16 / 9;
 		order: -1;
+		position: static;
 	}
+}
+
+/* Shop toolbar — result count left, sort dropdown right. The WC native
+ * `.woocommerce-result-count` + `.woocommerce-ordering` floats are
+ * neutralised elsewhere in this stylesheet, so the toolbar needs a
+ * flex layout of its own to right-align the orderby select. */
+.lwp-shop-toolbar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 16px;
+	flex-wrap: wrap;
+	margin: 0 0 16px;
+}
+.lwp-shop-toolbar > div { min-width: 0; }
+.lwp-shop-toolbar .woocommerce-result-count,
+.lwp-shop-toolbar .woocommerce-ordering {
+	margin: 0 !important;
+}
+/* Higher specificity than the WC ordering reset at line ~6020 that
+ * sets `margin: 0 0 16px !important` (= margin-left: 0) and would
+ * otherwise pin the dropdown against the result count text. */
+html body main .lwp-shop-toolbar .woocommerce-ordering,
+html body .lwp-shop-results .lwp-shop-toolbar .woocommerce-ordering {
+  margin-left: auto !important;
+}
+
+/* Hide Google reCAPTCHA v3 floating badge — it collides with the chat
+ * launcher at bottom-right. Per Google's terms the privacy/terms
+ * disclaimer must be surfaced elsewhere (footer copy already shows
+ * "Secure checkout" + privacy policy link). */
+.grecaptcha-badge {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 .lwp-archive-subcat-grid {
@@ -4388,7 +4635,8 @@ body.lwp-yt-open { overflow: hidden; }
 	flex: none;
 	border-top: 1px solid var(--lwp-drw-line);
 	background: var(--lwp-drw-bg-deeper);
-	padding: 14px 20px 18px;
+	/* Right padding bumped to clear the 48×48 mobile chat launcher (right:20 + 48 + 8 buffer) */
+	padding: 14px 88px 18px 20px;
 	display: flex;
 	flex-direction: column;
 	gap: 12px;
@@ -4397,8 +4645,9 @@ body.lwp-yt-open { overflow: hidden; }
 .lwp-mobile-drawer .lwp-drw-foot-row {
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
-	gap: 12px;
+	justify-content: flex-start; /* keep chips left-aligned so they never sit under the bottom-right chat launcher */
+	gap: 14px;
+	flex-wrap: wrap;
 }
 .lwp-mobile-drawer .lwp-drw-foot-lbl {
 	font-family: var(--mono, monospace);
@@ -4541,25 +4790,70 @@ body.lwp-drw-locked #wpadminbar {
 	}
 }
 
+/* ─── Topbar social icons (left slot) — shipped in 1.7.10 after the
+ * email channel was removed. Icons are inline SVG with currentColor so
+ * they pick up the topbar's text color automatically (light strip on
+ * dark bg). Hover lifts toward brand gold. */
+.lwp-topbar-social {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 24px;
+	height: 24px;
+	color: rgba(255, 255, 255, 0.7);
+	text-decoration: none;
+	transition: color .15s ease, transform .15s ease;
+	border-radius: 4px;
+}
+.lwp-topbar-social:hover,
+.lwp-topbar-social:focus-visible {
+	color: var(--primary-light, #D4AF37);
+	transform: translateY(-1px);
+}
+.lwp-topbar-social svg {
+	display: block;
+	width: 14px;
+	height: 14px;
+}
+
 /* Mobile breakpoint switch */
 @media (max-width: 900px) {
 	/* Hide desktop mega menu, show hamburger */
 	.lwp-mm-top { display: none !important; }
 	.lwp-mobile-toggle { display: inline-flex; }
 
-	/* Topbar — collapse promo strip to a single scrollable line */
+	/* On mobile, scale socials down a touch and tighten the gap so the
+	 * row + lang pill + Track order all fit on a 360px viewport. */
+	.lwp-topbar-social { width: 22px; height: 22px; }
+	.lwp-topbar-social svg { width: 12px; height: 12px; }
+	.lwp-topbar-l { gap: 6px; }
+
+	/* Topbar — single horizontal row on mobile.
+	 * Left: social icon row (auto-collapses when no socials configured).
+	 * Right: lang pill + track-order. DHL promo dropped on mobile since
+	 * the strip is already tight. The email channel was removed entirely
+	 * in 1.7.10 — operators expose contact via footer/drawer/chat. */
 	.lwp-topbar-inner {
-		flex-direction: column;
-		gap: 6px;
-		padding: 8px 12px;
+		flex-direction: row;
+		gap: 12px;
+		padding: 6px 12px;
+		justify-content: space-between;
+		align-items: center;
 	}
 	.lwp-topbar-l, .lwp-topbar-r {
-		justify-content: center;
-		flex-wrap: wrap;
-		gap: 8px;
+		flex-wrap: nowrap;
+		gap: 10px;
 		font-size: 11px;
+		white-space: nowrap;
+		display: inline-flex;
+		align-items: center;
 	}
-	.lwp-topbar-loc, .lwp-topbar-promo { display: none; }
+	.lwp-topbar-l { justify-content: flex-start; }
+	.lwp-topbar-r { justify-content: flex-end; }
+	.lwp-topbar-loc,
+	.lwp-topbar-promo { display: none !important; }
+	.lwp-topbar-track { font-size: 10.5px; }
+	.lwp-topbar-r .lwp-topbar-sep { display: inline !important; opacity: .5; }
 
 	/* Site header — single-row 3-grid: hamburger · logo · actions.
 	 * Forces hamburger left, logo centered, action icons right; nothing
@@ -4626,8 +4920,9 @@ body.lwp-drw-locked #wpadminbar {
 	.lwp-pdp-sticky__thumb { width: 48px; height: 48px; }
 	.lwp-pdp-sticky__title { font-size: 14px; }
 
-	/* Single post / page — narrower readable column */
-	.lwp-single, .lwp-page { padding: 0 16px !important; }
+	/* Single post / page — narrower readable column.
+	 * Use side padding only — preserve default vertical padding (top:64px gives breadcrumb space under sticky header). */
+	.lwp-single, .lwp-page { padding-left: 16px !important; padding-right: 16px !important; }
 	.lwp-single h1, .lwp-page h1 { font-size: 28px !important; line-height: 1.2; }
 
 	/* Footer — stack columns */
@@ -4659,3 +4954,3808 @@ body.lwp-drw-locked #wpadminbar {
 /* ═════════════════════════════════════════════════════════════════════ */
 /*  UI-FIXES END                                                          */
 /* ═════════════════════════════════════════════════════════════════════ */
+
+/* V54 BEGIN — homepage infobar native icon-box skin (2026-05-11)
+ * Replaces the single HTML widget `tap_infobar_html` with 4 native
+ * Elementor `icon-box` widgets inside `tap_infobar_col`. This layer
+ * restores the original dark-band 4-grid look (gold circular icons,
+ * white serif-bold titles, muted mono captions) on top of Elementor's
+ * default icon-box markup, so the operator can edit each cell from the
+ * Elementor visual editor while the brand styling stays intact.
+ *
+ * Selectors are scoped to `.elementor-element-tap_hp_infobar` so they
+ * cannot bleed into other icon-box widgets on the site.
+ */
+
+/* Section already has background:#1A1612 from element settings; the
+ * grid layout for the 4 icon-boxes lives here. */
+html body .elementor-element-tap_infobar_col > .elementor-column-wrap > .elementor-widget-wrap,
+html body .elementor-element-tap_infobar_col > .elementor-widget-wrap,
+html body .elementor-element.elementor-element-tap_infobar_col .elementor-widget-wrap {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 24px !important;
+  align-items: center;
+}
+
+/* Per-item wrapper — kill the default block margin/padding so the
+ * grid cells sit tight. */
+html body .elementor-element-tap_hp_infobar .elementor-widget-icon-box {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+}
+html body .elementor-element-tap_hp_infobar .elementor-icon-box-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-align: left;
+}
+
+/* Icon — gold circular badge on dark-on-gold background, matching
+ * the original `.tap-info-item .ic` rule. */
+html body .elementor-element-tap_hp_infobar .elementor-icon-box-icon {
+  margin: 0;
+  flex-shrink: 0;
+}
+html body .elementor-element-tap_hp_infobar .elementor-icon-box-icon .elementor-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, .14);
+  border: 1px solid rgba(212, 175, 55, .35);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #D4AF37;
+  font-size: 26px;
+  padding: 0;
+  box-shadow: 0 0 0 0 rgba(212, 175, 55, 0);
+  transition: box-shadow 240ms ease;
+}
+html body .elementor-element-tap_hp_infobar .elementor-icon-box-icon:hover .elementor-icon {
+  box-shadow: 0 0 0 6px rgba(212, 175, 55, .08);
+}
+html body .elementor-element-tap_hp_infobar .elementor-icon-box-icon .elementor-icon svg,
+html body .elementor-element-tap_hp_infobar .elementor-icon-box-icon .elementor-icon i {
+  color: #D4AF37 !important;
+  fill: currentColor;
+  font-size: 24px !important;
+  width: 24px !important;
+  height: 24px !important;
+  line-height: 1 !important;
+}
+@media (max-width: 767px) {
+  html body .elementor-element-tap_hp_infobar .elementor-icon-box-icon .elementor-icon {
+    width: 44px;
+    height: 44px;
+    font-size: 20px;
+  }
+  html body .elementor-element-tap_hp_infobar .elementor-icon-box-icon .elementor-icon svg,
+  html body .elementor-element-tap_hp_infobar .elementor-icon-box-icon .elementor-icon i {
+    font-size: 19px !important;
+    width: 19px !important;
+    height: 19px !important;
+  }
+}
+
+/* Title — white Inter bold. */
+html body .elementor-element-tap_hp_infobar .elementor-icon-box-content {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+html body .elementor-element-tap_hp_infobar .elementor-icon-box-title {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #fff;
+}
+html body .elementor-element-tap_hp_infobar .elementor-icon-box-title a,
+html body .elementor-element-tap_hp_infobar .elementor-icon-box-title span {
+  color: inherit;
+}
+
+/* Description — JetBrains Mono muted caption. */
+html body .elementor-element-tap_hp_infobar .elementor-icon-box-description {
+  margin: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .06em;
+  color: #a89d85;
+  line-height: 1.4;
+}
+
+/* Mobile: collapse to 2 columns at <=768px to match the original
+ * @media breakpoint of the legacy HTML widget. */
+@media (max-width: 768px) {
+  html body .elementor-element-tap_infobar_col .elementor-widget-wrap {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 18px !important;
+  }
+}
+@media (max-width: 480px) {
+  html body .elementor-element-tap_hp_infobar .elementor-icon-box-title { font-size: 13px; }
+  html body .elementor-element-tap_hp_infobar .elementor-icon-box-description { font-size: 10.5px; }
+}
+/* end V54 */
+
+/* ─── HP native-widget skin (Tapadum demo homepage) ─────────────────────
+ * Replaces the inline <style> blocks that used to live inside each big
+ * HTML widget on the homepage. The HTML widgets were decomposed into
+ * native Elementor widgets (heading / text-editor / button) plus small
+ * focused HTML widgets for layout-heavy groups (CTA rows, stat grids,
+ * card grids). Class hooks like .tap-eyebrow / .tap-section-title /
+ * .tap-lead / .tap-btn-link-as-button now live on the .elementor-element
+ * wrapper instead of the bare HTML — selectors below are scoped to the
+ * inner Elementor markup.
+ *
+ * @since 1.7.8
+ */
+
+/* === Hero section vertical column stack === */
+.elementor-element-tap_hero_l .elementor-widget-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.elementor-element-tap_hero_l .elementor-widget-text-editor {
+  width: auto;
+}
+
+/* Eyebrow (small uppercase tag — used everywhere) */
+.tap-eyebrow .elementor-heading-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  color: #9A7B3A;
+  font-weight: 600;
+}
+.tap-eyebrow-dark .elementor-heading-title { color: #D4AF37; }
+
+/* H1 hero title */
+.tap-h1 .elementor-heading-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-size: 72px;
+  line-height: 1.05;
+  letter-spacing: -1px;
+  color: #1A1612;
+  margin: 0;
+  text-wrap: pretty;
+}
+.tap-h1 .elementor-heading-title em {
+  font-style: italic;
+  color: #9A7B3A;
+}
+
+/* Section h2 title (atelier / categories / products / masters / yt / journal) */
+.tap-section-title .elementor-heading-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-size: 48px;
+  line-height: 1.1;
+  letter-spacing: -.5px;
+  color: #1A1612;
+  margin: 0;
+}
+.tap-section-title .elementor-heading-title em {
+  font-style: italic;
+  color: #9A7B3A;
+}
+.tap-section-title-dark .elementor-heading-title { color: #fff; }
+
+/* Lead paragraph (under hero h1 + atelier h2) */
+.tap-lead .elementor-widget-container p {
+  font-family: 'Inter', sans-serif;
+  font-size: 17px;
+  line-height: 1.65;
+  color: #3a342c;
+  margin: 0;
+  max-width: 520px;
+}
+
+/* CTA button styles for native button widgets */
+.tap-btn-link-as-button .elementor-button {
+  background: transparent !important;
+  color: #1A1612 !important;
+  border: 0 !important;
+  border-bottom: 1px solid #1A1612 !important;
+  border-radius: 0 !important;
+  padding: 4px 0 6px !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  text-decoration: none !important;
+  transition: color .15s, border-color .15s !important;
+  box-shadow: none !important;
+  letter-spacing: 0 !important;
+}
+.tap-btn-link-as-button .elementor-button:hover {
+  color: #9A7B3A !important;
+  border-color: #9A7B3A !important;
+  background: transparent !important;
+}
+.tap-btn-link-as-button-dark .elementor-button {
+  color: #fff !important;
+  border-color: #fff !important;
+}
+.tap-btn-link-as-button-dark .elementor-button:hover {
+  color: #D4AF37 !important;
+  border-color: #D4AF37 !important;
+}
+
+/* CTA row (small HTML widget) */
+.tap-hero-cta {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+.tap-btn-primary {
+  padding: 14px 28px;
+  background: #1A1612;
+  color: #fff;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: .02em;
+  transition: all .2s;
+}
+.tap-btn-primary:hover {
+  background: #9A7B3A;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px -10px rgba(154, 123, 58, .55);
+  color: #fff;
+}
+.tap-btn-link {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1A1612;
+  text-decoration: none;
+  border-bottom: 1px solid #1A1612;
+  padding-bottom: 2px;
+  transition: all .15s;
+}
+.tap-btn-link:hover { color: #9A7B3A; border-color: #9A7B3A; }
+
+/* Hero stats grid (small HTML widget) */
+.tap-hero-stats {
+  display: flex;
+  gap: 36px;
+  margin-top: 24px;
+  padding-top: 32px;
+  border-top: 1px solid #E8DFC8;
+}
+.tap-stat { display: flex; flex-direction: column; gap: 4px; }
+.tap-stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px;
+  font-weight: 500;
+  color: #1A1612;
+  line-height: 1;
+}
+.tap-stat-lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  color: #8b7f6a;
+  line-height: 1.5;
+}
+
+/* Hero RIGHT — pill + image + card overlay (small HTML widgets, all
+ * absolutely positioned inside the column for the overlapping look). */
+.elementor-element-tap_hero_r { position: relative; min-height: 520px; }
+.tap-hero-pill {
+  position: absolute;
+  top: -18px;
+  right: 32px;
+  z-index: 3;
+  background: #fff;
+  border: 1px solid #E8DFC8;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #3a342c;
+  box-shadow: 0 8px 20px -8px rgba(0, 0, 0, .15);
+}
+.tap-hero-pill::before {
+  content: '●';
+  color: #3A7A4A;
+  margin-right: 6px;
+  animation: tap-blink 2s infinite;
+}
+@keyframes tap-blink { 50% { opacity: .4; } }
+.tap-hero-img {
+  aspect-ratio: 4 / 5;
+  background: linear-gradient(135deg, #3d2f1f, #7a5a2c);
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 30px 60px -20px rgba(60, 40, 0, .4);
+}
+.tap-placeholder {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .2em;
+  color: rgba(255, 255, 255, .4);
+  text-transform: uppercase;
+  text-align: center;
+  width: 80%;
+}
+.tap-hero-img-tag {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  background: rgba(0, 0, 0, .5);
+  backdrop-filter: blur(8px);
+  padding: 10px 14px;
+  border-radius: 6px;
+  color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border: 1px solid rgba(255, 255, 255, .1);
+}
+.tap-hero-img-tag strong {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  color: #D4AF37;
+}
+.tap-hero-card {
+  position: absolute;
+  bottom: -40px;
+  left: -40px;
+  background: #fff;
+  border-radius: 6px;
+  padding: 18px 22px;
+  box-shadow: 0 24px 60px -20px rgba(60, 40, 0, .35);
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  border: 1px solid #E8DFC8;
+  max-width: 340px;
+  z-index: 2;
+}
+.tap-hero-card-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #9A7B3A, #D4AF37);
+  flex-shrink: 0;
+}
+.tap-hero-card-text { display: flex; flex-direction: column; gap: 2px; }
+.tap-hero-card-text .nm {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1A1612;
+}
+.tap-hero-card-text .role {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #8b7f6a;
+}
+.tap-hero-card-text .quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 13px;
+  color: #3a342c;
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+/* === ATELIER section === */
+.elementor-element-tap_atelier_l { position: relative; }
+.tap-atelier-img {
+  aspect-ratio: 4 / 5;
+  background: linear-gradient(135deg, #c89a5a, #5a3a2a);
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tap-atelier-pl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .4);
+  text-align: center;
+  padding: 0 24px;
+}
+.tap-atelier-card {
+  position: absolute;
+  bottom: -32px;
+  right: -32px;
+  background: #fff;
+  border: 1px solid #E8DFC8;
+  border-radius: 6px;
+  padding: 18px 22px;
+  box-shadow: 0 24px 60px -20px rgba(60, 40, 0, .35);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: 260px;
+}
+.tap-atelier-card .eb {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #8b7f6a;
+}
+.tap-atelier-card strong {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: #1A1612;
+}
+.tap-atelier-card .sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: #3a342c;
+}
+
+.elementor-element-tap_atelier_r .elementor-widget-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.tap-bullets {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.tap-bullets li {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+}
+.tap-bullets li > span {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  color: #9A7B3A;
+  font-weight: 500;
+  line-height: 1;
+  flex-shrink: 0;
+  min-width: 32px;
+}
+.tap-bullets li strong {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #1A1612;
+  margin-bottom: 4px;
+}
+.tap-bullets li div {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #3a342c;
+}
+
+/* === Section-head grid layout (cats / products / masters / yt / journal) === */
+/* Each section column has: eyebrow + h2 + button + grid-html in a 2-col 3-row grid. */
+.elementor-element-tap_cat_col .elementor-widget-wrap,
+.elementor-element-tap_prod_col .elementor-widget-wrap,
+.elementor-element-tap_masters_col .elementor-widget-wrap,
+.elementor-element-tap_yt_col .elementor-widget-wrap,
+.elementor-element-tap_journal_col .elementor-widget-wrap {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px 24px;
+  align-items: end;
+}
+.elementor-element-tap_cat_col .tap-eyebrow,
+.elementor-element-tap_prod_col .tap-eyebrow,
+.elementor-element-tap_masters_col .tap-eyebrow,
+.elementor-element-tap_yt_col .tap-eyebrow,
+.elementor-element-tap_journal_col .tap-eyebrow { grid-column: 1; grid-row: 1; }
+.elementor-element-tap_cat_col .tap-section-title,
+.elementor-element-tap_prod_col .tap-section-title,
+.elementor-element-tap_masters_col .tap-section-title,
+.elementor-element-tap_yt_col .tap-section-title,
+.elementor-element-tap_journal_col .tap-section-title { grid-column: 1; grid-row: 2; }
+.elementor-element-tap_cat_col .tap-btn-link-as-button,
+.elementor-element-tap_prod_col .tap-btn-link-as-button,
+.elementor-element-tap_masters_col .tap-btn-link-as-button,
+.elementor-element-tap_yt_col .tap-btn-link-as-button,
+.elementor-element-tap_journal_col .tap-btn-link-as-button {
+  grid-column: 2;
+  grid-row: 2;
+  align-self: end;
+}
+.elementor-element-tap_cat_col .tap-cat-grid-block,
+.elementor-element-tap_prod_col .tap-prod-pills-block,
+.elementor-element-tap_masters_col .tap-masters-grid-block,
+.elementor-element-tap_yt_col .tap-yt-grid-block,
+.elementor-element-tap_journal_col .tap-journal-grid-block {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  margin-top: 32px;
+}
+
+/* === Categories grid (HTML widget content) === */
+.tap-cat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.tap-cat {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: 8px;
+  overflow: hidden;
+  text-decoration: none;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  /* space-between keeps the eyebrow at the top and the h3 + sub-text glued
+   * to the bottom naturally, so the eyebrow no longer overlaps the title
+   * when the card is short. Previously eyebrow was absolute-positioned and
+   * stacked on top of the h3 on narrower viewports. */
+  justify-content: space-between;
+  color: #fff;
+  transition: transform .25s;
+}
+.tap-cat:hover { transform: translateY(-3px); }
+.tap-cat-eb {
+  /* In-flow at the top of the flex column. The arrow ::after / .tap-cat-arrow
+   * stays absolutely positioned because it's a hover-only affordance. */
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .8);
+  display: block;
+}
+.tap-cat-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.tap-cat h3 {
+  font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  font-size: 32px;
+  font-weight: 500;
+  color: #fff;
+  margin: 0 0 4px;
+  line-height: 1.15;
+}
+.tap-cat-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: rgba(255, 255, 255, .8);
+  line-height: 1.4;
+}
+.tap-cat-arrow {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  color: #fff;
+  font-size: 20px;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: all .2s;
+}
+.tap-cat:hover .tap-cat-arrow { opacity: 1; transform: translateX(0); }
+
+/* === Products pills (HTML widget content) === */
+.tap-section-head-r {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.tap-pills {
+  display: inline-flex;
+  gap: 4px;
+  background: #f6f3f2;
+  padding: 4px;
+  border-radius: 999px;
+}
+.tap-pills a {
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #3a342c;
+  text-decoration: none;
+  transition: all .15s;
+}
+.tap-pills a.on,
+.tap-pills a:hover { background: #1A1612; color: #fff; }
+
+/* === Masters section (on dark bg) === */
+.elementor-element-tap_hp_masters { background: #1A1612; }
+.tap-masters-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+.tap-master {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-decoration: none;
+  padding: 18px;
+  background: rgba(255, 255, 255, .04);
+  border: 1px solid rgba(255, 255, 255, .08);
+  border-radius: 8px;
+  transition: all .2s;
+}
+.tap-master:hover {
+  background: rgba(255, 255, 255, .08);
+  transform: translateY(-2px);
+}
+.tap-master-img {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 500;
+  color: #fff;
+}
+.tap-master-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.tap-master-meta h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 500;
+  color: #fff;
+  margin: 0;
+}
+.tap-master-meta .loc,
+.tap-master-meta .spec,
+.tap-master-meta .count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #a89d85;
+}
+.tap-master-meta .count { color: #D4AF37; margin-top: 4px; }
+
+/* === YouTube grid === */
+.tap-yt-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+.tap-yt {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-decoration: none;
+}
+.tap-yt-thumb {
+  aspect-ratio: 16 / 9;
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+}
+.tap-yt-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 52px;
+  height: 52px;
+  background: rgba(255, 255, 255, .92);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1A1612;
+  font-size: 16px;
+  padding-left: 4px;
+}
+.tap-yt-time {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  background: rgba(0, 0, 0, .75);
+  color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  padding: 3px 6px;
+  border-radius: 4px;
+}
+.tap-yt-meta { display: flex; flex-direction: column; gap: 4px; }
+.tap-yt-meta h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 500;
+  color: #1A1612;
+  margin: 0;
+}
+.tap-yt-meta span {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: #8b7f6a;
+}
+
+/* === Journal grid === */
+.tap-journal-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 18px;
+}
+.tap-jnl {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-decoration: none;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid #f0ebe0;
+}
+.tap-jnl-big { grid-row: span 1; }
+.tap-jnl-img {
+  aspect-ratio: 16 / 10;
+  border-radius: 8px 8px 0 0;
+}
+.tap-jnl-big .tap-jnl-img { aspect-ratio: 4 / 3; }
+.tap-jnl-meta {
+  padding: 16px 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.tap-jnl-meta .eb {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #8b7f6a;
+}
+.tap-jnl-meta h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 500;
+  color: #1A1612;
+  margin: 0;
+  line-height: 1.3;
+}
+.tap-jnl-big .tap-jnl-meta h3 { font-size: 24px; }
+.tap-jnl-meta .date {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: #8b7f6a;
+  letter-spacing: .12em;
+}
+
+/* === Responsive collapses === */
+@media (max-width: 1024px) {
+  .tap-h1 .elementor-heading-title { font-size: 52px; }
+  .tap-section-title .elementor-heading-title { font-size: 36px; }
+  .tap-cat-grid,
+  .tap-masters-grid,
+  .tap-yt-grid { grid-template-columns: repeat(2, 1fr); }
+  .tap-journal-grid { grid-template-columns: 1fr 1fr; }
+  .elementor-element-tap_hero_r { min-height: auto; }
+  .tap-hero-card { position: static; margin-top: 24px; max-width: none; }
+  .tap-atelier-card { position: static; margin-top: -24px; margin-left: 24px; max-width: none; }
+}
+@media (max-width: 600px) {
+  .tap-h1 .elementor-heading-title { font-size: 40px; }
+  .tap-section-title .elementor-heading-title { font-size: 28px; }
+  .tap-hero-stats { gap: 20px; }
+  .tap-stat-num { font-size: 28px; }
+  .tap-cat-grid { grid-template-columns: 1fr; }
+  .tap-masters-grid,
+  .tap-yt-grid,
+  .tap-journal-grid { grid-template-columns: 1fr; }
+  .elementor-element-tap_cat_col .elementor-widget-wrap,
+  .elementor-element-tap_prod_col .elementor-widget-wrap,
+  .elementor-element-tap_masters_col .elementor-widget-wrap,
+  .elementor-element-tap_yt_col .elementor-widget-wrap,
+  .elementor-element-tap_journal_col .elementor-widget-wrap {
+    grid-template-columns: 1fr;
+  }
+  .elementor-element-tap_cat_col .tap-btn-link-as-button,
+  .elementor-element-tap_prod_col .tap-btn-link-as-button,
+  .elementor-element-tap_masters_col .tap-btn-link-as-button,
+  .elementor-element-tap_yt_col .tap-btn-link-as-button,
+  .elementor-element-tap_journal_col .tap-btn-link-as-button {
+    grid-column: 1;
+    grid-row: 3;
+    justify-self: start;
+  }
+}
+/* end HP native-widget skin */
+
+/* ─── About + Contact native-widget skin ────────────────────────────
+ * Companion to the HP native skin — handles the styling for the
+ * decomposed widgets on /about-gold/ and /contact-gold/. Same pattern:
+ * class hooks on the .elementor-element wrapper get scoped to the
+ * inner Elementor markup.
+ *
+ * @since 1.7.8
+ */
+
+/* Breadcrumb (shared) */
+.tap-breadcrumb {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #8b7f6a;
+}
+.tap-breadcrumb a {
+  color: #8b7f6a;
+  text-decoration: none;
+  transition: color .15s;
+}
+.tap-breadcrumb a:hover { color: #9A7B3A; }
+.tap-breadcrumb span:not(:first-child) { margin: 0 8px; }
+
+/* About hero h1 — slightly different sizing from homepage h1 */
+.tap-h1-about .elementor-heading-title {
+  font-size: 60px;
+  max-width: 1100px;
+}
+.tap-h1-contact .elementor-heading-title {
+  font-size: 60px;
+}
+
+/* Atelier story image — about-page variant (different aspect ratio) */
+.tap-atelier-img-ab { aspect-ratio: 4 / 5; }
+
+/* === About timeline === */
+.elementor-element-tap_ab_timeline { background: #1A1612; }
+.tap-tl {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  margin-top: 12px;
+}
+.tap-tl-row {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 36px;
+  align-items: start;
+  padding-bottom: 36px;
+  border-bottom: 1px solid rgba(255, 255, 255, .08);
+}
+.tap-tl-row:last-child { border-bottom: 0; }
+.tap-tl-row .yr {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 48px;
+  font-weight: 500;
+  color: #D4AF37;
+  line-height: 1;
+}
+.tap-tl-row h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 500;
+  color: #fff;
+  margin: 0 0 8px;
+}
+.tap-tl-row p {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 1.65;
+  color: #a89d85;
+  margin: 0;
+  max-width: 720px;
+}
+
+/* === Contact main blocks === */
+.tap-ct-blocks {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  margin-top: 36px;
+}
+.tap-ct-blocks > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #E8DFC8;
+}
+.tap-ct-blocks > div:last-child { border-bottom: 0; }
+.tap-ct-blocks .eb {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #8b7f6a;
+}
+.tap-ct-blocks strong {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: #1A1612;
+  margin: 4px 0;
+}
+.tap-ct-blocks p {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #3a342c;
+  margin: 0;
+}
+
+/* === Contact form === */
+.tap-form {
+  background: #faf6ee;
+  border: 1px solid #E8DFC8;
+  border-radius: 8px;
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.tap-form h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 500;
+  color: #1A1612;
+  margin: 0;
+}
+.tap-form .sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: #8b7f6a;
+  margin: 0 0 8px;
+}
+.tap-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.tap-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #8b7f6a;
+}
+.tap-form input,
+.tap-form select,
+.tap-form textarea {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  padding: 12px 14px;
+  border: 1px solid #E8DFC8;
+  border-radius: 6px;
+  background: #fff;
+  color: #1A1612;
+  outline: none;
+  transition: border-color .15s, box-shadow .15s;
+}
+.tap-form input:focus,
+.tap-form select:focus,
+.tap-form textarea:focus {
+  border-color: #9A7B3A;
+  box-shadow: 0 0 0 3px rgba(154, 123, 58, .12);
+}
+.tap-form label.chk {
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  text-transform: none;
+  letter-spacing: 0;
+  color: #3a342c;
+}
+.tap-form label.chk input {
+  width: 16px;
+  height: 16px;
+  padding: 0;
+}
+.tap-form button[type="submit"] {
+  align-self: flex-start;
+  padding: 14px 32px;
+  background: #1A1612;
+  color: #fff;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: .02em;
+  border: 0;
+  cursor: pointer;
+  transition: all .2s;
+}
+.tap-form button[type="submit"]:hover {
+  background: #9A7B3A;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px -10px rgba(154, 123, 58, .55);
+}
+.tap-form-msg {
+  display: none;
+  padding: 14px 18px;
+  background: #e8f3e8;
+  border: 1px solid #b8d8b8;
+  border-radius: 6px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: #2a5a1f;
+  margin-top: 4px;
+}
+
+/* === Contact map === */
+.tap-map {
+  height: 420px;
+  background: linear-gradient(135deg, #3a342c, #1A1612);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
+.tap-map .pl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .4);
+}
+
+/* === Responsive collapses (about + contact) === */
+@media (max-width: 1024px) {
+  .tap-h1-about .elementor-heading-title,
+  .tap-h1-contact .elementor-heading-title { font-size: 44px; }
+  .tap-tl-row { grid-template-columns: 80px 1fr; gap: 18px; }
+  .tap-tl-row .yr { font-size: 32px; }
+}
+@media (max-width: 600px) {
+  .tap-h1-about .elementor-heading-title,
+  .tap-h1-contact .elementor-heading-title { font-size: 32px; }
+  .tap-tl-row { grid-template-columns: 1fr; gap: 8px; }
+  .tap-form { padding: 24px; }
+  .tap-form-row { grid-template-columns: 1fr; }
+  .tap-map { height: 280px; }
+}
+/* end About + Contact native-widget skin */
+
+/* ─── lwp-pcard image fit override (defeat legacy Kit CSS) ─────────────
+ * Legacy Kit CSS V42/V43/V44/V47 layers target the OLD default WC card
+ * (`ul.products li.product img`) with `width:auto !important; height:auto
+ * !important; object-fit:contain`. That rule still ships in the Kit and
+ * wins over the theme's `.lwp-pcard-img img { width:100%; height:100% }`
+ * by specificity, leaving non-square product photos rendering at their
+ * natural ratio inside a 1:1 wrapper — empty band below the image, exactly
+ * the symptom the operator screenshotted.
+ *
+ * This override gives the new card markup max specificity + !important
+ * so the image always fills the square wrapper regardless of which Kit
+ * CSS layer happens to be in play.
+ *
+ * @since 1.7.8
+ */
+/* Padding-bottom aspect-ratio polyfill — bulletproof 1:1 square regardless
+ * of how Kit CSS or flex parents interact with the CSS `aspect-ratio`
+ * property. `padding-bottom: 100%` of width gives a square box; height is
+ * forced to 0 and children are positioned absolutely. Works in every
+ * browser back to IE11 and is immune to flex-item aspect-ratio quirks. */
+html body #primary .woocommerce ul.products li.lwp-pcard .lwp-pcard-img,
+html body #primary ul.products li.lwp-pcard .lwp-pcard-img,
+html body .woocommerce ul.products li.lwp-pcard .lwp-pcard-img,
+html body .woocommerce-page ul.products li.lwp-pcard .lwp-pcard-img,
+html body ul.products li.lwp-pcard .lwp-pcard-img,
+html body li.lwp-pcard .lwp-pcard-img {
+  width: 100% !important;
+  padding: 0 0 100% 0 !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  aspect-ratio: 1 / 1 !important;
+  overflow: hidden !important;
+  background: linear-gradient(135deg, #f0e6d0, #d4c19a) !important;
+  border-radius: 6px !important;
+  position: relative !important;
+  margin: 0 !important;
+  display: block !important;
+}
+html body #primary .woocommerce ul.products li.lwp-pcard .lwp-pcard-img img,
+html body #primary ul.products li.lwp-pcard .lwp-pcard-img img,
+html body .woocommerce ul.products li.lwp-pcard .lwp-pcard-img img,
+html body .woocommerce ul.products li.lwp-pcard .lwp-pcard-img .lwp-pcard-thumb,
+html body .woocommerce ul.products li.lwp-pcard .lwp-pcard-img a img,
+html body .woocommerce ul.products li.lwp-pcard a.lwp-pcard-link .lwp-pcard-img img,
+html body .woocommerce ul.products li.lwp-pcard a:first-of-type .lwp-pcard-img img,
+html body .woocommerce ul.products li.lwp-pcard .lwp-pcard-img .wp-post-image,
+html body .woocommerce ul.products li.lwp-pcard .lwp-pcard-img .attachment-woocommerce_thumbnail,
+html body .woocommerce-page ul.products li.lwp-pcard .lwp-pcard-img img,
+html body ul.products li.lwp-pcard .lwp-pcard-img img,
+html body li.lwp-pcard .lwp-pcard-img img {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+  min-height: 0 !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  display: block !important;
+  background: transparent !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  aspect-ratio: auto !important;
+  border-radius: 0 !important;
+}
+
+/* Archive toolbar: shrink the WC result-count + ordering on mobile.
+ * Legacy Kit CSS V32/V37 stamped a larger uppercase font on these via
+ * `ul.products`-adjacent selectors, overshadowing the theme's 10.5px
+ * mono rule. Higher specificity + !important brings the operator's
+ * "SHOWING 1-16 OF 128 RESULTS" line back to one row on phones. */
+html body .woocommerce .woocommerce-result-count,
+html body .woocommerce-page .woocommerce-result-count {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 11px !important;
+  letter-spacing: .12em !important;
+  text-transform: uppercase !important;
+  color: #8a8780 !important;
+  margin: 0 0 12px !important;
+  padding: 0 !important;
+  line-height: 1.4 !important;
+  float: none !important;
+}
+html body .woocommerce .woocommerce-ordering,
+html body .woocommerce-page .woocommerce-ordering {
+  margin: 0 0 16px !important;
+  float: none !important;
+}
+html body .woocommerce .woocommerce-ordering select,
+html body main.lwp-shop-archive .woocommerce-ordering select {
+  font-family: var(--mono, 'JetBrains Mono', monospace) !important;
+  font-size: 11px !important;
+  letter-spacing: .12em !important;
+  text-transform: uppercase !important;
+  color: var(--ink, #1b1c1c) !important;
+  background: #fff !important;
+  border: 1px solid var(--line, #e8e2d3) !important;
+  border-radius: var(--radius-pill, 999px) !important;
+  padding: 10px 38px 10px 18px !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6' fill='none' stroke='%23735c00' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'><polyline points='1,1 5,5 9,1'/></svg>") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 16px center !important;
+  background-size: 10px 6px !important;
+  cursor: pointer !important;
+  transition: border-color 200ms ease, box-shadow 200ms ease !important;
+  min-width: 220px;
+}
+html body .woocommerce .woocommerce-ordering select:hover,
+html body main.lwp-shop-archive .woocommerce-ordering select:hover {
+  border-color: var(--primary, #735c00) !important;
+}
+html body .woocommerce .woocommerce-ordering select:focus,
+html body main.lwp-shop-archive .woocommerce-ordering select:focus {
+  outline: none !important;
+  border-color: var(--primary, #735c00) !important;
+  box-shadow: 0 0 0 3px rgba(115, 92, 0, .14) !important;
+}
+@media (max-width: 767px) {
+  html body .woocommerce .woocommerce-result-count,
+  html body .woocommerce-page .woocommerce-result-count,
+  html body main.lwp-shop-archive .woocommerce-result-count,
+  html body main.lwp-page .woocommerce-result-count {
+    font-size: 10px !important;
+    letter-spacing: .10em !important;
+    padding: 6px 16px 0 !important;
+    line-height: 1.4 !important;
+    white-space: normal !important;
+  }
+  html body .woocommerce .woocommerce-ordering select,
+  html body main.lwp-shop-archive .woocommerce-ordering select {
+    font-size: 10.5px !important;
+    padding: 10px 34px 10px 14px !important;
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+}
+
+/* Belt-and-braces cart-mobile guard: even if the grid-template-columns
+ * cascade leaks, force single-column + 100% width on phones so the
+ * sidebar never escapes the viewport. */
+@media (max-width: 1024px) {
+  .lwp-cart-form,
+  .lwp-cart-summary,
+  .cart-collaterals,
+  .lwp-cart-grid,
+  .lwp-cart-list {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
+  }
+  .lwp-cart-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+}
+
+/* ─── PDP product gallery (WooCommerce native + Flexslider) ──────────────
+ * The default markup ships `<div class="woocommerce-product-gallery__image">`
+ * with inline `width: 594px` set by Flexslider for desktop multi-slide view.
+ * On mobile this overflows the 487px viewport horizontally (image wraps to
+ * x=626/1220/1814 of the same row). Clamp every gallery slide + image to
+ * the wrapper width so each slide fills exactly one screen. */
+.woocommerce-product-gallery {
+  max-width: 100% !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+  position: relative;
+}
+.woocommerce-product-gallery .flex-viewport,
+.woocommerce-product-gallery .woocommerce-product-gallery__wrapper,
+.woocommerce-product-gallery__image {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+.woocommerce-product-gallery__image,
+.woocommerce-product-gallery__image a {
+  display: block;
+  box-sizing: border-box;
+}
+.woocommerce-product-gallery__image img,
+.woocommerce-product-gallery__image a img {
+  width: 100% !important;
+  height: auto !important;
+  max-width: 100% !important;
+  display: block;
+  object-fit: contain;
+}
+/* Flexslider thumbnail nav — wrap into a grid that fills the gallery
+ * width instead of inheriting Flexslider's inline `width: 594px` per
+ * <li> which overflows narrow viewports. 5 thumbs per row on tablet,
+ * 4 per row on mobile, no horizontal scroll. The <ul> + <li> need
+ * `position: static !important` because Flexslider's runtime JS sets
+ * `position: absolute` on individual thumbs in some configurations,
+ * which makes every <li> stack on top of each other (mobile bug
+ * reported 2026-05-12). `height: auto` on the <ul> beats Flexslider's
+ * inline fixed height that's calculated for one-row layouts. */
+.woocommerce-product-gallery .flex-control-nav.flex-control-thumbs {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px;
+  margin: 12px 0 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  position: relative !important;
+  overflow: visible !important;
+}
+.woocommerce-product-gallery .flex-control-nav.flex-control-thumbs li {
+  width: calc((100% - 32px) / 5) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+  float: none !important;
+  position: static !important;
+  top: auto !important;
+  left: auto !important;
+  height: auto !important;
+}
+.woocommerce-product-gallery .flex-control-nav.flex-control-thumbs li img {
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+  cursor: pointer;
+  border: 1px solid var(--line, #e8e2d3);
+  border-radius: 4px;
+  opacity: .8;
+  transition: opacity 200ms ease, border-color 200ms ease;
+}
+.woocommerce-product-gallery .flex-control-nav.flex-control-thumbs li img:hover,
+.woocommerce-product-gallery .flex-control-nav.flex-control-thumbs li img.flex-active {
+  opacity: 1;
+  border-color: var(--primary, #735c00);
+}
+@media (max-width: 600px) {
+  .woocommerce-product-gallery .flex-control-nav.flex-control-thumbs li {
+    width: calc((100% - 24px) / 4) !important;
+  }
+}
+/* WC sale badge — pinned to top-left, brand-red gold accent, no overflow.
+ * Default WC styles position it relative which pushes other content. */
+.woocommerce span.onsale {
+  position: absolute !important;
+  top: 12px !important;
+  left: 12px !important;
+  min-width: 56px !important;
+  min-height: 56px !important;
+  width: auto !important;
+  height: auto !important;
+  padding: 8px 14px !important;
+  background: var(--primary, #735c00) !important;
+  color: #fff !important;
+  border-radius: 999px !important;
+  font-family: var(--mono, 'JetBrains Mono', monospace) !important;
+  font-size: 11px !important;
+  letter-spacing: .14em !important;
+  text-transform: uppercase !important;
+  font-weight: 600 !important;
+  z-index: 5 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  line-height: 1 !important;
+}
+@media (max-width: 767px) {
+  .woocommerce span.onsale {
+    top: 8px !important;
+    left: 8px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    font-size: 10px !important;
+    padding: 6px 10px !important;
+  }
+  /* Single product PDP — kill horizontal overflow + clamp Elementor
+   * built containers to the viewport so the gallery doesn't pan out. */
+  body.single-product main,
+  body.single-product main.lwp-pdp,
+  body.single-product main .lwp-pdp-container,
+  body.single-product main .e-con,
+  body.single-product main .e-con-boxed,
+  body.single-product main .elementor-section,
+  body.single-product main .elementor-container {
+    max-width: 100% !important;
+    overflow-x: clip;
+  }
+  body.single-product main .elementor-widget-wrap,
+  body.single-product main .e-con-inner {
+    max-width: 100% !important;
+  }
+  /* Single product images everywhere on PDP — defensive clamp. */
+  body.single-product main img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+}
+
+/* ─── Blog single post container — wider mobile reading column ──────────
+ * Operator preference: blog post body should occupy ~92% of mobile
+ * viewport (~4vw padding per side). Live DOM nests <main class="lwp-page
+ * lwp-journal-single"> > <article class="lwp-journal-article">; if both
+ * received 5vw padding the column collapsed to ~80%. Push padding onto
+ * the article only and zero the outer main's horizontal padding so the
+ * insets don't compound. */
+@media (max-width: 767px) {
+  body.single-post main.lwp-page,
+  body.single-post main.lwp-journal-single,
+  body.single-post main.lwp-single {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    box-sizing: border-box;
+  }
+  body.single-post .lwp-journal-article,
+  body.single-post article.lwp-journal-article,
+  body.single-post article.lwp-single,
+  body.single-post article.lwp-journal {
+    padding-left: 4vw !important;
+    padding-right: 4vw !important;
+    box-sizing: border-box;
+  }
+}
+
+/* ─── Mobile result-count + sort dropdown — final defensive sizing ──────
+ * Operator reports the SHOWING ALL N RESULTS line and SORT BY PRICE
+ * dropdown are still too large on phones. The earlier rule at line 5985
+ * targets `.woocommerce-result-count` but the operator's archive renders
+ * inside `.lwp-shop-archive` + a Gold-specific toolbar wrapper. Add the
+ * higher-specificity selectors + clamp the SELECT element itself. */
+@media (max-width: 767px) {
+  html body main .woocommerce-result-count,
+  html body main.lwp-shop-archive .woocommerce-result-count,
+  html body .lwp-shop-archive .woocommerce-result-count {
+    font-size: 10px !important;
+    line-height: 1.4 !important;
+    letter-spacing: .08em !important;
+    padding: 6px 5vw 0 !important;
+    margin: 0 0 8px !important;
+    text-transform: uppercase;
+    font-family: var(--mono, 'JetBrains Mono', monospace) !important;
+    white-space: normal !important;
+  }
+  html body main .woocommerce-ordering,
+  html body main.lwp-shop-archive .woocommerce-ordering {
+    margin: 0 5vw 12px !important;
+    padding: 0 !important;
+  }
+  html body main .woocommerce-ordering select,
+  html body main.lwp-shop-archive .woocommerce-ordering select {
+    font-size: 10.5px !important;
+    letter-spacing: .06em !important;
+    padding: 8px 28px 8px 10px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
+    line-height: 1.4 !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+ * 1.7.9 — tablet/desktop/mobile responsive polish
+ * ═══════════════════════════════════════════════════════════════════════
+ * Sprint 2026-05-11 audit findings:
+ *   1. Tablet (901–1100px): BLOG menu item overlaps the search icon
+ *      because the .lwp-mm-top flex row + .lwp-site-header-actions wrap
+ *      both compete for horizontal space and the 900px hamburger flip
+ *      is too low. Tighten gaps + clamp font + nowrap.
+ *   2. Top-level mega-menu labels wrap to two lines when the column is
+ *      tight ("STRING INSTRUMENTS"). Force single-line.
+ *   3. Mobile info-bar (`.tap-infobar`) — inline <style> in the homepage
+ *      HTML widget shipped a too-tight 2-col grid that wraps "Before /
+ *      every / dispatch" into 4 lines on a 360px viewport. Override with
+ *      higher-specificity rules so existing imported data benefits without
+ *      a re-import.
+ * ═══════════════════════════════════════════════════════════════════════ */
+
+/* (1) Top-level mega menu: keep labels single-line at every breakpoint
+ * where the desktop menu is visible. */
+.lwp-mm-top > li > a {
+	white-space: nowrap;
+}
+
+/* (2) Tablet squeeze (901px–1100px): tighten gaps, shrink font slightly,
+ * cap link padding so all six top-level items + actions cluster fit on
+ * a 1024px viewport without colliding. Keeps the desktop mega menu
+ * visible (matches the design intent — hamburger only at <=900px). */
+@media (min-width: 901px) and (max-width: 1100px) {
+	.lwp-mm-top { gap: 18px; }
+	.lwp-mm-top > li > a {
+		font-size: 12px;
+		letter-spacing: .06em;
+		padding: 16px 0;
+	}
+	.lwp-mm-arrow { font-size: 10px; }
+	/* Pull the action icon column tighter against the menu */
+	.lwp-site-header-actions { gap: 4px; }
+	.lwp-icon-btn { width: 36px; height: 36px; }
+	/* Logo can sit closer to nav at this breakpoint */
+	.lwp-site-header-logo img,
+	.lwp-site-header-logo .lwp-wordmark { max-height: 38px; }
+}
+
+/* Even narrower fallback (901px–960px) — at this width the six menu
+ * items + icons start to push past 1011px even with the tightening
+ * above. Demote BLOG to the drawer-only list and let the mega menu
+ * carry the five product navs. The drawer always renders BLOG in the
+ * mobile list AND is reachable through the footer column "Journal",
+ * so no functionality is lost. */
+@media (min-width: 901px) and (max-width: 960px) {
+	.lwp-mm-top > li.lwp-mm-blog,
+	.lwp-mm-top > li[data-menu-slug="blog"],
+	.lwp-mm-top > li:has(> a[href$="/blog/"]) {
+		display: none;
+	}
+}
+
+/* (3) Homepage info-bar mobile wrap fix.
+ *
+ * Root cause (audit 2026-05-11): the Elementor SECTION wrapping the
+ * info-bar widget ships its own kit rule
+ *   .elementor-element-tap_infobar_col .elementor-widget-wrap {
+ *     display: grid !important;
+ *     grid-template-columns: repeat(4, 1fr) !important;
+ *   }
+ *   @media(max-width:768px) { grid-template-columns: repeat(2, 1fr) !important; }
+ * meant for when each icon ships as its own widget. The homepage kit
+ * actually consolidates all four icons into ONE html widget that does
+ * its own internal grid — so the outer "4-column wrap" sandwich
+ * collapses the single child to ~244px on mobile, which is why the
+ * inner grid columns become ~110px and the text wraps to 4–5 lines.
+ *
+ * Fix: force the OUTER `.elementor-widget-wrap` of the info-bar
+ * section to `display:block` so the single child fills the column,
+ * then the inner `.tap-infobar` runs its own 2-up grid cleanly. */
+html body .elementor-element.elementor-element-tap_infobar_col .elementor-widget-wrap {
+	display: block !important;
+	grid-template-columns: none !important;
+}
+html body .elementor-element.elementor-element-tap_infobar_col .elementor-widget-wrap > .elementor-element {
+	width: 100% !important;
+}
+
+/* Tighten typography + sizing on the inner items. Specificity 0,2,1
+ * (body .tap-infobar X) wins over the inline <style> default 0,1,1. */
+@media (max-width: 768px) {
+	body .tap-infobar { gap: 14px 12px; }
+	body .tap-infobar .tap-info-item { gap: 10px; align-items: flex-start; }
+	body .tap-infobar .tap-info-item strong {
+		font-size: 13px;
+		letter-spacing: .005em;
+		line-height: 1.25;
+	}
+	body .tap-infobar .tap-info-item span {
+		font-size: 10.5px;
+		letter-spacing: .04em;
+		line-height: 1.35;
+		display: block;
+		word-spacing: -0.02em;
+	}
+}
+@media (max-width: 480px) {
+	body .tap-infobar { grid-template-columns: repeat(2, 1fr) !important; gap: 12px 10px !important; }
+	body .tap-infobar .tap-info-item .ic {
+		width: 32px; height: 32px;
+		font-size: 14px;
+	}
+	body .tap-infobar .tap-info-item strong { font-size: 12.5px; }
+	body .tap-infobar .tap-info-item span { font-size: 10px; }
+}
+
+/* end 1.7.9 */
+
+/* ─── tap-infobar trust signal: icon centering ──────────────────────────
+ * The .ic round badge uses display:flex + align-items:center +
+ * justify-content:center, BUT Unicode glyphs (⚙ ✈ ↺ ★) sit on their
+ * font baseline which is below the visual center of the glyph box.
+ * Plus the default line-height: normal (~1.2) inflates the line-box and
+ * pushes glyphs downward inside the round. Pin line-height:1 and
+ * normalize via grid place-items so any future glyph (emoji, ligature)
+ * lands dead-center too. Specificity 0,3,1 beats the inline <style>
+ * rule (0,1,1) carried in the HP HTML widget. */
+body .tap-infobar .tap-info-item .ic {
+  display: grid !important;
+  place-items: center !important;
+  line-height: 1 !important;
+  text-align: center !important;
+  font-style: normal !important;
+  /* Unicode glyphs have inconsistent left-bearing; nudge slightly to
+   * compensate. Most musical/symbolic glyphs from the system fallback
+   * fonts (Segoe UI Symbol on Windows, Apple Color Emoji on Mac) carry
+   * 0-2px of left-bearing. */
+  padding: 0 !important;
+}
+
+/* YouTube Channel widget BEGIN -- lwp-youtube-channel (1.7.10) */
+.lwp-ytc {
+  --lwp-ytc-card-bg: #fff;
+  --lwp-ytc-card-border: #E8DFC8;
+  --lwp-ytc-title-color: #1A1612;
+  --lwp-ytc-byline-color: #8b7f6a;
+  --lwp-ytc-yt-red: #ff0033;
+  --lwp-ytc-ink: var(--lwp-ink, #1b1c1c);
+  --lwp-ytc-gold: var(--primary-light, #D4AF37);
+  max-width: 1372px;
+  margin: 0 auto;
+}
+
+.lwp-ytc-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  margin-bottom: 48px;
+  flex-wrap: wrap;
+}
+.lwp-ytc-head__copy { min-width: 0; }
+.lwp-ytc-head__actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.lwp-ytc-eyebrow {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #9A7B3A;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 10px;
+}
+.lwp-ytc-title {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(28px, 4vw, 48px);
+  color: var(--lwp-ytc-ink);
+  margin: 0;
+  line-height: 1.1;
+  text-wrap: pretty;
+}
+
+.lwp-ytc-cta {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lwp-ytc-ink);
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding: 0 0 2px;
+  transition: color 0.25s ease, border-color 0.25s ease;
+  white-space: nowrap;
+}
+.lwp-ytc-cta:hover { color: #9A7B3A; border-color: #9A7B3A; }
+
+/* Subscribe button -- minimalist pill with idle pulse + hover fill. */
+.lwp-ytc-sub {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px 9px 13px;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--lwp-ytc-ink);
+  text-decoration: none;
+  background: transparent;
+  border: 1px solid var(--lwp-ytc-card-border);
+  border-radius: 999px;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.3s ease, border-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  white-space: nowrap;
+}
+.lwp-ytc-sub::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--lwp-ytc-yt-red);
+  transform: translateX(-101%);
+  transition: transform 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+  z-index: -1;
+}
+.lwp-ytc-sub:hover,
+.lwp-ytc-sub:focus-visible {
+  color: #fff;
+  border-color: var(--lwp-ytc-yt-red);
+  box-shadow: 0 6px 18px -8px rgba(255, 0, 51, 0.55);
+}
+.lwp-ytc-sub:hover::before,
+.lwp-ytc-sub:focus-visible::before { transform: translateX(0); }
+.lwp-ytc-sub:active { transform: translateY(1px); }
+.lwp-ytc-sub:focus-visible { outline: 2px solid var(--lwp-ytc-gold); outline-offset: 3px; }
+
+.lwp-ytc-sub__icon {
+  display: inline-flex;
+  align-items: center;
+  color: var(--lwp-ytc-yt-red);
+  transition: color 0.3s ease, transform 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+.lwp-ytc-sub__icon svg { display: block; }
+.lwp-ytc-sub:hover .lwp-ytc-sub__icon,
+.lwp-ytc-sub:focus-visible .lwp-ytc-sub__icon { color: #fff; transform: scale(1.08); }
+
+.lwp-ytc-sub__label { position: relative; z-index: 1; }
+
+/* Idle pulse -- soft red halo behind the icon. */
+.lwp-ytc-sub__pulse {
+  position: absolute;
+  left: 11px;
+  top: 50%;
+  width: 22px;
+  height: 16px;
+  border-radius: 4px;
+  background: var(--lwp-ytc-yt-red);
+  transform: translateY(-50%) scale(0.9);
+  opacity: 0.5;
+  z-index: 0;
+  pointer-events: none;
+  animation: lwp-ytc-sub-pulse 2.6s ease-out infinite;
+}
+@keyframes lwp-ytc-sub-pulse {
+  0%   { opacity: 0.45; transform: translateY(-50%) scale(0.9); }
+  60%  { opacity: 0;    transform: translateY(-50%) scale(1.8); }
+  100% { opacity: 0;    transform: translateY(-50%) scale(1.8); }
+}
+.lwp-ytc-sub:hover .lwp-ytc-sub__pulse,
+.lwp-ytc-sub:focus-visible .lwp-ytc-sub__pulse { animation-play-state: paused; opacity: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .lwp-ytc-sub::before { transition: none; }
+  .lwp-ytc-sub__pulse  { animation: none; opacity: 0; }
+  .lwp-ytc-sub__icon   { transition: none; }
+}
+
+/* Admin-only placeholder shown when no videos are configured yet. */
+.lwp-ytc-placeholder {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 28px 32px;
+  background: #fff8e1;
+  border: 1px dashed #c89a5a;
+  border-radius: 8px;
+  color: #5a4520;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 14px;
+}
+.lwp-ytc-placeholder strong { font-size: 15px; color: #1b1c1c; }
+.lwp-ytc-placeholder span { opacity: 0.85; }
+
+/* Video grid + card */
+.lwp-ytc-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+.lwp-ytc[data-columns="3"] .lwp-ytc-grid { grid-template-columns: repeat(3, 1fr); }
+.lwp-ytc[data-columns="2"] .lwp-ytc-grid { grid-template-columns: repeat(2, 1fr); }
+
+.lwp-ytc-card {
+  background: var(--lwp-ytc-card-bg);
+  border-radius: 8px;
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--lwp-ytc-title-color);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--lwp-ytc-card-border);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.lwp-ytc-card:hover,
+.lwp-ytc-card:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 36px -16px rgba(60, 40, 0, 0.25);
+  border-color: var(--lwp-ytc-gold);
+}
+.lwp-ytc-card:focus-visible { outline: 2px solid var(--lwp-ytc-gold); outline-offset: 3px; }
+
+.lwp-ytc-thumb {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #0e0a06;
+}
+.lwp-ytc-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.lwp-ytc-card:hover .lwp-ytc-thumb img { transform: scale(1.05); }
+
+.lwp-ytc-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  color: #1A1612;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  padding-left: 4px;
+  transition: transform 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+}
+.lwp-ytc-card:hover .lwp-ytc-play,
+.lwp-ytc-card:focus-visible .lwp-ytc-play {
+  transform: translate(-50%, -50%) scale(1.12);
+  background: var(--lwp-ytc-gold);
+  color: #1A1612;
+}
+
+.lwp-ytc-time {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.lwp-ytc-meta {
+  padding: 16px 18px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.lwp-ytc-meta h4 {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 500;
+  font-size: 17px;
+  color: var(--lwp-ytc-title-color);
+  margin: 0;
+  line-height: 1.3;
+  text-wrap: pretty;
+}
+.lwp-ytc-byline {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--lwp-ytc-byline-color);
+  text-transform: uppercase;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .lwp-ytc-grid,
+  .lwp-ytc[data-columns="3"] .lwp-ytc-grid,
+  .lwp-ytc[data-columns="4"] .lwp-ytc-grid { grid-template-columns: repeat(2, 1fr); }
+  .lwp-ytc-head { margin-bottom: 32px; }
+}
+@media (max-width: 600px) {
+  .lwp-ytc-grid,
+  .lwp-ytc[data-columns="2"] .lwp-ytc-grid,
+  .lwp-ytc[data-columns="3"] .lwp-ytc-grid,
+  .lwp-ytc[data-columns="4"] .lwp-ytc-grid { grid-template-columns: 1fr; gap: 16px; }
+  .lwp-ytc-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .lwp-ytc-head__actions { width: 100%; }
+}
+/* end YouTube Channel widget */
+
+/* Instagram Channel widget BEGIN -- lwp-instagram-channel (1.7.10) */
+.lwp-igc {
+  --lwp-igc-tile-border: #E8DFC8;
+  --lwp-igc-title-color: #1A1612;
+  --lwp-igc-ink: var(--lwp-ink, #1b1c1c);
+  --lwp-igc-gold: var(--primary-light, #D4AF37);
+  --lwp-igc-grad: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  --lwp-igc-grad-dark: linear-gradient(45deg, #c66f1f 0%, #b35131 25%, #aa1a35 50%, #9a1a4d 75%, #8e0f63 100%);
+  max-width: 1372px;
+  margin: 0 auto;
+}
+
+.lwp-igc-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  margin-bottom: 48px;
+  flex-wrap: wrap;
+}
+.lwp-igc-head__copy { min-width: 0; }
+.lwp-igc-head__actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.lwp-igc-eyebrow {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #9A7B3A;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 10px;
+}
+.lwp-igc-title {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(28px, 4vw, 48px);
+  color: var(--lwp-igc-ink);
+  margin: 0;
+  line-height: 1.1;
+  text-wrap: pretty;
+}
+.lwp-igc-cta {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lwp-igc-ink);
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding: 0 0 2px;
+  transition: color 0.25s ease, border-color 0.25s ease;
+  white-space: nowrap;
+}
+.lwp-igc-cta:hover { color: #9A7B3A; border-color: #9A7B3A; }
+
+/* Follow button -- Instagram brand gradient with hover fill + idle shimmer. */
+.lwp-igc-follow {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 16px 9px 14px;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--lwp-igc-ink);
+  text-decoration: none;
+  background: transparent;
+  border: 1px solid var(--lwp-igc-tile-border);
+  border-radius: 999px;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.3s ease, border-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  white-space: nowrap;
+}
+.lwp-igc-follow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--lwp-igc-grad);
+  transform: translateX(-101%);
+  transition: transform 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+  z-index: -1;
+}
+.lwp-igc-follow:hover,
+.lwp-igc-follow:focus-visible {
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 8px 22px -10px rgba(220, 39, 67, 0.55);
+}
+.lwp-igc-follow:hover::before,
+.lwp-igc-follow:focus-visible::before { transform: translateX(0); }
+.lwp-igc-follow:active { transform: translateY(1px); }
+.lwp-igc-follow:focus-visible { outline: 2px solid var(--lwp-igc-gold); outline-offset: 3px; }
+
+.lwp-igc-follow__icon {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  /* The Instagram glyph itself is a gradient — we paint it via a
+   * background-clipped SVG mask so it stays gradient at rest and flips
+   * to white on hover. */
+  color: transparent;
+  background-image: var(--lwp-igc-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.lwp-igc-follow__icon svg {
+  display: block;
+  /* SVG strokes inherit currentColor — when the parent's `color` is
+   * transparent the strokes vanish, so we explicitly set stroke via
+   * a CSS var the SVG honours. */
+  color: var(--lwp-igc-glyph, transparent);
+  filter: drop-shadow(0 0 0 currentColor);
+}
+.lwp-igc-follow .lwp-igc-follow__icon { --lwp-igc-glyph: #dc2743; }
+.lwp-igc-follow:hover .lwp-igc-follow__icon,
+.lwp-igc-follow:focus-visible .lwp-igc-follow__icon { --lwp-igc-glyph: #fff; transform: scale(1.08); transition: transform 0.3s ease; }
+
+.lwp-igc-follow__label { position: relative; z-index: 1; }
+.lwp-igc-follow__handle {
+  font-style: normal;
+  font-weight: 500;
+  opacity: 0.75;
+  margin-left: 4px;
+  letter-spacing: 0;
+  text-transform: lowercase;
+  font-size: 11px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lwp-igc-follow::before { transition: none; }
+  .lwp-igc-follow__icon { transition: none; }
+}
+
+/* Grid + tile */
+.lwp-igc-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+.lwp-igc[data-columns="6"] .lwp-igc-grid { grid-template-columns: repeat(6, 1fr); gap: 10px; }
+.lwp-igc[data-columns="3"] .lwp-igc-grid { grid-template-columns: repeat(3, 1fr); }
+.lwp-igc[data-columns="2"] .lwp-igc-grid { grid-template-columns: repeat(2, 1fr); }
+
+.lwp-igc-tile {
+  position: relative;
+  display: block;
+  background: var(--lwp-igc-tile-border);
+  border-radius: 10px;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  text-decoration: none;
+  isolation: isolate;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.lwp-igc-tile:hover,
+.lwp-igc-tile:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 36px -16px rgba(60, 40, 0, 0.25);
+}
+.lwp-igc-tile:focus-visible { outline: 2px solid var(--lwp-igc-gold); outline-offset: 3px; }
+.lwp-igc-tile[aria-disabled="true"] { pointer-events: none; opacity: 0.6; }
+
+.lwp-igc-thumb {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: var(--lwp-igc-grad);
+}
+.lwp-igc-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.lwp-igc-tile:hover .lwp-igc-thumb img { transform: scale(1.06); }
+
+.lwp-igc-thumb__empty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 42px;
+  color: #fff;
+  opacity: 0.7;
+}
+
+.lwp-igc-tile__overlay {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 14px 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: linear-gradient(to top, rgba(0,0,0,0.65), rgba(0,0,0,0.0));
+  color: #fff;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.lwp-igc-tile:hover .lwp-igc-tile__overlay,
+.lwp-igc-tile:focus-visible .lwp-igc-tile__overlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+.lwp-igc-tile__kind {
+  font-size: 18px;
+  line-height: 1;
+}
+.lwp-igc-tile__caption {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 13px;
+  line-height: 1.35;
+  text-wrap: pretty;
+}
+.lwp-igc-tile__meta {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  padding: 3px 7px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .lwp-igc-grid,
+  .lwp-igc[data-columns="6"] .lwp-igc-grid,
+  .lwp-igc[data-columns="4"] .lwp-igc-grid { grid-template-columns: repeat(3, 1fr); }
+  .lwp-igc-head { margin-bottom: 32px; }
+}
+@media (max-width: 600px) {
+  .lwp-igc-grid,
+  .lwp-igc[data-columns="2"] .lwp-igc-grid,
+  .lwp-igc[data-columns="3"] .lwp-igc-grid,
+  .lwp-igc[data-columns="4"] .lwp-igc-grid,
+  .lwp-igc[data-columns="6"] .lwp-igc-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .lwp-igc-head { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .lwp-igc-head__actions { width: 100%; }
+  /* On mobile the hover-overlay is invisible — always show the caption strip. */
+  .lwp-igc-tile__overlay { opacity: 1; transform: none; }
+}
+/* end Instagram Channel widget */
+
+/* Section Head BEGIN -- lwp-section-head (1.7.11) */
+.lwp-sh {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  margin-bottom: 48px;
+  flex-wrap: wrap;
+  max-width: 1372px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.lwp-sh__copy { min-width: 0; }
+.lwp-sh__right {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: flex-end;
+}
+.lwp-sh__eyebrow {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 10px;
+}
+.lwp-sh__title {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(28px, 4vw, 48px);
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+  margin: 0;
+  text-wrap: pretty;
+}
+.lwp-sh__title em { font-style: italic; color: #9A7B3A; }
+.lwp-sh--light .lwp-sh__eyebrow { color: #9A7B3A; }
+.lwp-sh--light .lwp-sh__title   { color: #1A1612; }
+.lwp-sh--dark  .lwp-sh__eyebrow { color: #D4AF37; }
+.lwp-sh--dark  .lwp-sh__title   { color: #fff; }
+
+.lwp-sh__pills {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.lwp-sh__pill {
+  padding: 8px 14px;
+  border-radius: 20px;
+  border: 1px solid #E8DFC8;
+  background: #fff;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 12px;
+  color: #3a342c;
+  text-decoration: none;
+  transition: all 0.15s ease;
+  letter-spacing: 0.02em;
+}
+.lwp-sh__pill:hover { border-color: #9A7B3A; color: #9A7B3A; }
+.lwp-sh__pill.is-on { background: #1A1612; border-color: #1A1612; color: #fff; }
+.lwp-sh--dark .lwp-sh__pill { background: transparent; border-color: #3a342c; color: #fff; }
+.lwp-sh--dark .lwp-sh__pill:hover { border-color: #D4AF37; color: #D4AF37; }
+.lwp-sh--dark .lwp-sh__pill.is-on { background: #D4AF37; border-color: #D4AF37; color: #1A1612; }
+
+.lwp-sh__cta {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding: 0 0 2px;
+  transition: color 0.25s ease, border-color 0.25s ease;
+  white-space: nowrap;
+}
+.lwp-sh--light .lwp-sh__cta { color: #1A1612; }
+.lwp-sh--light .lwp-sh__cta:hover { color: #9A7B3A; border-color: #9A7B3A; }
+.lwp-sh--dark  .lwp-sh__cta { color: #fff; }
+.lwp-sh--dark  .lwp-sh__cta:hover { color: #D4AF37; border-color: #D4AF37; }
+
+@media (max-width: 768px) {
+  .lwp-sh { flex-direction: column; align-items: flex-start; margin-bottom: 32px; }
+  .lwp-sh__right { align-items: flex-start; width: 100%; }
+}
+/* end Section Head */
+
+/* Category Grid BEGIN -- lwp-category-grid (1.7.11) */
+.lwp-cgrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  max-width: 1372px;
+  margin: 0 auto;
+}
+.lwp-cgrid[data-columns="3"] { grid-template-columns: repeat(3, 1fr); }
+.lwp-cgrid[data-columns="2"] { grid-template-columns: repeat(2, 1fr); }
+
+.lwp-cgrid__tile {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  aspect-ratio: 3 / 4;
+  padding: 24px;
+  border-radius: 8px;
+  color: #fff;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.lwp-cgrid__tile::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.55), transparent 60%);
+  pointer-events: none;
+}
+.lwp-cgrid__tile:hover,
+.lwp-cgrid__tile:focus-visible {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 48px -20px rgba(60, 40, 0, 0.5);
+}
+.lwp-cgrid__eyebrow {
+  position: relative;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 8px;
+}
+.lwp-cgrid__title {
+  position: relative;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(24px, 3vw, 34px);
+  color: #fff;
+  margin: 0 0 6px;
+  line-height: 1.05;
+}
+.lwp-cgrid__sub {
+  position: relative;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.5;
+}
+.lwp-cgrid__arrow {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.25s ease;
+}
+.lwp-cgrid__tile:hover .lwp-cgrid__arrow,
+.lwp-cgrid__tile:focus-visible .lwp-cgrid__arrow {
+  background: #fff;
+  color: #1A1612;
+  transform: rotate(-45deg);
+}
+@media (max-width: 1024px) {
+  .lwp-cgrid,
+  .lwp-cgrid[data-columns="3"],
+  .lwp-cgrid[data-columns="4"] { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .lwp-cgrid,
+  .lwp-cgrid[data-columns="2"],
+  .lwp-cgrid[data-columns="3"],
+  .lwp-cgrid[data-columns="4"] { grid-template-columns: 1fr; }
+}
+/* end Category Grid */
+
+/* Master Grid BEGIN -- lwp-master-grid (1.7.11) */
+.lwp-mgrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  max-width: 1372px;
+  margin: 0 auto;
+}
+.lwp-mgrid[data-columns="3"] { grid-template-columns: repeat(3, 1fr); }
+.lwp-mgrid[data-columns="2"] { grid-template-columns: repeat(2, 1fr); }
+
+.lwp-mgrid__card {
+  border-radius: 8px;
+  padding: 24px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+.lwp-mgrid--dark .lwp-mgrid__card {
+  background: #0e0a06;
+  border: 1px solid #3a342c;
+  color: #fff;
+}
+.lwp-mgrid--dark .lwp-mgrid__card:hover,
+.lwp-mgrid--dark .lwp-mgrid__card:focus-visible {
+  border-color: #D4AF37;
+  transform: translateY(-4px);
+  background: #15110b;
+}
+.lwp-mgrid--light .lwp-mgrid__card {
+  background: #fff;
+  border: 1px solid #E8DFC8;
+  color: #1A1612;
+}
+.lwp-mgrid--light .lwp-mgrid__card:hover,
+.lwp-mgrid--light .lwp-mgrid__card:focus-visible {
+  border-color: #9A7B3A;
+  transform: translateY(-4px);
+  box-shadow: 0 18px 36px -16px rgba(60, 40, 0, 0.25);
+}
+
+.lwp-mgrid__avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-size: 36px;
+  font-weight: 500;
+  color: #fff;
+  overflow: hidden;
+}
+.lwp-mgrid__avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+
+.lwp-mgrid__name {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 500;
+  font-size: 22px;
+  margin: 0 0 4px;
+}
+.lwp-mgrid--dark  .lwp-mgrid__name { color: #fff; }
+.lwp-mgrid--light .lwp-mgrid__name { color: #1A1612; }
+.lwp-mgrid__loc {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #D4AF37;
+  display: block;
+  margin-bottom: 8px;
+}
+.lwp-mgrid__spec {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 13px;
+  display: block;
+  margin-bottom: 12px;
+  font-style: italic;
+}
+.lwp-mgrid--dark  .lwp-mgrid__spec { color: #a89d85; }
+.lwp-mgrid--light .lwp-mgrid__spec { color: #5a4f3e; }
+.lwp-mgrid__count {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 11px;
+  padding-top: 10px;
+  display: block;
+}
+.lwp-mgrid--dark  .lwp-mgrid__count { color: #6b6151; border-top: 1px solid #3a342c; }
+.lwp-mgrid--light .lwp-mgrid__count { color: #8b7f6a; border-top: 1px solid #E8DFC8; }
+
+@media (max-width: 1024px) {
+  .lwp-mgrid, .lwp-mgrid[data-columns="3"], .lwp-mgrid[data-columns="4"] { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .lwp-mgrid, .lwp-mgrid[data-columns="2"], .lwp-mgrid[data-columns="3"], .lwp-mgrid[data-columns="4"] { grid-template-columns: 1fr; }
+}
+/* end Master Grid */
+
+/* Story Split BEGIN -- lwp-story-split (1.7.11) */
+.lwp-story {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+  max-width: 1372px;
+  margin: 0 auto;
+}
+.lwp-story[data-image-side="right"] .lwp-story__image-side { order: 2; }
+.lwp-story[data-image-side="right"] .lwp-story__copy-side  { order: 1; }
+
+.lwp-story__image {
+  aspect-ratio: 5 / 6;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 30px 60px -20px rgba(60, 40, 0, 0.35);
+  background-size: cover;
+  background-position: center;
+}
+.lwp-story__card {
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  right: 24px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  padding: 18px 22px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.lwp-story__card-eb {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #9A7B3A;
+  font-weight: 600;
+}
+.lwp-story__card strong {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 22px;
+  font-weight: 500;
+  color: #1A1612;
+}
+.lwp-story__card-sub {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 12px;
+  color: #3a342c;
+}
+
+.lwp-story__copy-side {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.lwp-story__eyebrow {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: #9A7B3A;
+  font-weight: 600;
+}
+.lwp-story__title {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+  color: #1A1612;
+  margin: 0;
+  text-wrap: pretty;
+}
+.lwp-story__title em { font-style: italic; color: #9A7B3A; }
+.lwp-story__lead {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  color: #3a342c;
+  margin: 0;
+  max-width: 540px;
+}
+
+.lwp-story__bullets {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  counter-reset: lwp-story-counter;
+}
+.lwp-story__bullets li {
+  display: flex;
+  gap: 18px;
+  padding: 14px 0;
+  border-top: 1px solid #E8DFC8;
+}
+.lwp-story__bullets li:last-child { border-bottom: 1px solid #E8DFC8; }
+.lwp-story__num {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-size: 24px;
+  color: #9A7B3A;
+  font-weight: 500;
+  flex-shrink: 0;
+  width: 36px;
+}
+.lwp-story__bullets div {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #3a342c;
+}
+.lwp-story__bullets strong {
+  display: block;
+  color: #1A1612;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.lwp-story__cta {
+  align-self: flex-start;
+  padding: 14px 28px;
+  background: #1A1612;
+  color: #fff;
+  border-radius: 8px;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: all 0.2s ease;
+}
+.lwp-story__cta:hover {
+  background: #9A7B3A;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px -10px rgba(154, 123, 58, 0.55);
+  color: #fff;
+}
+
+@media (max-width: 900px) {
+  .lwp-story { grid-template-columns: 1fr; gap: 32px; }
+  .lwp-story[data-image-side="right"] .lwp-story__image-side,
+  .lwp-story[data-image-side="right"] .lwp-story__copy-side { order: initial; }
+}
+/* end Story Split */
+
+/* WC Products shortcode skin BEGIN -- targets [products class="tap-products"] (1.7.11) */
+.tap-products .products {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.tap-products .product {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #f0e6d0;
+  position: relative;
+  display: flex !important;
+  flex-direction: column;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+.tap-products .product:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 50px -22px rgba(60, 40, 0, 0.25);
+}
+.tap-products .woocommerce-loop-product__title {
+  font-family: "Cormorant Garamond", Georgia, serif !important;
+  font-size: 18px !important;
+  font-weight: 500 !important;
+  color: #1A1612;
+  padding: 14px 16px 4px !important;
+  line-height: 1.3;
+}
+.tap-products .price {
+  padding: 0 16px 14px !important;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 18px;
+  color: #1A1612;
+}
+.tap-products .price del { color: #8b7f6a; font-size: 14px; margin-right: 6px; }
+.tap-products .price ins { text-decoration: none; color: #9A7B3A; font-weight: 600; }
+.tap-products .button,
+.tap-products .added_to_cart { display: none !important; }
+.tap-products .onsale {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: #C84B3A;
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  z-index: 2;
+}
+.tap-products img {
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  width: 100%;
+}
+@media (max-width: 1024px) {
+  .tap-products .products { grid-template-columns: repeat(2, 1fr) !important; }
+}
+@media (max-width: 600px) {
+  .tap-products .products { grid-template-columns: 1fr !important; }
+}
+/* end WC Products shortcode skin */
+
+/* Hero Split BEGIN -- lwp-hero-split (1.7.11) */
+.lwp-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+  max-width: 1372px;
+  margin: 0 auto;
+}
+.lwp-hero__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.lwp-hero__eyebrow {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: #9A7B3A;
+  font-weight: 600;
+}
+.lwp-hero__h1 {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(40px, 6vw, 72px);
+  line-height: 1.05;
+  letter-spacing: -1px;
+  color: #1A1612;
+  margin: 0;
+  text-wrap: pretty;
+}
+.lwp-hero__h1 em { font-style: italic; color: #9A7B3A; }
+.lwp-hero__lead {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.65;
+  color: #3a342c;
+  margin: 0;
+  max-width: 520px;
+}
+
+.lwp-hero__cta {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+.lwp-hero__cta-primary {
+  padding: 14px 28px;
+  background: #1A1612;
+  color: #fff;
+  border-radius: 8px;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: all 0.2s ease;
+}
+.lwp-hero__cta-primary:hover {
+  background: #9A7B3A;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px -10px rgba(154, 123, 58, 0.55);
+  color: #fff;
+}
+.lwp-hero__cta-link {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1A1612;
+  text-decoration: none;
+  border-bottom: 1px solid #1A1612;
+  padding-bottom: 2px;
+  transition: all 0.15s ease;
+}
+.lwp-hero__cta-link:hover { color: #9A7B3A; border-color: #9A7B3A; }
+
+.lwp-hero__stats {
+  display: flex;
+  gap: 36px;
+  margin-top: 24px;
+  padding-top: 32px;
+  border-top: 1px solid #E8DFC8;
+}
+.lwp-hero__stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.lwp-hero__stat-num {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 36px;
+  font-weight: 500;
+  color: #1A1612;
+  line-height: 1;
+}
+.lwp-hero__stat-lbl {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #8b7f6a;
+  line-height: 1.5;
+}
+
+/* Right side */
+.lwp-hero__image-side {
+  position: relative;
+  min-height: 520px;
+}
+.lwp-hero__pill {
+  position: absolute;
+  top: -18px;
+  right: 32px;
+  z-index: 3;
+  background: #fff;
+  border: 1px solid #E8DFC8;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #3a342c;
+  box-shadow: 0 8px 20px -8px rgba(0, 0, 0, 0.15);
+}
+.lwp-hero__pill::before {
+  content: "●";
+  color: #3A7A4A;
+  margin-right: 6px;
+  animation: lwp-hero-blink 2s infinite;
+}
+@keyframes lwp-hero-blink { 50% { opacity: 0.4; } }
+
+.lwp-hero__image {
+  aspect-ratio: 4 / 5;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 30px 60px -20px rgba(60, 40, 0, 0.4);
+}
+.lwp-hero__tag {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  padding: 10px 14px;
+  border-radius: 6px;
+  color: #fff;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.lwp-hero__tag strong {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  color: #D4AF37;
+}
+
+.lwp-hero__quote {
+  position: absolute;
+  bottom: -40px;
+  left: -40px;
+  background: #fff;
+  border-radius: 6px;
+  padding: 18px 22px;
+  box-shadow: 0 24px 60px -20px rgba(60, 40, 0, 0.35);
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  border: 1px solid #E8DFC8;
+  max-width: 340px;
+  z-index: 2;
+}
+.lwp-hero__quote-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #9A7B3A, #D4AF37);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 500;
+  font-size: 22px;
+  overflow: hidden;
+}
+.lwp-hero__quote-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.lwp-hero__quote-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.lwp-hero__quote-name {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1A1612;
+}
+.lwp-hero__quote-role {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #8b7f6a;
+}
+.lwp-hero__quote-q {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-size: 13px;
+  color: #3a342c;
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+@media (max-width: 1024px) {
+  .lwp-hero { grid-template-columns: 1fr; gap: 56px; }
+  .lwp-hero__image-side { min-height: auto; }
+  .lwp-hero__quote { position: static; margin-top: 24px; max-width: none; }
+  .lwp-hero__h1 { font-size: clamp(36px, 8vw, 52px); }
+}
+@media (max-width: 600px) {
+  .lwp-hero__h1 { font-size: clamp(30px, 9vw, 40px); }
+  .lwp-hero__stats { gap: 20px; flex-wrap: wrap; }
+  .lwp-hero__stat-num { font-size: 28px; }
+  .lwp-hero__pill { right: 16px; }
+}
+/* end Hero Split */
+
+/* Testimonials BEGIN -- lwp-testimonials (1.7.11) */
+.lwp-tst { max-width: 1372px; margin: 0 auto; }
+.lwp-tst__track {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.lwp-tst[data-layout="carousel"] .lwp-tst__track {
+  grid-template-columns: none;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(320px, 1fr);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 0 24px;
+  padding-bottom: 8px;
+}
+.lwp-tst[data-layout="carousel"] .lwp-tst__card { scroll-snap-align: start; }
+.lwp-tst__card {
+  background: #fff;
+  border: 1px solid #E8DFC8;
+  border-radius: 10px;
+  padding: 26px 26px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.lwp-tst__stars { color: #D4AF37; font-size: 16px; letter-spacing: 2px; }
+.lwp-tst__stars span { color: #E8DFC8; }
+.lwp-tst__stars span.is-on { color: #D4AF37; }
+.lwp-tst__quote {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-size: 18px;
+  line-height: 1.5;
+  color: #1A1612;
+  margin: 0;
+  text-wrap: pretty;
+}
+.lwp-tst__foot { display: flex; align-items: center; gap: 12px; margin-top: auto; padding-top: 16px; border-top: 1px solid #E8DFC8; }
+.lwp-tst__avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lwp-tst__avatar img { width: 100%; height: 100%; object-fit: cover; }
+.lwp-tst__avatar--initial {
+  background: linear-gradient(135deg, #9A7B3A, #D4AF37);
+  color: #fff;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-size: 20px;
+}
+.lwp-tst__who { display: flex; flex-direction: column; gap: 2px; }
+.lwp-tst__name { font-family: "Inter", system-ui, sans-serif; font-size: 13px; font-weight: 600; color: #1A1612; }
+.lwp-tst__meta { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #8b7f6a; }
+.lwp-tst__dots { display: flex; justify-content: center; gap: 8px; margin-top: 18px; }
+@media (max-width: 900px) { .lwp-tst[data-layout="grid"] .lwp-tst__track { grid-template-columns: 1fr; } }
+/* end Testimonials */
+
+/* FAQ BEGIN -- lwp-faq (1.7.11) */
+.lwp-faq { max-width: 880px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+.lwp-faq__item {
+  border: 1px solid #E8DFC8;
+  border-radius: 8px;
+  background: #fff;
+  overflow: hidden;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.lwp-faq__item[open] { border-color: #D4AF37; box-shadow: 0 12px 24px -16px rgba(60, 40, 0, 0.2); }
+.lwp-faq__q {
+  list-style: none;
+  cursor: pointer;
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 19px;
+  font-weight: 500;
+  color: #1A1612;
+}
+.lwp-faq__q::-webkit-details-marker { display: none; }
+.lwp-faq__chev {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 24px;
+  font-weight: 300;
+  color: #9A7B3A;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s ease;
+  flex-shrink: 0;
+}
+.lwp-faq__item[open] .lwp-faq__chev { transform: rotate(45deg); }
+.lwp-faq__a {
+  padding: 0 24px 22px;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.65;
+  color: #3a342c;
+}
+.lwp-faq__a p:first-child { margin-top: 0; }
+.lwp-faq__a p:last-child { margin-bottom: 0; }
+/* end FAQ */
+
+/* Trust Badges BEGIN -- lwp-trust-badges (1.7.11) */
+.lwp-tb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 32px;
+  color: #3a342c;
+}
+.lwp-tb[data-align="center"] { justify-content: center; }
+.lwp-tb[data-align="right"]  { justify-content: flex-end; }
+.lwp-tb__item {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+.lwp-tb__item:hover { color: #9A7B3A; transform: translateY(-2px); }
+.lwp-tb__item img { max-height: 40px; width: auto; display: block; }
+.lwp-tb__item i, .lwp-tb__item svg { font-size: inherit; }
+.lwp-tb__lbl {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+/* end Trust Badges */
+
+/* Newsletter BEGIN -- lwp-newsletter (1.7.11) */
+.lwp-nl {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: center;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+.lwp-nl__copy { display: flex; flex-direction: column; gap: 14px; }
+.lwp-nl__eyebrow {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #9A7B3A;
+  font-weight: 600;
+}
+.lwp-nl__title {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(26px, 3.5vw, 40px);
+  color: #1A1612;
+  margin: 0;
+  line-height: 1.1;
+}
+.lwp-nl__lead {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 15px;
+  color: #3a342c;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.lwp-nl__form { display: flex; flex-direction: column; gap: 12px; }
+.lwp-nl__field {
+  display: flex;
+  align-items: stretch;
+  background: #fff;
+  border: 1px solid #E8DFC8;
+  border-radius: 999px;
+  padding: 6px 6px 6px 22px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.lwp-nl__field:focus-within { border-color: #9A7B3A; box-shadow: 0 8px 24px -12px rgba(154, 123, 58, 0.4); }
+.lwp-nl__field input[type="email"] {
+  flex: 1;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 15px;
+  color: #1A1612;
+  min-width: 0;
+}
+.lwp-nl__field button {
+  border: 0;
+  cursor: pointer;
+  padding: 12px 22px;
+  background: #1A1612;
+  color: #fff;
+  border-radius: 999px;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+.lwp-nl__field button:hover { background: #9A7B3A; }
+.lwp-nl__gdpr {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 12px;
+  color: #5a4f3e;
+  line-height: 1.5;
+  cursor: pointer;
+}
+.lwp-nl__gdpr input[type="checkbox"] { margin-top: 3px; flex-shrink: 0; }
+.lwp-nl__msg {
+  min-height: 18px;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 13px;
+}
+.lwp-nl__msg.is-ok    { color: #3A7A4A; }
+.lwp-nl__msg.is-error { color: #C84B3A; }
+
+.lwp-nl--dark { color: #fff; }
+.lwp-nl--dark .lwp-nl__title { color: #fff; }
+.lwp-nl--dark .lwp-nl__lead  { color: rgba(255, 255, 255, 0.75); }
+.lwp-nl--dark .lwp-nl__field { background: rgba(255, 255, 255, 0.05); border-color: rgba(255, 255, 255, 0.2); }
+.lwp-nl--dark .lwp-nl__field input[type="email"] { color: #fff; }
+.lwp-nl--dark .lwp-nl__field input::placeholder  { color: rgba(255, 255, 255, 0.5); }
+.lwp-nl--dark .lwp-nl__field button { background: #D4AF37; color: #1A1612; }
+.lwp-nl--dark .lwp-nl__field button:hover { background: #fff; }
+.lwp-nl--dark .lwp-nl__gdpr { color: rgba(255, 255, 255, 0.7); }
+
+@media (max-width: 900px) { .lwp-nl { grid-template-columns: 1fr; gap: 24px; } }
+/* end Newsletter */
+
+/* Countdown BEGIN -- lwp-countdown (1.7.11) */
+.lwp-cd { max-width: 1372px; margin: 0 auto; }
+.lwp-cd[data-align="left"]   { text-align: left; }
+.lwp-cd[data-align="center"] { text-align: center; }
+.lwp-cd[data-align="right"]  { text-align: right; }
+.lwp-cd__cells {
+  display: inline-flex;
+  gap: 16px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.lwp-cd[data-align="center"] .lwp-cd__cells { justify-content: center; }
+.lwp-cd[data-align="right"]  .lwp-cd__cells { justify-content: flex-end; }
+.lwp-cd__cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: 78px;
+  padding: 18px 14px;
+  background: #fff;
+  border: 1px solid #E8DFC8;
+  border-radius: 8px;
+}
+.lwp-cd__num {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(34px, 5vw, 56px);
+  font-weight: 500;
+  line-height: 1;
+  color: #1A1612;
+  font-variant-numeric: tabular-nums;
+}
+.lwp-cd__lbl {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #8b7f6a;
+}
+.lwp-cd--dark .lwp-cd__cell { background: #15110b; border-color: #3a342c; }
+.lwp-cd--dark .lwp-cd__num { color: #fff; }
+.lwp-cd--dark .lwp-cd__lbl { color: #a89d85; }
+.lwp-cd__expired {
+  padding: 28px 24px;
+  background: #FAF6EE;
+  border: 1px solid #E8DFC8;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.lwp-cd__expired-btn {
+  padding: 12px 24px;
+  background: #1A1612;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+.lwp-cd__expired-btn:hover { background: #9A7B3A; color: #fff; }
+/* end Countdown */
+
+/* CTA Banner BEGIN -- lwp-cta-banner (1.7.11) */
+.lwp-ctab {
+  position: relative;
+  padding: clamp(48px, 8vw, 96px) 32px;
+  border-radius: 8px;
+  color: #fff;
+  overflow: hidden;
+}
+.lwp-ctab__inner {
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.lwp-ctab[data-align="center"] { text-align: center; }
+.lwp-ctab[data-align="center"] .lwp-ctab__inner { margin: 0 auto; align-items: center; }
+.lwp-ctab[data-align="right"] { text-align: right; }
+.lwp-ctab[data-align="right"] .lwp-ctab__inner { margin-left: auto; align-items: flex-end; }
+.lwp-ctab__eyebrow {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #D4AF37;
+  font-weight: 600;
+}
+.lwp-ctab__title {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(28px, 5vw, 56px);
+  margin: 0;
+  line-height: 1.1;
+  text-wrap: pretty;
+}
+.lwp-ctab__title em { font-style: italic; color: #D4AF37; }
+.lwp-ctab__lead {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+  max-width: 560px;
+}
+.lwp-ctab__btns { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 6px; }
+.lwp-ctab[data-align="center"] .lwp-ctab__btns { justify-content: center; }
+.lwp-ctab[data-align="right"]  .lwp-ctab__btns { justify-content: flex-end; }
+.lwp-ctab__btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 14px 28px;
+  border-radius: 8px;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: background-color 0.2s ease, transform 0.15s ease, color 0.2s ease;
+}
+.lwp-ctab__btn--primary { background: #D4AF37; color: #1A1612; }
+.lwp-ctab__btn--primary:hover { background: #fff; color: #1A1612; transform: translateY(-2px); }
+.lwp-ctab__btn--ghost { background: transparent; color: #fff; border: 1px solid rgba(255, 255, 255, 0.4); }
+.lwp-ctab__btn--ghost:hover { background: rgba(255, 255, 255, 0.1); border-color: #fff; color: #fff; }
+/* end CTA Banner */
+
+/* Stat Counter BEGIN -- lwp-stat-counter (1.7.11) */
+.lwp-sc {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  max-width: 1372px;
+  margin: 0 auto;
+}
+.lwp-sc[data-columns="2"] { grid-template-columns: repeat(2, 1fr); }
+.lwp-sc[data-columns="3"] { grid-template-columns: repeat(3, 1fr); }
+.lwp-sc[data-columns="6"] { grid-template-columns: repeat(6, 1fr); }
+.lwp-sc__item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 0 18px;
+  position: relative;
+}
+.lwp-sc--dividers .lwp-sc__item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 1px;
+  background: #E8DFC8;
+}
+.lwp-sc__icon { color: #9A7B3A; font-size: 22px; margin-bottom: 8px; }
+.lwp-sc__num {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(40px, 5vw, 64px);
+  font-weight: 500;
+  color: #1A1612;
+  line-height: 1;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 2px;
+  font-variant-numeric: tabular-nums;
+}
+.lwp-sc__prefix, .lwp-sc__suffix { font-size: 0.6em; color: #9A7B3A; }
+.lwp-sc__lbl {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1A1612;
+  margin-top: 6px;
+}
+.lwp-sc__sub {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: #8b7f6a;
+}
+.lwp-sc--dark .lwp-sc__num { color: #fff; }
+.lwp-sc--dark .lwp-sc__lbl { color: rgba(255, 255, 255, 0.85); }
+.lwp-sc--dark .lwp-sc__sub { color: rgba(255, 255, 255, 0.55); }
+.lwp-sc--dark.lwp-sc--dividers .lwp-sc__item:not(:last-child)::after { background: rgba(255, 255, 255, 0.15); }
+@media (max-width: 900px) {
+  .lwp-sc, .lwp-sc[data-columns="3"], .lwp-sc[data-columns="4"], .lwp-sc[data-columns="6"] { grid-template-columns: repeat(2, 1fr); }
+  .lwp-sc--dividers .lwp-sc__item:not(:last-child)::after { display: none; }
+}
+@media (max-width: 480px) {
+  .lwp-sc, .lwp-sc[data-columns="2"], .lwp-sc[data-columns="3"], .lwp-sc[data-columns="4"], .lwp-sc[data-columns="6"] { grid-template-columns: 1fr; }
+}
+/* end Stat Counter */
+
+/* Process Steps BEGIN -- lwp-process-steps (1.7.11) */
+.lwp-ps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-width: 1372px;
+  margin-left: auto;
+  margin-right: auto;
+  display: grid;
+  gap: 28px;
+}
+.lwp-ps--horizontal { grid-template-columns: repeat(var(--lwp-ps-count, 4), 1fr); }
+.lwp-ps--horizontal[data-count="3"] { --lwp-ps-count: 3; }
+.lwp-ps--horizontal[data-count="2"] { --lwp-ps-count: 2; }
+.lwp-ps--horizontal[data-count="5"] { --lwp-ps-count: 5; }
+.lwp-ps__step { position: relative; }
+.lwp-ps__head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.lwp-ps__num {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #1A1612;
+  color: #D4AF37;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-size: 22px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.lwp-ps__icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #FAF6EE;
+  color: #9A7B3A;
+  font-size: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid #E8DFC8;
+}
+.lwp-ps__arrow {
+  font-size: 18px;
+  color: #9A7B3A;
+  flex: 1;
+  text-align: center;
+  opacity: 0.5;
+}
+.lwp-ps__title {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 500;
+  font-size: 22px;
+  color: #1A1612;
+  margin: 0 0 6px;
+  line-height: 1.25;
+  text-wrap: pretty;
+}
+.lwp-ps__body {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #3a342c;
+  margin: 0;
+}
+.lwp-ps--vertical { grid-template-columns: 1fr; }
+.lwp-ps--vertical .lwp-ps__arrow { display: none; }
+@media (max-width: 900px) {
+  .lwp-ps--horizontal { grid-template-columns: 1fr; }
+  .lwp-ps__arrow { display: none; }
+}
+/* end Process Steps */
+
+/* AI Search Bar BEGIN -- lwp-ai-search (1.7.11) */
+.lwp-ais { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+.lwp-ais__bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 18px 22px;
+  background: #fff;
+  border: 1px solid #E8DFC8;
+  border-radius: 999px;
+  cursor: text;
+  text-align: left;
+  font-family: "Inter", system-ui, sans-serif;
+  color: #8b7f6a;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+}
+.lwp-ais[data-size="large"] .lwp-ais__bar { padding: 22px 28px; font-size: 17px; }
+.lwp-ais[data-size="medium"] .lwp-ais__bar { padding: 14px 20px; font-size: 14px; }
+.lwp-ais__bar:hover { border-color: #9A7B3A; transform: translateY(-1px); box-shadow: 0 12px 24px -16px rgba(60, 40, 0, 0.2); }
+.lwp-ais__icon { color: #9A7B3A; flex-shrink: 0; }
+.lwp-ais__placeholder { flex: 1; }
+.lwp-ais__badge {
+  background: linear-gradient(135deg, #9A7B3A, #D4AF37);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-family: "Inter", system-ui, sans-serif;
+}
+.lwp-ais__chips { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.lwp-ais__chip {
+  background: transparent;
+  border: 1px solid #E8DFC8;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 12px;
+  color: #3a342c;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.lwp-ais__chip:hover { border-color: #9A7B3A; color: #9A7B3A; }
+.lwp-ais--dark .lwp-ais__bar { background: rgba(255, 255, 255, 0.06); border-color: rgba(255, 255, 255, 0.2); color: rgba(255, 255, 255, 0.7); }
+.lwp-ais--dark .lwp-ais__chip { border-color: rgba(255, 255, 255, 0.25); color: rgba(255, 255, 255, 0.8); }
+.lwp-ais--dark .lwp-ais__chip:hover { border-color: #D4AF37; color: #D4AF37; }
+/* end AI Search Bar */
+
+/* Featured Product BEGIN -- lwp-featured-product (1.7.11) */
+.lwp-fp {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+.lwp-fp[data-image-side="right"] .lwp-fp__image { order: 2; }
+.lwp-fp[data-image-side="right"] .lwp-fp__copy  { order: 1; }
+.lwp-fp__image {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: 10px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #3d2f1f, #7a5a2c);
+  box-shadow: 0 30px 60px -20px rgba(60, 40, 0, 0.35);
+}
+.lwp-fp__image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.lwp-fp__chip {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: #D4AF37;
+  color: #1A1612;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+.lwp-fp__copy { display: flex; flex-direction: column; gap: 18px; }
+.lwp-fp__eyebrow {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #9A7B3A;
+  font-weight: 600;
+}
+.lwp-fp__title {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(28px, 4vw, 44px);
+  color: #1A1612;
+  margin: 0;
+  line-height: 1.15;
+}
+.lwp-fp__title a { color: inherit; text-decoration: none; transition: color 0.2s ease; }
+.lwp-fp__title a:hover { color: #9A7B3A; }
+.lwp-fp__excerpt {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.65;
+  color: #3a342c;
+  margin: 0;
+}
+.lwp-fp__price {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 26px;
+  font-weight: 500;
+  color: #1A1612;
+}
+.lwp-fp__price del { color: #8b7f6a; font-size: 18px; margin-right: 8px; }
+.lwp-fp__price ins { text-decoration: none; color: #9A7B3A; font-weight: 600; }
+.lwp-fp__cta {
+  align-self: flex-start;
+  padding: 14px 28px;
+  background: #1A1612;
+  color: #fff;
+  border-radius: 8px;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+.lwp-fp__cta:hover { background: #9A7B3A; color: #fff; transform: translateY(-2px); box-shadow: 0 12px 24px -10px rgba(154, 123, 58, 0.55); }
+.lwp-fp--dark .lwp-fp__title, .lwp-fp--dark .lwp-fp__price { color: #fff; }
+.lwp-fp--dark .lwp-fp__excerpt { color: rgba(255, 255, 255, 0.75); }
+@media (max-width: 900px) {
+  .lwp-fp { grid-template-columns: 1fr; gap: 28px; }
+  .lwp-fp[data-image-side="right"] .lwp-fp__image,
+  .lwp-fp[data-image-side="right"] .lwp-fp__copy { order: initial; }
+}
+/* end Featured Product */
+
+/* Featured Strip BEGIN -- lwp-featured-strip (1.7.11) */
+.lwp-fs { max-width: 1372px; margin: 0 auto; }
+.lwp-fs__head { display: flex; flex-direction: column; gap: 6px; margin-bottom: 28px; }
+.lwp-fs__eyebrow {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #9A7B3A;
+  font-weight: 600;
+}
+.lwp-fs__heading {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(24px, 3vw, 36px);
+  color: #1A1612;
+  margin: 0;
+  line-height: 1.15;
+}
+.lwp-fs__track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(240px, 1fr);
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 12px;
+}
+.lwp-fs__card {
+  scroll-snap-align: start;
+  background: #fff;
+  border: 1px solid #E8DFC8;
+  border-radius: 8px;
+  overflow: hidden;
+  text-decoration: none;
+  color: #1A1612;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.lwp-fs__card:hover { transform: translateY(-3px); box-shadow: 0 18px 36px -16px rgba(60, 40, 0, 0.25); border-color: #D4AF37; }
+.lwp-fs__img {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  background: #FAF6EE;
+  overflow: hidden;
+}
+.lwp-fs__img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.lwp-fs__chip {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #D4AF37;
+  color: #1A1612;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+.lwp-fs__meta { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 4px; }
+.lwp-fs__title {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 500;
+  font-size: 17px;
+  color: #1A1612;
+  line-height: 1.3;
+}
+.lwp-fs__price {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 14px;
+  color: #3a342c;
+}
+/* end Featured Strip */
+
+/* KG Stats + KG Trending BEGIN -- lwp-kg-* (1.7.11) */
+.lwp-kgstats, .lwp-kgt { max-width: 1372px; margin: 0 auto; }
+.lwp-kgstats__head, .lwp-kgt__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+.lwp-kgstats__eyebrow, .lwp-kgt__eyebrow {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #9A7B3A;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 6px;
+}
+.lwp-kgstats__title, .lwp-kgt__heading {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(24px, 3vw, 36px);
+  color: #1A1612;
+  margin: 0;
+  line-height: 1.15;
+}
+.lwp-kgstats__badge, .lwp-kgt__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #9A7B3A, #D4AF37);
+  color: #fff;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+.lwp-kgstats__badge::before, .lwp-kgt__badge::before {
+  content: "●";
+  color: #3A7A4A;
+  font-size: 8px;
+  animation: lwp-kg-blink 2s infinite;
+}
+@keyframes lwp-kg-blink { 50% { opacity: 0.3; } }
+
+.lwp-kgstats__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
+}
+.lwp-kgstats__grid[data-count="3"] { grid-template-columns: repeat(3, 1fr); }
+.lwp-kgstats__grid[data-count="2"] { grid-template-columns: repeat(2, 1fr); }
+.lwp-kgstats__cell { display: flex; flex-direction: column; gap: 6px; padding: 24px; background: #fff; border: 1px solid #E8DFC8; border-radius: 8px; }
+.lwp-kgstats__num {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(36px, 4vw, 52px);
+  font-weight: 500;
+  color: #1A1612;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.lwp-kgstats__lbl {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #8b7f6a;
+}
+
+.lwp-kgstats--upsell { background: linear-gradient(135deg, #FAF6EE, #fff); border: 1px dashed #D4AF37; border-radius: 12px; padding: 48px; text-align: center; }
+.lwp-kgstats__upsell-inner { max-width: 540px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; align-items: center; }
+.lwp-kgstats__upsell-eb {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #9A7B3A;
+  font-weight: 600;
+}
+.lwp-kgstats__upsell-title {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(22px, 3vw, 32px);
+  color: #1A1612;
+  margin: 0;
+  line-height: 1.2;
+}
+.lwp-kgstats__upsell-lead {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #3a342c;
+  margin: 0;
+}
+.lwp-kgstats__upsell-btn {
+  margin-top: 8px;
+  padding: 14px 24px;
+  background: #1A1612;
+  color: #fff;
+  border-radius: 8px;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+.lwp-kgstats__upsell-btn:hover { background: #9A7B3A; color: #fff; }
+
+.lwp-kgt__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.lwp-kgt__card {
+  position: relative;
+  background: #fff;
+  border: 1px solid #E8DFC8;
+  border-radius: 8px;
+  overflow: hidden;
+  text-decoration: none;
+  color: #1A1612;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.lwp-kgt__card:hover { transform: translateY(-4px); box-shadow: 0 18px 36px -16px rgba(60, 40, 0, 0.25); border-color: #D4AF37; }
+.lwp-kgt__img {
+  aspect-ratio: 16 / 10;
+  background: linear-gradient(135deg, #d4b97a, #7a5a2c);
+  background-size: cover;
+  background-position: center;
+}
+.lwp-kgt__meta { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 4px; }
+.lwp-kgt__name {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 500;
+  font-size: 19px;
+  color: #1A1612;
+}
+.lwp-kgt__count {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #8b7f6a;
+}
+.lwp-kgt__score {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #D4AF37;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+@media (max-width: 1024px) {
+  .lwp-kgstats__grid, .lwp-kgstats__grid[data-count="3"], .lwp-kgstats__grid[data-count="4"] { grid-template-columns: repeat(2, 1fr); }
+  .lwp-kgt__grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .lwp-kgstats__grid, .lwp-kgstats__grid[data-count="2"], .lwp-kgstats__grid[data-count="3"], .lwp-kgstats__grid[data-count="4"] { grid-template-columns: 1fr; }
+  .lwp-kgt__grid { grid-template-columns: 1fr; }
+}
+/* end KG widgets */

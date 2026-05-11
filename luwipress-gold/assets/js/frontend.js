@@ -675,6 +675,17 @@
 	/* UI-FIXES — float bar ↔ footer smooth handoff + mobile drawer       */
 	/* ───────────────────────────────────────────────────────────────── */
 
+	/* PDP gallery sticky release — REMOVED 2026-05-12. Earlier versions
+	 * used an IntersectionObserver to swap `position: sticky` → `static`
+	 * when related products entered view. That caused the gallery to
+	 * vanish mid-description-scroll because static position dropped it
+	 * back to its natural grid row 1 (= top of grid, often off-screen
+	 * by then). Per the CSS Grid spec, a grid item's containing block
+	 * IS its grid area, so `grid-area: gallery` + `position: sticky`
+	 * already bounds the sticky behaviour to rows 1-2 (gallery+summary
+	 * +tabs span). When the user scrolls past row 2 (tabs end), the
+	 * browser naturally releases the pin. */
+
 	/* (1) Float bar fades out as the footer enters the viewport, so the
 	 * sticky panel doesn't visually collide with the footer's header.
 	 * Activates only when the PDP sticky bar is rendered AND a footer
@@ -683,7 +694,7 @@
 		var bar = document.querySelector( '.lwp-pdp-sticky' );
 		if ( ! bar ) return;
 		var footer = document.querySelector(
-			'footer.elementor-location-footer, footer.lwp-footer, footer.site-footer, body > footer'
+			'footer.lwp-site-footer, footer.elementor-location-footer, footer.lwp-footer, footer.site-footer, body > footer'
 		);
 		if ( ! footer || ! ( 'IntersectionObserver' in window ) ) return;
 		var io = new IntersectionObserver( function ( entries ) {
@@ -1110,5 +1121,176 @@
 		document.addEventListener( 'DOMContentLoaded', initReasonChips );
 	} else {
 		initReasonChips();
+	}
+
+	/* ─────────────────────────────────────────────────────────── */
+	/* Newsletter widget (lwp-nl__form) — AJAX submit              */
+	/* ─────────────────────────────────────────────────────────── */
+	function initNewsletter() {
+		var forms = document.querySelectorAll( '[data-lwp-newsletter]' );
+		forms.forEach( function ( form ) {
+			if ( form._lwpBound ) return;
+			form._lwpBound = true;
+			form.addEventListener( 'submit', function ( ev ) {
+				ev.preventDefault();
+				var msg     = form.querySelector( '.lwp-nl__msg' );
+				var btn     = form.querySelector( 'button[type="submit"]' );
+				var email   = ( form.querySelector( 'input[name="email"]' ) || {} ).value || '';
+				var consent = !! ( ( form.querySelector( 'input[name="consent"]' ) || {} ).checked );
+				var source  = ( form.querySelector( 'input[name="source"]' ) || {} ).value || '';
+				var rest    = form.getAttribute( 'data-rest' );
+				var nonce   = form.getAttribute( 'data-nonce' );
+				var okMsg   = form.getAttribute( 'data-success' ) || 'Thanks!';
+				var errMsg  = form.getAttribute( 'data-error' )   || 'Try again.';
+				if ( ! rest || ! /\S+@\S+\.\S+/.test( email ) ) {
+					if ( msg ) { msg.textContent = errMsg; msg.className = 'lwp-nl__msg is-error'; }
+					return;
+				}
+				if ( form.querySelector( 'input[name="consent"][required]' ) && ! consent ) {
+					if ( msg ) { msg.textContent = errMsg; msg.className = 'lwp-nl__msg is-error'; }
+					return;
+				}
+				if ( btn ) { btn.disabled = true; btn.dataset.label = btn.textContent; btn.textContent = '…'; }
+				fetch( rest, {
+					method: 'POST',
+					credentials: 'same-origin',
+					headers: { 'Content-Type': 'application/json', 'X-WP-Nonce': nonce || '' },
+					body: JSON.stringify( { email: email, consent: consent, source: source } ),
+				} )
+					.then( function ( r ) { return r.json().then( function ( j ) { return { ok: r.ok, body: j }; } ); } )
+					.then( function ( res ) {
+						if ( res.ok && res.body && res.body.success ) {
+							if ( msg ) { msg.textContent = okMsg; msg.className = 'lwp-nl__msg is-ok'; }
+							form.reset();
+						} else {
+							var m = ( res.body && ( res.body.message || res.body.error ) ) || errMsg;
+							if ( msg ) { msg.textContent = m; msg.className = 'lwp-nl__msg is-error'; }
+						}
+					} )
+					.catch( function () {
+						if ( msg ) { msg.textContent = errMsg; msg.className = 'lwp-nl__msg is-error'; }
+					} )
+					.finally( function () {
+						if ( btn ) { btn.disabled = false; btn.textContent = btn.dataset.label || 'Subscribe'; }
+					} );
+			} );
+		} );
+	}
+
+	/* ─────────────────────────────────────────────────────────── */
+	/* Stat Counter (lwp-sc) — IntersectionObserver count-up       */
+	/* ─────────────────────────────────────────────────────────── */
+	function initStatCounters() {
+		var blocks = document.querySelectorAll( '.lwp-sc' );
+		if ( ! blocks.length || ! ( 'IntersectionObserver' in window ) ) { return; }
+		var prefersReduced = window.matchMedia && window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches;
+		var io = new IntersectionObserver( function ( entries ) {
+			entries.forEach( function ( e ) {
+				if ( ! e.isIntersecting ) return;
+				var block = e.target;
+				if ( block._lwpRan ) return;
+				block._lwpRan = true;
+				io.unobserve( block );
+				var duration = parseInt( block.getAttribute( 'data-duration' ) || '1800', 10 );
+				block.querySelectorAll( '.lwp-sc__num' ).forEach( function ( cell ) {
+					var target = parseInt( cell.getAttribute( 'data-target' ) || '0', 10 );
+					var val    = cell.querySelector( '.lwp-sc__val' );
+					if ( ! val ) return;
+					if ( prefersReduced ) { val.textContent = target.toLocaleString(); return; }
+					var start = performance.now();
+					function step( now ) {
+						var p = Math.min( 1, ( now - start ) / duration );
+						var eased = 1 - Math.pow( 1 - p, 3 );
+						val.textContent = Math.round( target * eased ).toLocaleString();
+						if ( p < 1 ) requestAnimationFrame( step );
+					}
+					requestAnimationFrame( step );
+				} );
+			} );
+		}, { threshold: 0.35 } );
+		blocks.forEach( function ( b ) { io.observe( b ); } );
+	}
+
+	/* ─────────────────────────────────────────────────────────── */
+	/* Countdown (lwp-cd) — tick + locale numbers                  */
+	/* ─────────────────────────────────────────────────────────── */
+	function initCountdowns() {
+		var blocks = document.querySelectorAll( '.lwp-cd' );
+		blocks.forEach( function ( block ) {
+			var target = parseInt( block.getAttribute( 'data-target' ) || '0', 10 );
+			if ( ! target ) return;
+			var cells = {
+				d: block.querySelector( '.lwp-cd__cell[data-unit="d"] .lwp-cd__num' ),
+				h: block.querySelector( '.lwp-cd__cell[data-unit="h"] .lwp-cd__num' ),
+				m: block.querySelector( '.lwp-cd__cell[data-unit="m"] .lwp-cd__num' ),
+				s: block.querySelector( '.lwp-cd__cell[data-unit="s"] .lwp-cd__num' ),
+			};
+			var expiredEl = block.querySelector( '.lwp-cd__expired' );
+			var cellsWrap = block.querySelector( '.lwp-cd__cells' );
+			function tick() {
+				var now = Math.floor( Date.now() / 1000 );
+				var diff = target - now;
+				if ( diff <= 0 ) {
+					if ( cellsWrap ) cellsWrap.hidden = true;
+					if ( expiredEl ) expiredEl.hidden = false;
+					clearInterval( iv );
+					return;
+				}
+				var d = Math.floor( diff / 86400 );
+				var h = Math.floor( ( diff % 86400 ) / 3600 );
+				var m = Math.floor( ( diff % 3600 ) / 60 );
+				var s = diff % 60;
+				if ( cells.d ) cells.d.textContent = String( d ).padStart( 2, '0' );
+				if ( cells.h ) cells.h.textContent = String( h ).padStart( 2, '0' );
+				if ( cells.m ) cells.m.textContent = String( m ).padStart( 2, '0' );
+				if ( cells.s ) cells.s.textContent = String( s ).padStart( 2, '0' );
+			}
+			tick();
+			var iv = setInterval( tick, 1000 );
+		} );
+	}
+
+	/* ─────────────────────────────────────────────────────────── */
+	/* Testimonials carousel (lwp-tst) — dots from track items      */
+	/* ─────────────────────────────────────────────────────────── */
+	function initTestimonials() {
+		document.querySelectorAll( '.lwp-tst[data-layout="carousel"]' ).forEach( function ( wrap ) {
+			var track = wrap.querySelector( '.lwp-tst__track' );
+			var dots  = wrap.querySelector( '.lwp-tst__dots' );
+			if ( ! track || ! dots ) return;
+			var cards = track.querySelectorAll( '.lwp-tst__card' );
+			if ( cards.length < 2 ) { dots.style.display = 'none'; return; }
+			dots.innerHTML = '';
+			cards.forEach( function ( _, i ) {
+				var b = document.createElement( 'button' );
+				b.type = 'button';
+				b.setAttribute( 'role', 'tab' );
+				b.setAttribute( 'aria-label', 'Slide ' + ( i + 1 ) );
+				b.className = 'lwp-tst__dot' + ( i === 0 ? ' is-on' : '' );
+				b.addEventListener( 'click', function () {
+					cards[ i ].scrollIntoView( { behavior: 'smooth', block: 'nearest', inline: 'start' } );
+				} );
+				dots.appendChild( b );
+			} );
+			track.addEventListener( 'scroll', function () {
+				var w = track.clientWidth;
+				var idx = Math.round( track.scrollLeft / Math.max( 1, w ) );
+				dots.querySelectorAll( '.lwp-tst__dot' ).forEach( function ( d, j ) {
+					d.classList.toggle( 'is-on', j === idx );
+				} );
+			}, { passive: true } );
+		} );
+	}
+
+	function initLwpWidgets() {
+		initNewsletter();
+		initStatCounters();
+		initCountdowns();
+		initTestimonials();
+	}
+	if ( document.readyState === 'loading' ) {
+		document.addEventListener( 'DOMContentLoaded', initLwpWidgets );
+	} else {
+		initLwpWidgets();
 	}
 })();

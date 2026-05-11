@@ -46,13 +46,41 @@ require_once LUWIPRESS_GOLD_DIR . '/inc/maintenance/class-maintenance-tools.php'
 require_once LUWIPRESS_GOLD_DIR . '/inc/maintenance/class-fix-tools.php';
 require_once LUWIPRESS_GOLD_DIR . '/inc/maintenance/class-extra-audit-tools.php';
 require_once LUWIPRESS_GOLD_DIR . '/inc/maintenance/class-seo-audit-tools.php';
+require_once LUWIPRESS_GOLD_DIR . '/inc/maintenance/class-language-drift-tool.php';
 require_once LUWIPRESS_GOLD_DIR . '/inc/maintenance/elementor-template-force.php';
 require_once LUWIPRESS_GOLD_DIR . '/inc/maintenance/seo-enforcement.php';
+
+/**
+ * Append the theme version as a query string to the screenshot URL shown in
+ * `Appearance → Themes → Theme Details`. WP fetches `screenshot.png` without
+ * any cache-buster, so browsers serve a years-old cached copy and operators
+ * see stale art after every legitimate screenshot update. Tying the URL to
+ * the live theme version forces a fresh download on every bump.
+ */
+add_filter( 'wp_prepare_themes_for_js', function ( $themes ) {
+	$slug = get_template();
+	if ( isset( $themes[ $slug ]['screenshot'][0] ) ) {
+		$url = $themes[ $slug ]['screenshot'][0];
+		$themes[ $slug ]['screenshot'][0] = add_query_arg( 'ver', LUWIPRESS_GOLD_VERSION, $url );
+	}
+	return $themes;
+} );
 
 // LuwiPress bridge — single point of contact for the AI engine, chat,
 // plugin detector, and ecosystem helpers. Loaded unconditionally so the
 // admin notice can warn even when LuwiPress is missing.
 require_once LUWIPRESS_GOLD_DIR . '/inc/luwipress-bridge.php';
+
+// Featured Products registry — per-product flag, admin meta box, admin-bar
+// toggle on single-product pages, REST endpoint, helper API. Consumed by
+// the mega menu Featured panel and the featured-product / featured-strip
+// widgets (and any custom code reading lwp_gold_get_featured_ids()).
+require_once LUWIPRESS_GOLD_DIR . '/inc/featured-products.php';
+
+// Mega menu admin UI — adds the per-menu-item "Featured product (override)"
+// field to Appearance → Menus. Loaded unconditionally; admin-only hooks
+// internally so the field only renders when admin is editing menus.
+require_once LUWIPRESS_GOLD_DIR . '/inc/mega-menu-admin.php';
 
 // Friendly-plugin glue — consolidates Rank Math / Yoast / WPML / Polylang /
 // WooCommerce-side hooks that amplify each plugin's presence on the
@@ -71,6 +99,11 @@ if ( class_exists( 'WooCommerce' ) ) {
 	// Smart filter sidebar — price + attribute layered nav + tags + on-sale
 	// / in-stock toggles. Replaces the legacy "Categories" fallback list.
 	require_once LUWIPRESS_GOLD_DIR . '/inc/smart-filters.php';
+	// Cart/checkout/my-account fallback when the page was built with
+	// Elementor Pro WC widgets but Pro is not installed. Detects the empty
+	// Pro-widget skeleton in `the_content` and swaps in the matching WC
+	// shortcode so the theme's WC template overrides take over.
+	require_once LUWIPRESS_GOLD_DIR . '/inc/wc-page-fallback.php';
 }
 
 // Blog page auto-fallback — promotes a "Blog/Journal/News" page to WP

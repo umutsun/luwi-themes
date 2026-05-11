@@ -20,9 +20,10 @@ if ( ! $elementor_footer_active ) :
 		__( 'Hand-crafted instruments from the masters of Anatolia, Persia and the Mediterranean.', 'luwipress-gold' )
 	);
 	$legal     = get_theme_mod( 'luwipress_gold_footer_legal', '' );
-	$byline    = get_theme_mod( 'luwipress_gold_footer_byline',
-		__( 'Hand-tuned in our atelier · Shipped worldwide', 'luwipress-gold' )
-	);
+	// Byline default empty since 1.7.5 — was redundant with the brand
+	// blurb above and crowded the bottom strip. Operator can re-enable
+	// any text via Customizer → LuwiPress Gold → Footer → Footer byline.
+	$byline    = get_theme_mod( 'luwipress_gold_footer_byline', '' );
 
 	// Social-icon rendering moved to inc/footer-enhancements.php where the
 	// full SVG icon set + Customizer wiring live. Footer.php just calls
@@ -38,17 +39,39 @@ if ( ! $elementor_footer_active ) :
 
 		<div class="lwp-site-footer-col lwp-site-footer-brand">
 			<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="lwp-site-footer-logo" rel="home">
-				<?php echo esc_html( $site_name ); ?>
+				<?php
+				// Prefer the uploaded site logo (Customizer → Site Identity).
+				// Wrap in a span so CSS can apply the white-on-dark filter
+				// (footer band is deep-black; coloured logos invert via
+				// `filter: brightness(0) invert(1)`). Fallback to site
+				// name text only when no logo has been uploaded.
+				$logo_id = (int) get_theme_mod( 'custom_logo', 0 );
+				if ( $logo_id ) {
+					echo wp_get_attachment_image(
+						$logo_id,
+						'medium',
+						false,
+						array(
+							'class'   => 'lwp-site-footer-logo__img',
+							'alt'     => esc_attr( $site_name ),
+							'loading' => 'lazy',
+						)
+					);
+				} else {
+					echo '<span class="lwp-site-footer-logo__text">' . esc_html( $site_name ) . '</span>';
+				}
+				?>
 			</a>
 			<?php if ( $blurb ) : ?>
 				<p class="lwp-site-footer-blurb"><?php echo esc_html( $blurb ); ?></p>
 			<?php endif; ?>
 			<?php
-			// Social icons opt-in (1.7.0+). Default OFF — atelier-style design
-			// puts the social row in the bottom bar context instead, leaving
-			// the brand column visually quiet. Operator can flip this back
-			// on in Customizer → LuwiPress Gold → Footer.
-			if ( get_theme_mod( 'luwipress_gold_footer_show_socials', false ) &&
+			// Social icons under the logo + tagline (operator UI judgment
+			// call 2026-05-12 — "tapadum logosunun altında tagline altına
+			// sen nasıl uygun görürsen"). Top-down reading: brand → claim
+			// → community. Renders nothing when no platform URLs are set
+			// in Customizer, so the column stays clean for fresh installs.
+			if ( get_theme_mod( 'luwipress_gold_footer_show_socials', true ) &&
 				 function_exists( 'luwipress_gold_footer_render_social_icons' ) ) {
 				luwipress_gold_footer_render_social_icons();
 			}
@@ -110,20 +133,11 @@ if ( ! $elementor_footer_active ) :
 		}
 		?>
 
-		<div class="lwp-site-footer-col lwp-site-footer-atelier">
-			<h4><?php esc_html_e( 'Atelier', 'luwipress-gold' ); ?></h4>
-			<?php
-			$simple = (bool) get_theme_mod( 'luwipress_gold_footer_atelier_simple', true );
-			$loc    = get_theme_mod( 'luwipress_gold_topbar_location', '' );
-			$phone  = get_theme_mod( 'luwipress_gold_topbar_phone', '' );
-			$email  = get_theme_mod( 'luwipress_gold_topbar_email', get_option( 'admin_email' ) );
-			?>
-			<ul>
-				<?php if ( ! $simple && $loc !== '' ) : ?><li><?php echo esc_html( $loc ); ?></li><?php endif; ?>
-				<?php if ( ! $simple && $phone !== '' ) : ?><li><a href="<?php echo esc_url( 'tel:' . preg_replace( '/\s+/', '', $phone ) ); ?>"><?php echo esc_html( $phone ); ?></a></li><?php endif; ?>
-				<?php if ( $email !== '' ) : ?><li><a href="<?php echo esc_url( 'mailto:' . $email ); ?>"><?php echo esc_html( $email ); ?></a></li><?php endif; ?>
-			</ul>
-		</div>
+		<?php /* Atelier column removed in 1.7.10 — used to render only the
+		 * topbar email as a single mailto link, which felt redundant given
+		 * email lives in the chat widget + drawer + (footer-newsletter on
+		 * larger plans). Footer is now 4-col: logo+blurb / Customer Care /
+		 * Explore / Shop. Operator: "bu gereksiz info kaldıralım." */ ?>
 
 	</div>
 
@@ -131,9 +145,12 @@ if ( ! $elementor_footer_active ) :
 	if ( function_exists( 'luwipress_gold_footer_render_newsletter' ) ) {
 		luwipress_gold_footer_render_newsletter();
 	}
-	if ( function_exists( 'luwipress_gold_footer_render_trust_strip' ) ) {
-		luwipress_gold_footer_render_trust_strip();
-	}
+	// Trust strip ("Secure checkout · Worldwide shipping · 30-day returns")
+	// removed 2026-05-12 — operator feedback: the three short claims read as
+	// generic reassurance copy and the dark band visually fragmented the
+	// footer between the column grid and the copyright bottom strip.
+	// `luwipress_gold_footer_render_trust_strip()` is still defined for
+	// operators who want it back; uncomment to restore.
 	?>
 
 	<div class="lwp-site-footer-bottom">
@@ -141,10 +158,20 @@ if ( ! $elementor_footer_active ) :
 			&copy; <?php echo esc_html( date( 'Y' ) ); ?> <?php echo esc_html( $site_name ); ?>
 			<?php if ( $legal ) echo ' · ' . esc_html( $legal ); ?>
 		</span>
-		<?php if ( $byline ) : ?>
+		<?php
+		// Optional byline (default empty since 1.7.5 — was redundant with
+		// the brand blurb in the column above).
+		if ( $byline !== '' ) : ?>
 			<span class="lwp-site-footer-bottom__byline"><?php echo esc_html( $byline ); ?></span>
 		<?php endif; ?>
 		<?php
+		// Social icons moved to brand column (under logo) since 1.7.10
+		// per operator preference. The bottom-strip render is removed
+		// so icons appear in one place only.
+		// Payment row default OFF since 1.7.5 — the gateway labels are
+		// long ("MyBank · a través de PayPal"), language-dependent, and
+		// already shown at checkout where they actually matter. Operator
+		// can flip back on in Customizer → LuwiPress Gold → Footer.
 		if ( function_exists( 'luwipress_gold_footer_render_payment_row' ) ) {
 			luwipress_gold_footer_render_payment_row();
 		}

@@ -7,50 +7,23 @@
  * loop over an empty array and emit a blank middle between header and
  * footer — visitors see what looks like a broken page.
  *
- * Editorial empty-state: large headline + supportive blurb + two CTAs
- * (Shop / Continue with last viewed) + a quiet "what's in your cart"
- * help line. Auto-pulls 3 best-selling products as a discovery rail
- * when WC product data exists, so the page never feels like a dead end.
+ * 1.7.6: simplified to bare-bones markup. The previous version ran an
+ * inline `WP_Query` for best-sellers; under Elementor Pro's `woocommerce-cart`
+ * widget render context that nested query was fataling silently and the
+ * widget's output buffer captured the resulting blank string — leaving
+ * the cart page rendering an empty `.elementor-widget-container` in the
+ * DOM. Discovery rail moved out to a separate `luwipress_gold_after_cart_empty`
+ * hook so it can be re-added by a sister plugin or later iteration without
+ * gambling on Elementor render context.
  *
  * @package luwipress-gold
  */
 
 defined( 'ABSPATH' ) || exit;
 
-$shop_url      = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/' );
-$account_url   = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : '';
-$has_account   = is_user_logged_in() && $account_url;
-
-// Best-sellers rail: 3 most-bought products. Skipped if no products
-// have ever been sold (e.g. fresh install).
-$best_sellers = [];
-if ( function_exists( 'wc_get_product' ) ) {
-	$q = new WP_Query( [
-		'post_type'      => 'product',
-		'posts_per_page' => 3,
-		'post_status'    => 'publish',
-		'meta_key'       => 'total_sales',
-		'orderby'        => [ 'meta_value_num' => 'DESC', 'date' => 'DESC' ],
-		'no_found_rows'  => true,
-	] );
-	if ( $q->have_posts() ) {
-		while ( $q->have_posts() ) {
-			$q->the_post();
-			$pid = get_the_ID();
-			$p   = wc_get_product( $pid );
-			if ( $p && $p->is_visible() ) {
-				$best_sellers[] = [
-					'id'    => $pid,
-					'name'  => $p->get_name(),
-					'price' => $p->get_price_html(),
-					'thumb' => get_the_post_thumbnail_url( $pid, 'woocommerce_thumbnail' ) ?: '',
-					'url'   => get_permalink( $pid ),
-				];
-			}
-		}
-		wp_reset_postdata();
-	}
-}
+$shop_url    = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/' );
+$account_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : '';
+$has_account = is_user_logged_in() && $account_url;
 ?>
 
 <section class="lwp-cart-empty" role="region" aria-label="<?php esc_attr_e( 'Empty cart', 'luwipress-gold' ); ?>">
@@ -85,29 +58,14 @@ if ( function_exists( 'wc_get_product' ) ) {
 			<?php endif; ?>
 		</div>
 
-		<?php if ( ! empty( $best_sellers ) ) : ?>
-			<div class="lwp-cart-empty__rail">
-				<h2 class="lwp-cart-empty__rail-title"><?php esc_html_e( 'Most loved this season', 'luwipress-gold' ); ?></h2>
-				<ul class="lwp-cart-empty__rail-list">
-					<?php foreach ( $best_sellers as $item ) : ?>
-						<li>
-							<a href="<?php echo esc_url( $item['url'] ); ?>" class="lwp-cart-empty__rail-card">
-								<?php if ( $item['thumb'] ) : ?>
-									<span class="lwp-cart-empty__rail-thumb" style="background-image:url(<?php echo esc_url( $item['thumb'] ); ?>)" aria-hidden="true"></span>
-								<?php endif; ?>
-								<span class="lwp-cart-empty__rail-name"><?php echo esc_html( $item['name'] ); ?></span>
-								<span class="lwp-cart-empty__rail-price"><?php echo wp_kses_post( $item['price'] ); ?></span>
-							</a>
-						</li>
-					<?php endforeach; ?>
-				</ul>
-			</div>
-		<?php endif; ?>
-
 	</div>
 </section>
 
 <?php
 /* Hook so the operator / sister plugins can append below the empty
- * state (e.g. a "promotion code" widget) without forking this template. */
+ * state (e.g. a "promotion code" widget, best-sellers rail, or recently-
+ * viewed items) without forking this template. Render handler is responsible
+ * for any nested WP_Query — keep this template's scope narrow to dodge
+ * Elementor Pro widget render-context conflicts.
+ */
 do_action( 'luwipress_gold_after_cart_empty' );

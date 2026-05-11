@@ -69,17 +69,40 @@ if ( ! $elementor_header_active ) :
 	<div class="lwp-topbar-inner">
 		<div class="lwp-topbar-l">
 			<?php
-			$loc   = get_theme_mod( 'luwipress_gold_topbar_location', '' );
-			$phone = get_theme_mod( 'luwipress_gold_topbar_phone', '' );
-			$email = get_theme_mod( 'luwipress_gold_topbar_email', $contact_email );
-			if ( $loc !== '' ) {
-				echo '<span class="lwp-topbar-loc">📍 ' . esc_html( $loc ) . '</span>';
-			}
-			if ( $phone !== '' ) {
-				echo '<a href="' . esc_url( 'tel:' . preg_replace( '/\s+/', '', $phone ) ) . '">' . esc_html( $phone ) . '</a>';
-			}
-			if ( $email !== '' ) {
-				echo '<a href="mailto:' . esc_attr( $email ) . '">' . esc_html( $email ) . '</a>';
+			// Social rail — operator-set urls via Customizer. Each filled
+			// platform renders an SVG icon link; empty slots are skipped so
+			// merchants who don't use every channel get a clean strip. The
+			// email channel was intentionally removed from the topbar in
+			// 1.7.10 — operators expose contact via the footer / drawer /
+			// chat widget instead. Keeps the topbar feeling like a brand
+			// strip, not a customer-service banner.
+			$socials = [
+				'instagram' => get_theme_mod( 'luwipress_gold_social_instagram', '' ),
+				'youtube'   => get_theme_mod( 'luwipress_gold_social_youtube', '' ),
+				'facebook'  => get_theme_mod( 'luwipress_gold_social_facebook', '' ),
+				'tiktok'    => get_theme_mod( 'luwipress_gold_social_tiktok', '' ),
+				'whatsapp'  => get_theme_mod( 'luwipress_gold_social_whatsapp', '' ),
+				'pinterest' => get_theme_mod( 'luwipress_gold_social_pinterest', '' ),
+				'x'         => get_theme_mod( 'luwipress_gold_social_x', '' ),
+			];
+			$icons = [
+				'instagram' => '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"/></svg>',
+				'youtube'   => '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.5 2.5 0 0 0 2.4 7.2C2 8.8 2 12 2 12s0 3.2.4 4.8a2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8C22 15.2 22 12 22 12s0-3.2-.4-4.8zM10 15V9l5 3-5 3z"/></svg>',
+				'facebook'  => '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M13.5 21v-7.5h2.5l.4-3h-2.9V8.7c0-.9.2-1.5 1.5-1.5h1.6V4.5c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.1H8v3h2.4V21h3.1z"/></svg>',
+				'tiktok'    => '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M19.6 8.2a6.4 6.4 0 0 1-3.8-1.3v8.4a5.4 5.4 0 1 1-5.4-5.4c.3 0 .6 0 .9.1v2.7a2.7 2.7 0 1 0 1.9 2.6V3h2.7a3.7 3.7 0 0 0 3.7 3.5v1.7z"/></svg>',
+				'whatsapp'  => '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 5L2 22l5.1-1.3c1.4.8 3.1 1.3 4.9 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2zm5.3 14.1c-.2.6-1.2 1.2-1.7 1.2-.5 0-.9.4-2.9-.8s-3.4-3.2-3.5-3.3c-.1-.1-.9-1.2-.9-2.3s.6-1.6.8-1.8c.2-.2.4-.2.6-.2h.5c.1 0 .3 0 .5.4.2.5.7 1.7.7 1.8.1.1.1.2 0 .4-.1.2-.2.3-.4.4-.1.1-.3.3-.4.4-.1.1-.3.3-.1.5.2.3.7 1.2 1.5 1.9 1 .9 1.8 1.2 2.1 1.3.3.1.4.1.6-.1.2-.2.7-.8.9-1 .2-.3.4-.2.6-.1l1.7.8c.2.1.4.2.4.3.1.1.1.7-.1 1.3z"/></svg>',
+				'pinterest' => '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12c0 4.2 2.6 7.7 6.2 9.2-.1-.8-.2-2 0-2.9.2-.8 1.2-5.2 1.2-5.2s-.3-.6-.3-1.5c0-1.4.8-2.5 1.9-2.5.9 0 1.3.7 1.3 1.5 0 .9-.6 2.3-.9 3.6-.3 1.1.5 2 1.6 2 2 0 3.4-2.5 3.4-5.5 0-2.3-1.5-4-4.3-4-3.2 0-5.1 2.4-5.1 4.8 0 1 .4 2 .8 2.6.1.1.1.2.1.2-.1.4-.2 1-.3 1.2 0 .2-.1.2-.3.1-1.2-.6-2-2.3-2-3.7 0-3 2.2-5.8 6.4-5.8 3.4 0 6 2.4 6 5.6 0 3.3-2.1 6-5.1 6-1 0-1.9-.5-2.2-1.1 0 0-.5 1.9-.6 2.4-.2.9-.9 2-1.3 2.7C9.9 21.9 10.9 22 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>',
+				'x'         => '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M18.3 3h3.4l-7.4 8.5L23 21h-6.8l-5.3-7-6.1 7H1.4l8-9.1L1 3h6.9l4.8 6.4L18.3 3zm-1.2 16h1.9L7 5H5l12.1 14z"/></svg>',
+			];
+			foreach ( $socials as $platform => $url ) {
+				if ( $url === '' ) continue;
+				printf(
+					'<a href="%s" class="lwp-topbar-social lwp-topbar-social--%s" aria-label="%s" target="_blank" rel="noopener">%s</a>',
+					esc_url( $url ),
+					esc_attr( $platform ),
+					esc_attr( ucfirst( $platform ) ),
+					$icons[ $platform ] ?? ''
+				);
 			}
 			?>
 		</div>
@@ -237,10 +260,10 @@ if ( ! $elementor_header_active ) :
 		?>
 
 		<div class="lwp-site-header-actions">
-			<a href="<?php echo esc_url( $site_url . '?s=' ); ?>" class="lwp-icon-btn lwp-search-btn" data-lwp-search-toggle aria-label="<?php esc_attr_e( 'Search', 'luwipress-gold' ); ?>">⌕</a>
+			<a href="<?php echo esc_url( $site_url . '?s=' ); ?>" class="lwp-icon-btn lwp-search-btn" data-lwp-search-toggle aria-label="<?php esc_attr_e( 'Search', 'luwipress-gold' ); ?>"><svg class="lwp-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></a>
 			<?php if ( class_exists( 'WooCommerce' ) ) : ?>
 				<div class="lwp-account-wrap">
-					<a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>" class="lwp-icon-btn lwp-account-btn" data-lwp-account-toggle aria-label="<?php esc_attr_e( 'Account', 'luwipress-gold' ); ?>" aria-expanded="false">◯</a>
+					<a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>" class="lwp-icon-btn lwp-account-btn" data-lwp-account-toggle aria-label="<?php esc_attr_e( 'Account', 'luwipress-gold' ); ?>" aria-expanded="false"><svg class="lwp-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></a>
 					<?php
 					// Smart account popover. Logged-out: quick login form +
 					// "Create account" CTA + "Why sign in" perks. Logged-in:
@@ -296,7 +319,7 @@ if ( ! $elementor_header_active ) :
 
 				<?php $cart_count = WC()->cart ? WC()->cart->get_cart_contents_count() : 0; ?>
 				<a href="<?php echo esc_url( wc_get_cart_url() ); ?>" class="lwp-icon-btn lwp-cart-btn lwp-cart-icon" data-lwp-cart-toggle aria-label="<?php esc_attr_e( 'Cart', 'luwipress-gold' ); ?>">
-					▣<?php if ( $cart_count > 0 ) : ?><span class="lwp-cart-badge"><?php echo (int) $cart_count; ?></span><?php endif; ?>
+					<svg class="lwp-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l-1.2 11a2 2 0 0 1-2 1.8H9.2a2 2 0 0 1-2-1.8L6 7z"/><path d="M9 7V5a3 3 0 1 1 6 0v2"/></svg><?php if ( $cart_count > 0 ) : ?><span class="lwp-cart-badge"><?php echo (int) $cart_count; ?></span><?php endif; ?>
 				</a>
 			<?php endif; ?>
 		</div>

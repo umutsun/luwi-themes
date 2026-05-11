@@ -1,0 +1,124 @@
+<?php
+/**
+ * Widget: FAQ Accordion.
+ *
+ * Collapsible Q&A. Renders Schema.org FAQPage JSON-LD inline so
+ * SEO plugins (Rank Math / Yoast / AIOSEO) pick it up and Google
+ * shows the FAQ rich result.
+ *
+ * No JS framework — uses native <details>/<summary>. Hooks into
+ * LuwiPress AEO module if available so AEO Coverage report counts
+ * the FAQ presence on this page.
+ */
+
+if ( ! defined( 'ABSPATH' ) ) { exit; }
+if ( ! class_exists( 'Elementor\\Widget_Base' ) ) { return; }
+
+use Elementor\Widget_Base;
+use Elementor\Controls_Manager;
+use Elementor\Repeater;
+
+class LuwiPress_Gold_Widget_FAQ extends Widget_Base {
+
+	public function get_name()        { return 'lwp-faq'; }
+	public function get_title()       { return __( 'FAQ Accordion', 'luwipress-gold' ); }
+	public function get_icon()        { return 'eicon-help-o'; }
+	public function get_categories()  { return [ 'luwipress-gold' ]; }
+	public function get_keywords()    { return [ 'faq', 'accordion', 'questions', 'q&a', 'schema', 'aeo' ]; }
+	public function get_style_depends() { return [ 'luwipress-gold-widgets' ]; }
+
+	protected function register_controls() {
+
+		$this->start_controls_section( 'section_items', [ 'label' => __( 'Questions', 'luwipress-gold' ) ] );
+
+		$rep = new Repeater();
+		$rep->add_control( 'q', [ 'label' => __( 'Question', 'luwipress-gold' ), 'type' => Controls_Manager::TEXT, 'default' => '' ] );
+		$rep->add_control( 'a', [ 'label' => __( 'Answer', 'luwipress-gold' ), 'type' => Controls_Manager::WYSIWYG, 'default' => '' ] );
+		$rep->add_control( 'open', [
+			'label'        => __( 'Open by default', 'luwipress-gold' ),
+			'type'         => Controls_Manager::SWITCHER,
+			'return_value' => 'yes',
+			'default'      => '',
+		] );
+
+		$this->add_control( 'items', [
+			'label'       => __( 'Items', 'luwipress-gold' ),
+			'type'        => Controls_Manager::REPEATER,
+			'fields'      => $rep->get_controls(),
+			'title_field' => '{{{ q || "Question" }}}',
+			'default'     => [
+				[ 'q' => 'How long does shipping take?', 'a' => 'DHL Express delivery in 3–7 working days, fully insured. We pack every instrument in a custom-built crate.' ],
+				[ 'q' => 'What if my instrument arrives damaged?', 'a' => 'Every shipment is insured. Report the damage within 48 hours and we replace or refund — no questions asked.' ],
+				[ 'q' => 'Do you take custom orders?', 'a' => 'Yes. Contact us with your spec and the master luthier best matched to it; lead time is typically 8–14 weeks.' ],
+				[ 'q' => 'Are the instruments tuned before dispatch?', 'a' => 'Yes — every saz, oud and santur is hand-tuned and intonated by our atelier team before it leaves Brisighella.' ],
+			],
+		] );
+
+		$this->add_control( 'output_schema', [
+			'label'        => __( 'Output FAQPage schema (JSON-LD)', 'luwipress-gold' ),
+			'description'  => __( 'Required for Google FAQ rich result. Disable if you already have FAQPage schema on the page via Rank Math / Yoast.', 'luwipress-gold' ),
+			'type'         => Controls_Manager::SWITCHER,
+			'return_value' => 'yes',
+			'default'      => 'yes',
+		] );
+
+		$this->add_control( 'allow_multiple', [
+			'label'        => __( 'Allow multiple open at once', 'luwipress-gold' ),
+			'type'         => Controls_Manager::SWITCHER,
+			'return_value' => 'yes',
+			'default'      => '',
+		] );
+
+		$this->end_controls_section();
+	}
+
+	protected function render() {
+		$s     = $this->get_settings_for_display();
+		$items = is_array( $s['items'] ?? null ) ? $s['items'] : [];
+		if ( empty( $items ) ) { return; }
+		$schema = ( $s['output_schema'] ?? 'yes' ) === 'yes';
+		$multi  = ( $s['allow_multiple'] ?? '' ) === 'yes';
+		$name   = 'lwp-faq-' . substr( md5( $this->get_id() ), 0, 6 );
+
+		// Build schema first so we can emit it inline.
+		$entities = [];
+		foreach ( $items as $it ) {
+			$q = trim( wp_strip_all_tags( (string) ( $it['q'] ?? '' ) ) );
+			$a = trim( wp_strip_all_tags( (string) ( $it['a'] ?? '' ) ) );
+			if ( $q === '' || $a === '' ) { continue; }
+			$entities[] = [
+				'@type'          => 'Question',
+				'name'           => $q,
+				'acceptedAnswer' => [ '@type' => 'Answer', 'text' => $a ],
+			];
+		}
+		?>
+		<div class="lwp-faq">
+			<?php foreach ( $items as $i => $it ) :
+				$q = trim( (string) ( $it['q'] ?? '' ) );
+				$a = trim( (string) ( $it['a'] ?? '' ) );
+				if ( $q === '' || $a === '' ) { continue; }
+				$open = ( $it['open'] ?? '' ) === 'yes';
+				?>
+				<details class="lwp-faq__item" <?php echo $open ? 'open' : ''; ?>
+					<?php if ( ! $multi ) : ?>data-lwp-faq-name="<?php echo esc_attr( $name ); ?>"<?php endif; ?>>
+					<summary class="lwp-faq__q">
+						<span><?php echo esc_html( $q ); ?></span>
+						<span class="lwp-faq__chev" aria-hidden="true">+</span>
+					</summary>
+					<div class="lwp-faq__a"><?php echo wp_kses_post( $a ); ?></div>
+				</details>
+			<?php endforeach; ?>
+		</div>
+		<?php if ( $schema && ! empty( $entities ) ) :
+			$json = wp_json_encode( [
+				'@context'   => 'https://schema.org',
+				'@type'      => 'FAQPage',
+				'mainEntity' => $entities,
+			], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
+			?>
+			<script type="application/ld+json"><?php echo $json; ?></script>
+			<?php
+		endif;
+	}
+}

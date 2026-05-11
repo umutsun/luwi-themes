@@ -480,33 +480,30 @@ class LuwiPress_Gold_Widget_Mega_Menu extends Widget_Base {
 					esc_html( $entry['label'] ),
 					$entry_count !== '' ? '<span class="lwp-mm-col-head-count">' . esc_html( $entry_count ) . '</span>' : ''
 				);
-				if ( ! empty( $entry['children'] ) ) {
-					echo '<ul>';
-					foreach ( $entry['children'] as $c ) {
-						$count = $show_counts ? self::resolve_item_count( $c ) : '';
-						printf(
-							'<li><a href="%s">%s%s</a></li>',
-							esc_url( self::resolve_target_url( $c ) ),
-							esc_html( $c['label'] ),
-							$count !== '' ? '<span>' . esc_html( $count ) . '</span>' : ''
-						);
-					}
-					echo '</ul>';
-				}
+				/* Third-level (grand-children) suppressed by design — every column
+				 * renders the same: header + count pill only. Operator-set sub-menus
+				 * on items like Oud would otherwise stand out as the only column
+				 * with a `<ul>`, breaking visual rhythm across the mega panel. */
 			}
 			echo '</div>';
 		}
 
-		// Featured slot — content set via menu item meta `_lwp_gold_mega_featured`.
+		// Featured slot — resolution chain (first hit wins):
+		//   1. Per-menu-item manual override (`_lwp_gold_mega_featured`)
+		//   2. Central Featured Registry — products flipped via product
+		//      meta box / admin bar. Prefer ones whose product_cat
+		//      overlaps this menu item's category tree; fall back to
+		//      the global most-recently-featured product.
+		//   3. Auto: most-popular product matching the top-level slug.
 		$featured_id = (int) get_post_meta( $node['id'], '_lwp_gold_mega_featured', true );
+		if ( ! $featured_id ) {
+			$featured_id = self::registry_featured_for_top( $node );
+		}
+		if ( ! $featured_id ) {
+			$featured_id = self::auto_featured_for_top( $node );
+		}
 		if ( $featured_id ) {
 			self::render_featured_slot( $featured_id );
-		} else {
-			// Auto-fallback: pick most-popular product matching the top-level URL slug.
-			$auto_id = self::auto_featured_for_top( $node );
-			if ( $auto_id ) {
-				self::render_featured_slot( $auto_id );
-			}
 		}
 
 		echo '</div>'; // panel-cols
@@ -804,6 +801,64 @@ class LuwiPress_Gold_Widget_Mega_Menu extends Widget_Base {
 		$segments = array_values( array_filter( explode( '/', trim( $path, '/' ) ) ) );
 		if ( empty( $segments ) ) return '';
 		return (string) end( $segments );
+	}
+
+	/**
+	 * Layer 2 of the featured-slot fallback chain: pick a product from
+	 * the Featured Products registry, preferring one whose product_cat
+	 * overlaps this menu item's category tree. Lets operators flip a
+	 * "Featured" flag on any product and have it bubble up into the
+	 * relevant mega panel automatically.
+	 *
+	 * Returns 0 when registry helpers are missing or when no featured
+	 * product matches.
+	 */
+	private static function registry_featured_for_top( $node ) {
+		if ( ! function_exists( 'lwp_gold_get_featured_ids' ) ) {
+			return 0;
+		}
+		$ids = lwp_gold_get_featured_ids( [ 'number' => 30 ] );
+		if ( empty( $ids ) ) {
+			return 0;
+		}
+
+		$term_id = 0;
+		if ( in_array( $node['object'] ?? '', [ 'product_cat' ], true ) && ! empty( $node['object_id'] ) ) {
+			$term_id = (int) $node['object_id'];
+		} elseif ( ! empty( $node['url'] ) ) {
+			$path = wp_parse_url( $node['url'], PHP_URL_PATH );
+			if ( $path ) {
+				$segments = array_values( array_filter( explode( '/', trim( $path, '/' ) ) ) );
+				$slug     = end( $segments );
+				if ( $slug && taxonomy_exists( 'product_cat' ) ) {
+					$t = get_term_by( 'slug', $slug, 'product_cat' );
+					if ( $t && ! is_wp_error( $t ) ) {
+						$term_id = (int) $t->term_id;
+					}
+				}
+			}
+		}
+
+		if ( $term_id && taxonomy_exists( 'product_cat' ) ) {
+			$descendants = get_term_children( $term_id, 'product_cat' );
+			$tree_ids    = is_wp_error( $descendants ) ? [ $term_id ] : array_merge( [ $term_id ], (array) $descendants );
+
+			foreach ( $ids as $pid ) {
+				$prod_terms = wp_get_post_terms( (int) $pid, 'product_cat', [ 'fields' => 'ids' ] );
+				if ( is_wp_error( $prod_terms ) || empty( $prod_terms ) ) { continue; }
+				if ( array_intersect( $prod_terms, $tree_ids ) ) {
+					return (int) $pid;
+				}
+			}
+		}
+
+		// No category-matched featured product — but if the menu item has
+		// no category context (e.g. "Sale" custom link), fall back to the
+		// globally most-recently-featured product.
+		if ( ! $term_id && ! empty( $ids ) ) {
+			return (int) $ids[0];
+		}
+		return 0;
 	}
 
 	/**

@@ -16,7 +16,15 @@ defined( 'ABSPATH' ) || exit;
 // the page renders as a blank middle between header + footer, which
 // looks like the theme is broken. Defers to our branded cart-empty.php
 // when present; falls through to WC core's default otherwise.
-if ( WC()->cart->is_empty() ) {
+//
+// 1.7.6 hardening: null-guard `WC()->cart`. Elementor Pro's `woocommerce-cart`
+// widget can fire its render in a context where the cart object hasn't
+// been initialised yet (`wp_loaded` race) and a null-method-call would
+// fatal silently — leaving a blank container in the DOM. The guard falls
+// back to "cart is empty" semantics in that edge case so the branded
+// empty-state template still renders instead of nothing.
+$lwp_cart = function_exists( 'WC' ) && WC() ? WC()->cart : null;
+if ( ! $lwp_cart || $lwp_cart->is_empty() ) {
 	wc_get_template( 'cart/cart-empty.php' );
 	return;
 }

@@ -511,6 +511,37 @@ ul.lwp-quick-toggles li a.lwp-quick-toggle.is-active {
 .lwp-loadmore-btn:hover { background: var(--primary, #735c00); }
 .lwp-loadmore-btn:disabled { opacity: .55; cursor: progress; }
 .lwp-loadmore-btn[hidden] { display: none; }
+/* Loading indicator — purely symbolic so we don't ship i18n strings per
+   language. A rotating ring means "loading", numeric "X / Y" pagination
+   text passes through (language-neutral), "✓" marks end of list, "⚠"
+   surfaces errors. No textual labels in any state. */
+.lwp-loadmore-spinner {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 12px;
+	background: var(--bg-alt, #f5f0e6);
+	border: 1px solid var(--border, #e8dfc9);
+	border-radius: 999px;
+}
+.lwp-loadmore-spinner[hidden] { display: none; }
+.lwp-loadmore-spinner__ring {
+	width: 18px;
+	height: 18px;
+	border-radius: 50%;
+	border: 2px solid var(--border, #e8dfc9);
+	border-top-color: var(--primary, #735c00);
+	animation: lwp-loadmore-spin .9s linear infinite;
+	display: inline-block;
+}
+@keyframes lwp-loadmore-spin {
+	to { transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+	.lwp-loadmore-spinner__ring {
+		animation: lwp-loadmore-spin 2.4s linear infinite;
+	}
+}
 .lwp-loadmore-status {
 	font-family: var(--mono, ui-monospace, monospace);
 	font-size: 11px;
@@ -898,22 +929,23 @@ ul.lwp-quick-toggles li a.lwp-quick-toggle.is-active {
 	}
 	.woocommerce.single-product .single_variation_wrap .price { border-bottom: 0; padding-bottom: 0; }
 
-	/* Sticky add-to-cart bar — atelier ATC pattern */
+	/* Mobile add-to-cart row — inline (NOT fixed). The earlier sticky
+	 * pattern (`position: fixed; bottom: 0`) covered functional content
+	 * on mobile (chat launcher, breadcrumb cart icon, blog reading
+	 * column) and competed with the `.lwp-pdp-sticky` bar that already
+	 * carried thumb + meta + CTA. Both were removed in 1.7.10; the WC
+	 * native form now flows naturally inside the summary column. */
 	.woocommerce.single-product form.cart {
-		position: fixed;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		z-index: 9990;
+		position: static !important;
 		display: grid !important;
 		grid-template-columns: 1fr 44px;
 		align-items: center;
 		gap: 10px;
-		padding: 10px 14px calc(10px + env(safe-area-inset-bottom)) !important;
+		padding: 16px 0 !important;
 		margin: 0 !important;
-		background: var(--bg, #fffefb);
-		border-top: 1px solid var(--line, #e6e0d6);
-		box-shadow: 0 -8px 24px -12px rgba(27, 28, 28, .18);
+		background: transparent;
+		border-top: 0;
+		box-shadow: none;
 	}
 	.woocommerce.single-product form.cart .quantity {
 		display: flex;
@@ -2495,6 +2527,9 @@ ul.lwp-quick-toggles li a.lwp-quick-toggle.is-active {
 		color: var(--ink, #1b1c1c);
 		margin: 22px 0 8px;
 		letter-spacing: -.005em;
+		/* Two-line headings need descender clearance — Playfair's default
+		 * normal line-height collapses "How Two Traditions" and "Diverged". */
+		line-height: 1.25;
 	}
 	body.single-post .lwp-journal-article h2,
 	body.single-post .entry-content h2 { font-size: 22px; }

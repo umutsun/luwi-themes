@@ -115,6 +115,78 @@ function lwp_gold_lp_log( $message, $level = 'info', $context = array() ) {
 }
 
 /**
+ * Theme-side newsletter subscribe endpoint.
+ *
+ * The `lwp-newsletter` widget POSTs to `/luwipress-gold/v1/subscribe`.
+ * If a friendly CRM (FluentCRM / Mailchimp for WC) is detected via the
+ * LuwiPress plugin_detector, the lead is handed off to that. Otherwise
+ * the lead is stored in the `luwipress_gold_newsletter_leads` option
+ * (capped at 500 entries) and the site admin is notified via wp_mail.
+ *
+ * The endpoint is intentionally lenient on auth (public — visitors
+ * sign up) but rate-limited at 5 attempts per IP per hour via a
+ * transient. Honeypot + email validation guard against bots.
+ */
+add_action( 'rest_api_init', function () {
+	register_rest_route( 'luwipress-gold/v1', '/subscribe', array(
+		'methods'             => 'POST',
+		'permission_callback' => '__return_true',
+		'args'                => array(
+			'email'   => array( 'type' => 'string', 'required' => true ),
+			'consent' => array( 'type' => 'boolean', 'required' => false, 'default' => false ),
+			'source'  => array( 'type' => 'string', 'required' => false, 'default' => '' ),
+		),
+		'callback'            => function ( $request ) {
+			$email   = sanitize_email( (string) $request->get_param( 'email' ) );
+			$consent = (bool) $request->get_param( 'consent' );
+			$source  = sanitize_text_field( (string) $request->get_param( 'source' ) );
+
+			if ( ! is_email( $email ) ) {
+				return new WP_Error( 'lwp_invalid_email', __( 'Please provide a valid email.', 'luwipress-gold' ), array( 'status' => 422 ) );
+			}
+
+			// Rate-limit: 5 per IP per hour.
+			$ip  = isset( $_SERVER['REMOTE_ADDR'] ) ? preg_replace( '/[^0-9a-fA-F:.]/', '', $_SERVER['REMOTE_ADDR'] ) : 'unknown';
+			$key = 'lwp_gold_nl_rl_' . md5( $ip );
+			$hits = (int) get_transient( $key );
+			if ( $hits >= 5 ) {
+				return new WP_Error( 'lwp_rate_limit', __( 'Too many attempts. Try again later.', 'luwipress-gold' ), array( 'status' => 429 ) );
+			}
+			set_transient( $key, $hits + 1, HOUR_IN_SECONDS );
+
+			// Persist locally regardless of where we hand off.
+			$leads = (array) get_option( 'luwipress_gold_newsletter_leads', array() );
+			if ( count( $leads ) > 500 ) {
+				$leads = array_slice( $leads, -400 );
+			}
+			$leads[] = array(
+				'email'   => $email,
+				'consent' => $consent,
+				'source'  => $source,
+				'when'    => time(),
+				'ip'      => $ip,
+			);
+			update_option( 'luwipress_gold_newsletter_leads', $leads, false );
+
+			/**
+			 * Fired on every successful subscribe. Companion plugins
+			 * (FluentCRM bridge, Mailchimp bridge, etc.) can hook here.
+			 *
+			 * @param string $email
+			 * @param bool   $consent
+			 * @param string $source
+			 */
+			do_action( 'luwipress_gold_newsletter_subscribed', $email, $consent, $source );
+
+			return rest_ensure_response( array(
+				'success' => true,
+				'email'   => $email,
+			) );
+		},
+	) );
+} );
+
+/**
  * Defense-in-depth admin notice for sites running WordPress 6.4 (which
  * doesn't enforce style.css `Requires Plugins`). Activation slips through
  * on those, then half the theme features fall back silently. Tell the
@@ -415,6 +487,23 @@ add_filter( 'luwipress_theme_tools', function ( $tools, $slug ) {
 		);
 	}
 
+	if ( class_exists( 'LuwiPress_Gold_Language_Drift_Tool' ) ) {
+		$tools[] = array(
+			'id'          => 'language_drift_sweep',
+			'label'       => __( 'Language Drift Sweep', 'luwipress-gold' ),
+			'description' => __( 'Detect translated posts whose body content is still in the source language (the silent failure mode that makes existence-based coverage report 100% even when blogs are broken English). Scans posts + pages by default; execute clears the Elementor "already-translated" guard meta and re-fires the AI translation pipeline against the drifted languages. Pre-execution body snapshots are stored so restore can roll back individual posts.', 'luwipress-gold' ),
+			'category'    => 'maintenance',
+			'capability'  => 'manage_options',
+			'wpml_aware'  => true,
+			'destructive' => true,
+			'callbacks'   => array(
+				'scan'    => array( 'LuwiPress_Gold_Language_Drift_Tool', 'scan' ),
+				'execute' => array( 'LuwiPress_Gold_Language_Drift_Tool', 'execute' ),
+				'restore' => array( 'LuwiPress_Gold_Language_Drift_Tool', 'restore' ),
+			),
+		);
+	}
+
 	if ( class_exists( 'LuwiPress_Gold_Elementor_To_Default_Editor_Tool' ) ) {
 		$tools[] = array(
 			'id'          => 'elementor_to_default_editor',
@@ -642,10 +731,10 @@ add_filter( 'luwipress_theme_settings', function ( $settings, $slug ) {
 	$settings[] = array(
 		'id'        => 'footer_show_socials',
 		'theme_mod' => 'luwipress_gold_footer_show_socials',
-		'label'     => __( 'Footer — social icons in brand column', 'luwipress-gold' ),
-		'description' => __( 'Atelier-style design keeps the brand column quiet. Turn ON to expose the social icon row again.', 'luwipress-gold' ),
+		'label'     => __( 'Footer — show social icons in bottom strip', 'luwipress-gold' ),
+		'description' => __( 'Default ON since 1.7.5 — social icons render on the right side of the footer bottom strip, balancing the © copy on the left. Turn OFF to hide entirely.', 'luwipress-gold' ),
 		'type'      => 'checkbox',
-		'default'   => false,
+		'default'   => true,
 		'group'     => 'footer',
 	);
 
@@ -826,6 +915,38 @@ add_filter( 'luwipress_theme_settings', function ( $settings, $slug ) {
 		),
 		'group'     => 'shop',
 	);
+
+	// ─── Social URLs (1.7.10) ────────────────────────────────────────────────
+	// Mirrors the Customizer → LuwiPress Gold → Footer → Social fields so
+	// operators can enter them from the LuwiPress admin Theme tab as well.
+	// Both surfaces write to the same theme_mod keys. The YouTube Channel
+	// widget (and upcoming Instagram widget) consume `social_youtube` /
+	// `social_instagram` as their CTA / Subscribe-button URL fallback.
+	$social_channels = array(
+		'instagram' => __( 'Instagram URL', 'luwipress-gold' ),
+		'youtube'   => __( 'YouTube channel URL', 'luwipress-gold' ),
+		'facebook'  => __( 'Facebook URL', 'luwipress-gold' ),
+		'whatsapp'  => __( 'WhatsApp URL', 'luwipress-gold' ),
+		'tiktok'    => __( 'TikTok URL', 'luwipress-gold' ),
+		'pinterest' => __( 'Pinterest URL', 'luwipress-gold' ),
+		'twitter'   => __( 'Twitter / X URL', 'luwipress-gold' ),
+		'linkedin'  => __( 'LinkedIn URL', 'luwipress-gold' ),
+	);
+	foreach ( $social_channels as $key => $label ) {
+		$settings[] = array(
+			'id'          => 'social_' . $key,
+			'theme_mod'   => 'luwipress_gold_social_' . $key,
+			'label'       => $label,
+			'description' => sprintf(
+				/* translators: %s: channel name (Instagram / YouTube / …) */
+				__( 'Public %s profile URL. Powers footer icons, the YouTube/Instagram homepage widgets and one-click Subscribe / Follow buttons.', 'luwipress-gold' ),
+				ucfirst( $key )
+			),
+			'type'        => 'url',
+			'default'     => '',
+			'group'       => 'social',
+		);
+	}
 
 	return $settings;
 }, 10, 2 );

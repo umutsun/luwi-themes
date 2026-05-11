@@ -7,7 +7,6 @@
       "id": "tap_hp_hero",
       "elType": "section",
       "settings": {
-        "structure": "20",
         "background_background": "classic",
         "background_color": "#FAF6EE",
         "padding": {
@@ -21,42 +20,42 @@
         "content_width": {
           "unit": "px",
           "size": 1372
-        },
-        "gap": "extended"
+        }
       },
       "elements": [
         {
-          "id": "tap_hero_l",
+          "id": "tap_hero_col",
           "elType": "column",
-          "settings": {
-            "_column_size": 50,
-            "content_position": "center"
-          },
+          "settings": { "_column_size": 100 },
           "elements": [
             {
-              "id": "tap_hero_l_html",
+              "id": "tap_hero_w",
               "elType": "widget",
-              "widgetType": "html",
+              "widgetType": "lwp-hero-split",
               "settings": {
-                "html": "<div class=\"tap-hero-l\">\n  <span class=\"tap-eyebrow\">— Est. Brisighella · Worldwide shipping</span>\n  <h1 class=\"tap-h1\">Hand-crafted craft<br>from <em>{{LWP:category_phrase}}</em>.</h1>\n  <p class=\"tap-lead\">{{LWP:ai:hero_lead}}</p>\n  <div class=\"tap-hero-cta\">\n    <a href=\"{{LWP:shop_url}}\" class=\"tap-btn-primary\">Browse the catalogue ></a>\n    <a href=\"{{LWP:about_url}}\" class=\"tap-btn-link\">Visit the atelier ></a>\n  </div>\n  <div class=\"tap-hero-stats\">\n    <div class=\"tap-stat\"><span class=\"tap-stat-num\">{{LWP:product_count}}+</span><span class=\"tap-stat-lbl\">Products<br>in catalogue</span></div>\n    <div class=\"tap-stat\"><span class=\"tap-stat-num\">{{LWP:countries_count}}</span><span class=\"tap-stat-lbl\">Countries<br>shipped to</span></div>\n    <div class=\"tap-stat\"><span class=\"tap-stat-num\">{{LWP:master_count}}</span><span class=\"tap-stat-lbl\">Master luthiers<br>in the network</span></div>\n  </div>\n</div>\n<style>\n.tap-hero-l{display:flex;flex-direction:column;gap:24px}\n.tap-eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:.18em;color:#9A7B3A;font-weight:600}\n.tap-h1{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:72px;line-height:1.05;letter-spacing:-1px;color:#1A1612;margin:0;text-wrap:pretty}\n.tap-h1 em{font-style:italic;color:#9A7B3A}\n.tap-underline{position:relative;white-space:nowrap}\n.tap-underline::after{content:'';position:absolute;left:0;right:0;bottom:6px;height:8px;background:rgba(212,175,55,.35);z-index:-1}\n.tap-lead{font-family:'Inter',sans-serif;font-size:17px;line-height:1.65;color:#3a342c;margin:0;max-width:520px}\n.tap-hero-cta{display:flex;gap:18px;align-items:center;margin-top:6px;flex-wrap:wrap}\n.tap-btn-primary{padding:14px 28px;background:#1A1612;color:#fff;border-radius:8px;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;text-decoration:none;letter-spacing:.02em;transition:all .2s}\n.tap-btn-primary:hover{background:#9A7B3A;transform:translateY(-2px);box-shadow:0 12px 24px -10px rgba(154,123,58,.55);color:#fff}\n.tap-btn-link{font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#1A1612;text-decoration:none;border-bottom:1px solid #1A1612;padding-bottom:2px;transition:all .15s}\n.tap-btn-link:hover{color:#9A7B3A;border-color:#9A7B3A}\n.tap-hero-stats{display:flex;gap:36px;margin-top:24px;padding-top:32px;border-top:1px solid #E8DFC8}\n.tap-stat{display:flex;flex-direction:column;gap:4px}\n.tap-stat-num{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:500;color:#1A1612;line-height:1}\n.tap-stat-lbl{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:#8b7f6a;line-height:1.5}\n@media(max-width:1024px){.tap-h1{font-size:52px}}\n@media(max-width:600px){.tap-h1{font-size:40px}.tap-hero-stats{gap:20px}.tap-stat-num{font-size:28px}}\n</style>"
-              }
-            }
-          ]
-        },
-        {
-          "id": "tap_hero_r",
-          "elType": "column",
-          "settings": {
-            "_column_size": 50,
-            "content_position": "center"
-          },
-          "elements": [
-            {
-              "id": "tap_hero_r_html",
-              "elType": "widget",
-              "widgetType": "html",
-              "settings": {
-                "html": "<div class=\"tap-hero-r\">\n  <div class=\"tap-hero-pill\">In atelier · Tuning</div>\n  <div class=\"tap-hero-img\">\n    <span class=\"tap-placeholder\">Hero image · luthier workshop · oud being strung</span>\n    <div class=\"tap-hero-img-tag\">Featured this week<strong>{{LWP:top_seller_name}}</strong></div>\n  </div>\n  <div class=\"tap-hero-card\">\n    <div class=\"tap-hero-card-avatar\">{{LWP:top_master_init}}</div>\n    <div class=\"tap-hero-card-text\">\n      <span class=\"nm\">{{LWP:top_master_name}}</span>\n      <span class=\"role\">Istanbul · Oud luthier</span>\n      <span class=\"quote\">&ldquo;Each oud takes 14 days. The wood decides when it&rsquo;s ready.&rdquo;</span>\n    </div>\n  </div>\n</div>\n<style>\n.tap-hero-r{position:relative;min-height:520px}\n.tap-hero-pill{position:absolute;top:-18px;right:32px;z-index:3;background:#fff;border:1px solid #E8DFC8;padding:8px 16px;border-radius:999px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#3a342c;box-shadow:0 8px 20px -8px rgba(0,0,0,.15)}\n.tap-hero-pill::before{content:'●';color:#3A7A4A;margin-right:6px;animation:tap-blink 2s infinite}\n@keyframes tap-blink{50%{opacity:.4}}\n.tap-hero-img{aspect-ratio:4/5;background:linear-gradient(135deg,#3d2f1f,#7a5a2c);border-radius:8px;position:relative;overflow:hidden;box-shadow:0 30px 60px -20px rgba(60,40,0,.4)}\n.tap-placeholder{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;color:rgba(255,255,255,.4);text-transform:uppercase;text-align:center;width:80%}\n.tap-hero-img-tag{position:absolute;top:24px;left:24px;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);padding:10px 14px;border-radius:6px;color:#fff;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;display:flex;flex-direction:column;gap:2px;border:1px solid rgba(255,255,255,.1)}\n.tap-hero-img-tag strong{font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:500;text-transform:none;letter-spacing:0;color:#D4AF37}\n.tap-hero-card{position:absolute;bottom:-40px;left:-40px;background:#fff;border-radius:6px;padding:18px 22px;box-shadow:0 24px 60px -20px rgba(60,40,0,.35);display:flex;gap:14px;align-items:center;border:1px solid #E8DFC8;max-width:340px;z-index:2}\n.tap-hero-card-avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#9A7B3A,#D4AF37);flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:22px}\n.tap-hero-card-text{display:flex;flex-direction:column;gap:2px}\n.tap-hero-card-text .nm{font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:#1A1612}\n.tap-hero-card-text .role{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#8b7f6a}\n.tap-hero-card-text .quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:#3a342c;margin-top:6px;line-height:1.4}\n@media(max-width:1024px){.tap-hero-r{min-height:auto}.tap-hero-card{position:static;margin-top:24px;max-width:none}}\n</style>"
+                "eyebrow": "Est. atelier · Worldwide shipping",
+                "heading": "Hand-crafted instruments\nfrom [em]Anatolia, Persia & the Mediterranean[/em].",
+                "lead": "From the Brisighella atelier to your studio — every saz, oud and santur is signed by the luthier who made it and tuned by hand before dispatch.",
+                "cta1_label": "Browse the catalogue →",
+                "cta1_url": { "url": "/shop", "is_external": "", "nofollow": "" },
+                "cta2_label": "Visit the atelier →",
+                "cta2_url": { "url": "/about", "is_external": "", "nofollow": "" },
+                "stats": [
+                  { "_id": "hst_1", "num": "240+", "label": "Products\nin catalogue" },
+                  { "_id": "hst_2", "num": "42",   "label": "Countries\nshipped to" },
+                  { "_id": "hst_3", "num": "26",   "label": "Master luthiers\nin the network" }
+                ],
+                "image": { "url": "" },
+                "image_grad_from": "#3d2f1f",
+                "image_grad_to": "#7a5a2c",
+                "pill_text": "In atelier · Tuning",
+                "tag_eyebrow": "Featured this week",
+                "tag_title": "Sultan Turkish Oud",
+                "quote_avatar": { "url": "" },
+                "quote_initial": "F",
+                "quote_name": "Feramis Aktas",
+                "quote_role": "Istanbul · Oud luthier",
+                "quote_text": "Each oud takes 14 days. The wood decides when it's ready."
               }
             }
           ]
@@ -91,11 +90,20 @@
           },
           "elements": [
             {
-              "id": "tap_infobar_html",
+              "id": "tap_infobar_widget",
               "elType": "widget",
-              "widgetType": "html",
+              "widgetType": "lwp-info-bar",
               "settings": {
-                "html": "<div class=\"tap-infobar\">\n  <div class=\"tap-info-item\"><span class=\"ic\">⚙</span><div><strong>Hand-tuned</strong><span>Before every dispatch</span></div></div>\n  <div class=\"tap-info-item\"><span class=\"ic\">✈</span><div><strong>Worldwide DHL</strong><span>Insured · 3–7 days</span></div></div>\n  <div class=\"tap-info-item\"><span class=\"ic\">↺</span><div><strong>14-day returns</strong><span>No questions asked</span></div></div>\n  <div class=\"tap-info-item\"><span class=\"ic\">★</span><div><strong>4.9 / 5</strong><span>1,287 verified reviews</span></div></div>\n</div>\n<style>\n.tap-infobar{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;color:#fff}\n.tap-info-item{display:flex;gap:14px;align-items:center}\n.tap-info-item .ic{width:42px;height:42px;border-radius:50%;background:rgba(212,175,55,.12);border:1px solid rgba(212,175,55,.3);display:flex;align-items:center;justify-content:center;font-size:18px;color:#D4AF37;flex-shrink:0}\n.tap-info-item strong{display:block;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;color:#fff;line-height:1.3}\n.tap-info-item span{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;color:#a89d85}\n@media(max-width:768px){.tap-infobar{grid-template-columns:repeat(2,1fr);gap:18px}}\n</style>"
+                "bar_bg": "#1A1612",
+                "icon_bg": "rgba(212,175,55,0.12)",
+                "title_color": "#ffffff",
+                "desc_color": "#a89d85",
+                "items": [
+                  { "_id": "ib_1", "title": "Hand-tuned",     "desc": "Before every dispatch",   "icon": { "value": "fas fa-cog",           "library": "fa-solid" } },
+                  { "_id": "ib_2", "title": "Worldwide DHL",  "desc": "Insured · 3–7 days",      "icon": { "value": "fas fa-shipping-fast", "library": "fa-solid" } },
+                  { "_id": "ib_3", "title": "14-day returns", "desc": "No questions asked",      "icon": { "value": "fas fa-undo-alt",      "library": "fa-solid" } },
+                  { "_id": "ib_4", "title": "4.9 / 5",        "desc": "1,287 verified reviews",  "icon": { "value": "fas fa-star",          "library": "fa-solid" } }
+                ]
               }
             }
           ]
@@ -132,9 +140,21 @@
             {
               "id": "tap_prod_head",
               "elType": "widget",
-              "widgetType": "html",
+              "widgetType": "lwp-section-head",
               "settings": {
-                "html": "<div class=\"tap-section-head\">\n  <div class=\"tap-section-head-l\"><span class=\"tap-eyebrow\">— Birthday sale · until Nov 30</span><h2 class=\"tap-section-title\">Best-selling instruments<br><em>up to −27% off.</em></h2></div>\n  <div class=\"tap-section-head-r\"><div class=\"tap-pills\"><a class=\"on\" href=\"#\">All</a><a href=\"#\">String</a><a href=\"#\">Percussions</a><a href=\"#\">Bowed</a><a href=\"#\">Winds</a></div><a href=\"/shop\" class=\"tap-btn-link\">View all 240 →</a></div>\n</div>\n<style>\n.tap-section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:48px;flex-wrap:wrap}\n.tap-section-title{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:48px;line-height:1.1;letter-spacing:-.5px;color:#1A1612;margin:8px 0 0}\n.tap-section-title em{font-style:italic;color:#9A7B3A}\n.tap-section-head-r{display:flex;flex-direction:column;gap:14px;align-items:flex-end}\n.tap-pills{display:flex;gap:6px;flex-wrap:wrap}\n.tap-pills a{padding:8px 14px;border-radius:20px;border:1px solid #E8DFC8;background:#fff;font-family:'Inter',sans-serif;font-size:12px;color:#3a342c;text-decoration:none;transition:all .15s;letter-spacing:.02em}\n.tap-pills a:hover{border-color:#9A7B3A;color:#9A7B3A}\n.tap-pills a.on{background:#1A1612;border-color:#1A1612;color:#fff}\n@media(max-width:768px){.tap-section-title{font-size:34px}.tap-section-head-r{align-items:flex-start;width:100%}}\n</style>"
+                "eyebrow": "Birthday sale · until Nov 30",
+                "heading": "Best-selling instruments\n[em]up to −27% off.[/em]",
+                "heading_tag": "h2",
+                "cta_label": "View all 240 →",
+                "cta_url": { "url": "/shop", "is_external": "", "nofollow": "" },
+                "variant": "light",
+                "pills": [
+                  { "_id": "pl_1", "label": "All",         "url": { "url": "#", "is_external": "", "nofollow": "" }, "active": "yes" },
+                  { "_id": "pl_2", "label": "String",      "url": { "url": "/category/string",      "is_external": "", "nofollow": "" }, "active": "" },
+                  { "_id": "pl_3", "label": "Percussions", "url": { "url": "/category/percussions", "is_external": "", "nofollow": "" }, "active": "" },
+                  { "_id": "pl_4", "label": "Bowed",       "url": { "url": "/category/bowed",       "is_external": "", "nofollow": "" }, "active": "" },
+                  { "_id": "pl_5", "label": "Winds",       "url": { "url": "/category/winds",       "is_external": "", "nofollow": "" }, "active": "" }
+                ]
               }
             },
             {
@@ -143,14 +163,6 @@
               "widgetType": "shortcode",
               "settings": {
                 "shortcode": "[products limit=\"8\" columns=\"4\" orderby=\"popularity\" class=\"tap-products\"]"
-              }
-            },
-            {
-              "id": "tap_prod_grid_fallback",
-              "elType": "widget",
-              "widgetType": "html",
-              "settings": {
-                "html": "<style>\n/* Style WooCommerce product grid OR fallback static cards */\n.tap-products .products,.tap-products-static{display:grid !important;grid-template-columns:repeat(4,1fr) !important;gap:20px;list-style:none;padding:0;margin:0}\n.tap-products .product,.tap-prod-card{background:#fff;border-radius:8px;overflow:hidden;border:1px solid #f0e6d0;position:relative;display:flex !important;flex-direction:column;transition:transform .35s,box-shadow .35s}\n.tap-products .product:hover,.tap-prod-card:hover{transform:translateY(-3px);box-shadow:0 20px 50px -22px rgba(60,40,0,.25)}\n.tap-products .woocommerce-loop-product__title{font-family:'Cormorant Garamond',serif !important;font-size:18px !important;font-weight:500 !important;color:#1A1612;padding:14px 16px 4px !important;line-height:1.3}\n.tap-products .price{padding:0 16px 14px !important;font-family:'Cormorant Garamond',serif;font-size:18px;color:#1A1612}\n.tap-products .price del{color:#8b7f6a;font-size:14px;margin-right:6px}\n.tap-products .price ins{text-decoration:none;color:#9A7B3A;font-weight:600}\n.tap-products .button,.tap-products .added_to_cart{display:none !important}\n.tap-products .onsale{position:absolute;top:14px;left:14px;background:#C84B3A;color:#fff;padding:4px 10px;border-radius:20px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.08em;z-index:2}\n.tap-products img{aspect-ratio:1/1;object-fit:cover;width:100%}\n@media(max-width:1024px){.tap-products .products,.tap-products-static{grid-template-columns:repeat(2,1fr) !important}}\n@media(max-width:600px){.tap-products .products,.tap-products-static{grid-template-columns:1fr !important}}\n\n/* Fallback static (if Woo not active) */\n.tap-prod-img{aspect-ratio:1/1;background:linear-gradient(135deg,#f0e6d0,#d4c19a);position:relative;display:flex;align-items:center;justify-content:center}\n.tap-prod-img.b{background:linear-gradient(135deg,#3d2f1f,#6b4a2c)}\n.tap-prod-img.c{background:linear-gradient(135deg,#8b5a2c,#c89a5a)}\n.tap-prod-img.d{background:linear-gradient(135deg,#5a3a2a,#a87a4a)}\n.tap-prod-img.e{background:linear-gradient(135deg,#d4b97a,#7a5a2c)}\n.tap-prod-img.f{background:linear-gradient(135deg,#6b4a2c,#a87a4a)}\n.tap-prod-img.g{background:linear-gradient(135deg,#5a3a2a,#c89a5a)}\n.tap-prod-img.h{background:linear-gradient(135deg,#8b6a3a,#d4b97a)}\n.tap-prod-img .pl{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;color:rgba(255,255,255,.45);text-transform:uppercase;text-align:center;padding:0 14px}\n.tap-badge-sale{position:absolute;top:14px;left:14px;background:#C84B3A;color:#fff;padding:4px 10px;border-radius:20px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.08em;z-index:2}\n.tap-fav{position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.9);border:0;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#3a342c;font-size:14px}\n.tap-fav:hover{color:#C84B3A}\n.tap-prod-meta{padding:18px 18px 16px;display:flex;flex-direction:column;gap:4px;flex:1}\n.tap-prod-cat{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:#9A7B3A}\n.tap-prod-name{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:500;color:#1A1612;line-height:1.3;margin:2px 0;text-wrap:pretty}\n.tap-prod-maker{font-family:'Inter',sans-serif;font-size:12px;font-style:italic;color:#8b7f6a}\n.tap-prod-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:14px}\n.tap-prod-old{font-family:'Inter',sans-serif;font-size:13px;color:#8b7f6a;text-decoration:line-through;margin-right:6px}\n.tap-prod-now{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:#1A1612}\n.tap-prod-add{width:34px;height:34px;border-radius:50%;border:1px solid #E8DFC8;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#1A1612;font-size:18px;font-weight:300;transition:all .18s}\n.tap-prod-add:hover{background:#9A7B3A;color:#fff;border-color:#9A7B3A;transform:rotate(90deg)}\n</style>"
               }
             }
           ]
@@ -185,11 +197,31 @@
           },
           "elements": [
             {
-              "id": "tap_cat_html",
+              "id": "tap_cat_head",
               "elType": "widget",
-              "widgetType": "html",
+              "widgetType": "lwp-section-head",
               "settings": {
-                "html": "<div class=\"tap-section-head\">\n  <div><span class=\"tap-eyebrow\">— Browse by family</span><h2 class=\"tap-section-title\">Pick the voice<br>you're looking for.</h2></div>\n  <a href=\"/shop\" class=\"tap-btn-link\">All categories →</a>\n</div>\n<div class=\"tap-cat-grid\">\n  <a href=\"/category/string\" class=\"tap-cat\" style=\"background:linear-gradient(135deg,#d4b97a,#7a5a2c)\"><span class=\"tap-cat-eb\">62 instruments</span><h3>String</h3><span class=\"tap-cat-sub\">Oud · Saz · Setar · Tanbur · Kanun · Santur</span><span class=\"tap-cat-arrow\">→</span></a>\n  <a href=\"/category/percussions\" class=\"tap-cat\" style=\"background:linear-gradient(135deg,#3d2f1f,#7a5a2c)\"><span class=\"tap-cat-eb\">48 instruments</span><h3>Percussions</h3><span class=\"tap-cat-sub\">Darbuka · Bendir · Riq · Handpan · Steel Tongue</span><span class=\"tap-cat-arrow\">→</span></a>\n  <a href=\"/category/bowed\" class=\"tap-cat\" style=\"background:linear-gradient(135deg,#5a3a2a,#c89a5a)\"><span class=\"tap-cat-eb\">28 instruments</span><h3>Bowed</h3><span class=\"tap-cat-sub\">Kemence · Kamancheh · Kabak Kemane</span><span class=\"tap-cat-arrow\">→</span></a>\n  <a href=\"/category/winds\" class=\"tap-cat\" style=\"background:linear-gradient(135deg,#2a3d3a,#7aa494)\"><span class=\"tap-cat-eb\">36 instruments</span><h3>Winds</h3><span class=\"tap-cat-sub\">Ney · Duduk · Kaval · Mey · Zurna</span><span class=\"tap-cat-arrow\">→</span></a>\n</div>\n<style>\n.tap-cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}\n.tap-cat{display:flex;flex-direction:column;justify-content:flex-end;aspect-ratio:3/4;padding:24px;border-radius:8px;color:#fff;text-decoration:none;position:relative;overflow:hidden;transition:transform .3s ease,box-shadow .3s ease}\n.tap-cat::before{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.55),transparent 60%);pointer-events:none}\n.tap-cat:hover{transform:translateY(-6px);box-shadow:0 24px 48px -20px rgba(60,40,0,.5)}\n.tap-cat-eb{position:relative;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:8px}\n.tap-cat h3{position:relative;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:34px;color:#fff;margin:0 0 6px;line-height:1.05}\n.tap-cat-sub{position:relative;font-family:'Inter',sans-serif;font-size:12px;color:rgba(255,255,255,.75);line-height:1.5}\n.tap-cat-arrow{position:absolute;top:24px;right:24px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.15);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;font-size:16px;border:1px solid rgba(255,255,255,.2);transition:all .25s}\n.tap-cat:hover .tap-cat-arrow{background:#fff;color:#1A1612;transform:rotate(-45deg)}\n@media(max-width:1024px){.tap-cat-grid{grid-template-columns:repeat(2,1fr)}}\n@media(max-width:600px){.tap-cat-grid{grid-template-columns:1fr}}\n</style>"
+                "eyebrow": "Browse by family",
+                "heading": "Pick the voice\nyou're looking for.",
+                "heading_tag": "h2",
+                "cta_label": "All categories →",
+                "cta_url": { "url": "/shop", "is_external": "", "nofollow": "" },
+                "variant": "light"
+              }
+            },
+            {
+              "id": "tap_cat_grid",
+              "elType": "widget",
+              "widgetType": "lwp-category-grid",
+              "settings": {
+                "source": "manual",
+                "columns": "4",
+                "items": [
+                  { "_id": "cat_1", "eyebrow": "62 instruments", "title": "String",      "sub": "Oud · Saz · Setar · Tanbur · Kanun · Santur",  "url": { "url": "/category/string",      "is_external": "", "nofollow": "" }, "image": { "url": "" }, "grad_from": "#d4b97a", "grad_to": "#7a5a2c" },
+                  { "_id": "cat_2", "eyebrow": "48 instruments", "title": "Percussions", "sub": "Darbuka · Bendir · Riq · Handpan · Steel Tongue", "url": { "url": "/category/percussions", "is_external": "", "nofollow": "" }, "image": { "url": "" }, "grad_from": "#3d2f1f", "grad_to": "#7a5a2c" },
+                  { "_id": "cat_3", "eyebrow": "28 instruments", "title": "Bowed",       "sub": "Kemence · Kamancheh · Kabak Kemane",           "url": { "url": "/category/bowed",       "is_external": "", "nofollow": "" }, "image": { "url": "" }, "grad_from": "#5a3a2a", "grad_to": "#c89a5a" },
+                  { "_id": "cat_4", "eyebrow": "36 instruments", "title": "Winds",       "sub": "Ney · Duduk · Kaval · Mey · Zurna",            "url": { "url": "/category/winds",       "is_external": "", "nofollow": "" }, "image": { "url": "" }, "grad_from": "#2a3d3a", "grad_to": "#7aa494" }
+                ]
               }
             }
           ]
@@ -200,7 +232,6 @@
       "id": "tap_hp_atelier",
       "elType": "section",
       "settings": {
-        "structure": "20",
         "background_background": "classic",
         "background_color": "#FFFFFF",
         "padding": {
@@ -214,42 +245,37 @@
         "content_width": {
           "unit": "px",
           "size": 1372
-        },
-        "gap": "extended"
+        }
       },
       "elements": [
         {
-          "id": "tap_atelier_l",
+          "id": "tap_atelier_col",
           "elType": "column",
-          "settings": {
-            "_column_size": 50,
-            "content_position": "center"
-          },
+          "settings": { "_column_size": 100 },
           "elements": [
             {
-              "id": "tap_atelier_l_html",
+              "id": "tap_atelier_w",
               "elType": "widget",
-              "widgetType": "html",
+              "widgetType": "lwp-story-split",
               "settings": {
-                "html": "<div class=\"tap-atelier-img\">\n  <div class=\"tap-atelier-pl\">Workshop photo · Brisighella atelier · 14 / 09 / 2025</div>\n  <div class=\"tap-atelier-card\"><span class=\"eb\">Atelier hours</span><strong>Open by appointment</strong><span class=\"sub\">Tuesday – Saturday · 10:00 – 18:00</span></div>\n</div>\n<style>\n.tap-atelier-img{aspect-ratio:5/6;background:linear-gradient(135deg,#3d2f1f,#7a5a2c);border-radius:8px;position:relative;overflow:hidden;box-shadow:0 30px 60px -20px rgba(60,40,0,.35)}\n.tap-atelier-pl{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;color:rgba(255,255,255,.4);text-transform:uppercase;text-align:center;width:80%}\n.tap-atelier-card{position:absolute;bottom:24px;left:24px;right:24px;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);padding:18px 22px;border-radius:6px;display:flex;flex-direction:column;gap:2px}\n.tap-atelier-card .eb{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#9A7B3A;font-weight:600}\n.tap-atelier-card strong{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:#1A1612}\n.tap-atelier-card .sub{font-family:'Inter',sans-serif;font-size:12px;color:#3a342c}\n</style>"
-              }
-            }
-          ]
-        },
-        {
-          "id": "tap_atelier_r",
-          "elType": "column",
-          "settings": {
-            "_column_size": 50,
-            "content_position": "center"
-          },
-          "elements": [
-            {
-              "id": "tap_atelier_r_html",
-              "elType": "widget",
-              "widgetType": "html",
-              "settings": {
-                "html": "<div class=\"tap-atelier-r\">\n  <span class=\"tap-eyebrow\">— Our story · since 2014</span>\n  <h2 class=\"tap-section-title\">A workshop for instruments<br>that <em>don't fit</em> a category.</h2>\n  <p class=\"tap-lead\">Tapadum started as a duo of Italian musicians chasing a single Turkish oud across three Istanbul workshops. Eleven years later, our atelier in Brisighella is the home address for 26 master luthiers across the Mediterranean — and the shipping desk for nearly 2,500 hand-tuned instruments delivered worldwide.</p>\n  <ul class=\"tap-bullets\">\n    <li><span>01</span><div><strong>Direct from masters.</strong>No middlemen. Each instrument is signed by the luthier who made it.</div></li>\n    <li><span>02</span><div><strong>Tuned before dispatch.</strong>Every saz, oud and santur is set up and intonated by Yildirim's team in our atelier.</div></li>\n    <li><span>03</span><div><strong>Worldwide insured shipping.</strong>DHL Express in custom-built crates · 3–7 working days.</div></li>\n    <li><span>04</span><div><strong>Lifetime support.</strong>Free maintenance for two years · paid service forever after.</div></li>\n  </ul>\n  <a href=\"/about\" class=\"tap-btn-primary\">Read the full story →</a>\n</div>\n<style>\n.tap-atelier-r{display:flex;flex-direction:column;gap:22px}\n.tap-bullets{list-style:none;padding:0;margin:8px 0;display:flex;flex-direction:column;gap:14px}\n.tap-bullets li{display:flex;gap:18px;padding:14px 0;border-top:1px solid #E8DFC8}\n.tap-bullets li:last-child{border-bottom:1px solid #E8DFC8}\n.tap-bullets span{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:24px;color:#9A7B3A;font-weight:500;flex-shrink:0;width:36px}\n.tap-bullets div{font-family:'Inter',sans-serif;font-size:14px;line-height:1.6;color:#3a342c}\n.tap-bullets strong{display:block;color:#1A1612;font-weight:600;margin-bottom:2px}\n</style>"
+                "image_side": "left",
+                "image": { "url": "" },
+                "image_alt_grad_from": "#3d2f1f",
+                "image_alt_grad_to": "#7a5a2c",
+                "card_eyebrow": "Atelier hours",
+                "card_title": "Open by appointment",
+                "card_sub": "Tuesday – Saturday · 10:00 – 18:00",
+                "eyebrow": "Our story · since 2014",
+                "heading": "A workshop for instruments\nthat [em]don't fit[/em] a category.",
+                "lead": "Tapadum started as a duo of Italian musicians chasing a single Turkish oud across three Istanbul workshops. Eleven years later, our atelier in Brisighella is the home address for 26 master luthiers across the Mediterranean — and the shipping desk for nearly 2,500 hand-tuned instruments delivered worldwide.",
+                "cta_label": "Read the full story →",
+                "cta_url": { "url": "/about", "is_external": "", "nofollow": "" },
+                "bullets": [
+                  { "_id": "atel_b1", "title": "Direct from masters.",       "body": "No middlemen. Each instrument is signed by the luthier who made it." },
+                  { "_id": "atel_b2", "title": "Tuned before dispatch.",      "body": "Every saz, oud and santur is set up and intonated by our atelier team." },
+                  { "_id": "atel_b3", "title": "Worldwide insured shipping.", "body": "DHL Express in custom-built crates · 3–7 working days." },
+                  { "_id": "atel_b4", "title": "Lifetime support.",            "body": "Free maintenance for two years · paid service forever after." }
+                ]
               }
             }
           ]
@@ -284,11 +310,31 @@
           },
           "elements": [
             {
-              "id": "tap_masters_html",
+              "id": "tap_masters_head",
               "elType": "widget",
-              "widgetType": "html",
+              "widgetType": "lwp-section-head",
               "settings": {
-                "html": "<div class=\"tap-masters-head\">\n  <div><span class=\"tap-eyebrow\" style=\"color:#D4AF37\">— The hands behind the work</span><h2 class=\"tap-section-title\" style=\"color:#fff\">Master luthiers in the network.</h2></div>\n  <a href=\"/masters\" class=\"tap-btn-link\" style=\"color:#fff;border-color:#fff\">All 26 masters →</a>\n</div>\n<div class=\"tap-masters-grid\">\n  <a href=\"/masters/feramis-aktas\" class=\"tap-master\"><div class=\"tap-master-img\" style=\"background:linear-gradient(135deg,#9a7b3a,#d4af37)\">F</div><div class=\"tap-master-meta\"><h4>Feramis Aktas</h4><span class=\"loc\">Istanbul · TR</span><span class=\"spec\">Oud · 28 years</span><span class=\"count\">42 instruments</span></div></a>\n  <a href=\"/masters/yildirim-palabiyik\" class=\"tap-master\"><div class=\"tap-master-img\" style=\"background:linear-gradient(135deg,#5a3a2a,#a87a4a)\">Y</div><div class=\"tap-master-meta\"><h4>Yildirim Palabiyik</h4><span class=\"loc\">Istanbul · TR</span><span class=\"spec\">Saz · Tanbur · 32 years</span><span class=\"count\">68 instruments</span></div></a>\n  <a href=\"/masters/hamid\" class=\"tap-master\"><div class=\"tap-master-img\" style=\"background:linear-gradient(135deg,#3d2f1f,#7a5a2c)\">H</div><div class=\"tap-master-meta\"><h4>Hamid</h4><span class=\"loc\">Tehran · IR</span><span class=\"spec\">Setar · Tar · 24 years</span><span class=\"count\">31 instruments</span></div></a>\n  <a href=\"/masters/golestani\" class=\"tap-master\"><div class=\"tap-master-img\" style=\"background:linear-gradient(135deg,#7a5a3a,#b89a6a)\">A</div><div class=\"tap-master-meta\"><h4>A. Golestani</h4><span class=\"loc\">Tehran · IR</span><span class=\"spec\">Tar · Kamancheh · 35 years</span><span class=\"count\">22 instruments</span></div></a>\n</div>\n<style>\n.tap-masters-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:48px;flex-wrap:wrap}\n.tap-masters-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}\n.tap-master{background:#0e0a06;border:1px solid #3a342c;border-radius:8px;padding:24px;text-decoration:none;display:flex;flex-direction:column;gap:18px;transition:all .3s}\n.tap-master:hover{border-color:#D4AF37;transform:translateY(-4px);background:#15110b}\n.tap-master-img{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:36px;font-weight:500;color:#fff}\n.tap-master-meta h4{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:22px;color:#fff;margin:0 0 4px}\n.tap-master-meta .loc{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#D4AF37;display:block;margin-bottom:8px}\n.tap-master-meta .spec{font-family:'Inter',sans-serif;font-size:13px;color:#a89d85;display:block;margin-bottom:12px;font-style:italic}\n.tap-master-meta .count{font-family:'Inter',sans-serif;font-size:11px;color:#6b6151;border-top:1px solid #3a342c;padding-top:10px;display:block}\n@media(max-width:1024px){.tap-masters-grid{grid-template-columns:repeat(2,1fr)}}\n@media(max-width:600px){.tap-masters-grid{grid-template-columns:1fr}}\n</style>"
+                "eyebrow": "The hands behind the work",
+                "heading": "Master luthiers in the network.",
+                "heading_tag": "h2",
+                "cta_label": "All 26 masters →",
+                "cta_url": { "url": "/masters", "is_external": "", "nofollow": "" },
+                "variant": "dark"
+              }
+            },
+            {
+              "id": "tap_masters_grid",
+              "elType": "widget",
+              "widgetType": "lwp-master-grid",
+              "settings": {
+                "variant": "dark",
+                "columns": "4",
+                "items": [
+                  { "_id": "mst_1", "name": "Feramis Aktas",      "initial": "F", "location": "Istanbul · TR", "specialty": "Oud · 28 years",          "count": "42 instruments", "url": { "url": "/masters/feramis-aktas",      "is_external": "", "nofollow": "" }, "grad_from": "#9a7b3a", "grad_to": "#d4af37" },
+                  { "_id": "mst_2", "name": "Yildirim Palabiyik", "initial": "Y", "location": "Istanbul · TR", "specialty": "Saz · Tanbur · 32 years", "count": "68 instruments", "url": { "url": "/masters/yildirim-palabiyik", "is_external": "", "nofollow": "" }, "grad_from": "#5a3a2a", "grad_to": "#a87a4a" },
+                  { "_id": "mst_3", "name": "Hamid",              "initial": "H", "location": "Tehran · IR",   "specialty": "Setar · Tar · 24 years",  "count": "31 instruments", "url": { "url": "/masters/hamid",              "is_external": "", "nofollow": "" }, "grad_from": "#3d2f1f", "grad_to": "#7a5a2c" },
+                  { "_id": "mst_4", "name": "A. Golestani",       "initial": "A", "location": "Tehran · IR",   "specialty": "Tar · Kamancheh · 35 years","count": "22 instruments", "url": { "url": "/masters/golestani",          "is_external": "", "nofollow": "" }, "grad_from": "#7a5a3a", "grad_to": "#b89a6a" }
+                ]
               }
             }
           ]
@@ -325,9 +371,21 @@
             {
               "id": "tap_yt_head",
               "elType": "widget",
-              "widgetType": "html",
+              "widgetType": "lwp-youtube-channel",
               "settings": {
-                "html": "<div class=\"tap-section-head\"><div><span class=\"tap-eyebrow\">— Listen before you buy</span><h2 class=\"tap-section-title\">Every instrument, played<br>in our atelier.</h2></div><a href=\"https://youtube.com/@tapadum\" class=\"tap-btn-link\">YouTube channel →</a></div>\n<div class=\"tap-yt-grid\">\n  <a class=\"tap-yt\" href=\"https://youtu.be/dQw4w9WgXcQ\"><div class=\"tap-yt-thumb\" style=\"background:linear-gradient(135deg,#3d2f1f,#7a5a2c)\"><span class=\"tap-yt-play\">▶</span><span class=\"tap-yt-time\">3:42</span></div><div class=\"tap-yt-meta\"><h4>Sultan Turkish Oud — solo taksim in Hicaz</h4><span>Yildirim Palabiyik · 14k views</span></div></a>\n  <a class=\"tap-yt\" href=\"https://youtu.be/dQw4w9WgXcQ\"><div class=\"tap-yt-thumb\" style=\"background:linear-gradient(135deg,#2a3d3a,#7aa494)\"><span class=\"tap-yt-play\">▶</span><span class=\"tap-yt-time\">5:18</span></div><div class=\"tap-yt-meta\"><h4>Tapadum Pro 12 — handpan in D Hicaz</h4><span>In-house atelier · 28k views</span></div></a>\n  <a class=\"tap-yt\" href=\"https://youtu.be/dQw4w9WgXcQ\"><div class=\"tap-yt-thumb\" style=\"background:linear-gradient(135deg,#5a3a2a,#c89a5a)\"><span class=\"tap-yt-play\">▶</span><span class=\"tap-yt-time\">2:54</span></div><div class=\"tap-yt-meta\"><h4>Persian Setar by Hamid — Mahour mode</h4><span>Hamid · 9.2k views</span></div></a>\n  <a class=\"tap-yt\" href=\"https://youtu.be/dQw4w9WgXcQ\"><div class=\"tap-yt-thumb\" style=\"background:linear-gradient(135deg,#8b6a3a,#d4b97a)\"><span class=\"tap-yt-play\">▶</span><span class=\"tap-yt-time\">4:08</span></div><div class=\"tap-yt-meta\"><h4>Master Ney — Feramis Aktas plays Saba</h4><span>Feramis Aktas · 11k views</span></div></a>\n</div>\n<style>\n.tap-yt-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}\n.tap-yt{background:#fff;border-radius:8px;overflow:hidden;text-decoration:none;color:#1A1612;display:flex;flex-direction:column;border:1px solid #E8DFC8;transition:transform .3s,box-shadow .3s}\n.tap-yt:hover{transform:translateY(-4px);box-shadow:0 18px 36px -16px rgba(60,40,0,.25)}\n.tap-yt-thumb{aspect-ratio:16/9;position:relative;display:flex;align-items:center;justify-content:center}\n.tap-yt-play{width:54px;height:54px;border-radius:50%;background:rgba(255,255,255,.92);color:#1A1612;display:flex;align-items:center;justify-content:center;font-size:18px;padding-left:4px;transition:transform .25s}\n.tap-yt:hover .tap-yt-play{transform:scale(1.12);background:#D4AF37;color:#1A1612}\n.tap-yt-time{position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,.75);color:#fff;padding:3px 8px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600}\n.tap-yt-meta{padding:16px 18px 18px;display:flex;flex-direction:column;gap:6px}\n.tap-yt-meta h4{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:17px;color:#1A1612;margin:0;line-height:1.3;text-wrap:pretty}\n.tap-yt-meta span{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;color:#8b7f6a;text-transform:uppercase}\n@media(max-width:1024px){.tap-yt-grid{grid-template-columns:repeat(2,1fr)}}\n@media(max-width:600px){.tap-yt-grid{grid-template-columns:1fr}}\n</style>"
+                "eyebrow": "Listen before you buy",
+                "heading": "Every instrument, played\nin our atelier.",
+                "cta_label": "YouTube channel →",
+                "cta_url": { "url": "", "is_external": "on", "nofollow": "" },
+                "show_subscribe": "yes",
+                "subscribe_label": "Subscribe",
+                "columns": "4",
+                "videos": [
+                  { "_id": "ytv_oud01",   "video": "", "title": "Sultan Turkish Oud — solo taksim in Hicaz", "byline": "Yildirim Palabiyik · 14k views",  "duration": "3:42", "thumb_quality": "hq" },
+                  { "_id": "ytv_pro12",   "video": "", "title": "Tapadum Pro 12 — handpan in D Hicaz",       "byline": "In-house atelier · 28k views",    "duration": "5:18", "thumb_quality": "hq" },
+                  { "_id": "ytv_setar",   "video": "", "title": "Persian Setar by Hamid — Mahour mode",     "byline": "Hamid · 9.2k views",              "duration": "2:54", "thumb_quality": "hq" },
+                  { "_id": "ytv_ney",     "video": "", "title": "Master Ney — Feramis Aktas plays Saba",    "byline": "Feramis Aktas · 11k views",        "duration": "4:08", "thumb_quality": "hq" }
+                ]
               }
             }
           ]
@@ -362,11 +420,18 @@
           },
           "elements": [
             {
-              "id": "tap_journal_html",
+              "id": "tap_journal_widget",
               "elType": "widget",
-              "widgetType": "html",
+              "widgetType": "lwp-editorial-grid",
               "settings": {
-                "html": "<div class=\"tap-section-head\"><div><span class=\"tap-eyebrow\">— Long reads from the atelier</span><h2 class=\"tap-section-title\">From the journal.</h2></div><a href=\"/journal\" class=\"tap-btn-link\">All posts →</a></div>\n<div class=\"tap-journal-grid\">\n  <a class=\"tap-jnl tap-jnl-big\" href=\"/blog/the-voice-of-the-kemence\"><div class=\"tap-jnl-img\" style=\"background:linear-gradient(135deg,#5a3a2a,#c89a5a)\"></div><div class=\"tap-jnl-meta\"><span class=\"eb\">Field notes · 8 min read</span><h3>The voice of the kemence — three days with master Mehmet on the Black Sea coast.</h3><span class=\"date\">Oct 12, 2025</span></div></a>\n  <a class=\"tap-jnl\" href=\"/blog/healing-effects-of-the-ney\"><div class=\"tap-jnl-img\" style=\"background:linear-gradient(135deg,#2a3d3a,#7aa494)\"></div><div class=\"tap-jnl-meta\"><span class=\"eb\">Long read · 12 min</span><h3>Healing effects of the ney in Sufi music.</h3><span class=\"date\">Sep 28, 2025</span></div></a>\n  <a class=\"tap-jnl\" href=\"/blog/how-an-oud-is-built\"><div class=\"tap-jnl-img\" style=\"background:linear-gradient(135deg,#3d2f1f,#7a5a2c)\"></div><div class=\"tap-jnl-meta\"><span class=\"eb\">Workshop · 6 min</span><h3>How an oud is built — 14 days with Feramis Aktas in Istanbul.</h3><span class=\"date\">Sep 14, 2025</span></div></a>\n</div>\n<style>\n.tap-journal-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:24px}\n.tap-jnl{text-decoration:none;color:#1A1612;display:flex;flex-direction:column;gap:18px;transition:transform .3s}\n.tap-jnl:hover{transform:translateY(-4px)}\n.tap-jnl-img{aspect-ratio:4/3;border-radius:8px}\n.tap-jnl-big .tap-jnl-img{aspect-ratio:16/10}\n.tap-jnl-meta{display:flex;flex-direction:column;gap:6px}\n.tap-jnl .eb{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#9A7B3A;font-weight:600}\n.tap-jnl h3{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:22px;color:#1A1612;margin:0;line-height:1.25;text-wrap:pretty}\n.tap-jnl-big h3{font-size:34px}\n.tap-jnl .date{font-family:'JetBrains Mono',monospace;font-size:11px;color:#8b7f6a;letter-spacing:.06em;margin-top:6px}\n.tap-jnl:hover h3{color:#9A7B3A}\n@media(max-width:1024px){.tap-journal-grid{grid-template-columns:1fr 1fr}.tap-jnl-big{grid-column:1/-1}}\n@media(max-width:600px){.tap-journal-grid{grid-template-columns:1fr}}\n</style>"
+                "post_type": "post",
+                "count": 3,
+                "orderby": "date",
+                "category": [],
+                "eyebrow": "Long reads from the atelier",
+                "heading": "From the journal.",
+                "all_link": { "url": "/journal", "is_external": "", "nofollow": "" },
+                "all_label": "All posts →"
               }
             }
           ]

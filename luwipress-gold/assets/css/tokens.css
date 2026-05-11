@@ -571,13 +571,10 @@ body.lwp-layout-boxed .lwp-elementor-page .elementor-section {
 	margin: 0 auto;
 	padding: 64px var(--gutter, 32px) 32px;
 	display: grid;
-	/* Default 4-col layout; the Shop column from inc/footer-enhancements.php
-	 * uses :has() at the rule below to flip the grid to 5-col when present. */
+	/* 4-col layout: logo+blurb / Customer Care / Explore / Shop.
+	 * Atelier column removed in 1.7.10 (was email-only — redundant with
+	 * chat widget + drawer contact channels). */
 	grid-template-columns: 1.5fr repeat(3, 1fr);
-	gap: 48px;
-}
-.lwp-site-footer-inner:has(.lwp-site-footer-shop) {
-	grid-template-columns: 1.4fr repeat(4, 1fr);
 	gap: 36px;
 }
 .lwp-site-footer-shop ul a {
@@ -628,13 +625,28 @@ body.lwp-layout-boxed .lwp-elementor-page .elementor-section {
 .lwp-site-footer-col a:hover { color: var(--primary-light, #D4AF37); }
 
 .lwp-site-footer-logo {
+	display: inline-block;
+	color: #fff;
+	text-decoration: none;
+	margin-bottom: 14px;
+	line-height: 1;
+}
+/* When logo is uploaded via Site Identity (Customizer), render the
+   image and force-white via filter — most logos are dark-on-light by
+   default; this matches the deep-black footer band. 1.7.5+. */
+.lwp-site-footer-logo__img {
+	display: block;
+	max-height: 36px;
+	width: auto;
+	filter: brightness(0) invert(1);
+	opacity: .9;
+}
+/* Fallback: text logo when no Site Identity logo is uploaded. */
+.lwp-site-footer-logo__text {
 	font-family: var(--serif, 'Playfair Display', Georgia, serif);
 	font-size: 32px;
 	font-weight: 500;
 	color: #fff;
-	text-decoration: none;
-	display: block;
-	margin-bottom: 14px;
 }
 .lwp-site-footer-blurb {
 	font-size: 13.5px;
@@ -643,7 +655,11 @@ body.lwp-layout-boxed .lwp-elementor-page .elementor-section {
 	margin: 0 0 18px;
 	max-width: 36ch;
 }
-.lwp-site-footer-social { display: flex; gap: 10px; }
+.lwp-site-footer-social { display: flex; gap: 10px; flex-wrap: wrap; }
+/* When the social row sits inside the brand column (under the logo +
+ * blurb), give it breathing room. The bottom-strip placement keeps
+ * gap: 0 because the strip's own padding handles spacing. */
+.lwp-site-footer-brand .lwp-site-footer-social { margin-top: 18px; }
 .lwp-site-footer-social a {
 	width: 36px; height: 36px;
 	border-radius: 50%;
@@ -673,13 +689,22 @@ body.lwp-layout-boxed .lwp-elementor-page .elementor-section {
 	flex-wrap: wrap;
 	gap: 14px;
 }
-/* Bottom bar — three-area layout: left (©), middle (byline), right (payments) */
+/* Bottom bar (1.7.5 minimal) — left (©), right (social icons).
+   Byline + payment row default OFF. When operator opts back in via
+   Customizer, byline takes the middle, payments slot to the far right. */
 .lwp-site-footer-bottom__copy { flex: 0 0 auto; }
 .lwp-site-footer-bottom__byline {
 	flex: 1 1 auto;
 	text-align: center;
 	color: #888;
 	letter-spacing: .14em;
+}
+/* Social icons in bottom strip — quieter than brand-column placement.
+   The .lwp-site-footer-social rule above handles per-icon styling; we
+   only need to right-align the row here. */
+.lwp-site-footer-bottom .lwp-site-footer-social {
+	margin-left: auto;
+	flex: 0 0 auto;
 }
 .lwp-site-footer-bottom .lwp-site-footer-payments {
 	margin: 0;
@@ -707,6 +732,10 @@ body.lwp-layout-boxed .lwp-elementor-page .elementor-section {
 	}
 	.lwp-site-footer-bottom__byline { text-align: center; }
 	.lwp-site-footer-bottom .lwp-site-footer-payments { justify-content: center; }
+	.lwp-site-footer-bottom .lwp-site-footer-social {
+		margin: 0 auto;
+		justify-content: center;
+	}
 }
 
 @media (max-width: 1100px) {
@@ -1029,31 +1058,80 @@ body.lwp-layout-boxed .lwp-elementor-page .elementor-section {
 	margin: 0 auto;
 	padding: 0 var(--gutter, 32px);
 }
+/* PDP layout: the actual 2-col grid lives on `<div class="product">`
+ * (WC's wrapper), NOT on `.lwp-pdp-grid`. Earlier versions used
+ * `display: contents` on `.product` to hoist its children up to the
+ * outer grid; that worked for layout but broke `position: sticky` on
+ * the gallery — Chromium's containing-block resolution falls back to
+ * the document root for sticky descendants of a `display: contents`
+ * grid parent, so the gallery would bleed sticky across the whole
+ * grid (or vanish mid-scroll when force-released by JS). Making
+ * `.product` the actual grid restores the gallery's grid area as its
+ * sticky containing block — the pin naturally releases at the end of
+ * row 2 (tabs end), exactly where row 3 (related) begins. */
 .lwp-pdp-grid {
+	margin-top: 32px;
+}
+.lwp-pdp-grid > .product {
 	display: grid;
 	grid-template-columns: 1.05fr 1fr;
-	gap: 64px;
-	margin-top: 32px;
+	grid-template-rows: auto auto auto;
+	grid-template-areas:
+		"gallery summary"
+		"gallery tabs"
+		"related related";
+	gap: 24px 64px;
 	align-items: start;
+	/* Containing block for WC's `<span class="onsale">` which is
+	 * absolutely positioned at top:12 left:12. Without this `.onsale`
+	 * climbs up to the body and lands in the topbar zone. */
+	position: relative;
 }
-/* WC wraps gallery + summary inside <div class="product">. Project that
- * wrapper's children up to the grid so the 2-column layout actually
- * lays out gallery LEFT, summary RIGHT (instead of `.product` becoming
- * one grid cell with empty space beside it). */
-.lwp-pdp-grid > .product {
-	display: contents;
-}
+/* Gallery LEFT — sticky so it stays pinned while the operator scrolls
+ * through summary + tabs on the right. Spans both grid rows in col 1
+ * so the sticky behaviour has a tall track to anchor against.
+ *
+ * `position` needs !important because WC ships its own
+ * `.woocommerce div.product div.images.woocommerce-product-gallery
+ * { position: relative }` reset with specificity 0,4,2 — higher than
+ * our 0,2,0 selector. Without !important the sticky never engages.
+ */
 .lwp-pdp-grid .woocommerce-product-gallery {
 	float: none !important;
 	width: 100% !important;
 	max-width: none !important;
-	grid-column: 1;
+	grid-area: gallery;
+	position: sticky;
+	top: 88px;
+	align-self: start;
 }
+/* Summary (title + price + add-to-cart + meta) sits in col 2 row 1,
+ * tabs (Description / Additional Information / Reviews) sit in col 2
+ * row 2 directly below. This keeps the buy column tight at top and
+ * gives the long-form copy the same right-hand reading column. */
 .lwp-pdp-grid .summary {
 	float: none !important;
 	width: 100% !important;
 	margin: 0 !important;
-	grid-column: 2;
+	grid-area: summary;
+}
+.lwp-pdp-grid .woocommerce-tabs {
+	grid-area: tabs;
+	margin: 0 !important;
+	padding-bottom: 0 !important;
+}
+/* Related / up-sells / reviews-as-block fall below the grid as a
+ * full-width landing. Tighten the top margin so the seam between
+ * the tabs (description body) and the related rail doesn't span
+ * the whole viewport. */
+.lwp-pdp-grid .related,
+.lwp-pdp-grid .upsells,
+.lwp-pdp-grid > .related,
+.lwp-pdp-grid > .upsells {
+	grid-area: related;
+	margin-top: 48px !important;
+	padding-top: 0 !important;
+	clear: none;
 }
 .lwp-pdp-grid .product_title {
 	font-family: var(--serif, 'Playfair Display', Georgia, serif);
@@ -1115,10 +1193,61 @@ body.lwp-layout-boxed .lwp-elementor-page .elementor-section {
 	letter-spacing: .14em;
 	text-transform: uppercase;
 	color: var(--muted, #7f7663);
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
 }
+/* SKU + categories rendered as pill rows. Each `.sku_wrapper` /
+ * `.posted_in` becomes a flex row with the label as a quiet caption
+ * and every value (SKU number or category link) as a pill chip. */
+.lwp-pdp .product_meta .sku_wrapper,
+.lwp-pdp .product_meta .posted_in,
+.lwp-pdp .product_meta .tagged_as {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+	margin: 0;
+}
+.lwp-pdp .product_meta .sku_wrapper::before { content: ''; }
+.lwp-pdp .product_meta .sku,
+.lwp-pdp .product_meta .posted_in a,
+.lwp-pdp .product_meta .tagged_as a {
+	display: inline-flex;
+	align-items: center;
+	padding: 5px 12px;
+	border: 1px solid var(--line, #e8e2d3);
+	border-radius: var(--radius-pill, 999px);
+	background: var(--bg, #fcf9f8);
+	color: var(--ink-soft, #4d4635);
+	font-family: var(--sans, 'Inter', sans-serif);
+	font-size: 11px;
+	letter-spacing: .04em;
+	text-transform: none;
+	text-decoration: none;
+	line-height: 1;
+	transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
+}
+.lwp-pdp .product_meta .posted_in a:hover,
+.lwp-pdp .product_meta .tagged_as a:hover {
+	border-color: var(--primary, #735c00);
+	color: var(--primary, #735c00);
+	background: #fff;
+}
+.lwp-pdp .product_meta .sku { color: var(--primary, #735c00); font-weight: 500; }
+/* The "Categories:" / "Tags:" / "SKU:" label that ships as plain text
+ * stays inline as a muted caption; the pills sit after it. WC ships
+ * comma separators inside `.posted_in` text — hide them so each link
+ * stands alone as a pill. */
+.lwp-pdp .product_meta .posted_in,
+.lwp-pdp .product_meta .tagged_as {
+	color: var(--muted, #7f7663);
+}
+.lwp-pdp .product_meta .posted_in a + a,
+.lwp-pdp .product_meta .tagged_as a + a { margin-left: 0; }
 .lwp-pdp .woocommerce-tabs {
-	margin-top: 80px;
-	padding-top: 48px;
+	margin-top: 32px;
+	padding-top: 24px;
 	border-top: 1px solid var(--line, #e8e2d3);
 }
 .lwp-pdp .woocommerce-tabs ul.tabs {
@@ -1161,15 +1290,85 @@ body.lwp-layout-boxed .lwp-elementor-page .elementor-section {
 	.lwp-pdp-grid .summary { grid-column: 1; }
 }
 
-/* Sibling content (woocommerce-tabs, related-products, upsells) lives as
- * extra siblings inside .product. With display:contents on .product they
- * also become grid items — span them across both columns so they don't
- * squeeze into one. */
-.lwp-pdp-grid > .product > .woocommerce-tabs,
+/* Sibling content (related-products, upsells) lives as extra siblings
+ * inside .product. With display:contents on .product they also become
+ * grid items — span them across both columns so they don't squeeze
+ * into one. Tabs are intentionally NOT in this list because the new
+ * layout keeps them in column 2 directly under the summary. */
 .lwp-pdp-grid .related,
 .lwp-pdp-grid .upsells,
+.lwp-pdp-grid > .product > .related,
+.lwp-pdp-grid > .product > .upsells,
 .lwp-pdp-grid .product > .clear,
 .lwp-pdp-grid .product > nav { grid-column: 1 / -1; }
+
+/* On viewports where the 2-col grid collapses to single column, the
+ * sticky gallery + spanned summary need to revert to natural flow:
+ * gallery first (no sticky on mobile, image gets in the way), summary
+ * below it, then tabs, then related. */
+@media (max-width: 900px) {
+	.lwp-pdp-grid > .product {
+		grid-template-columns: 1fr;
+		grid-template-areas:
+			"gallery"
+			"summary"
+			"tabs"
+			"related";
+		gap: 32px;
+	}
+	.lwp-pdp-grid .woocommerce-product-gallery {
+		position: static !important;
+	}
+}
+
+/* FAQ accordion inside the WC tab panel (registered as third tab by
+ * `LuwiPress_AI_Content::register_faq_tab`). Re-skinned from the
+ * legacy inline-styled accordion that used to live below the tabs. */
+.lwp-pdp .woocommerce-tabs .luwipress-faq {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin: 0;
+}
+.lwp-pdp .luwipress-faq__item {
+	border: 1px solid var(--line, #e8e2d3);
+	border-radius: var(--radius-card, 8px);
+	background: #fff;
+	padding: 16px 18px;
+	transition: border-color 200ms ease, background 200ms ease;
+}
+.lwp-pdp .luwipress-faq__item[open] {
+	border-color: var(--primary-light, #D4AF37);
+	background: var(--bg, #fcf9f8);
+}
+.lwp-pdp .luwipress-faq__q {
+	cursor: pointer;
+	font-family: var(--serif, 'Playfair Display', Georgia, serif);
+	font-size: 16px;
+	font-weight: 500;
+	color: var(--ink, #1b1c1c);
+	list-style: none;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+}
+.lwp-pdp .luwipress-faq__q::-webkit-details-marker { display: none; }
+.lwp-pdp .luwipress-faq__q::after {
+	content: '+';
+	font-size: 20px;
+	color: var(--primary, #735c00);
+	transition: transform 200ms ease;
+	flex-shrink: 0;
+}
+.lwp-pdp .luwipress-faq__item[open] .luwipress-faq__q::after {
+	content: '−';
+}
+.lwp-pdp .luwipress-faq__a {
+	margin-top: 12px;
+	color: var(--ink-soft, #4d4635);
+	line-height: 1.6;
+}
 
 /* ─────────────────────────────────────────────────────────────────── */
 /* My-account                                                           */

@@ -25,6 +25,20 @@
 		if ( s ) { s.textContent = msg || ''; }
 	}
 
+	// Spinner shown during the fetch so users see immediate visual feedback
+	// when infinite-scroll triggers. Without it the page feels stalled.
+	function setSpinner( wrap, on ) {
+		var sp = wrap.querySelector( '.lwp-loadmore-spinner' );
+		if ( ! sp ) { return; }
+		if ( on ) {
+			sp.hidden = false;
+			sp.removeAttribute( 'aria-hidden' );
+		} else {
+			sp.hidden = true;
+			sp.setAttribute( 'aria-hidden', 'true' );
+		}
+	}
+
 	function nextUrl( wrap ) {
 		var current = parseInt( wrap.dataset.current || '1', 10 );
 		var max     = parseInt( wrap.dataset.max || '1', 10 );
@@ -50,17 +64,30 @@
 		return url.toString();
 	}
 
+	// Symbolic state markers — language-neutral so we don't ship 4 i18n strings
+	// per state across FR/IT/ES/DE/AR/etc. Glyphs picked from common Unicode
+	// punctuation present in every modern font:
+	//   '·'   while loading (resting; spinner ring covers active state)
+	//   'X / Y'  numeric pagination after each successful append
+	//   '✓'   end of list
+	//   '⚠'   error
+	var SYM = { loading: '', done: '✓', error: '⚠' };
+
 	function loadNext( wrap, btn ) {
 		var url = nextUrl( wrap );
 		if ( ! url ) {
 			btn && ( btn.hidden = true );
-			setStatus( wrap, cfg.i18n.no_more );
+			setSpinner( wrap, false );
+			setStatus( wrap, SYM.done );
 			return;
 		}
 		btn && ( btn.disabled = true );
 		var origLabel = btn ? btn.textContent : '';
+		// Button label stays textual ONLY in button-mode (operator opt-in);
+		// infinite mode hides the button so text label never renders.
 		if ( btn ) { btn.textContent = cfg.i18n.loading; }
-		setStatus( wrap, '' );
+		setStatus( wrap, SYM.loading );
+		setSpinner( wrap, true );
 
 		fetch( url, { credentials: 'same-origin', headers: { 'X-Requested-With': 'fetch' } } )
 			.then( function ( r ) {
@@ -93,9 +120,10 @@
 				var max     = parseInt( wrap.dataset.max || '1', 10 );
 				current++;
 				wrap.dataset.current = String( current );
+				setSpinner( wrap, false );
 				if ( current >= max ) {
 					if ( btn ) { btn.hidden = true; }
-					setStatus( wrap, cfg.i18n.no_more );
+					setStatus( wrap, SYM.done );
 				} else {
 					if ( btn ) { btn.disabled = false; btn.textContent = origLabel || cfg.i18n.load_more; }
 					setStatus( wrap, current + ' / ' + max );
@@ -108,7 +136,8 @@
 			} )
 			.catch( function () {
 				if ( btn ) { btn.disabled = false; btn.textContent = origLabel || cfg.i18n.load_more; }
-				setStatus( wrap, cfg.i18n.error );
+				setSpinner( wrap, false );
+				setStatus( wrap, SYM.error );
 			} );
 	}
 

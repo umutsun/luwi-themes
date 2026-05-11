@@ -3413,6 +3413,13 @@ body.single-product .tap-sale-circle { display: none !important; }
 	/* flex-wrap layout with equal-width thumbs (5 per row desktop,    */
 	/* 4 per row tablet) so the entire gallery (image + thumbs) is one */
 	/* tidy block carried by the sticky position above.                */
+	/* Gallery wrapper gets bottom breathing room so thumb strip does  */
+	/* not crash against whatever sits beneath (mobile stack) or the   */
+	/* related-products band beneath the grid on desktop.              */
+	html body.single-product .woocommerce-product-gallery {
+		padding-bottom: 40px !important;
+	}
+
 	html body.single-product .woocommerce-product-gallery .flex-control-nav,
 	html body.single-product .woocommerce-product-gallery .flex-control-thumbs {
 		position: relative !important;

@@ -3405,6 +3405,55 @@ body.single-product .tap-sale-circle { display: none !important; }
 	html body.single-product .lwp-pdp-container,
 	html body.single-product .lwp-pdp-grid,
 	html body.single-product .lwp-pdp-grid > .product { overflow: visible !important; }
+
+	/* (3) Flexslider thumb strip must stay inside the gallery column. */
+	/* WC's Flexslider sets an inline `width: <main-image-px>` on the  */
+	/* thumb <ol> which overflows the gallery's grid cell, leaking     */
+	/* horizontally into the summary / related-products column. Force  */
+	/* flex-wrap layout with equal-width thumbs (5 per row desktop,    */
+	/* 4 per row tablet) so the entire gallery (image + thumbs) is one */
+	/* tidy block carried by the sticky position above.                */
+	html body.single-product .woocommerce-product-gallery .flex-control-nav,
+	html body.single-product .woocommerce-product-gallery .flex-control-thumbs {
+		position: relative !important;
+		display: flex !important;
+		flex-wrap: wrap !important;
+		width: 100% !important;
+		max-width: 100% !important;
+		box-sizing: border-box !important;
+		padding: 0 !important;
+		margin: 12px 0 0 !important;
+		gap: 8px !important;
+		list-style: none !important;
+		overflow: visible !important;
+	}
+	html body.single-product .woocommerce-product-gallery .flex-control-thumbs li,
+	html body.single-product .woocommerce-product-gallery .flex-control-nav li {
+		flex: 0 0 calc((100% - 32px) / 5) !important;
+		width: auto !important;
+		max-width: calc((100% - 32px) / 5) !important;
+		margin: 0 !important;
+		padding: 0 !important;
+	}
+	html body.single-product .woocommerce-product-gallery .flex-control-thumbs li img,
+	html body.single-product .woocommerce-product-gallery .flex-control-nav li img {
+		width: 100% !important;
+		height: auto !important;
+		aspect-ratio: 1 / 1 !important;
+		object-fit: cover !important;
+		border-radius: 6px !important;
+		display: block !important;
+		cursor: pointer;
+	}
+}
+
+/* Tablet (768-1024px): 4 thumbs per row, tighter gap. */
+@media (min-width: 768px) and (max-width: 1024px) {
+	html body.single-product .woocommerce-product-gallery .flex-control-thumbs li,
+	html body.single-product .woocommerce-product-gallery .flex-control-nav li {
+		flex: 0 0 calc((100% - 24px) / 4) !important;
+		max-width: calc((100% - 24px) / 4) !important;
+	}
 }
 
 /* ============================================================== */

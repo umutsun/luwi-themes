@@ -1101,9 +1101,16 @@ body.lwp-layout-boxed .lwp-elementor-page .elementor-section {
 	width: 100% !important;
 	max-width: none !important;
 	grid-area: gallery;
-	position: sticky;
-	top: 88px;
-	align-self: start;
+	/* !important is REQUIRED here — WC ships a higher-specificity
+	 * `.woocommerce div.product div.images.woocommerce-product-gallery
+	 * { position: relative }` reset (0,4,2 vs our 0,2,0). Without it,
+	 * WC wins and sticky never engages. Confirmed in live combined-CSS
+	 * inspection on 2026-05-12 (LiteSpeed UCSS keeps only the winning
+	 * declaration). Same for top + align-self for safety. */
+	position: sticky !important;
+	top: 100px !important;
+	align-self: start !important;
+	z-index: 1;
 }
 /* Summary (title + price + add-to-cart + meta) sits in col 2 row 1,
  * tabs (Description / Additional Information / Reviews) sit in col 2

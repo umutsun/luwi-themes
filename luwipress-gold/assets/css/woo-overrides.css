@@ -3375,23 +3375,36 @@ body.single-product .lwp-sale-circle,
 body.single-product .tap-sale-circle { display: none !important; }
 
 /* (2) Sticky product gallery — tablet + desktop.                   */
-@media (min-width: 900px) {
-	html, body { overflow-x: clip; }
+/* !important on `position` is REQUIRED — see the same comment in   */
+/* tokens.css `.lwp-pdp-grid .woocommerce-product-gallery`. WC ships */
+/* `.woocommerce div.product div.images.woocommerce-product-gallery */
+/*  { position: relative }` at 0,4,2 specificity and wins without   */
+/* the bang. The `html body.single-product` prefix also lifts our   */
+/* selector to 0,2,2 so most third-party PDP styles do not override.*/
+@media (min-width: 768px) {
+	html, body { overflow-x: clip !important; }
 
-	body.single-product .woocommerce-product-gallery,
-	body.single-product .elementor-widget-woocommerce-product-images,
-	body.single-product .product-images {
-		position: sticky;
-		top: 100px;
-		align-self: start;
-		z-index: 1;
+	html body.single-product .woocommerce-product-gallery,
+	html body.single-product .woocommerce.single-product div.product div.images,
+	html body.single-product .elementor-widget-woocommerce-product-images,
+	html body.single-product .product-images,
+	html body.single-product .lwp-pdp-grid .woocommerce-product-gallery {
+		position: sticky !important;
+		top: 100px !important;
+		align-self: start !important;
+		z-index: 1 !important;
 	}
 
-	/* Elementor column wrappers must not clip sticky descendants. */
-	body.single-product .e-con,
-	body.single-product .e-con-inner,
-	body.single-product .elementor-column,
-	body.single-product .elementor-widget-wrap { overflow: visible !important; }
+	/* Elementor column wrappers + LuwiPress PDP containers must not  */
+	/* clip sticky descendants (overflow: hidden kills sticky).        */
+	html body.single-product .e-con,
+	html body.single-product .e-con-inner,
+	html body.single-product .elementor-column,
+	html body.single-product .elementor-widget-wrap,
+	html body.single-product main.lwp-pdp,
+	html body.single-product .lwp-pdp-container,
+	html body.single-product .lwp-pdp-grid,
+	html body.single-product .lwp-pdp-grid > .product { overflow: visible !important; }
 }
 
 /* ============================================================== */

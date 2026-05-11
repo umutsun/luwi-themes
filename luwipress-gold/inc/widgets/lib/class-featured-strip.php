@@ -61,8 +61,8 @@ class LuwiPress_Gold_Widget_Featured_Strip extends Widget_Base {
 		$this->end_controls_section();
 
 		$this->start_controls_section( 'section_head', [ 'label' => __( 'Heading (optional)', 'luwipress-gold' ) ] );
-		$this->add_control( 'eyebrow', [ 'label' => __( 'Eyebrow', 'luwipress-gold' ), 'type' => Controls_Manager::TEXT, 'default' => __( 'From the atelier', 'luwipress-gold' ) ] );
-		$this->add_control( 'heading', [ 'label' => __( 'Heading', 'luwipress-gold' ), 'type' => Controls_Manager::TEXT, 'default' => __( "What we're featuring this week.", 'luwipress-gold' ) ] );
+		$this->add_control( 'eyebrow', [ 'label' => __( 'Eyebrow', 'luwipress-gold' ), 'type' => Controls_Manager::TEXT, 'default' => __( 'Hand-picked', 'luwipress-gold' ) ] );
+		$this->add_control( 'heading', [ 'label' => __( 'Heading', 'luwipress-gold' ), 'type' => Controls_Manager::TEXT, 'default' => __( 'Featured products.', 'luwipress-gold' ) ] );
 		$this->end_controls_section();
 	}
 

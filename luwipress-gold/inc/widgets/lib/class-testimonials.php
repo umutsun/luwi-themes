@@ -49,9 +49,9 @@ class LuwiPress_Gold_Widget_Testimonials extends Widget_Base {
 			'fields'      => $rep->get_controls(),
 			'title_field' => '{{{ name || "Review" }}}',
 			'default'     => [
-				[ 'quote' => 'The oud arrived already in tune and the action was perfect. Communication from the atelier was exceptional throughout.', 'name' => 'Marco S.',  'location' => 'Milan · IT',     'product' => 'Sultan Turkish Oud',  'rating' => '5' ],
-				[ 'quote' => 'I have bought instruments from many luthiers over thirty years. This was the most personal experience I have had — and the saz sings.', 'name' => 'David K.',  'location' => 'Berlin · DE',   'product' => 'Baglama Saz',          'rating' => '5' ],
-				[ 'quote' => 'The packaging alone was a work of art. The setar inside? Even better. Tapadum has my trust forever.', 'name' => 'Leila R.',  'location' => 'Paris · FR',   'product' => 'Persian Setar',         'rating' => '5' ],
+				[ 'quote' => __( 'Replace this with a real customer review — it is the single biggest conversion lever you control.', 'luwipress-gold' ), 'name' => __( 'Customer name', 'luwipress-gold' ), 'location' => '', 'product' => '', 'rating' => '5' ],
+				[ 'quote' => __( 'Add a second testimonial here. Quotes that mention specific products tend to convert best.', 'luwipress-gold' ),       'name' => __( 'Customer name', 'luwipress-gold' ), 'location' => '', 'product' => '', 'rating' => '5' ],
+				[ 'quote' => __( 'A third quote rounds out the social-proof block. Photo + first name + city + product gives the most credibility.', 'luwipress-gold' ), 'name' => __( 'Customer name', 'luwipress-gold' ), 'location' => '', 'product' => '', 'rating' => '5' ],
 			],
 		] );
 

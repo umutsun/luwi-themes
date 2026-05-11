@@ -89,10 +89,10 @@ class LuwiPress_Gold_Widget_Category_Grid extends Widget_Base {
 				'fields'      => $rep->get_controls(),
 				'title_field' => '{{{ title || "Tile" }}}',
 				'default'     => [
-					[ 'eyebrow' => '62 instruments', 'title' => 'String',      'sub' => 'Oud · Saz · Setar · Tanbur · Kanun · Santur',  'grad_from' => '#d4b97a', 'grad_to' => '#7a5a2c' ],
-					[ 'eyebrow' => '48 instruments', 'title' => 'Percussions', 'sub' => 'Darbuka · Bendir · Riq · Handpan',              'grad_from' => '#3d2f1f', 'grad_to' => '#7a5a2c' ],
-					[ 'eyebrow' => '28 instruments', 'title' => 'Bowed',       'sub' => 'Kemence · Kamancheh · Kabak Kemane',           'grad_from' => '#5a3a2a', 'grad_to' => '#c89a5a' ],
-					[ 'eyebrow' => '36 instruments', 'title' => 'Winds',       'sub' => 'Ney · Duduk · Kaval · Mey · Zurna',             'grad_from' => '#2a3d3a', 'grad_to' => '#7aa494' ],
+					[ 'eyebrow' => '', 'title' => __( 'Category 1', 'luwipress-gold' ), 'sub' => '', 'grad_from' => '#d4b97a', 'grad_to' => '#7a5a2c' ],
+					[ 'eyebrow' => '', 'title' => __( 'Category 2', 'luwipress-gold' ), 'sub' => '', 'grad_from' => '#3d2f1f', 'grad_to' => '#7a5a2c' ],
+					[ 'eyebrow' => '', 'title' => __( 'Category 3', 'luwipress-gold' ), 'sub' => '', 'grad_from' => '#5a3a2a', 'grad_to' => '#c89a5a' ],
+					[ 'eyebrow' => '', 'title' => __( 'Category 4', 'luwipress-gold' ), 'sub' => '', 'grad_from' => '#2a3d3a', 'grad_to' => '#7aa494' ],
 				],
 			]
 		);

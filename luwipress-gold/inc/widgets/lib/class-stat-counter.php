@@ -41,10 +41,10 @@ class LuwiPress_Gold_Widget_Stat_Counter extends Widget_Base {
 			'fields'      => $rep->get_controls(),
 			'title_field' => '{{{ label || "Stat" }}}',
 			'default'     => [
-				[ 'number' => 240, 'suffix' => '+',   'label' => 'Products in catalogue' ],
-				[ 'number' => 42,  'suffix' => '',    'label' => 'Countries shipped to' ],
-				[ 'number' => 26,  'suffix' => '',    'label' => 'Master luthiers' ],
-				[ 'number' => 11,  'suffix' => ' yrs', 'label' => 'Atelier years' ],
+				[ 'number' => 100, 'suffix' => '+',   'label' => __( 'Products', 'luwipress-gold' ) ],
+				[ 'number' => 10,  'suffix' => '',    'label' => __( 'Countries shipped', 'luwipress-gold' ) ],
+				[ 'number' => 5,   'suffix' => '',    'label' => __( 'Team members', 'luwipress-gold' ) ],
+				[ 'number' => 3,   'suffix' => ' yrs', 'label' => __( 'In business', 'luwipress-gold' ) ],
 			],
 		] );
 

@@ -157,10 +157,10 @@ class LuwiPress_Gold_Widget_Story_Split extends Widget_Base {
 				'fields'      => $rep->get_controls(),
 				'title_field' => '{{{ title || "Bullet" }}}',
 				'default'     => [
-					[ 'title' => 'Direct from masters.',          'body' => 'No middlemen. Each instrument is signed by the luthier who made it.' ],
-					[ 'title' => 'Tuned before dispatch.',         'body' => 'Every saz, oud and santur is set up and intonated by our atelier team.' ],
-					[ 'title' => 'Worldwide insured shipping.',    'body' => 'DHL Express in custom-built crates · 3–7 working days.' ],
-					[ 'title' => 'Lifetime support.',              'body' => 'Free maintenance for two years · paid service forever after.' ],
+					[ 'title' => __( 'Quality first.',          'luwipress-gold' ), 'body' => __( 'A short paragraph that explains your first key value.', 'luwipress-gold' ) ],
+					[ 'title' => __( 'Direct from us to you.', 'luwipress-gold' ), 'body' => __( 'Second value proposition — replace this copy from the widget editor.', 'luwipress-gold' ) ],
+					[ 'title' => __( 'Worldwide shipping.',     'luwipress-gold' ), 'body' => __( 'Third value — what makes your delivery / fulfillment story strong.', 'luwipress-gold' ) ],
+					[ 'title' => __( 'After-sale support.',     'luwipress-gold' ), 'body' => __( 'Fourth value — what happens after the customer buys.', 'luwipress-gold' ) ],
 				],
 			]
 		);

@@ -46,7 +46,7 @@ class LuwiPress_Gold_Widget_Instagram_Channel extends Widget_Base {
 			[
 				'label'   => __( 'Eyebrow', 'luwipress-gold' ),
 				'type'    => Controls_Manager::TEXT,
-				'default' => __( 'From the gram', 'luwipress-gold' ),
+				'default' => __( 'Follow us', 'luwipress-gold' ),
 			]
 		);
 		$this->add_control(
@@ -56,7 +56,7 @@ class LuwiPress_Gold_Widget_Instagram_Channel extends Widget_Base {
 				'description' => __( 'Use Enter for a 2-line title.', 'luwipress-gold' ),
 				'type'    => Controls_Manager::TEXTAREA,
 				'rows'    => 2,
-				'default' => __( "Inside the workshop,\non Instagram.", 'luwipress-gold' ),
+				'default' => __( "Latest posts\non Instagram.", 'luwipress-gold' ),
 			]
 		);
 
@@ -74,7 +74,7 @@ class LuwiPress_Gold_Widget_Instagram_Channel extends Widget_Base {
 				'label'       => __( 'CTA URL', 'luwipress-gold' ),
 				'description' => __( 'Leave empty to pull the profile URL from Customize → LuwiPress Gold → Footer → Instagram URL (or LuwiPress admin → Theme → Settings → Social).', 'luwipress-gold' ),
 				'type'        => Controls_Manager::URL,
-				'placeholder' => 'https://www.instagram.com/tapadum/',
+				'placeholder' => 'https://www.instagram.com/yourhandle/',
 				'default'     => [ 'url' => '' ],
 			]
 		);
@@ -166,10 +166,10 @@ class LuwiPress_Gold_Widget_Instagram_Channel extends Widget_Base {
 				'fields'      => $repeater->get_controls(),
 				'title_field' => '{{{ caption || post_url || "Post" }}}',
 				'default'     => [
-					[ 'post_url' => '', 'caption' => __( 'Hand-tuned in the atelier.', 'luwipress-gold' ),     'meta' => __( 'Photo', 'luwipress-gold' ),    'kind' => 'post',     'thumbnail' => [ 'url' => '' ] ],
-					[ 'post_url' => '', 'caption' => __( 'Setar build, day 7 — neck graft.', 'luwipress-gold' ), 'meta' => __( 'Reel', 'luwipress-gold' ),     'kind' => 'reel',     'thumbnail' => [ 'url' => '' ] ],
-					[ 'post_url' => '', 'caption' => __( 'Oud rosette inlay close-up.', 'luwipress-gold' ),     'meta' => __( 'Carousel', 'luwipress-gold' ), 'kind' => 'carousel', 'thumbnail' => [ 'url' => '' ] ],
-					[ 'post_url' => '', 'caption' => __( 'Backyard taksim with Yildirim.', 'luwipress-gold' ), 'meta' => __( 'Reel', 'luwipress-gold' ),     'kind' => 'reel',     'thumbnail' => [ 'url' => '' ] ],
+					[ 'post_url' => '', 'caption' => '', 'meta' => __( 'Photo', 'luwipress-gold' ),    'kind' => 'post',     'thumbnail' => [ 'url' => '' ] ],
+					[ 'post_url' => '', 'caption' => '', 'meta' => __( 'Reel', 'luwipress-gold' ),     'kind' => 'reel',     'thumbnail' => [ 'url' => '' ] ],
+					[ 'post_url' => '', 'caption' => '', 'meta' => __( 'Carousel', 'luwipress-gold' ), 'kind' => 'carousel', 'thumbnail' => [ 'url' => '' ] ],
+					[ 'post_url' => '', 'caption' => '', 'meta' => __( 'Photo', 'luwipress-gold' ),    'kind' => 'post',     'thumbnail' => [ 'url' => '' ] ],
 				],
 			]
 		);

@@ -42,14 +42,14 @@ class LuwiPress_Gold_Widget_Hero_Split extends Widget_Base {
 		$this->add_control( 'eyebrow', [
 			'label' => __( 'Eyebrow', 'luwipress-gold' ),
 			'type'  => Controls_Manager::TEXT,
-			'default' => __( 'Est. atelier · Worldwide shipping', 'luwipress-gold' ),
+			'default' => __( 'Welcome', 'luwipress-gold' ),
 		] );
 		$this->add_control( 'heading', [
 			'label'       => __( 'Heading (H1)', 'luwipress-gold' ),
 			'description' => __( 'Use Enter for line breaks. Wrap with [em]…[/em] for italic gold accent.', 'luwipress-gold' ),
 			'type'        => Controls_Manager::TEXTAREA,
 			'rows'        => 3,
-			'default'     => __( "Hand-crafted instruments\nfrom [em]Anatolia, Persia & the Mediterranean[/em].", 'luwipress-gold' ),
+			'default'     => __( "Your headline goes here\nin [em]two lines[/em].", 'luwipress-gold' ),
 		] );
 		$this->add_control( 'lead', [
 			'label' => __( 'Lead paragraph', 'luwipress-gold' ),
@@ -61,7 +61,7 @@ class LuwiPress_Gold_Widget_Hero_Split extends Widget_Base {
 		$this->add_control( 'cta1_label', [
 			'label' => __( 'Primary CTA — label', 'luwipress-gold' ),
 			'type'  => Controls_Manager::TEXT,
-			'default' => __( 'Browse the catalogue →', 'luwipress-gold' ),
+			'default' => __( 'Shop now →', 'luwipress-gold' ),
 		] );
 		$this->add_control( 'cta1_url', [
 			'label' => __( 'Primary CTA — URL', 'luwipress-gold' ),
@@ -71,7 +71,7 @@ class LuwiPress_Gold_Widget_Hero_Split extends Widget_Base {
 		$this->add_control( 'cta2_label', [
 			'label' => __( 'Secondary CTA — label', 'luwipress-gold' ),
 			'type'  => Controls_Manager::TEXT,
-			'default' => __( 'Visit the atelier →', 'luwipress-gold' ),
+			'default' => __( 'Learn more →', 'luwipress-gold' ),
 		] );
 		$this->add_control( 'cta2_url', [
 			'label' => __( 'Secondary CTA — URL', 'luwipress-gold' ),
@@ -94,9 +94,9 @@ class LuwiPress_Gold_Widget_Hero_Split extends Widget_Base {
 			'fields'      => $rep->get_controls(),
 			'title_field' => '{{{ num || "Stat" }}}',
 			'default'     => [
-				[ 'num' => '240+', 'label' => "Products\nin catalogue" ],
-				[ 'num' => '42',   'label' => "Countries\nshipped to" ],
-				[ 'num' => '26',   'label' => "Master luthiers\nin the network" ],
+				[ 'num' => '100+', 'label' => "Products\nin catalogue" ],
+				[ 'num' => '10',   'label' => "Countries\nshipped to" ],
+				[ 'num' => '5',    'label' => "Years in\nbusiness" ],
 			],
 		] );
 
@@ -123,15 +123,15 @@ class LuwiPress_Gold_Widget_Hero_Split extends Widget_Base {
 
 		$this->add_control( 'pill_text', [
 			'label'       => __( 'Live status pill text', 'luwipress-gold' ),
-			'description' => __( 'Small pulsing-dot pill above the image (e.g. "In atelier · Tuning"). Leave empty to hide.', 'luwipress-gold' ),
+			'description' => __( 'Small pulsing-dot pill above the image. Leave empty to hide.', 'luwipress-gold' ),
 			'type'        => Controls_Manager::TEXT,
-			'default'     => __( 'In atelier · Tuning', 'luwipress-gold' ),
+			'default'     => '',
 		] );
 
 		$this->add_control( 'tag_eyebrow', [
 			'label' => __( 'Featured tag — eyebrow', 'luwipress-gold' ),
 			'type'  => Controls_Manager::TEXT,
-			'default' => __( 'Featured this week', 'luwipress-gold' ),
+			'default' => __( 'Featured', 'luwipress-gold' ),
 		] );
 		$this->add_control( 'tag_title', [
 			'label' => __( 'Featured tag — title', 'luwipress-gold' ),
@@ -152,7 +152,7 @@ class LuwiPress_Gold_Widget_Hero_Split extends Widget_Base {
 		$this->add_control( 'quote_initial', [
 			'label' => __( 'Avatar initial (fallback)', 'luwipress-gold' ),
 			'type'  => Controls_Manager::TEXT,
-			'default' => 'F',
+			'default' => '',
 		] );
 		$this->add_control( 'quote_name', [
 			'label' => __( 'Name', 'luwipress-gold' ),

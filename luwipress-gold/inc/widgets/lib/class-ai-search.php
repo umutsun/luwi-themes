@@ -39,7 +39,7 @@ class LuwiPress_Gold_Widget_AI_Search extends Widget_Base {
 		$this->add_control( 'placeholder', [
 			'label'   => __( 'Placeholder text', 'luwipress-gold' ),
 			'type'    => Controls_Manager::TEXT,
-			'default' => __( 'Search instruments, makers, materials…', 'luwipress-gold' ),
+			'default' => __( 'Search products, categories, posts…', 'luwipress-gold' ),
 		] );
 
 		$this->add_control( 'badge', [
@@ -67,10 +67,10 @@ class LuwiPress_Gold_Widget_AI_Search extends Widget_Base {
 			'fields'      => $rep->get_controls(),
 			'title_field' => '{{{ label || "Chip" }}}',
 			'default'     => [
-				[ 'label' => 'Turkish oud',    'q' => 'turkish oud' ],
-				[ 'label' => 'Persian setar',  'q' => 'persian setar' ],
-				[ 'label' => 'Handpan D Hicaz','q' => 'handpan d hicaz' ],
-				[ 'label' => 'Travel darbuka', 'q' => 'travel darbuka' ],
+				[ 'label' => __( 'Best sellers', 'luwipress-gold' ), 'q' => '' ],
+				[ 'label' => __( 'New arrivals', 'luwipress-gold' ), 'q' => '' ],
+				[ 'label' => __( 'On sale',      'luwipress-gold' ), 'q' => '' ],
+				[ 'label' => __( 'Gift ideas',   'luwipress-gold' ), 'q' => '' ],
 			],
 			'condition'   => [ 'show_chips' => 'yes' ],
 		] );

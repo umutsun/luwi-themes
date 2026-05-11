@@ -47,10 +47,10 @@ class LuwiPress_Gold_Widget_FAQ extends Widget_Base {
 			'fields'      => $rep->get_controls(),
 			'title_field' => '{{{ q || "Question" }}}',
 			'default'     => [
-				[ 'q' => 'How long does shipping take?', 'a' => 'DHL Express delivery in 3–7 working days, fully insured. We pack every instrument in a custom-built crate.' ],
-				[ 'q' => 'What if my instrument arrives damaged?', 'a' => 'Every shipment is insured. Report the damage within 48 hours and we replace or refund — no questions asked.' ],
-				[ 'q' => 'Do you take custom orders?', 'a' => 'Yes. Contact us with your spec and the master luthier best matched to it; lead time is typically 8–14 weeks.' ],
-				[ 'q' => 'Are the instruments tuned before dispatch?', 'a' => 'Yes — every saz, oud and santur is hand-tuned and intonated by our atelier team before it leaves Brisighella.' ],
+				[ 'q' => __( 'How long does shipping take?', 'luwipress-gold' ),         'a' => __( 'Replace this answer with your real shipping timeline + carriers + insurance details.', 'luwipress-gold' ) ],
+				[ 'q' => __( 'What is your return policy?', 'luwipress-gold' ),          'a' => __( 'Describe your return / refund policy here — common answers convert best.', 'luwipress-gold' ) ],
+				[ 'q' => __( 'Do you ship worldwide?', 'luwipress-gold' ),               'a' => __( 'List the regions you ship to and any restrictions.', 'luwipress-gold' ) ],
+				[ 'q' => __( 'How can I contact customer support?', 'luwipress-gold' ),  'a' => __( 'Add your support email, hours and average response time here.', 'luwipress-gold' ) ],
 			],
 		] );
 

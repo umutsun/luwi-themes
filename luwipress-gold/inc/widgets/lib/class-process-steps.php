@@ -38,10 +38,10 @@ class LuwiPress_Gold_Widget_Process_Steps extends Widget_Base {
 			'fields'      => $rep->get_controls(),
 			'title_field' => '{{{ title || "Step" }}}',
 			'default'     => [
-				[ 'title' => 'Pick the voice',  'body' => 'Browse 240+ instruments or write to the atelier with what you are after.' ],
-				[ 'title' => 'Match the master', 'body' => 'We pair you with the luthier whose specialty best matches your spec.' ],
-				[ 'title' => 'Build & tune',     'body' => 'The instrument is built in the workshop and tuned at the atelier before dispatch.' ],
-				[ 'title' => 'Worldwide ship',   'body' => 'DHL Express delivery in 3–7 days, insured and in a custom crate.' ],
+				[ 'title' => __( 'Step 1',  'luwipress-gold' ), 'body' => __( 'Describe the first step of your customer journey here.', 'luwipress-gold' ) ],
+				[ 'title' => __( 'Step 2',  'luwipress-gold' ), 'body' => __( 'Second step — what happens after the customer takes step 1.', 'luwipress-gold' ) ],
+				[ 'title' => __( 'Step 3',  'luwipress-gold' ), 'body' => __( 'Third step — the build / fulfillment / processing phase.', 'luwipress-gold' ) ],
+				[ 'title' => __( 'Step 4',  'luwipress-gold' ), 'body' => __( 'Final step — delivery / handoff / after-sale.', 'luwipress-gold' ) ],
 			],
 		] );
 

@@ -56,7 +56,7 @@ class LuwiPress_Gold_Widget_KG_Trending extends Widget_Base {
 		] );
 
 		$this->add_control( 'eyebrow', [ 'label' => __( 'Eyebrow', 'luwipress-gold' ), 'type' => Controls_Manager::TEXT, 'default' => __( 'Picking up momentum', 'luwipress-gold' ) ] );
-		$this->add_control( 'heading', [ 'label' => __( 'Heading', 'luwipress-gold' ), 'type' => Controls_Manager::TEXT, 'default' => __( 'Trending in the catalogue.', 'luwipress-gold' ) ] );
+		$this->add_control( 'heading', [ 'label' => __( 'Heading', 'luwipress-gold' ), 'type' => Controls_Manager::TEXT, 'default' => __( 'Trending right now.', 'luwipress-gold' ) ] );
 
 		$this->end_controls_section();
 	}

@@ -56,7 +56,7 @@ class LuwiPress_Gold_Widget_Timeline extends Widget_Base {
 			[
 				'label'   => __( 'Title', 'luwipress-gold' ),
 				'type'    => Controls_Manager::TEXT,
-				'default' => __( 'The barn in Brisighella', 'luwipress-gold' ),
+				'default' => __( 'Milestone title', 'luwipress-gold' ),
 			]
 		);
 		$repeater->add_control(
@@ -65,7 +65,7 @@ class LuwiPress_Gold_Widget_Timeline extends Widget_Base {
 				'label'   => __( 'Body', 'luwipress-gold' ),
 				'type'    => Controls_Manager::TEXTAREA,
 				'rows'    => 3,
-				'default' => __( 'Lorenzo and Sara open the first workshop after a six-month trip across Anatolia.', 'luwipress-gold' ),
+				'default' => __( 'A short paragraph describing this milestone — replace from the widget editor.', 'luwipress-gold' ),
 			]
 		);
 
@@ -77,10 +77,10 @@ class LuwiPress_Gold_Widget_Timeline extends Widget_Base {
 				'fields'      => $repeater->get_controls(),
 				'title_field' => '{{{ year }}} — {{{ title }}}',
 				'default'     => [
-					[ 'year' => '2014', 'title' => __( 'The barn in Brisighella', 'luwipress-gold' ),    'body' => __( 'Lorenzo and Sara open the first workshop after a six-month trip across Anatolia.', 'luwipress-gold' ) ],
-					[ 'year' => '2017', 'title' => __( 'First master agreements', 'luwipress-gold' ),   'body' => __( 'Direct partnerships signed with Yildirim in Istanbul and Hamid in Tehran.', 'luwipress-gold' ) ],
-					[ 'year' => '2021', 'title' => __( 'Pro handpan launch', 'luwipress-gold' ),        'body' => __( 'Our first in-house instrument — 600 units shipped in the first year.', 'luwipress-gold' ) ],
-					[ 'year' => '2025', 'title' => __( '26 masters, 47 countries', 'luwipress-gold' ), 'body' => __( 'Nearly 2,500 instruments delivered worldwide.', 'luwipress-gold' ) ],
+					[ 'year' => '2020', 'title' => __( 'The beginning',     'luwipress-gold' ), 'body' => __( 'Describe how the story started — replace this copy.', 'luwipress-gold' ) ],
+					[ 'year' => '2022', 'title' => __( 'First milestone',   'luwipress-gold' ), 'body' => __( 'A second milestone — replace this copy.', 'luwipress-gold' ) ],
+					[ 'year' => '2024', 'title' => __( 'Scaling up',         'luwipress-gold' ), 'body' => __( 'A third milestone — replace this copy.', 'luwipress-gold' ) ],
+					[ 'year' => '2026', 'title' => __( 'Where we are today', 'luwipress-gold' ), 'body' => __( 'Final milestone — replace this copy.', 'luwipress-gold' ) ],
 				],
 			]
 		);

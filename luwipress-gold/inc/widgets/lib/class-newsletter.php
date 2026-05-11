@@ -30,8 +30,8 @@ class LuwiPress_Gold_Widget_Newsletter extends Widget_Base {
 
 		$this->start_controls_section( 'section_copy', [ 'label' => __( 'Copy', 'luwipress-gold' ) ] );
 
-		$this->add_control( 'eyebrow', [ 'label' => __( 'Eyebrow', 'luwipress-gold' ), 'type' => Controls_Manager::TEXT, 'default' => __( 'Stay in tune', 'luwipress-gold' ) ] );
-		$this->add_control( 'heading', [ 'label' => __( 'Heading', 'luwipress-gold' ), 'type' => Controls_Manager::TEXTAREA, 'rows' => 2, 'default' => __( "Atelier notes, new arrivals,\nworkshop stories.", 'luwipress-gold' ) ] );
+		$this->add_control( 'eyebrow', [ 'label' => __( 'Eyebrow', 'luwipress-gold' ), 'type' => Controls_Manager::TEXT, 'default' => __( 'Stay in the loop', 'luwipress-gold' ) ] );
+		$this->add_control( 'heading', [ 'label' => __( 'Heading', 'luwipress-gold' ), 'type' => Controls_Manager::TEXTAREA, 'rows' => 2, 'default' => __( "New arrivals + offers,\ndelivered to your inbox.", 'luwipress-gold' ) ] );
 		$this->add_control( 'lead',    [ 'label' => __( 'Lead', 'luwipress-gold' ),    'type' => Controls_Manager::TEXTAREA, 'rows' => 3, 'default' => __( 'A short letter, once a month. No spam, no resellers.', 'luwipress-gold' ) ] );
 
 		$this->add_control( 'placeholder', [ 'label' => __( 'Email placeholder', 'luwipress-gold' ), 'type' => Controls_Manager::TEXT, 'default' => __( 'your@email.com', 'luwipress-gold' ) ] );
@@ -47,7 +47,7 @@ class LuwiPress_Gold_Widget_Newsletter extends Widget_Base {
 			'label'   => __( 'GDPR consent text', 'luwipress-gold' ),
 			'type'    => Controls_Manager::TEXTAREA,
 			'rows'    => 2,
-			'default' => __( 'I agree to receive the Tapadum atelier newsletter. I can unsubscribe at any time.', 'luwipress-gold' ),
+			'default' => __( 'I agree to receive your newsletter. I can unsubscribe at any time.', 'luwipress-gold' ),
 			'condition' => [ 'gdpr_show' => 'yes' ],
 		] );
 
@@ -55,7 +55,7 @@ class LuwiPress_Gold_Widget_Newsletter extends Widget_Base {
 			'label'   => __( 'Success message', 'luwipress-gold' ),
 			'type'    => Controls_Manager::TEXTAREA,
 			'rows'    => 2,
-			'default' => __( 'Welcome to the atelier. Check your inbox to confirm.', 'luwipress-gold' ),
+			'default' => __( 'Thanks for subscribing. Check your inbox to confirm.', 'luwipress-gold' ),
 		] );
 		$this->add_control( 'error_msg', [
 			'label'   => __( 'Error message', 'luwipress-gold' ),

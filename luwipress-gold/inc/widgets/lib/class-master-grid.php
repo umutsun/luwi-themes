@@ -50,10 +50,10 @@ class LuwiPress_Gold_Widget_Master_Grid extends Widget_Base {
 				'fields'      => $rep->get_controls(),
 				'title_field' => '{{{ name || "Master" }}}',
 				'default'     => [
-					[ 'name' => 'Feramis Aktas',      'initial' => 'F', 'location' => 'Istanbul · TR', 'specialty' => 'Oud · 28 years',          'count' => '42 instruments', 'grad_from' => '#9a7b3a', 'grad_to' => '#d4af37' ],
-					[ 'name' => 'Yildirim Palabiyik', 'initial' => 'Y', 'location' => 'Istanbul · TR', 'specialty' => 'Saz · Tanbur · 32 years', 'count' => '68 instruments', 'grad_from' => '#5a3a2a', 'grad_to' => '#a87a4a' ],
-					[ 'name' => 'Hamid',              'initial' => 'H', 'location' => 'Tehran · IR',   'specialty' => 'Setar · Tar · 24 years',  'count' => '31 instruments', 'grad_from' => '#3d2f1f', 'grad_to' => '#7a5a2c' ],
-					[ 'name' => 'A. Golestani',       'initial' => 'A', 'location' => 'Tehran · IR',   'specialty' => 'Tar · Kamancheh · 35 years', 'count' => '22 instruments', 'grad_from' => '#7a5a3a', 'grad_to' => '#b89a6a' ],
+					[ 'name' => __( 'Team member 1', 'luwipress-gold' ), 'initial' => '1', 'location' => '', 'specialty' => '', 'count' => '', 'grad_from' => '#9a7b3a', 'grad_to' => '#d4af37' ],
+					[ 'name' => __( 'Team member 2', 'luwipress-gold' ), 'initial' => '2', 'location' => '', 'specialty' => '', 'count' => '', 'grad_from' => '#5a3a2a', 'grad_to' => '#a87a4a' ],
+					[ 'name' => __( 'Team member 3', 'luwipress-gold' ), 'initial' => '3', 'location' => '', 'specialty' => '', 'count' => '', 'grad_from' => '#3d2f1f', 'grad_to' => '#7a5a2c' ],
+					[ 'name' => __( 'Team member 4', 'luwipress-gold' ), 'initial' => '4', 'location' => '', 'specialty' => '', 'count' => '', 'grad_from' => '#7a5a3a', 'grad_to' => '#b89a6a' ],
 				],
 			]
 		);

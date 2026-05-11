@@ -52,7 +52,7 @@ class LuwiPress_Gold_Widget_Hero extends Widget_Base {
 			[
 				'label'   => __( 'Eyebrow', 'luwipress-gold' ),
 				'type'    => Controls_Manager::TEXT,
-				'default' => __( 'Est. Brisighella · Worldwide shipping', 'luwipress-gold' ),
+				'default' => __( 'Welcome · Worldwide shipping', 'luwipress-gold' ),
 			]
 		);
 		$this->add_control(
@@ -61,7 +61,7 @@ class LuwiPress_Gold_Widget_Hero extends Widget_Base {
 				'label'       => __( 'Headline (HTML allowed)', 'luwipress-gold' ),
 				'type'        => Controls_Manager::TEXTAREA,
 				'rows'        => 3,
-				'default'     => __( 'Hand-crafted instruments<br>from <em>Anatolia</em>, <span class="underline">Persia</span> &amp; the Mediterranean.', 'luwipress-gold' ),
+				'default'     => __( 'Your headline<br>in <em>two lines</em> with a <span class="underline">highlighted phrase</span>.', 'luwipress-gold' ),
 				'description' => __( 'Use <em>…</em> for italic emphasis (gold) and <span class="underline">…</span> for the underline accent.', 'luwipress-gold' ),
 			]
 		);
@@ -71,7 +71,7 @@ class LuwiPress_Gold_Widget_Hero extends Widget_Base {
 				'label'   => __( 'Lead paragraph', 'luwipress-gold' ),
 				'type'    => Controls_Manager::TEXTAREA,
 				'rows'    => 3,
-				'default' => __( 'Tapadum brings together master luthiers from Istanbul, Tehran and Cairo — then carries their work to musicians in 47 countries.', 'luwipress-gold' ),
+				'default' => __( 'A short paragraph explaining who you are and what you make. Replace this copy from the widget editor.', 'luwipress-gold' ),
 			]
 		);
 
@@ -97,7 +97,7 @@ class LuwiPress_Gold_Widget_Hero extends Widget_Base {
 			[
 				'label'   => __( 'Secondary CTA — label', 'luwipress-gold' ),
 				'type'    => Controls_Manager::TEXT,
-				'default' => __( 'Watch atelier film', 'luwipress-gold' ),
+				'default' => __( 'Learn more', 'luwipress-gold' ),
 			]
 		);
 		$this->add_control(
@@ -187,7 +187,7 @@ class LuwiPress_Gold_Widget_Hero extends Widget_Base {
 			[
 				'label'   => __( 'Master role', 'luwipress-gold' ),
 				'type'    => Controls_Manager::TEXT,
-				'default' => __( 'Master Luthier · Istanbul', 'luwipress-gold' ),
+				'default' => __( 'Role · Location', 'luwipress-gold' ),
 			]
 		);
 		$this->end_controls_section();

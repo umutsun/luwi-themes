@@ -47,7 +47,7 @@ class LuwiPress_Gold_Widget_Master_Profile extends Widget_Base {
 			[
 				'label'   => __( 'Name', 'luwipress-gold' ),
 				'type'    => Controls_Manager::TEXT,
-				'default' => 'Feramis Aktas',
+				'default' => __( 'Profile name', 'luwipress-gold' ),
 			]
 		);
 		$this->add_control(
@@ -55,7 +55,7 @@ class LuwiPress_Gold_Widget_Master_Profile extends Widget_Base {
 			[
 				'label'   => __( 'Location', 'luwipress-gold' ),
 				'type'    => Controls_Manager::TEXT,
-				'default' => 'Istanbul · Turkey',
+				'default' => '',
 			]
 		);
 		$this->add_control(
@@ -63,15 +63,15 @@ class LuwiPress_Gold_Widget_Master_Profile extends Widget_Base {
 			[
 				'label'   => __( 'Specialty', 'luwipress-gold' ),
 				'type'    => Controls_Manager::TEXT,
-				'default' => 'Oud · 28 years',
+				'default' => '',
 			]
 		);
 		$this->add_control(
 			'count',
 			[
-				'label'   => __( 'Instruments at the atelier', 'luwipress-gold' ),
+				'label'   => __( 'Count', 'luwipress-gold' ),
 				'type'    => Controls_Manager::NUMBER,
-				'default' => 42,
+				'default' => 0,
 				'min'     => 0,
 			]
 		);

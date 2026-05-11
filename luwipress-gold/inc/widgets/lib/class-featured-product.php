@@ -56,7 +56,7 @@ class LuwiPress_Gold_Widget_Featured_Product extends Widget_Base {
 		$this->add_control( 'eyebrow', [
 			'label' => __( 'Eyebrow', 'luwipress-gold' ),
 			'type'  => Controls_Manager::TEXT,
-			'default' => __( 'Featured this week', 'luwipress-gold' ),
+			'default' => __( 'Featured', 'luwipress-gold' ),
 		] );
 
 		$this->end_controls_section();
@@ -79,7 +79,7 @@ class LuwiPress_Gold_Widget_Featured_Product extends Widget_Base {
 		$this->add_control( 'cta_label', [
 			'label'   => __( 'CTA label', 'luwipress-gold' ),
 			'type'    => Controls_Manager::TEXT,
-			'default' => __( 'View instrument →', 'luwipress-gold' ),
+			'default' => __( 'View product →', 'luwipress-gold' ),
 		] );
 		$this->end_controls_section();
 

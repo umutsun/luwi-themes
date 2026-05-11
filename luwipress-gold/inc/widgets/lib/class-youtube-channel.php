@@ -45,7 +45,7 @@ class LuwiPress_Gold_Widget_YouTube_Channel extends Widget_Base {
 			[
 				'label'   => __( 'Eyebrow', 'luwipress-gold' ),
 				'type'    => Controls_Manager::TEXT,
-				'default' => __( 'Listen before you buy', 'luwipress-gold' ),
+				'default' => __( 'From our channel', 'luwipress-gold' ),
 			]
 		);
 		$this->add_control(
@@ -55,7 +55,7 @@ class LuwiPress_Gold_Widget_YouTube_Channel extends Widget_Base {
 				'description' => __( 'Use a line break (Enter) for a 2-line title.', 'luwipress-gold' ),
 				'type'        => Controls_Manager::TEXTAREA,
 				'rows'        => 2,
-				'default'     => __( "Every instrument, played\nin our atelier.", 'luwipress-gold' ),
+				'default'     => __( "Featured videos\nfrom our YouTube channel.", 'luwipress-gold' ),
 			]
 		);
 
@@ -73,7 +73,7 @@ class LuwiPress_Gold_Widget_YouTube_Channel extends Widget_Base {
 				'label'       => __( 'CTA URL', 'luwipress-gold' ),
 				'description' => __( 'Leave empty to pull the channel URL from Customize → LuwiPress Gold → Footer → YouTube URL.', 'luwipress-gold' ),
 				'type'        => Controls_Manager::URL,
-				'placeholder' => 'https://www.youtube.com/c/Tapadum',
+				'placeholder' => 'https://www.youtube.com/c/YourChannel',
 				'default'     => [ 'url' => '' ],
 			]
 		);
@@ -128,7 +128,7 @@ class LuwiPress_Gold_Widget_YouTube_Channel extends Widget_Base {
 			'byline',
 			[
 				'label'       => __( 'Byline', 'luwipress-gold' ),
-				'description' => __( 'e.g. "Yildirim Palabiyik · 14k views"', 'luwipress-gold' ),
+				'description' => __( 'e.g. "Channel name · 14k views"', 'luwipress-gold' ),
 				'type'        => Controls_Manager::TEXT,
 				'default'     => '',
 			]
@@ -164,10 +164,10 @@ class LuwiPress_Gold_Widget_YouTube_Channel extends Widget_Base {
 				'fields'      => $repeater->get_controls(),
 				'title_field' => '{{{ title || video || "Video" }}}',
 				'default'     => [
-					[ 'video' => '', 'title' => __( 'Sultan Turkish Oud — solo taksim in Hicaz', 'luwipress-gold' ), 'byline' => __( 'Yildirim Palabiyik · 14k views', 'luwipress-gold' ), 'duration' => '3:42', 'thumb_quality' => 'hq' ],
-					[ 'video' => '', 'title' => __( 'Tapadum Pro 12 — handpan in D Hicaz', 'luwipress-gold' ),       'byline' => __( 'In-house atelier · 28k views', 'luwipress-gold' ),    'duration' => '5:18', 'thumb_quality' => 'hq' ],
-					[ 'video' => '', 'title' => __( 'Persian Setar by Hamid — Mahour mode', 'luwipress-gold' ),     'byline' => __( 'Hamid · 9.2k views', 'luwipress-gold' ),               'duration' => '2:54', 'thumb_quality' => 'hq' ],
-					[ 'video' => '', 'title' => __( 'Master Ney — Feramis Aktas plays Saba', 'luwipress-gold' ),    'byline' => __( 'Feramis Aktas · 11k views', 'luwipress-gold' ),         'duration' => '4:08', 'thumb_quality' => 'hq' ],
+					[ 'video' => '', 'title' => __( 'Featured video 1', 'luwipress-gold' ), 'byline' => '', 'duration' => '', 'thumb_quality' => 'hq' ],
+					[ 'video' => '', 'title' => __( 'Featured video 2', 'luwipress-gold' ), 'byline' => '', 'duration' => '', 'thumb_quality' => 'hq' ],
+					[ 'video' => '', 'title' => __( 'Featured video 3', 'luwipress-gold' ), 'byline' => '', 'duration' => '', 'thumb_quality' => 'hq' ],
+					[ 'video' => '', 'title' => __( 'Featured video 4', 'luwipress-gold' ), 'byline' => '', 'duration' => '', 'thumb_quality' => 'hq' ],
 				],
 			]
 		);

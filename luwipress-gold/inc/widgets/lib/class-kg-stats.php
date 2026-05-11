@@ -31,17 +31,17 @@ class LuwiPress_Gold_Widget_KG_Stats extends Widget_Base {
 
 		$this->start_controls_section( 'section_layout', [ 'label' => __( 'Layout', 'luwipress-gold' ) ] );
 
-		$this->add_control( 'eyebrow', [ 'label' => __( 'Eyebrow', 'luwipress-gold' ), 'type' => Controls_Manager::TEXT, 'default' => __( 'Live from the atelier', 'luwipress-gold' ) ] );
-		$this->add_control( 'heading', [ 'label' => __( 'Heading', 'luwipress-gold' ), 'type' => Controls_Manager::TEXT, 'default' => __( 'Right now in the workshop.', 'luwipress-gold' ) ] );
+		$this->add_control( 'eyebrow', [ 'label' => __( 'Eyebrow', 'luwipress-gold' ), 'type' => Controls_Manager::TEXT, 'default' => __( 'Store at a glance', 'luwipress-gold' ) ] );
+		$this->add_control( 'heading', [ 'label' => __( 'Heading', 'luwipress-gold' ), 'type' => Controls_Manager::TEXT, 'default' => __( 'Live store stats.', 'luwipress-gold' ) ] );
 
 		$this->add_control( 'show_products',  [ 'label' => __( 'Show Products counter', 'luwipress-gold' ),  'type' => Controls_Manager::SWITCHER, 'return_value' => 'yes', 'default' => 'yes' ] );
 		$this->add_control( 'show_categories',[ 'label' => __( 'Show Categories counter', 'luwipress-gold' ),'type' => Controls_Manager::SWITCHER, 'return_value' => 'yes', 'default' => 'yes' ] );
-		$this->add_control( 'show_authors',   [ 'label' => __( 'Show Masters/Authors counter', 'luwipress-gold' ),   'type' => Controls_Manager::SWITCHER, 'return_value' => 'yes', 'default' => 'yes' ] );
+		$this->add_control( 'show_authors',   [ 'label' => __( 'Show Authors/Team counter', 'luwipress-gold' ),   'type' => Controls_Manager::SWITCHER, 'return_value' => 'yes', 'default' => 'yes' ] );
 		$this->add_control( 'show_countries', [ 'label' => __( 'Show Countries-shipped counter', 'luwipress-gold' ), 'type' => Controls_Manager::SWITCHER, 'return_value' => 'yes', 'default' => 'yes' ] );
 
 		$this->add_control( 'lbl_products',   [ 'label' => __( 'Products label', 'luwipress-gold' ),   'type' => Controls_Manager::TEXT, 'default' => __( 'Products in catalogue', 'luwipress-gold' ) ] );
-		$this->add_control( 'lbl_categories', [ 'label' => __( 'Categories label', 'luwipress-gold' ), 'type' => Controls_Manager::TEXT, 'default' => __( 'Instrument families', 'luwipress-gold' ) ] );
-		$this->add_control( 'lbl_authors',    [ 'label' => __( 'Masters label', 'luwipress-gold' ),    'type' => Controls_Manager::TEXT, 'default' => __( 'Master luthiers', 'luwipress-gold' ) ] );
+		$this->add_control( 'lbl_categories', [ 'label' => __( 'Categories label', 'luwipress-gold' ), 'type' => Controls_Manager::TEXT, 'default' => __( 'Categories', 'luwipress-gold' ) ] );
+		$this->add_control( 'lbl_authors',    [ 'label' => __( 'Authors label', 'luwipress-gold' ),    'type' => Controls_Manager::TEXT, 'default' => __( 'Team members', 'luwipress-gold' ) ] );
 		$this->add_control( 'lbl_countries',  [ 'label' => __( 'Countries label', 'luwipress-gold' ),  'type' => Controls_Manager::TEXT, 'default' => __( 'Countries shipped to', 'luwipress-gold' ) ] );
 
 		$this->end_controls_section();

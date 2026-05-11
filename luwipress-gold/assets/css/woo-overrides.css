@@ -3416,8 +3416,11 @@ body.single-product .tap-sale-circle { display: none !important; }
 	/* Gallery wrapper gets bottom breathing room so thumb strip does  */
 	/* not crash against whatever sits beneath (mobile stack) or the   */
 	/* related-products band beneath the grid on desktop.              */
+	/* 96px + 32px margin combined with the 56px grid row-gap from     */
+	/* tokens.css gives clear separation under the sticky gallery.     */
 	html body.single-product .woocommerce-product-gallery {
-		padding-bottom: 40px !important;
+		padding-bottom: 96px !important;
+		margin-bottom: 32px !important;
 	}
 
 	html body.single-product .woocommerce-product-gallery .flex-control-nav,

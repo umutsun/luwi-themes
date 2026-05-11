@@ -1080,7 +1080,10 @@ body.lwp-layout-boxed .lwp-elementor-page .elementor-section {
 		"gallery summary"
 		"gallery tabs"
 		"related related";
-	gap: 24px 64px;
+	/* 56px row-gap (was 24px) gives the related-products band visible
+	 * breathing room beneath the gallery + tabs grid even when sticky
+	 * is engaged. 64px column-gap is the same as before. */
+	gap: 56px 64px;
 	align-items: start;
 	/* Containing block for WC's `<span class="onsale">` which is
 	 * absolutely positioned at top:12 left:12. Without this `.onsale`
@@ -1136,9 +1139,18 @@ body.lwp-layout-boxed .lwp-elementor-page .elementor-section {
 .lwp-pdp-grid > .related,
 .lwp-pdp-grid > .upsells {
 	grid-area: related;
-	margin-top: 48px !important;
-	padding-top: 0 !important;
+	/* 96px top margin + 24px top padding + hair-line border separator
+	 * makes the related-products band a clear "next section" instead of
+	 * crashing against the gallery sticky pin. Operator-tuned 2026-05-12. */
+	margin-top: 96px !important;
+	padding-top: 24px !important;
+	border-top: 1px solid var(--line, #e8e2d3);
 	clear: none;
+}
+.lwp-pdp-grid .related > h2,
+.lwp-pdp-grid .upsells > h2 {
+	margin-top: 0 !important;
+	margin-bottom: 32px !important;
 }
 .lwp-pdp-grid .product_title {
 	font-family: var(--serif, 'Playfair Display', Georgia, serif);

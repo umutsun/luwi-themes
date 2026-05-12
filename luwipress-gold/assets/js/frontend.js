@@ -1282,11 +1282,82 @@
 		} );
 	}
 
+	/* ─────────────────────────────────────────────────────────── */
+	/* PDP thumbnail clicks — V61 moved the .flex-control-nav into  */
+	/* an absolute-positioned capsule on top of the main image.     */
+	/* Flexslider's bound click handler is unreliable in this        */
+	/* layout (z-index / pointer-events races with WC's overlay     */
+	/* trigger). Vanilla delegated handler bypasses that: read the  */
+	/* clicked li's index, drive jQuery Flexslider via its public    */
+	/* API if available, else manually swap the visible slide.       */
+	/* ─────────────────────────────────────────────────────────── */
+	function initPdpThumbClicks() {
+		if ( ! document.body.classList.contains( 'single-product' ) ) { return; }
+
+		document.addEventListener( 'click', function ( ev ) {
+			var thumbLi = ev.target.closest(
+				'.woocommerce-product-gallery .flex-control-nav li, ' +
+				'.woocommerce-product-gallery .flex-control-thumbs li'
+			);
+			if ( ! thumbLi ) { return; }
+			ev.preventDefault();
+			ev.stopPropagation();
+
+			var nav = thumbLi.parentElement;
+			var lis = Array.prototype.slice.call( nav.children );
+			var index = lis.indexOf( thumbLi );
+			if ( index < 0 ) { return; }
+
+			var gallery = thumbLi.closest( '.woocommerce-product-gallery' );
+			if ( ! gallery ) { return; }
+
+			// (1) Try jQuery Flexslider API.
+			var handled = false;
+			if ( window.jQuery ) {
+				try {
+					var $g = window.jQuery( gallery );
+					var fs = $g.data( 'flexslider' );
+					if ( fs && typeof fs.flexAnimate === 'function' ) {
+						fs.flexAnimate( index, true );
+						handled = true;
+					}
+				} catch ( e ) { /* fall through */ }
+			}
+
+			// (2) Fallback: manual slide swap by display + opacity.
+			if ( ! handled ) {
+				var slides = gallery.querySelectorAll(
+					'.woocommerce-product-gallery__wrapper > .woocommerce-product-gallery__image, ' +
+					'.woocommerce-product-gallery__wrapper > div'
+				);
+				slides.forEach( function ( s, i ) {
+					if ( i === index ) {
+						s.style.display = '';
+						s.style.opacity = '1';
+						s.classList.add( 'flex-active-slide' );
+					} else {
+						s.style.display = 'none';
+						s.style.opacity = '0';
+						s.classList.remove( 'flex-active-slide' );
+					}
+				} );
+			}
+
+			// (3) Update active thumb visual state.
+			nav.querySelectorAll( 'li img' ).forEach( function ( img ) {
+				img.classList.remove( 'flex-active' );
+			} );
+			var targetImg = thumbLi.querySelector( 'img' );
+			if ( targetImg ) { targetImg.classList.add( 'flex-active' ); }
+		}, true ); // capture phase — beats other handlers
+	}
+
 	function initLwpWidgets() {
 		initNewsletter();
 		initStatCounters();
 		initCountdowns();
 		initTestimonials();
+		initPdpThumbClicks();
 	}
 	if ( document.readyState === 'loading' ) {
 		document.addEventListener( 'DOMContentLoaded', initLwpWidgets );

@@ -93,6 +93,11 @@ require_once LUWIPRESS_GOLD_DIR . '/inc/ai-surface.php';
 
 if ( class_exists( 'WooCommerce' ) ) {
 	require_once LUWIPRESS_GOLD_DIR . '/inc/wc-pdp-hooks.php';
+	// Vanilla-JS PDP gallery — replaces WC's Flexslider stack. Immune to
+	// LiteSpeed JS Defer/Delay because our script ships with `data-no-defer`
+	// + `data-no-optimize` and runs at DOMContentLoaded. Gallery is rendered
+	// fully server-side so the first image is visible BEFORE any JS runs.
+	require_once LUWIPRESS_GOLD_DIR . '/inc/wc-pdp-gallery-override.php';
 	// Parent-term archive enrichment (atelier note + featured product band).
 	// Self-gates to product_cat parent terms; safe under WC-only loads.
 	require_once LUWIPRESS_GOLD_DIR . '/inc/archive-parent-enrichment.php';

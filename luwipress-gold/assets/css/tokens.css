@@ -1094,26 +1094,136 @@ body.lwp-layout-boxed .lwp-elementor-page .elementor-section {
  * through summary + tabs on the right. Spans both grid rows in col 1
  * so the sticky behaviour has a tall track to anchor against.
  *
- * `position` needs !important because WC ships its own
- * `.woocommerce div.product div.images.woocommerce-product-gallery
- * { position: relative }` reset with specificity 0,4,2 — higher than
- * our 0,2,0 selector. Without !important the sticky never engages.
+ * As of 1.7.10 (override path) we render our own `.lwp-gallery` instead
+ * of WC's `.woocommerce-product-gallery` — vanilla JS, no Flexslider,
+ * immune to LiteSpeed JS Defer. The legacy `.woocommerce-product-gallery`
+ * selector remains for any fallback render path or WC plugin compat.
  */
+/* Sticky column wrapper — owns the grid-area: gallery placement (rows
+ * 1-2 span). Sticky containing block is this wrapper, NOT `.product`.
+ * That's the trick: when row 2 (tabs) ends, the wrapper ends, sticky
+ * releases, related products on row 3 start clean full-width. */
+.lwp-pdp-grid .lwp-pdp-sticky-col {
+	grid-area: gallery;
+	position: relative;
+	align-self: stretch;
+	height: 100%;
+}
+/* Gallery element itself sticks inside the wrapper. */
+.lwp-pdp-grid .lwp-pdp-sticky-col .lwp-gallery,
 .lwp-pdp-grid .woocommerce-product-gallery {
 	float: none !important;
 	width: 100% !important;
 	max-width: none !important;
-	grid-area: gallery;
-	/* !important is REQUIRED here — WC ships a higher-specificity
-	 * `.woocommerce div.product div.images.woocommerce-product-gallery
-	 * { position: relative }` reset (0,4,2 vs our 0,2,0). Without it,
-	 * WC wins and sticky never engages. Confirmed in live combined-CSS
-	 * inspection on 2026-05-12 (LiteSpeed UCSS keeps only the winning
-	 * declaration). Same for top + align-self for safety. */
 	position: sticky !important;
 	top: 100px !important;
-	align-self: start !important;
-	z-index: 1;
+	max-height: calc(100vh - 120px);
+}
+/* Legacy fallback path — when WC default gallery is rendered without
+ * the sticky-col wrapper (some plugin compat scenarios), keep the old
+ * grid-area placement so layout doesn't collapse. */
+.lwp-pdp-grid > .product > .woocommerce-product-gallery {
+	grid-area: gallery;
+	align-self: start;
+}
+
+/* ===== Vanilla PDP gallery (1.7.10 override) =====
+ * Minimal flex layout: thumb strip LEFT (fixed 80px), main viewer RIGHT
+ * (fills remaining space). No grid, no row overlap.
+ */
+.lwp-gallery {
+	display: flex;
+	gap: 16px;
+	align-items: flex-start;
+	/* Sticky parent verir viewport sınırını; çocuk flex sabit
+	 * kolonu (80px thumbs) + esnek (1fr main) zarar görmez. */
+	max-height: 100%;
+}
+.lwp-gallery--single {
+	display: block;
+}
+.lwp-gallery__thumbs {
+	flex: 0 0 80px;
+	width: 80px;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	max-height: calc(100vh - 120px);
+	overflow-y: auto;
+	overflow-x: hidden;
+	scrollbar-width: thin;
+}
+.lwp-gallery__thumbs::-webkit-scrollbar { width: 4px; }
+.lwp-gallery__thumbs::-webkit-scrollbar-thumb {
+	background: var(--line, #e8e2d3);
+	border-radius: 2px;
+}
+.lwp-gallery__thumb {
+	display: block;
+	margin: 0;
+	padding: 0;
+}
+.lwp-gallery__thumb button {
+	display: block;
+	width: 80px;
+	height: 80px;
+	padding: 4px;
+	margin: 0;
+	background: #fff;
+	border: 2px solid var(--line, #e8e2d3);
+	border-radius: 6px;
+	cursor: pointer;
+	overflow: hidden;
+	transition: border-color 160ms ease;
+}
+.lwp-gallery__thumb button:hover {
+	border-color: var(--primary-light, #D4AF37);
+}
+.lwp-gallery__thumb.is-active button {
+	border-color: var(--primary, #735c00);
+}
+.lwp-gallery__thumb button img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	display: block;
+}
+.lwp-gallery__main {
+	flex: 1 1 auto;
+	min-width: 0;
+	position: relative;
+	background: #fff;
+	border: 1px solid var(--line, #e8e2d3);
+	border-radius: var(--radius-card, 8px);
+	aspect-ratio: 1 / 1;
+	max-height: calc(100vh - 120px);
+	overflow: hidden;
+}
+.lwp-gallery__slide {
+	position: absolute;
+	inset: 0;
+	display: none;
+	background: #fff;
+	text-decoration: none;
+}
+.lwp-gallery__slide.is-active {
+	display: block;
+}
+.lwp-gallery__slide img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	object-position: center;
+	display: block;
+}
+.lwp-gallery:focus { outline: none; }
+.lwp-gallery:focus-visible {
+	outline: 2px solid var(--primary, #735c00);
+	outline-offset: 4px;
+	border-radius: var(--radius-card, 8px);
 }
 /* Summary (title + price + add-to-cart + meta) sits in col 2 row 1,
  * tabs (Description / Additional Information / Reviews) sit in col 2
@@ -1349,8 +1459,62 @@ body.lwp-layout-boxed .lwp-elementor-page .elementor-section {
 			"related";
 		gap: 32px;
 	}
+	.lwp-pdp-grid .lwp-pdp-sticky-col {
+		position: static;
+		height: auto;
+	}
+	.lwp-pdp-grid .lwp-gallery,
 	.lwp-pdp-grid .woocommerce-product-gallery {
 		position: static !important;
+		top: auto !important;
+		max-height: none;
+	}
+	/* Vanilla gallery on mobile — main image on TOP (explicit order: 1),
+	 * thumbs strip below it horizontal-scrollable. `.lwp-gallery__main`
+	 * needs explicit width + min-height because its children are
+	 * `position: absolute` and `aspect-ratio` alone is unreliable in
+	 * flex column with `flex: 1 1 auto` (operator-reported regression
+	 * 2026-05-12 — main collapsed to 0 height). */
+	.lwp-gallery {
+		flex-direction: column;
+		align-items: stretch;
+		gap: 12px;
+	}
+	.lwp-gallery__main {
+		order: 1;
+		flex: 0 0 auto;
+		width: 100%;
+		max-width: 100%;
+		aspect-ratio: 1 / 1;
+		max-height: none;
+		height: auto;
+		min-height: 280px;
+	}
+	.lwp-gallery__thumbs {
+		order: 2;
+		flex: 0 0 auto;
+		width: 100%;
+		max-width: 100%;
+		flex-direction: row;
+		overflow-x: auto;
+		overflow-y: hidden;
+		max-height: none;
+		gap: 8px;
+		padding-bottom: 4px;
+	}
+	.lwp-gallery__thumb {
+		flex-shrink: 0;
+	}
+	.lwp-gallery__thumb button {
+		width: 64px;
+		height: 64px;
+	}
+}
+
+/* Desktop: pin a minimum height on the main viewer too, defensively. */
+@media (min-width: 768px) {
+	.lwp-gallery__main {
+		min-height: 360px;
 	}
 }
 

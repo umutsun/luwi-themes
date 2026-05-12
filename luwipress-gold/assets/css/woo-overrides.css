@@ -3413,56 +3413,114 @@ body.single-product .tap-sale-circle { display: none !important; }
 	/* flex-wrap layout with equal-width thumbs (5 per row desktop,    */
 	/* 4 per row tablet) so the entire gallery (image + thumbs) is one */
 	/* tidy block carried by the sticky position above.                */
-	/* Gallery wrapper gets bottom breathing room so thumb strip does  */
-	/* not crash against whatever sits beneath (mobile stack) or the   */
-	/* related-products band beneath the grid on desktop. 160px paired */
-	/* with tokens.css .related margin-top: 144 = 304px visible buffer */
-	/* before the related products row starts.                          */
+	/* Gallery becomes the positioning context for the thumb overlay   */
+	/* capsule (.flex-control-thumbs is moved INSIDE the gallery image */
+	/* via position: absolute below). Small bottom padding is just     */
+	/* breathing room — main visual buffer to related lives on the     */
+	/* `.related` rule itself.                                          */
 	html body.single-product .woocommerce-product-gallery {
-		padding-bottom: 160px !important;
+		padding-bottom: 24px !important;
 		margin-bottom: 0 !important;
 	}
 
+	/* PDP thumbnails are circular OVERLAY dots on the main image     */
+	/* (capsule with backdrop blur, bottom-centered). Killing the      */
+	/* below-image strip layout means gallery height = main image      */
+	/* height, so no horizontal overflow into related-products column. */
 	html body.single-product .woocommerce-product-gallery .flex-control-nav,
 	html body.single-product .woocommerce-product-gallery .flex-control-thumbs {
-		position: relative !important;
-		display: flex !important;
-		flex-wrap: wrap !important;
-		width: 100% !important;
-		max-width: 100% !important;
-		box-sizing: border-box !important;
-		padding: 0 !important;
-		margin: 12px 0 0 !important;
+		position: absolute !important;
+		bottom: 18px !important;
+		left: 50% !important;
+		transform: translateX(-50%) !important;
+		z-index: 4 !important;
+		width: auto !important;
+		max-width: 92% !important;
+		display: inline-flex !important;
+		flex-wrap: nowrap !important;
+		align-items: center !important;
 		gap: 8px !important;
+		padding: 8px 14px !important;
+		margin: 0 !important;
+		background: rgba(255, 255, 255, 0.88) !important;
+		-webkit-backdrop-filter: blur(10px) !important;
+		backdrop-filter: blur(10px) !important;
+		border-radius: 999px !important;
+		box-shadow: 0 6px 20px -8px rgba(60, 40, 0, 0.25),
+		            0 0 0 1px rgba(0, 0, 0, 0.04) !important;
 		list-style: none !important;
-		overflow: visible !important;
+		overflow-x: auto !important;
+		overflow-y: hidden !important;
+		scrollbar-width: none !important;
+		box-sizing: border-box !important;
 	}
+	html body.single-product .woocommerce-product-gallery .flex-control-thumbs::-webkit-scrollbar,
+	html body.single-product .woocommerce-product-gallery .flex-control-nav::-webkit-scrollbar {
+		display: none !important;
+	}
+
+	/* Each thumb = 36×36 circle. */
 	html body.single-product .woocommerce-product-gallery .flex-control-thumbs li,
 	html body.single-product .woocommerce-product-gallery .flex-control-nav li {
-		flex: 0 0 calc((100% - 32px) / 5) !important;
-		width: auto !important;
-		max-width: calc((100% - 32px) / 5) !important;
+		flex: 0 0 36px !important;
+		width: 36px !important;
+		height: 36px !important;
+		max-width: 36px !important;
+		min-width: 36px !important;
 		margin: 0 !important;
 		padding: 0 !important;
+		border-radius: 50% !important;
+		overflow: hidden !important;
+		cursor: pointer !important;
+		transition: transform 0.2s ease !important;
+	}
+	html body.single-product .woocommerce-product-gallery .flex-control-thumbs li:hover {
+		transform: scale(1.08) !important;
 	}
 	html body.single-product .woocommerce-product-gallery .flex-control-thumbs li img,
 	html body.single-product .woocommerce-product-gallery .flex-control-nav li img {
-		width: 100% !important;
-		height: auto !important;
-		aspect-ratio: 1 / 1 !important;
+		width: 36px !important;
+		height: 36px !important;
+		max-width: 36px !important;
+		border-radius: 50% !important;
+		border: 2px solid rgba(255, 255, 255, 0.6) !important;
 		object-fit: cover !important;
-		border-radius: 6px !important;
 		display: block !important;
-		cursor: pointer;
+		cursor: pointer !important;
+		opacity: 0.85 !important;
+		transition: opacity 0.2s ease, border-color 0.2s ease !important;
+		aspect-ratio: 1 / 1 !important;
+	}
+	html body.single-product .woocommerce-product-gallery .flex-control-thumbs li img.flex-active,
+	html body.single-product .woocommerce-product-gallery .flex-control-thumbs li:hover img,
+	html body.single-product .woocommerce-product-gallery .flex-control-nav li img.flex-active,
+	html body.single-product .woocommerce-product-gallery .flex-control-nav li:hover img {
+		border-color: var(--primary-light, #D4AF37) !important;
+		opacity: 1 !important;
 	}
 }
 
-/* Tablet (768-1024px): 4 thumbs per row, tighter gap. */
-@media (min-width: 768px) and (max-width: 1024px) {
+/* Mobile (<= 600px): smaller thumb dots (28×28) + tighter capsule. */
+@media (max-width: 600px) {
+	html body.single-product .woocommerce-product-gallery .flex-control-thumbs,
+	html body.single-product .woocommerce-product-gallery .flex-control-nav {
+		bottom: 12px !important;
+		padding: 6px 10px !important;
+		gap: 6px !important;
+	}
 	html body.single-product .woocommerce-product-gallery .flex-control-thumbs li,
 	html body.single-product .woocommerce-product-gallery .flex-control-nav li {
-		flex: 0 0 calc((100% - 24px) / 4) !important;
-		max-width: calc((100% - 24px) / 4) !important;
+		flex: 0 0 28px !important;
+		width: 28px !important;
+		height: 28px !important;
+		max-width: 28px !important;
+		min-width: 28px !important;
+	}
+	html body.single-product .woocommerce-product-gallery .flex-control-thumbs li img,
+	html body.single-product .woocommerce-product-gallery .flex-control-nav li img {
+		width: 28px !important;
+		height: 28px !important;
+		max-width: 28px !important;
 	}
 }
 

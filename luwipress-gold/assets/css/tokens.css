@@ -1151,13 +1151,12 @@ body.lwp-layout-boxed .lwp-elementor-page .elementor-section {
 .lwp-pdp-grid > .related,
 .lwp-pdp-grid > .upsells {
 	grid-area: related;
-	/* 144px top margin + 32px top padding + hairline border separator
-	 * gives the related-products band an obvious "next section" feel
-	 * vs the sticky gallery / tabs above. Operator-tuned 2026-05-12.
-	 * Pairs with the 160px padding-bottom on .woocommerce-product-
-	 * gallery (see woo-overrides.css) so visible buffer = ~300px even
-	 * at 1.25x browser zoom. */
-	margin-top: 144px !important;
+	/* 64px top margin + 32px top padding + hairline border. The
+	 * earlier 144px buffer existed because the thumb strip sat under
+	 * the main image; v1.7.19 moved thumbs to an overlay capsule on
+	 * top of the image, so the gallery is now compact and a smaller
+	 * separator works cleanly. */
+	margin-top: 64px !important;
 	padding-top: 32px !important;
 	border-top: 1px solid var(--line, #e8e2d3);
 	clear: none;

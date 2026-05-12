@@ -1080,10 +1080,10 @@ body.lwp-layout-boxed .lwp-elementor-page .elementor-section {
 		"gallery summary"
 		"gallery tabs"
 		"related related";
-	/* 56px row-gap (was 24px) gives the related-products band visible
-	 * breathing room beneath the gallery + tabs grid even when sticky
-	 * is engaged. 64px column-gap is the same as before. */
-	gap: 56px 64px;
+	/* Row-gap is 0 -- spacing between rows is controlled by explicit
+	 * margins so we can tighten summary->tabs while keeping gallery->
+	 * related wide. 64px column gap stays. */
+	gap: 0 64px;
 	align-items: start;
 	/* Containing block for WC's `<span class="onsale">` which is
 	 * absolutely positioned at top:12 left:12. Without this `.onsale`
@@ -1127,8 +1127,20 @@ body.lwp-layout-boxed .lwp-elementor-page .elementor-section {
 }
 .lwp-pdp-grid .woocommerce-tabs {
 	grid-area: tabs;
-	margin: 0 !important;
+	/* 16px clean-cut spacing between SKU / Categories meta block (last
+	 * thing inside summary) and the Description / Additional-info tabs
+	 * row. Replaces the older 56px row-gap which made the transition
+	 * feel disconnected. No top border. */
+	margin: 16px 0 0 !important;
+	padding-top: 0 !important;
 	padding-bottom: 0 !important;
+	border-top: 0 !important;
+}
+.lwp-pdp-grid .woocommerce-tabs ul.tabs {
+	margin: 0 0 24px !important;
+	padding: 0 !important;
+	border-bottom: 1px solid var(--line, #e8e2d3) !important;
+	list-style: none;
 }
 /* Related / up-sells / reviews-as-block fall below the grid as a
  * full-width landing. Tighten the top margin so the seam between
@@ -1139,11 +1151,14 @@ body.lwp-layout-boxed .lwp-elementor-page .elementor-section {
 .lwp-pdp-grid > .related,
 .lwp-pdp-grid > .upsells {
 	grid-area: related;
-	/* 96px top margin + 24px top padding + hair-line border separator
-	 * makes the related-products band a clear "next section" instead of
-	 * crashing against the gallery sticky pin. Operator-tuned 2026-05-12. */
-	margin-top: 96px !important;
-	padding-top: 24px !important;
+	/* 144px top margin + 32px top padding + hairline border separator
+	 * gives the related-products band an obvious "next section" feel
+	 * vs the sticky gallery / tabs above. Operator-tuned 2026-05-12.
+	 * Pairs with the 160px padding-bottom on .woocommerce-product-
+	 * gallery (see woo-overrides.css) so visible buffer = ~300px even
+	 * at 1.25x browser zoom. */
+	margin-top: 144px !important;
+	padding-top: 32px !important;
 	border-top: 1px solid var(--line, #e8e2d3);
 	clear: none;
 }

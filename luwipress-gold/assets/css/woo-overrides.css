@@ -3415,12 +3415,12 @@ body.single-product .tap-sale-circle { display: none !important; }
 	/* tidy block carried by the sticky position above.                */
 	/* Gallery wrapper gets bottom breathing room so thumb strip does  */
 	/* not crash against whatever sits beneath (mobile stack) or the   */
-	/* related-products band beneath the grid on desktop.              */
-	/* 96px + 32px margin combined with the 56px grid row-gap from     */
-	/* tokens.css gives clear separation under the sticky gallery.     */
+	/* related-products band beneath the grid on desktop. 160px paired */
+	/* with tokens.css .related margin-top: 144 = 304px visible buffer */
+	/* before the related products row starts.                          */
 	html body.single-product .woocommerce-product-gallery {
-		padding-bottom: 96px !important;
-		margin-bottom: 32px !important;
+		padding-bottom: 160px !important;
+		margin-bottom: 0 !important;
 	}
 
 	html body.single-product .woocommerce-product-gallery .flex-control-nav,

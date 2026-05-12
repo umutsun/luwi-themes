@@ -3415,25 +3415,26 @@ body.single-product .tap-sale-circle { display: none !important; }
 	/* tidy block carried by the sticky position above.                */
 	/* Gallery becomes the positioning context for the thumb overlay   */
 	/* capsule (.flex-control-thumbs is moved INSIDE the gallery image */
-	/* via position: absolute below). Small bottom padding is just     */
-	/* breathing room — main visual buffer to related lives on the     */
-	/* `.related` rule itself.                                          */
+	/* via position: absolute below). 56px bottom padding gives final  */
+	/* breathing room beneath gallery before related row.              */
 	html body.single-product .woocommerce-product-gallery {
-		padding-bottom: 24px !important;
+		padding-bottom: 56px !important;
 		margin-bottom: 0 !important;
 	}
 
-	/* PDP thumbnails are circular OVERLAY dots on the main image     */
-	/* (capsule with backdrop blur, bottom-centered). Killing the      */
-	/* below-image strip layout means gallery height = main image      */
-	/* height, so no horizontal overflow into related-products column. */
+	/* PDP thumbnails are circular OVERLAY dots on the main image.     */
+	/* z-index: 20 + explicit pointer-events: auto ensures clicks       */
+	/* reach Flexslider's bound li handler — without these, WC carry-   */
+	/* over rules can silently block the thumb click even though the    */
+	/* cursor reports `pointer`.                                         */
 	html body.single-product .woocommerce-product-gallery .flex-control-nav,
 	html body.single-product .woocommerce-product-gallery .flex-control-thumbs {
 		position: absolute !important;
-		bottom: 18px !important;
+		bottom: 22px !important;
 		left: 50% !important;
 		transform: translateX(-50%) !important;
-		z-index: 4 !important;
+		z-index: 20 !important;
+		pointer-events: auto !important;
 		width: auto !important;
 		max-width: 92% !important;
 		display: inline-flex !important;
@@ -3454,6 +3455,11 @@ body.single-product .tap-sale-circle { display: none !important; }
 		scrollbar-width: none !important;
 		box-sizing: border-box !important;
 	}
+	/* WC's gallery zoom trigger sits with high z-index by default —   */
+	/* clamp so it doesn't intercept clicks elsewhere on the gallery.  */
+	html body.single-product .woocommerce-product-gallery__trigger {
+		z-index: 5 !important;
+	}
 	html body.single-product .woocommerce-product-gallery .flex-control-thumbs::-webkit-scrollbar,
 	html body.single-product .woocommerce-product-gallery .flex-control-nav::-webkit-scrollbar {
 		display: none !important;
@@ -3472,6 +3478,7 @@ body.single-product .tap-sale-circle { display: none !important; }
 		border-radius: 50% !important;
 		overflow: hidden !important;
 		cursor: pointer !important;
+		pointer-events: auto !important;
 		transition: transform 0.2s ease !important;
 	}
 	html body.single-product .woocommerce-product-gallery .flex-control-thumbs li:hover {
@@ -3487,6 +3494,7 @@ body.single-product .tap-sale-circle { display: none !important; }
 		object-fit: cover !important;
 		display: block !important;
 		cursor: pointer !important;
+		pointer-events: auto !important;
 		opacity: 0.85 !important;
 		transition: opacity 0.2s ease, border-color 0.2s ease !important;
 		aspect-ratio: 1 / 1 !important;

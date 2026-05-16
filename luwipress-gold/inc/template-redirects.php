@@ -64,6 +64,20 @@
  *   - `luwipress_gold_hub_redirects` — final composition hook called on
  *     every request. Return [] to fully disable the module.
  *
+ * Population check (cross-cutting through every pass):
+ *
+ *   WooCommerce parent categories typically report `count=0` because
+ *   WC only counts products directly attached to a term — not products
+ *   attached to its descendants. So `percussions`, `winds`,
+ *   `bowed-instruments`, `string-instruments`, `accessories` all sit
+ *   at count=0 even when their children carry thousands of products.
+ *   Every pass below filters candidates via
+ *   `luwipress_gold_term_has_population()` which recurses into
+ *   descendants — a term is "populated" when its own count > 0 OR any
+ *   descendant in the hierarchy has count > 0. This is what allows
+ *   `/percussions/` to redirect to `/product-category/percussions/`
+ *   rather than getting dropped as "unused".
+ *
  * Discovery passes (in order):
  *
  *   1. Exact match — page.post_name === term.slug.
@@ -82,6 +96,14 @@
  *      category/winds/`. Skipped when the parent menu item resolves
  *      to a non-cat URL or when the page slug is in the system-page
  *      skip list.
+ *   6. Ancestor fallback for empty terms — when a page slug matches
+ *      (exactly or via passes 1–4) a term that is itself empty AND
+ *      whose entire subtree is empty, walk the parent chain to find
+ *      the first populated ancestor. `/duduk/` → empty leaf
+ *      `duduk-armanian-winds` → ancestor `winds` (populous via
+ *      Ney/Mey/Zurna/Kaval). Without this pass every editorial
+ *      profile page next to a dead leaf term keeps resolving to the
+ *      legacy page.
  *
  * Map values may be `bool true` (auto-target /product-category/<slug>/),
  * a full URL string, or an `int` term_id (resolved via
@@ -106,6 +128,23 @@
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
+}
+
+/*
+ * Core promotion (3.1.56) — when the canonical resolver class is loaded
+ * by core LuwiPress, this theme file becomes a no-op. The core engine
+ * runs the same six-pass discovery + the same `template_redirect` p1
+ * hook, so leaving both active would double-register the callback and
+ * (worse) compete for cache state. The core path also reads the legacy
+ * `luwipress_gold_resolve_slug_conflicts` theme_mod so operators who
+ * toggled the theme-tier resolver inherit their setting automatically.
+ *
+ * Geriye uyumluluk: core 3.1.55 or earlier? Class doesn't exist → fall
+ * through to the legacy theme path below. The site keeps working
+ * exactly as it did before the core promotion.
+ */
+if ( class_exists( 'LuwiPress_Slug_Resolver' ) ) {
+	return;
 }
 
 const LUWIPRESS_GOLD_SLUG_CONFLICT_TRANSIENT = 'luwipress_gold_slug_conflicts_v1';
@@ -183,6 +222,91 @@ if ( ! function_exists( 'luwipress_gold_skip_redirect_slugs' ) ) {
 	}
 }
 
+if ( ! function_exists( 'luwipress_gold_term_has_population' ) ) {
+
+	/**
+	 * Test whether a product_cat term is "populated" — either has direct
+	 * product assignments (count > 0) or any descendant in the hierarchy
+	 * tree does. Top-level WooCommerce parent categories often have
+	 * count=0 because WC only counts products directly attached to a
+	 * term, not products attached to its children. Without this widened
+	 * check, slug-collision discovery would skip every parent category
+	 * as if it were unused, leaving `/percussions/`, `/winds/`,
+	 * `/bowed-instruments/` etc. to keep resolving to legacy pages.
+	 *
+	 * Result is memoised per-request to keep deep descendant walks cheap.
+	 *
+	 * @param int    $term_id  product_cat term ID.
+	 * @param string $taxonomy Taxonomy name (default 'product_cat').
+	 * @return bool true when term self count > 0 OR any descendant count > 0.
+	 */
+	function luwipress_gold_term_has_population( $term_id, $taxonomy = 'product_cat' ) {
+		static $cache = [];
+		$term_id = (int) $term_id;
+		if ( $term_id <= 0 ) {
+			return false;
+		}
+		$cache_key = $taxonomy . ':' . $term_id;
+		if ( isset( $cache[ $cache_key ] ) ) {
+			return $cache[ $cache_key ];
+		}
+		$term = get_term( $term_id, $taxonomy );
+		if ( ! $term instanceof \WP_Term || is_wp_error( $term ) ) {
+			return $cache[ $cache_key ] = false;
+		}
+		if ( (int) $term->count > 0 ) {
+			return $cache[ $cache_key ] = true;
+		}
+		$children = get_term_children( $term_id, $taxonomy );
+		if ( is_wp_error( $children ) || empty( $children ) ) {
+			return $cache[ $cache_key ] = false;
+		}
+		foreach ( $children as $child_id ) {
+			$child = get_term( (int) $child_id, $taxonomy );
+			if ( $child instanceof \WP_Term && (int) $child->count > 0 ) {
+				return $cache[ $cache_key ] = true;
+			}
+		}
+		return $cache[ $cache_key ] = false;
+	}
+}
+
+if ( ! function_exists( 'luwipress_gold_term_find_populated_ancestor' ) ) {
+
+	/**
+	 * Walk the parent chain of a product_cat term and return the first
+	 * ancestor (or the term itself) whose `term_has_population` is true.
+	 * Used by Pass 5 of slug-conflict discovery to handle the case where
+	 * a page slug matches (exactly or via prefix/levenshtein) a term whose
+	 * own subtree is empty — e.g. `duduk-armanian-winds` (count=0,
+	 * descendant=0) → ancestor `winds` (count=0 but populated descendants
+	 * Ney/Mey/Zurna/Kaval) → returns the `winds` term_id.
+	 *
+	 * Loop-guarded by a visited set in case of malformed term parent
+	 * cycles (rare but recoverable).
+	 *
+	 * @param int    $term_id  Starting product_cat term ID.
+	 * @param string $taxonomy Taxonomy name (default 'product_cat').
+	 * @return int Term ID of the first populated ancestor, or 0 when none.
+	 */
+	function luwipress_gold_term_find_populated_ancestor( $term_id, $taxonomy = 'product_cat' ) {
+		$term_id = (int) $term_id;
+		$visited = [];
+		while ( $term_id > 0 && ! isset( $visited[ $term_id ] ) ) {
+			$visited[ $term_id ] = true;
+			if ( luwipress_gold_term_has_population( $term_id, $taxonomy ) ) {
+				return $term_id;
+			}
+			$term = get_term( $term_id, $taxonomy );
+			if ( ! $term instanceof \WP_Term || is_wp_error( $term ) ) {
+				return 0;
+			}
+			$term_id = (int) $term->parent;
+		}
+		return 0;
+	}
+}
+
 if ( ! function_exists( 'luwipress_gold_resolve_slug_conflicts_enabled' ) ) {
 
 	/**
@@ -224,6 +348,14 @@ if ( ! function_exists( 'luwipress_gold_discover_slug_conflicts' ) ) {
 		// 1) Exact slug matches — page.post_name === term.slug. These are
 		// the obvious conflicts where the visitor URL `/<slug>/` could
 		// land on either; redirect target is the term's permalink.
+		//
+		// We DON'T filter `tt.count > 0` in SQL. Top-level parent
+		// categories in WooCommerce often have count=0 because WC counts
+		// only direct product assignments, not descendants. Without that
+		// gate, `/percussions/`, `/winds/`, `/bowed-instruments/` (all
+		// parent terms with count=0 but populous children) would never
+		// enter the redirect map. The PHP-side filter below uses
+		// `term_has_population()` which recurses into descendants.
 		$exact_rows = $wpdb->get_results(
 			"SELECT DISTINCT p.post_name AS page_slug, t.term_id, tt.taxonomy
 			   FROM {$wpdb->posts} p
@@ -231,12 +363,16 @@ if ( ! function_exists( 'luwipress_gold_discover_slug_conflicts' ) ) {
 			   INNER JOIN {$wpdb->term_taxonomy} tt ON t.term_id = tt.term_id
 			  WHERE p.post_type = 'page'
 			    AND p.post_status = 'publish'
-			    AND tt.taxonomy = 'product_cat'
-			    AND tt.count > 0",
+			    AND tt.taxonomy = 'product_cat'",
 			ARRAY_A
 		);
 
 		$map = [];
+		// Pass 5 input — exact / fuzzy matches whose target term is empty
+		// AND has no populated descendants. Pass 5 walks parent chain to
+		// find a usable ancestor (e.g. `duduk-armanian-winds` empty → ancestor
+		// `winds` populous).
+		$empty_term_candidates = [];
 		if ( is_array( $exact_rows ) ) {
 			foreach ( $exact_rows as $r ) {
 				$slug = (string) $r['page_slug'];
@@ -244,7 +380,11 @@ if ( ! function_exists( 'luwipress_gold_discover_slug_conflicts' ) ) {
 					continue;
 				}
 				$tid = (int) $r['term_id'];
-				if ( $tid > 0 ) {
+				if ( $tid <= 0 ) {
+					$map[ $slug ] = true;
+					continue;
+				}
+				if ( luwipress_gold_term_has_population( $tid ) ) {
 					// Store term_id (not the resolved permalink) so request-time
 					// callers can apply WPML/Polylang current-language filter
 					// via `get_term_link()`. Storing the EN permalink would
@@ -252,7 +392,8 @@ if ( ! function_exists( 'luwipress_gold_discover_slug_conflicts' ) ) {
 					// menu render-time fallback consume the same map shape.
 					$map[ $slug ] = $tid;
 				} else {
-					$map[ $slug ] = true;
+					// Defer to Pass 5; record candidate for ancestor walk.
+					$empty_term_candidates[ $slug ] = $tid;
 				}
 			}
 		}
@@ -278,6 +419,10 @@ if ( ! function_exists( 'luwipress_gold_discover_slug_conflicts' ) ) {
 		$wpml_active = ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpml_table ) ) === $wpml_table );
 
 		if ( $wpml_active ) {
+			// Filter `tt.count > 0` intentionally OMITTED — same rationale
+			// as Pass 1 (parent categories have count=0 in WC). PHP-side
+			// `term_has_population()` widens the gate to include parent
+			// categories with populous descendant trees.
 			$cross_rows = $wpdb->get_results(
 				"SELECT DISTINCT p.post_name AS page_slug, t.term_id
 				   FROM {$wpdb->posts} p
@@ -294,7 +439,6 @@ if ( ! function_exists( 'luwipress_gold_discover_slug_conflicts' ) ) {
 				   INNER JOIN {$wpdb->term_taxonomy} tt
 				     ON tt.term_id = t.term_id
 				    AND tt.taxonomy = 'product_cat'
-				    AND tt.count > 0
 				  WHERE p.post_type = 'page'
 				    AND p.post_status = 'publish'",
 				ARRAY_A
@@ -305,7 +449,15 @@ if ( ! function_exists( 'luwipress_gold_discover_slug_conflicts' ) ) {
 					if ( $slug === '' || isset( $map[ $slug ] ) ) {
 						continue; // exact-match already handled it
 					}
-					$map[ $slug ] = (int) $r['term_id'];
+					$tid = (int) $r['term_id'];
+					if ( $tid <= 0 ) {
+						continue;
+					}
+					if ( luwipress_gold_term_has_population( $tid ) ) {
+						$map[ $slug ] = $tid;
+					} elseif ( ! isset( $empty_term_candidates[ $slug ] ) ) {
+						$empty_term_candidates[ $slug ] = $tid;
+					}
 				}
 			}
 		}
@@ -351,9 +503,13 @@ if ( ! function_exists( 'luwipress_gold_discover_slug_conflicts' ) ) {
 					$sib_post = get_post( $sib_id );
 					if ( ! $sib_post ) continue;
 					$term = get_term_by( 'slug', (string) $sib_post->post_name, 'product_cat' );
-					if ( $term instanceof \WP_Term && $term->count > 0 ) {
+					if ( ! ( $term instanceof \WP_Term ) ) continue;
+					if ( luwipress_gold_term_has_population( (int) $term->term_id ) ) {
 						$map[ $slug ] = (int) $term->term_id;
 						break;
+					}
+					if ( ! isset( $empty_term_candidates[ $slug ] ) ) {
+						$empty_term_candidates[ $slug ] = (int) $term->term_id;
 					}
 				}
 			}
@@ -393,9 +549,13 @@ if ( ! function_exists( 'luwipress_gold_discover_slug_conflicts' ) ) {
 		$page_slugs = is_array( $page_slugs ) ? $page_slugs : [];
 
 		// Pull every product_cat term once for in-memory matching.
+		// `hide_empty = false` so parent categories (count=0 but populous
+		// descendants) enter the pool. Per-candidate filter below uses
+		// `term_has_population()` to keep noise out of the final map
+		// while still allowing parent-category resolution.
 		$all_terms = get_terms( [
 			'taxonomy'   => 'product_cat',
-			'hide_empty' => true,
+			'hide_empty' => false,
 			'fields'     => 'all',
 			'number'     => 0,
 		] );
@@ -443,8 +603,13 @@ if ( ! function_exists( 'luwipress_gold_discover_slug_conflicts' ) ) {
 				continue;
 			}
 			$tid = (int) $candidates[0]->term_id;
-			if ( $tid > 0 ) {
+			if ( $tid <= 0 ) {
+				continue;
+			}
+			if ( luwipress_gold_term_has_population( $tid ) ) {
 				$map[ $slug ] = $tid; // term_id, not link — see exact-pass note above
+			} elseif ( ! isset( $empty_term_candidates[ $slug ] ) ) {
+				$empty_term_candidates[ $slug ] = $tid;
 			}
 		}
 
@@ -482,8 +647,13 @@ if ( ! function_exists( 'luwipress_gold_discover_slug_conflicts' ) ) {
 				continue;
 			}
 			$tid = (int) $candidates[0]->term_id;
-			if ( $tid > 0 ) {
+			if ( $tid <= 0 ) {
+				continue;
+			}
+			if ( luwipress_gold_term_has_population( $tid ) ) {
 				$map[ $slug ] = $tid; // term_id (consistent map shape)
+			} elseif ( ! isset( $empty_term_candidates[ $slug ] ) ) {
+				$empty_term_candidates[ $slug ] = $tid;
 			}
 		}
 
@@ -520,11 +690,15 @@ if ( ! function_exists( 'luwipress_gold_discover_slug_conflicts' ) ) {
 				}
 				$parent = $by_id[ $parent_menu_id ];
 
-				// Resolve parent menu item to a product_cat term.
+				// Resolve parent menu item to a product_cat term. Widened
+				// gate (population includes descendants) so visitors of a
+				// page nested under a "Strings" menu item inherit the
+				// parent category even when the parent term itself has
+				// count=0 (its children carry the products).
 				$parent_term_id = 0;
 				if ( $parent->object === 'product_cat' && ! empty( $parent->object_id ) ) {
 					$pt = get_term( (int) $parent->object_id );
-					if ( $pt instanceof \WP_Term && $pt->count > 0 ) {
+					if ( $pt instanceof \WP_Term && luwipress_gold_term_has_population( (int) $pt->term_id ) ) {
 						$parent_term_id = (int) $pt->term_id;
 					}
 				}
@@ -553,6 +727,34 @@ if ( ! function_exists( 'luwipress_gold_discover_slug_conflicts' ) ) {
 					continue; // never redirect system pages even via inheritance
 				}
 				$map[ $page_slug ] = $parent_term_id;
+			}
+		}
+
+		// 5) Ancestor fallback for empty terms.
+		//
+		// Some page slugs match (exactly, by prefix/plural, by
+		// Levenshtein-1, or via WPML/Polylang cross-language) a real
+		// product_cat term that is itself unused — count=0 with no
+		// populated descendants. Common Tapadum-style case:
+		// page `duduk` → prefix candidate `duduk-armanian-winds`
+		// (count=0, no children) → ancestor chain → `winds` (count=0
+		// itself but populous descendants Ney/Mey/Zurna/Kaval) →
+		// `term_has_population` true → use winds as the redirect target.
+		//
+		// Without this pass, every editorial profile page sitting next
+		// to an empty leaf term would never get rescued from the legacy
+		// page URL.
+		//
+		// Empty terms whose entire ancestor chain is also empty are
+		// dropped — redirecting visitors to an empty archive is worse
+		// than leaving them on the editorial page.
+		foreach ( $empty_term_candidates as $slug => $empty_tid ) {
+			if ( isset( $map[ $slug ] ) ) {
+				continue;
+			}
+			$anc = luwipress_gold_term_find_populated_ancestor( (int) $empty_tid );
+			if ( $anc > 0 ) {
+				$map[ $slug ] = $anc;
 			}
 		}
 

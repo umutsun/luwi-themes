@@ -1311,14 +1311,105 @@ li.lwp-pcard {
 	font-weight: 500;
 }
 
-/* When `.lwp-pcard` markup is in the loop, hide WC's default add-to-cart
- * button + WC overlay link wrappers — our card is one big anchor and
- * the buy flow lives on the product page. */
-li.lwp-pcard .button.add_to_cart_button,
-li.lwp-pcard .button.product_type_simple,
-li.lwp-pcard .button.product_type_variable,
-li.lwp-pcard .added_to_cart,
-li.lwp-pcard .star-rating { display: none !important; }
+/* ─── Loop card ATC button (1.7.11+) ─────────────────────────────────────
+ *
+ * Full-width pill anchored at the bottom of the card via flex flow.
+ * Plain WC outputs `<a class="button add_to_cart_button">Add to cart</a>`
+ * (in-stock simple/variable/grouped/external) or `<a class="button
+ * product_type_*">Read more</a>` (out-of-stock / non-purchasable) as a
+ * sibling of `.lwp-pcard-link` inside `li.product`. Since `li.product`
+ * is `display: flex; flex-direction: column` and the inner link is
+ * `flex: 1 1 auto`, the button auto-aligns to the card bottom.
+ *
+ * Combined with `ul.products` being `display: grid` (stretch default),
+ * buttons form a horizontal baseline across cards in the same row even
+ * when titles wrap to 1 vs 2 vs 3 lines.
+ *
+ * Specificity: `html body.woocommerce.woocommerce-page ul.products
+ * li.product > a.button.add_to_cart_button` = (0,6,5). Beats plausible
+ * host overrides (~0,5,4) without needing the `.lwp-pcard` chain — so
+ * Elementor's WC Products widget + WC's related-products render get
+ * the same treatment as the archive grid.
+ */
+
+html body.woocommerce.woocommerce-page ul.products li.product,
+html body.woocommerce ul.products li.product {
+	position: relative !important;
+	height: 100% !important;
+}
+html body.woocommerce.woocommerce-page ul.products li.product > a.lwp-pcard-link,
+html body.woocommerce ul.products li.product > a.lwp-pcard-link {
+	flex: 1 1 auto !important;
+}
+
+/* Pill button — full-width minus 16px gutter, sits at card bottom.
+ * Covers `.add_to_cart_button` (simple/variable/grouped/external)
+ * plus generic `.button` (Read more for out-of-stock). The
+ * `:not(.lwp-pcard-link)` guard excludes the card's own inner link. */
+html body.woocommerce.woocommerce-page ul.products li.product > a.button.add_to_cart_button,
+html body.woocommerce.woocommerce-page ul.products li.product > a.button.product_type_simple,
+html body.woocommerce.woocommerce-page ul.products li.product > a.button.product_type_variable,
+html body.woocommerce.woocommerce-page ul.products li.product > a.button.product_type_grouped,
+html body.woocommerce.woocommerce-page ul.products li.product > a.button.product_type_external,
+html body.woocommerce.woocommerce-page ul.products li.product > a.button:not(.lwp-pcard-link),
+html body.woocommerce ul.products li.product > a.button.add_to_cart_button,
+html body.woocommerce ul.products li.product > a.button:not(.lwp-pcard-link) {
+	position: static !important;
+	display: block !important;
+	width: auto !important;
+	max-width: none !important;
+	min-width: 0 !important;
+	margin: 14px 16px 16px !important;
+	padding: 13px 18px !important;
+	background: var(--ink, #1b1c1c) !important;
+	background-color: var(--ink, #1b1c1c) !important;
+	background-image: none !important;
+	color: #fff !important;
+	border: 0 !important;
+	border-radius: 8px !important;
+	font-family: var(--mono, 'JetBrains Mono', monospace) !important;
+	font-size: 11px !important;
+	font-weight: 600 !important;
+	letter-spacing: .14em !important;
+	line-height: 1.2 !important;
+	text-align: center !important;
+	text-decoration: none !important;
+	text-transform: uppercase !important;
+	white-space: nowrap !important;
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+	box-shadow: 0 2px 8px -3px rgba(0, 0, 0, .25) !important;
+	cursor: pointer !important;
+	transition: background 180ms ease, transform 180ms ease, box-shadow 180ms ease !important;
+	float: none !important;
+	box-sizing: border-box !important;
+	align-self: auto !important;
+}
+html body.woocommerce.woocommerce-page ul.products li.product > a.button:hover,
+html body.woocommerce ul.products li.product > a.button:hover {
+	background: var(--primary, #735c00) !important;
+	background-color: var(--primary, #735c00) !important;
+	transform: translateY(-1px) !important;
+	box-shadow: 0 6px 16px -4px rgba(115, 92, 0, .35) !important;
+}
+/* Loading state during AJAX. */
+html body.woocommerce.woocommerce-page ul.products li.product > a.add_to_cart_button.loading {
+	opacity: .55 !important;
+	pointer-events: none !important;
+}
+/* Added confirmation — gold lock, label flips to "Added ✓" via WC's
+ * own class swap on `a.added_to_cart` (handled below). */
+html body.woocommerce.woocommerce-page ul.products li.product > a.add_to_cart_button.added,
+html body.woocommerce ul.products li.product > a.add_to_cart_button.added {
+	background: var(--primary, #735c00) !important;
+	background-color: var(--primary, #735c00) !important;
+}
+/* "View cart" link WC appends after a successful add — redundant with
+ * the floating cart drawer trigger in the header. Hide it. */
+html body.woocommerce.woocommerce-page ul.products li.product a.added_to_cart,
+html body.woocommerce ul.products li.product a.added_to_cart {
+	display: none !important;
+}
 
 /* ─── Status pills (orders table, dashboard, view-order) ─────────────── */
 

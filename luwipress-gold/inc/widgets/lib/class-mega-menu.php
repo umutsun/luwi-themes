@@ -623,6 +623,39 @@ class LuwiPress_Gold_Widget_Mega_Menu extends Widget_Base {
 	 * up its count for free. Items that don't resolve return '' (we never
 	 * render "0" — empty pills look broken).
 	 */
+	/**
+	 * Bridge to the slug-collision map.
+	 *
+	 * LuwiPress core 3.1.56+ ships the canonical `LuwiPress_Slug_Resolver`
+	 * with the same six-pass discovery this theme used to do in
+	 * `inc/template-redirects.php`. When that class is loaded the theme's
+	 * legacy function (`luwipress_gold_get_hub_redirects`) early-returns
+	 * to avoid double registration — leaving previously theme-coupled
+	 * call-sites here without a source of truth.
+	 *
+	 * This helper centralises the lookup: prefer the core resolver when
+	 * present, fall through to the legacy theme function for any install
+	 * still on core ≤ 3.1.55. Per-request memoised so a 50-item menu
+	 * walks the resolver exactly once.
+	 *
+	 * @return array<string,int|bool|string> slug => term_id | true | URL
+	 */
+	private static function get_slug_resolver_map() {
+		static $cache = null;
+		if ( $cache !== null ) {
+			return $cache;
+		}
+		if ( class_exists( '\\LuwiPress_Slug_Resolver' ) ) {
+			$resolver = \LuwiPress_Slug_Resolver::get_instance();
+			$cache = $resolver->get_redirects();
+		} elseif ( function_exists( 'luwipress_gold_get_hub_redirects' ) ) {
+			$cache = (array) luwipress_gold_get_hub_redirects();
+		} else {
+			$cache = array();
+		}
+		return $cache;
+	}
+
 	public static function resolve_item_count( $node ) {
 		// Product taxonomy resolution — covers object='product_cat', exact
 		// URL slug, and plural variants (darbuka → darbukas).
@@ -713,21 +746,21 @@ class LuwiPress_Gold_Widget_Mega_Menu extends Widget_Base {
 		}
 
 		// WPML / Polylang cross-language fallback. The slug-conflict map
-		// (built in template-redirects.php) records every page slug —
-		// including translated ones (`percusiones` ES, `vents` FR) —
+		// (built by LuwiPress_Slug_Resolver in core 3.1.56+, or by the
+		// legacy theme function on older installs) records every page
+		// slug — including translated ones (`percusiones` ES, `vents` FR)
+		// AND empty-term ancestor fallbacks (`duduk` → `winds`) —
 		// against the canonical product_cat term. Plural-fuzzy match
 		// can't catch these because no in-language term has the
-		// translated slug, but the WPML translation table does.
-		if ( function_exists( 'luwipress_gold_get_hub_redirects' ) ) {
-			$redirects = luwipress_gold_get_hub_redirects();
-			if ( ! empty( $redirects ) && isset( $redirects[ $slug ] ) ) {
-				$rule = $redirects[ $slug ];
-				if ( is_int( $rule ) || ( is_string( $rule ) && ctype_digit( $rule ) ) ) {
-					$t = get_term( (int) $rule );
-					if ( $t instanceof \WP_Term ) {
-						$cache[ $cache_key ] = $t;
-						return $t;
-					}
+		// translated slug.
+		$redirects = self::get_slug_resolver_map();
+		if ( ! empty( $redirects ) && isset( $redirects[ $slug ] ) ) {
+			$rule = $redirects[ $slug ];
+			if ( is_int( $rule ) || ( is_string( $rule ) && ctype_digit( $rule ) ) ) {
+				$t = get_term( (int) $rule );
+				if ( $t instanceof \WP_Term ) {
+					$cache[ $cache_key ] = $t;
+					return $t;
 				}
 			}
 		}
@@ -766,10 +799,10 @@ class LuwiPress_Gold_Widget_Mega_Menu extends Widget_Base {
 		}
 
 		// Cross-language fallback via the slug-conflict map.
-		if ( ! empty( $node['url'] ) && function_exists( 'luwipress_gold_get_hub_redirects' ) ) {
+		if ( ! empty( $node['url'] ) ) {
 			$slug = self::extract_last_slug( (string) $node['url'] );
 			if ( $slug !== '' ) {
-				$redirects = luwipress_gold_get_hub_redirects();
+				$redirects = self::get_slug_resolver_map();
 				if ( ! empty( $redirects ) && isset( $redirects[ $slug ] ) ) {
 					$rule = $redirects[ $slug ];
 					if ( is_int( $rule ) || ( is_string( $rule ) && ctype_digit( $rule ) ) ) {

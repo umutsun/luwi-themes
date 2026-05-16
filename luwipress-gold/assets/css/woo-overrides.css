@@ -166,42 +166,12 @@ ul.products li.product .price ins {
 
 ul.products li.product .star-rating { display: none; }
 
-ul.products li.product .button.add_to_cart_button,
-ul.products li.product .button.product_type_simple,
-ul.products li.product .button.product_type_variable {
-	margin: 14px 20px 18px;
-	background: var(--ink, #1b1c1c);
-	color: #fff;
-	border-radius: 999px;
-	padding: 10px 18px;
-	font-size: 12px;
-	font-weight: 600;
-	letter-spacing: .04em;
-	text-transform: uppercase;
-	border: 0;
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	gap: 8px;
-	width: auto;
-	align-self: flex-start;
-	transition: background .2s, transform .2s;
-}
-ul.products li.product .button.add_to_cart_button:hover,
-ul.products li.product .button.product_type_simple:hover,
-ul.products li.product .button.product_type_variable:hover {
-	background: var(--primary, #735c00);
-	transform: translateY(-1px);
-}
-
-ul.products li.product .button.added_to_cart {
-	margin: 0 20px 18px;
-	font-family: var(--mono, monospace);
-	font-size: 11px;
-	letter-spacing: .12em;
-	color: var(--primary, #735c00);
-	text-decoration: underline;
-}
+/* Loop card ATC pill — single source of truth lives in widgets.css
+ * (1.7.11+). This file used to ship its own pill rule that conflicted
+ * with widgets.css's button styling. Removed to keep the cascade
+ * predictable; widgets.css covers in-stock + Read-more + AJAX states
+ * with higher specificity than any plausible host hot-patch.
+ */
 
 /* ─── WooCommerce notices (cart messages) — Gold palette ─── */
 .woocommerce-message,

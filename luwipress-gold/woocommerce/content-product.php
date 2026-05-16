@@ -5,9 +5,11 @@
  *
  * Mirrors the Claude Design Tapadum Gold reference card:
  *   eyebrow (category name) → Playfair name → italic master/maker →
- *   gold serif price ladder. Sale percentage badge top-left. NO inline
- *   add-to-cart button — the entire card is one big anchor that opens
- *   the product page where the operator can pick variations / quantity.
+ *   gold serif price ladder. Sale percentage badge top-left. AJAX
+ *   add-to-cart button rendered AFTER the main card anchor so the
+ *   button isn't nested inside another interactive element (invalid
+ *   HTML + a11y trap). Operator feedback 2026-05-12: storefront cards
+ *   need a direct ATC, picking variations on the PDP is a separate flow.
  *
  * Falls back to the WC default behaviour for shape (li.product) so
  * grid + sale class hooks + 3rd-party loop filters keep working.
@@ -103,4 +105,17 @@ if ( $product->is_on_sale() ) {
 		</div>
 
 	</a>
+
+	<?php
+	/**
+	 * Add-to-cart action — rendered OUTSIDE the main `<a>` so we don't
+	 * nest interactive elements. WC's default loop ATC outputs an
+	 * `<a class="button add_to_cart_button ajax_add_to_cart">` which
+	 * is fine as a sibling anchor; AJAX handling is auto-bound by
+	 * `wc-add-to-cart.js` (still enqueued — we only dequeue gallery
+	 * scripts on PDP). Hidden for out-of-stock / unpurchasable items
+	 * via WC's own guards.
+	 */
+	woocommerce_template_loop_add_to_cart();
+	?>
 </li>

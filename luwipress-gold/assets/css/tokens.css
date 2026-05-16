@@ -1143,24 +1143,25 @@ body.lwp-layout-boxed .lwp-elementor-page .elementor-section {
 	display: block;
 }
 .lwp-gallery__thumbs {
-	flex: 0 0 80px;
-	width: 80px;
+	flex: 0 0 72px;
+	width: 72px;
 	list-style: none;
 	margin: 0;
 	padding: 0;
 	display: flex;
 	flex-direction: column;
-	gap: 8px;
+	gap: 6px;
 	max-height: calc(100vh - 120px);
 	overflow-y: auto;
 	overflow-x: hidden;
-	scrollbar-width: thin;
+	/* Hide native scrollbar — products with 8-10+ thumbs were rendering a
+	 * visible thin scrollbar that drew attention away from the gallery.
+	 * The container still scrolls (mouse wheel + touch), the UI is just
+	 * cleaner. */
+	scrollbar-width: none;
+	-ms-overflow-style: none;
 }
-.lwp-gallery__thumbs::-webkit-scrollbar { width: 4px; }
-.lwp-gallery__thumbs::-webkit-scrollbar-thumb {
-	background: var(--line, #e8e2d3);
-	border-radius: 2px;
-}
+.lwp-gallery__thumbs::-webkit-scrollbar { display: none; width: 0; }
 .lwp-gallery__thumb {
 	display: block;
 	margin: 0;
@@ -1168,8 +1169,8 @@ body.lwp-layout-boxed .lwp-elementor-page .elementor-section {
 }
 .lwp-gallery__thumb button {
 	display: block;
-	width: 80px;
-	height: 80px;
+	width: 72px;
+	height: 72px;
 	padding: 4px;
 	margin: 0;
 	background: #fff;
@@ -1499,15 +1500,26 @@ body.lwp-layout-boxed .lwp-elementor-page .elementor-section {
 		overflow-x: auto;
 		overflow-y: hidden;
 		max-height: none;
-		gap: 8px;
+		gap: 6px;
 		padding-bottom: 4px;
+		scrollbar-width: none;
+		-ms-overflow-style: none;
 	}
+	/* 1.7.25 — Hide native scrollbar on mobile thumbnails. With 5-6 thumbs
+	 * the strip ends up 1-5px wider than its container (sub-pixel rounding
+	 * + gaps), which used to render a permanent thin scrollbar even though
+	 * scrolling was unnecessary. Keep overflow-x:auto so 8+-thumb products
+	 * still get touch-scroll, but don't draw a scrollbar UI for it. */
+	.lwp-gallery__thumbs::-webkit-scrollbar { display: none; height: 0; }
 	.lwp-gallery__thumb {
-		flex-shrink: 0;
+		flex: 1 1 0;
+		min-width: 0;
+		max-width: 72px;
 	}
 	.lwp-gallery__thumb button {
-		width: 64px;
-		height: 64px;
+		width: 100%;
+		height: auto;
+		aspect-ratio: 1 / 1;
 	}
 }
 
@@ -1694,4 +1706,20 @@ body.lwp-layout-boxed .lwp-elementor-page .elementor-section {
 @media (max-width: 900px) {
 	.lwp-acct-grid { grid-template-columns: 1fr; gap: 32px; }
 	.lwp-acct-side { position: static; }
+}
+
+/* 1.7.24 — PDP bottom-of-page whitespace cleanup. .lwp-pdp had
+ * padding-bottom:96px and .lwp-site-footer margin-top:96px which on
+ * mobile stacked into a ~192px empty cream-colored band between the
+ * perks list and the dark footer. Tighten both on mobile so the
+ * footer follows the content naturally. Desktop layout unaffected.
+ *
+ * NOTE: selector must out-specify the legacy Kit CSS layer rule
+ *   body.single-product main { padding-bottom: 96px } @max-width:767px
+ * which was pushed during an earlier sprint to compensate for a sticky
+ * bar that no longer needs it. Using body.single-product main.lwp-pdp
+ * (0,1,2) beats body.single-product main (0,1,1). */
+@media (max-width: 900px) {
+	body.single-product main.lwp-pdp { padding-bottom: 32px; }
+	.lwp-site-footer { margin-top: 32px; }
 }

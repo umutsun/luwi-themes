@@ -158,3 +158,10 @@ require_once LUWIPRESS_GOLD_DIR . '/inc/widgets/loader.php';
 
 // Customizer panel — Brand / Topbar / Header / Footer / Animation / Performance.
 require_once LUWIPRESS_GOLD_DIR . '/inc/customizer/bootstrap.php';
+
+// Mobile card width override — emits a guaranteed-cascade-winner inline
+// `<style>` block at `wp_head` p999 so the products / blog / single body
+// cards land at uniform 90% width on mobile, regardless of pre-V32 Kit CSS
+// baseline rules that previously forced `padding-left: 20px !important` on
+// `ul.products`. See `feedback_mobile_card_width_override_via_p999.md`.
+require_once LUWIPRESS_GOLD_DIR . '/inc/mobile-card-width-override.php';

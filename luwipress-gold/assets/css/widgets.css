@@ -1404,6 +1404,86 @@ html body.woocommerce ul.products li.product > a.add_to_cart_button.added {
 	background: var(--primary, #735c00) !important;
 	background-color: var(--primary, #735c00) !important;
 }
+
+/* ─── Body-agnostic CTA tier (1.7.34+) ───────────────────────────────────
+ * The two rule tiers above both require `body.woocommerce` (or its
+ * `.woocommerce-page` companion), which WP only adds on native WC
+ * templates. The HOMEPAGE — built in Elementor with the WC Products
+ * widget — has neither class on the body, so those rules silently
+ * miss and the ATC pill falls back to washed-gray Elementor styling
+ * AND the li.product flex-column structure (which pushes the button
+ * to the card bottom via lwp-pcard-link absorbing vertical space) is
+ * also lost — so buttons land at random Y positions depending on how
+ * many lines the title or price block consumes.
+ *
+ * This tier anchors on `li.product.lwp-pcard` (a class the theme
+ * stamps on every product card regardless of where it's rendered) so
+ * Elementor-hosted product grids — homepage, page-builder landing
+ * pages, search-result widgets — inherit the same bold-black brand pill
+ * AND bottom-aligned anchor as the shop archive. Specificity (0,4,4)
+ * beats Elementor's per-widget button overrides. */
+html body ul.products li.product.lwp-pcard {
+	display: flex !important;
+	flex-direction: column !important;
+	height: 100% !important;
+	position: relative !important;
+}
+html body ul.products li.product.lwp-pcard > a.lwp-pcard-link {
+	flex: 1 1 auto !important;
+}
+html body ul.products li.product.lwp-pcard > a.button.add_to_cart_button,
+html body ul.products li.product.lwp-pcard > a.button.product_type_simple,
+html body ul.products li.product.lwp-pcard > a.button.product_type_variable,
+html body ul.products li.product.lwp-pcard > a.button.product_type_grouped,
+html body ul.products li.product.lwp-pcard > a.button.product_type_external,
+html body ul.products li.product.lwp-pcard > a.button:not(.lwp-pcard-link) {
+	position: static !important;
+	display: block !important;
+	width: auto !important;
+	max-width: none !important;
+	min-width: 0 !important;
+	margin: 14px 16px 16px !important;
+	padding: 13px 18px !important;
+	background: var(--ink, #1b1c1c) !important;
+	background-color: var(--ink, #1b1c1c) !important;
+	background-image: none !important;
+	color: #fff !important;
+	border: 0 !important;
+	border-radius: 8px !important;
+	font-family: var(--mono, 'JetBrains Mono', monospace) !important;
+	font-size: 11px !important;
+	font-weight: 600 !important;
+	letter-spacing: .14em !important;
+	line-height: 1.2 !important;
+	text-align: center !important;
+	text-decoration: none !important;
+	text-transform: uppercase !important;
+	white-space: nowrap !important;
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+	box-shadow: 0 2px 8px -3px rgba(0, 0, 0, .25) !important;
+	cursor: pointer !important;
+	transition: background 180ms ease, transform 180ms ease, box-shadow 180ms ease !important;
+	float: none !important;
+	box-sizing: border-box !important;
+	align-self: auto !important;
+}
+html body ul.products li.product.lwp-pcard > a.button.add_to_cart_button:hover,
+html body ul.products li.product.lwp-pcard > a.button:not(.lwp-pcard-link):hover {
+	background: var(--primary, #735c00) !important;
+	background-color: var(--primary, #735c00) !important;
+	transform: translateY(-1px) !important;
+	box-shadow: 0 6px 16px -4px rgba(115, 92, 0, .35) !important;
+}
+html body ul.products li.product.lwp-pcard > a.add_to_cart_button.loading {
+	opacity: .55 !important;
+	pointer-events: none !important;
+}
+html body ul.products li.product.lwp-pcard > a.add_to_cart_button.added {
+	background: var(--primary, #735c00) !important;
+	background-color: var(--primary, #735c00) !important;
+}
+
 /* "View cart" link WC appends after a successful add — redundant with
  * the floating cart drawer trigger in the header. Hide it. */
 html body.woocommerce.woocommerce-page ul.products li.product a.added_to_cart,
@@ -4014,6 +4094,24 @@ body.lwp-yt-open { overflow: hidden; }
 	margin: 14px 0 0;
 	max-width: 56ch;
 }
+.lwp-archive-header .lwp-page-lead p {
+	margin: 0 0 1em;
+}
+.lwp-archive-header .lwp-page-lead p:last-child {
+	margin-bottom: 0;
+}
+.lwp-archive-header .lwp-page-lead a {
+	color: var(--primary, #735c00);
+	text-decoration: underline;
+	text-decoration-thickness: 1px;
+	text-underline-offset: 3px;
+	transition: color 200ms ease;
+}
+.lwp-archive-header .lwp-page-lead a:hover,
+.lwp-archive-header .lwp-page-lead a:focus {
+	color: var(--ink, #1a1612);
+	text-decoration-thickness: 2px;
+}
 .lwp-archive-header--split {
 	display: grid;
 	grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
@@ -4397,6 +4495,12 @@ html body .lwp-shop-results .lwp-shop-toolbar .woocommerce-ordering {
 .lwp-mobile-drawer__body {
 	flex: 1;
 	overflow-y: auto;
+	/* 1.7.35 — clip horizontal overflow. A descendant (.lwp-drw-flat with
+	 * width:100% + padding:16px 22px without explicit box-sizing) was
+	 * leaking 44px past the drawer's right edge, which `overflow-x: auto`
+	 * (the previous default) turned into a horizontal scrollbar so users
+	 * experienced the menu items "shifting" left/right on touch scroll. */
+	overflow-x: hidden;
 	-webkit-overflow-scrolling: touch;
 	padding: 6px 0 4px;
 	scrollbar-width: thin;
@@ -4568,6 +4672,11 @@ html body .lwp-shop-results .lwp-shop-toolbar .woocommerce-ordering {
 /* Flat (no children) — italic serif, sized down so it visually defers */
 .lwp-mobile-drawer .lwp-drw-flat {
 	width: 100%;
+	/* 1.7.35 — explicit border-box so the 22px L/R padding sits INSIDE
+	 * the 100% width box, not on top of it. Without this the anchor
+	 * rendered 44px wider than the drawer body and triggered horizontal
+	 * scroll inside the drawer. */
+	box-sizing: border-box;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;

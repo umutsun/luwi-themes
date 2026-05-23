@@ -80,9 +80,21 @@ html:not(.lwp-booting) .lwp-loader {
 	.lwp-loader-mark, .lwp-loader-arc, .lwp-loader-bar > span { animation: none !important; }
 }
 </style>
-<script id="lwp-gold-loader-boot-mark">
+<script id="lwp-gold-loader-boot-mark" data-no-optimize="1" data-no-defer="true" data-cfasync="false">
 /* Add the boot class as early as possible so the server-rendered
- * loader overlay covers the page on first paint. */
+ * loader overlay covers the page on first paint.
+ *
+ * 1.7.35 — `data-no-optimize`, `data-no-defer`, `data-cfasync` attributes
+ * tell LiteSpeed Cache (and Cloudflare Rocket Loader, when present) to
+ * skip JS-defer/combine on this specific script. Without them, LS rewrote
+ * `type="text/javascript"` to `type="litespeed/javascript"`, which the
+ * browser ignores until LS's combined deferred bundle re-executes after
+ * DOMContentLoaded — moving `lwp-booting` arrival to ~900ms post-nav and
+ * producing the visible "page first, loader after" flash. The attributes
+ * keep the boot mark inline and synchronous; LS still defers the rest of
+ * the page's JS. Pairs with the `litespeed_optm_html_filter` callback
+ * registered below as belt-and-braces (some older LS builds prefer
+ * content-pattern excludes over attribute-based ones). */
 document.documentElement.classList.add('lwp-booting');
 
 /* CRITICAL safety timer — runs INDEPENDENTLY of frontend.js. If the
@@ -113,6 +125,37 @@ window.setTimeout(function () {
 		<?php
 	}
 	add_action( 'wp_head', 'luwipress_gold_loader_print_head', 1 );
+}
+
+/**
+ * Programmatic LiteSpeed Cache exclusion for the loader boot mark.
+ *
+ * Belt-and-braces complement to the inline `data-no-optimize` attribute.
+ * Some LiteSpeed Cache builds honour the attribute reliably; others apply
+ * the JS-defer/combine pass BEFORE checking attributes. Adding the script
+ * to LSCWP's `optm_excludes_js` list via filter guarantees exclusion
+ * across every LS version that exposes the filter.
+ *
+ * The list accepts either inline content snippets or script IDs; we add
+ * the unique substring `lwp-gold-loader-boot-mark` (matches both the ID
+ * and any inline content), which LS uses as a presence-check against
+ * each script tag candidate during its optimization pass.
+ *
+ * @since 1.7.35 — Vendor / shipping prep: no-cache-config required on
+ * customer installs. The fix has to land in plugin code, not in the
+ * LiteSpeed admin's "JS Excludes" textarea (which a non-technical store
+ * owner would never discover or maintain).
+ */
+if ( ! function_exists( 'luwipress_gold_loader_litespeed_exclude' ) ) {
+	function luwipress_gold_loader_litespeed_exclude( $excludes ) {
+		if ( ! is_array( $excludes ) ) {
+			$excludes = array();
+		}
+		$excludes[] = 'lwp-gold-loader-boot-mark';
+		return $excludes;
+	}
+	add_filter( 'litespeed_optm_js_defer_exc', 'luwipress_gold_loader_litespeed_exclude' );
+	add_filter( 'litespeed_optm_js_excludes', 'luwipress_gold_loader_litespeed_exclude' );
 }
 
 if ( ! function_exists( 'luwipress_gold_loader_render' ) ) {

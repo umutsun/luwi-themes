@@ -4,7 +4,7 @@ Theme URI: https://luwi.dev/luwipress
 Author: LuwiPress
 Author URI: https://luwi.dev/luwipress
 Description: LuwiPress-powered, Elementor-ready WooCommerce theme. Tightly integrated with the LuwiPress plugin and companion ecosystem (WebMCP, Marketplace Sync, Open Claw): surfaces AI product search, sticky customer chat, and Knowledge-Graph-curated related products directly on the storefront. Ships with a 23-widget Elementor suite under a "LuwiPress Gold" category — hero split with stats + master quote, YouTube channel + Subscribe button, Instagram channel + Follow button, testimonials carousel with Review schema, FAQ accordion with FAQPage JSON-LD, newsletter signup with CRM detection + GDPR, countdown timer, CTA banner, stat counter with scroll-triggered count-up, process steps, prominent AI search bar, featured product showcase + horizontal strip, plus the KG-Stats and KG-Trending widgets that pull live data from the LuwiPress Knowledge Graph. Includes a Featured Products registry with admin-bar one-click toggle that bubbles into the mega menu, single-product spotlight and homepage strip. Ships with a 12-JSON Elementor Kit (homepage, shop, single product, about, master profile, journal, contact, 404, header, footer, animations) and global tokens (Cormorant Garamond + Inter + JetBrains Mono, gold accent palette).
-Version: 1.7.33
+Version: 1.7.35
 Requires at least: 6.4
 Tested up to: 6.9
 Requires PHP: 8.1

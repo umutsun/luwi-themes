@@ -77,7 +77,15 @@ if ( ! function_exists( 'luwipress_gold_emit_mobile_card_width_override' ) ) {
 		// rules (`.woocommerce ul.products { padding-left: 20px }`).
 		// Instead UL stays full-bleed and grid-justifies its single-
 		// column children to center — see card rule below.
-		echo "html body main ul.products,html body main ul.products[class*=\"columns-\"]{width:100vw!important;max-width:100vw!important;padding:0!important;margin:0!important;grid-template-columns:1fr!important;justify-items:center!important;gap:14px!important}";
+		// 1.7.35 fix — classic break-out negative-margin pattern. Without
+		// it, an Elementor section with `padding-left: 32px` pinned ul
+		// at x=32 while width grew to 100vw, so ul bled 32px past the
+		// viewport's right edge and cards drifted right. `margin: 0
+		// calc(50% - 50vw)` shifts ul left by the parent's offset-from-
+		// viewport-centre — so a 100vw element renders cleanly at
+		// x=0→100vw regardless of how deeply nested the container chain
+		// pads its content.
+		echo "html body main ul.products,html body main ul.products[class*=\"columns-\"]{width:100vw!important;max-width:100vw!important;padding:0!important;margin-top:0!important;margin-bottom:0!important;margin-left:calc(50% - 50vw)!important;margin-right:calc(50% - 50vw)!important;grid-template-columns:1fr!important;justify-items:center!important;gap:14px!important}";
 		// Card surface — uniform 90vw width across product loop cards,
 		// product-category cards, blog post cards (list + archive +
 		// single body), AND single editorial pages (body.page profile
@@ -99,6 +107,13 @@ if ( ! function_exists( 'luwipress_gold_emit_mobile_card_width_override' ) ) {
 		// (descendant selector covers wrapped + class-variant buttons).
 		echo ".woocommerce ul.products li.product,.woocommerce-page ul.products li.product{display:flex!important;flex-direction:column!important;height:100%!important;align-self:stretch!important}";
 		echo ".woocommerce ul.products li.product .button,.woocommerce ul.products li.product a.button,.woocommerce ul.products li.product .add_to_cart_button,.woocommerce ul.products li.product [class*=\"product_type_\"],.woocommerce ul.products li.product .woocommerce-loop-product__buttons{margin-top:auto!important;align-self:stretch!important;box-sizing:border-box!important}";
+		// 1.7.35 — Subcategory tile grid on category archives. The grid
+		// sits directly inside `main.lwp-shop-archive` (no `lwp-page-
+		// container` wrapper) and the container-padding-stripping rule
+		// above leaves it flush to the viewport edges. Add a small
+		// outer gutter on mobile so tiles breathe without changing the
+		// desktop grid (covered by widgets.css `(max-width: 720px)`).
+		echo "html body main.lwp-shop-archive .lwp-archive-subcat-grid{padding-left:12px!important;padding-right:12px!important;box-sizing:border-box!important}";
 		echo "}\n</style>\n";
 	}
 	add_action( 'wp_head', 'luwipress_gold_emit_mobile_card_width_override', 999 );

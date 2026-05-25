@@ -27,3 +27,7 @@ screenshot-original.*
 
 # Local notes
 NOTES.local.md
+
+# Kit JSON migration backups (kept locally for rollback, not source-of-truth)
+*.bak
+*.pre*.bak

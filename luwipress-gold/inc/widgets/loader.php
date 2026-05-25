@@ -80,6 +80,26 @@ add_action( 'elementor/init', function () {
 			'class-featured-strip.php'   => 'LuwiPress_Gold_Widget_Featured_Strip',
 			'class-kg-stats.php'         => 'LuwiPress_Gold_Widget_KG_Stats',
 			'class-kg-trending.php'      => 'LuwiPress_Gold_Widget_KG_Trending',
+			// 1.7.37+ header / footer / chrome widgets
+			'class-topbar.php'           => 'LuwiPress_Gold_Widget_Topbar',
+			'class-logo.php'             => 'LuwiPress_Gold_Widget_Logo',
+			'class-header-actions.php'   => 'LuwiPress_Gold_Widget_Header_Actions',
+			'class-search-overlay.php'   => 'LuwiPress_Gold_Widget_Search_Overlay',
+			'class-footer-brand.php'     => 'LuwiPress_Gold_Widget_Footer_Brand',
+			'class-footer-column.php'    => 'LuwiPress_Gold_Widget_Footer_Column',
+			'class-footer-bottom.php'    => 'LuwiPress_Gold_Widget_Footer_Bottom',
+			// 1.7.38+ shop / single-product widgets
+			'class-shop-filters.php'     => 'LuwiPress_Gold_Widget_Shop_Filters',
+			'class-shop-toolbar.php'     => 'LuwiPress_Gold_Widget_Shop_Toolbar',
+			'class-spec-list.php'        => 'LuwiPress_Gold_Widget_Spec_List',
+			'class-perks-list.php'       => 'LuwiPress_Gold_Widget_Perks_List',
+			// 1.8.0+ journal / 404 widgets (full widgetization milestone)
+			'class-featured-post.php'    => 'LuwiPress_Gold_Widget_Featured_Post',
+			'class-byline-card.php'      => 'LuwiPress_Gold_Widget_Byline_Card',
+			'class-pullquote.php'        => 'LuwiPress_Gold_Widget_Pullquote',
+			'class-reading-progress.php' => 'LuwiPress_Gold_Widget_Reading_Progress',
+			'class-load-more.php'        => 'LuwiPress_Gold_Widget_Load_More',
+			'class-404-hero.php'         => 'LuwiPress_Gold_Widget_404_Hero',
 		];
 
 		foreach ( $widgets as $file => $class ) {

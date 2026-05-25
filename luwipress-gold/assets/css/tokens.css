@@ -564,7 +564,16 @@ body.lwp-layout-boxed .lwp-elementor-page .elementor-section {
 .lwp-site-footer {
 	background: var(--black, #0c0c0c);
 	color: #aaa;
-	margin-top: 96px;
+	margin-top: 0;
+}
+/* html bg locked to footer-black so any leak above topbar or below
+ * footer on short pages reads as the footer band, not a cream flash.
+ * Body keeps the cream page bg so content styling is unaffected.
+ * (1.7.34+ — was margin-top: 96px which stacked on the last Elementor
+ * section's bottom padding and produced a ~150-200px cream band
+ * above the footer on the homepage.) */
+html {
+	background-color: var(--black, #0c0c0c);
 }
 .lwp-site-footer-inner {
 	max-width: var(--content-w, 1372px);

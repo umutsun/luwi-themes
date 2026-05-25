@@ -115,3 +115,30 @@ add_filter( 'woocommerce_get_availability', function ( $availability, $product )
 	$availability['availability'] = '<span class="' . esc_attr( $pill_class ) . '"><span class="lwp-pdp-stock__dot" aria-hidden="true"></span>' . esc_html( $label ) . '</span>';
 	return $availability;
 }, 10, 2 );
+
+/**
+ * Hub-BUG-009 fix (theme 1.7.34+): When a product has manual upsells
+ * set (`_upsell_ids` meta non-empty), WooCommerce renders BOTH the
+ * "You may also like…" upsell block (priority 15) AND the algorithmic
+ * Related Products block (priority 20) at the same time on the single-
+ * product page. They visually stack and read as redundant. Suppress the
+ * algorithmic Related Products when manual upsells exist.
+ *
+ * Filter `luwipress_gold_suppress_related_when_upsells` (default true)
+ * lets operators opt out if they want both sections to coexist.
+ */
+add_action( 'template_redirect', function () {
+	if ( ! is_singular( 'product' ) ) return;
+	if ( ! function_exists( 'wc_get_product' ) ) return;
+
+	$product = wc_get_product( get_the_ID() );
+	if ( ! $product ) return;
+
+	$upsell_ids = $product->get_upsell_ids();
+	if ( empty( $upsell_ids ) ) return;
+
+	$suppress = apply_filters( 'luwipress_gold_suppress_related_when_upsells', true, $product );
+	if ( ! $suppress ) return;
+
+	remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_output_related_products', 20 );
+}, 20 );

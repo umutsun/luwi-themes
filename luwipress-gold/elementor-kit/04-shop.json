@@ -9,21 +9,42 @@
       "settings": {
         "background_background": "classic",
         "background_color": "#FAF6EE",
-        "padding": { "unit": "px", "top": "60", "right": "32", "bottom": "60", "left": "32", "isLinked": false },
-        "content_width": { "unit": "px", "size": 1372 }
+        "padding": {
+          "unit": "px",
+          "top": "60",
+          "right": "32",
+          "bottom": "40",
+          "left": "32",
+          "isLinked": false
+        },
+        "structure": "10"
       },
       "elements": [
         {
           "id": "tap_shop_hero_col",
           "elType": "column",
-          "settings": { "_column_size": 100 },
+          "settings": {
+            "_column_size": 100
+          },
           "elements": [
             {
-              "id": "tap_shop_hero_html",
+              "id": "5ed59390",
               "elType": "widget",
-              "widgetType": "html",
+              "widgetType": "lwp-section-head",
               "settings": {
-                "html": "<div class=\"tap-shop-hero\"><div class=\"tap-breadcrumb\"><a href=\"/\">Home</a> <span>›</span> <span>Shop</span></div><span class=\"tap-eyebrow\">— Catalogue · 240 instruments</span><h1 class=\"tap-h1\" style=\"font-size:60px\">All hand-tuned, signed<br>and ready to ship.</h1><p class=\"tap-lead\" style=\"max-width:680px\">Filter by family, master, country or price. Every instrument is set up in our atelier before dispatch.</p></div><style>.tap-shop-hero{display:flex;flex-direction:column;gap:14px}.tap-breadcrumb{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:#8b7f6a;text-transform:uppercase;margin-bottom:8px}.tap-breadcrumb a{color:#8b7f6a;text-decoration:none}.tap-breadcrumb a:hover{color:#9A7B3A}.tap-breadcrumb span:nth-child(2){color:#bbb;margin:0 4px}</style>"
+                "eyebrow": "Catalogue · {{LWP:product_count}} instruments",
+                "heading": "All hand-tuned, signed\nand [em]ready to ship[/em].",
+                "heading_tag": "h1",
+                "variant": "light",
+                "pills": []
+              }
+            },
+            {
+              "id": "b38d4b7c",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "<p class=\"lwp-lead\" style=\"max-width:680px;font-family:'Inter',sans-serif;font-size:16px;line-height:1.6;color:#3a342c;\">Filter by family, master, country or price. Every instrument is set up in our atelier before dispatch.</p>"
               }
             }
           ]
@@ -34,48 +55,66 @@
       "id": "tap_shop_main",
       "elType": "section",
       "settings": {
-        "structure": "20",
-        "background_background": "classic",
-        "background_color": "#FFFFFF",
-        "padding": { "unit": "px", "top": "60", "right": "32", "bottom": "100", "left": "32", "isLinked": false },
-        "content_width": { "unit": "px", "size": 1372 },
-        "gap": "extended"
+        "padding": {
+          "unit": "px",
+          "top": "32",
+          "right": "32",
+          "bottom": "64",
+          "left": "32",
+          "isLinked": false
+        },
+        "structure": "23"
       },
       "elements": [
         {
-          "id": "tap_shop_sidebar",
+          "id": "tap_shop_filters_col",
           "elType": "column",
-          "settings": { "_column_size": 25, "_inline_size": 22 },
+          "settings": {
+            "_column_size": 25
+          },
           "elements": [
             {
-              "id": "tap_shop_filters",
+              "id": "da913461",
               "elType": "widget",
-              "widgetType": "html",
+              "widgetType": "lwp-shop-filters",
               "settings": {
-                "html": "<aside class=\"tap-filters\">\n  <div class=\"tap-fl-block\"><h5>Family</h5><label><input type=\"checkbox\" checked> String <span>62</span></label><label><input type=\"checkbox\"> Percussions <span>48</span></label><label><input type=\"checkbox\"> Bowed <span>28</span></label><label><input type=\"checkbox\"> Winds <span>36</span></label><label><input type=\"checkbox\"> Accessories <span>52</span></label></div>\n  <div class=\"tap-fl-block\"><h5>Master luthier</h5><label><input type=\"checkbox\"> Feramis Aktas <span>42</span></label><label><input type=\"checkbox\"> Yildirim Palabiyik <span>68</span></label><label><input type=\"checkbox\"> Hamid <span>31</span></label><label><input type=\"checkbox\"> A. Golestani <span>22</span></label><a href=\"#\" class=\"tap-fl-more\">+ 22 more</a></div>\n  <div class=\"tap-fl-block\"><h5>Origin</h5><label><input type=\"checkbox\"> Turkey <span>118</span></label><label><input type=\"checkbox\"> Iran <span>54</span></label><label><input type=\"checkbox\"> Egypt <span>32</span></label><label><input type=\"checkbox\"> In-house <span>36</span></label></div>\n  <div class=\"tap-fl-block\"><h5>Price</h5><div class=\"tap-fl-range\"><span>€229</span><input type=\"range\" min=\"229\" max=\"3500\" value=\"3500\"><span>€3,500</span></div></div>\n  <div class=\"tap-fl-block\"><h5>Availability</h5><label><input type=\"checkbox\"> In stock <span>198</span></label><label><input type=\"checkbox\"> Pre-order <span>14</span></label><label><input type=\"checkbox\"> Made to order <span>28</span></label></div>\n  <button class=\"tap-fl-clear\">Clear all filters ×</button>\n</aside>\n<style>\n.tap-filters{display:flex;flex-direction:column;gap:24px;position:sticky;top:120px}\n.tap-fl-block{display:flex;flex-direction:column;gap:8px;padding-bottom:20px;border-bottom:1px solid #E8DFC8}\n.tap-fl-block h5{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:#1A1612;font-weight:600;margin:0 0 6px}\n.tap-fl-block label{display:flex;align-items:center;gap:10px;font-family:'Inter',sans-serif;font-size:13px;color:#3a342c;cursor:pointer;padding:4px 0}\n.tap-fl-block label:hover{color:#9A7B3A}\n.tap-fl-block label input{accent-color:#9A7B3A}\n.tap-fl-block label span{margin-left:auto;color:#8b7f6a;font-size:11px;font-variant-numeric:tabular-nums}\n.tap-fl-more{font-family:'Inter',sans-serif;font-size:12px;color:#9A7B3A;text-decoration:none;margin-top:4px}\n.tap-fl-range{display:flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#3a342c}\n.tap-fl-range input{flex:1;accent-color:#9A7B3A}\n.tap-fl-clear{padding:12px;background:transparent;border:1px solid #E8DFC8;border-radius:6px;font-family:'Inter',sans-serif;font-size:12px;color:#8b7f6a;cursor:pointer;letter-spacing:.04em}\n.tap-fl-clear:hover{border-color:#C84B3A;color:#C84B3A}\n@media(max-width:1024px){.tap-filters{position:static}}\n</style>"
+                "show_category": "yes",
+                "label_category": "Family",
+                "show_price": "yes",
+                "label_price": "Price",
+                "show_stock": "yes",
+                "label_stock": "Availability",
+                "apply_label": "Apply filters",
+                "clear_label": "Clear all",
+                "custom_blocks": []
               }
             }
           ]
         },
         {
-          "id": "tap_shop_results",
+          "id": "tap_shop_main_col",
           "elType": "column",
-          "settings": { "_column_size": 75, "_inline_size": 78 },
+          "settings": {
+            "_column_size": 75
+          },
           "elements": [
             {
-              "id": "tap_shop_toolbar",
+              "id": "2eb9ba07",
               "elType": "widget",
-              "widgetType": "html",
+              "widgetType": "lwp-shop-toolbar",
               "settings": {
-                "html": "<div class=\"tap-shop-toolbar\"><div><strong>240 results</strong> <span>· filtered: String</span></div><div class=\"tap-shop-tools\"><div class=\"tap-view-toggle\"><button class=\"on\" aria-label=\"Grid\">▦</button><button aria-label=\"List\">≡</button></div><select class=\"tap-sort\"><option>Sort: Featured</option><option>Newest</option><option>Price ↑</option><option>Price ↓</option><option>Most reviewed</option></select></div></div><style>.tap-shop-toolbar{display:flex;justify-content:space-between;align-items:center;padding-bottom:18px;border-bottom:1px solid #E8DFC8;margin-bottom:24px;flex-wrap:wrap;gap:14px;font-family:'Inter',sans-serif;font-size:14px;color:#3a342c}.tap-shop-toolbar strong{font-weight:600;color:#1A1612}.tap-shop-toolbar span{color:#8b7f6a;font-size:13px}.tap-shop-tools{display:flex;gap:12px;align-items:center}.tap-view-toggle{display:inline-flex;border:1px solid #E8DFC8;border-radius:6px;overflow:hidden}.tap-view-toggle button{width:36px;height:36px;border:0;background:#fff;cursor:pointer;color:#8b7f6a}.tap-view-toggle button.on{background:#1A1612;color:#fff}.tap-sort{padding:9px 14px;border:1px solid #E8DFC8;border-radius:6px;background:#fff;font-family:'Inter',sans-serif;font-size:13px;color:#1A1612;cursor:pointer}</style>"
+                "show_count": "yes",
+                "count_template": "%d results",
+                "show_view_toggle": "yes",
+                "show_sort": "yes"
               }
             },
             {
-              "id": "tap_shop_grid",
+              "id": "f9607310",
               "elType": "widget",
               "widgetType": "shortcode",
               "settings": {
-                "shortcode": "[products limit=\"12\" columns=\"3\" paginate=\"true\" class=\"tap-products\"]"
+                "shortcode": "[products limit=\"24\" columns=\"3\" paginate=\"true\"]"
               }
             }
           ]
@@ -83,5 +122,8 @@
       ]
     }
   ],
-  "page_settings": { "template": "elementor_canvas", "page_title": "hide" }
+  "page_settings": {
+    "template": "elementor_header_footer",
+    "page_title": "false"
+  }
 }

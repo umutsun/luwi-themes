@@ -24,13 +24,48 @@ add_action( 'wp_enqueue_scripts', function () {
 
 	// Animation layer — page loader, scroll reveal, cart bump.
 	// Scripts only; respects prefers-reduced-motion at the JS layer.
+	//
+	// LiteSpeed's "Remove Query Strings" option strips `?ver=` from asset
+	// URLs for CDN cacheability — but it ALSO means edge caches (Hostinger
+	// / Cloudflare / disk cache) serve the very FIRST version of each file
+	// ever served, even after we deploy a new ZIP. Bake a filemtime cache
+	// buster directly into the URL using a non-`?ver=` query name that LS
+	// doesn't strip. Pass null as the 4th arg so WP doesn't append its own
+	// `?ver=` on top.
+	$frontend_path = get_template_directory() . '/assets/js/frontend.js';
+	$frontend_url  = LUWIPRESS_GOLD_URI . '/assets/js/frontend.js';
+	if ( file_exists( $frontend_path ) ) {
+		$frontend_url .= '?cb=' . $ver . '.' . filemtime( $frontend_path );
+	} else {
+		$frontend_url .= '?cb=' . $ver;
+	}
 	wp_enqueue_script(
 		'luwipress-gold-frontend',
-		LUWIPRESS_GOLD_URI . '/assets/js/frontend.js',
+		$frontend_url,
 		[],
-		$ver,
+		null,  // Don't let WP append ?ver= (LS strips it anyway)
 		true
 	);
+
+	// LiteSpeed exclusion — when "Delay JS Until User Interaction" is active,
+	// LS rewrites our script tag to type="litespeed/javascript" which the
+	// browser ignores until user clicks/touches/scrolls. That kills every
+	// widget interaction (search overlay, reading progress, view toggle,
+	// load-more, etc). Excluding by handle keeps the script as text/javascript
+	// so the deferred boot inside frontend.js fires on the first page load.
+	// Belt-and-braces: also add to attributes filter so LS Optimize doesn't
+	// rewrite the tag attributes.
+	add_filter( 'script_loader_tag', function ( $tag, $handle ) {
+		if ( $handle === 'luwipress-gold-frontend' ) {
+			// Add LS-specific opt-out attributes
+			$tag = str_replace(
+				' src=',
+				' data-no-optimize="1" data-no-defer="true" data-cfasync="false" src=',
+				$tag
+			);
+		}
+		return $tag;
+	}, 10, 2 );
 
 	// Shop archive surfaces — price slider script + load-more (1.7.0+).
 	// the_widget() doesn't trigger the WC widget's automatic enqueue path,
@@ -62,6 +97,34 @@ add_action( 'wp_enqueue_scripts', function () {
 		}
 	}
 }, 20 );
+
+/**
+ * LiteSpeed JS-defer/delay exclusion for our frontend bundle.
+ *
+ * When "Delay JS Until User Interaction" is enabled in LSCWP, deferred
+ * scripts get rewritten to type="litespeed/javascript" — browsers don't
+ * execute them until user interacts. That means our widget JS layer
+ * (search overlay, reading progress, view toggle, load-more, mobile
+ * drawer) is dead on first page render.
+ *
+ * The fix: tell LS to skip optimization for the frontend.js handle by
+ * registering the JS path as an exclude rule. LS checks each script tag's
+ * src against this list during its optimization pass.
+ */
+if ( ! function_exists( 'luwipress_gold_frontend_litespeed_exclude' ) ) {
+	function luwipress_gold_frontend_litespeed_exclude( $excludes ) {
+		if ( ! is_array( $excludes ) ) {
+			$excludes = array();
+		}
+		$excludes[] = 'luwipress-gold/assets/js/frontend.js';
+		$excludes[] = 'luwipress-gold-frontend';  // handle-based match for some LS builds
+		return $excludes;
+	}
+	add_filter( 'litespeed_optm_js_defer_exc', 'luwipress_gold_frontend_litespeed_exclude' );
+	add_filter( 'litespeed_optm_js_excludes',  'luwipress_gold_frontend_litespeed_exclude' );
+	// Some LS builds also expose a dedicated "Delay JS" exclusion filter.
+	add_filter( 'litespeed_optm_js_delay_inc', 'luwipress_gold_frontend_litespeed_exclude' );
+}
 
 /**
  * Localise the WooCommerce category tree on its own dedicated hook

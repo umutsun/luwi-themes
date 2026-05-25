@@ -19,10 +19,14 @@ $lead        = '';
 $current_obj = get_queried_object();
 $is_term     = $current_obj instanceof WP_Term;
 if ( $is_term ) {
-	$desc = term_description( $current_obj->term_id, $current_obj->taxonomy );
-	if ( $desc ) {
-		$lead = wp_strip_all_tags( $desc );
-	}
+	// `term_description()` already runs wptexturize / wpautop / shortcode
+	// processing via the `term_description` filter, so $desc arrives wrapped
+	// in `<p>` tags. Keep the HTML intact — the renderer below pipes it
+	// through `wp_kses_post()` so anchor tags, basic emphasis, and lists
+	// survive while scripts / event handlers / iframes are still blocked.
+	// The previous `wp_strip_all_tags()` here was destroying every internal
+	// link operators authored into category descriptions for SEO/AEO.
+	$lead = $is_term ? (string) term_description( $current_obj->term_id, $current_obj->taxonomy ) : '';
 }
 
 // Category image — native WC product_cat thumbnail when available, else
@@ -105,7 +109,7 @@ if ( $is_term && 'product_cat' === $current_obj->taxonomy ) {
 				<?php endif; ?>
 				<h1 class="lwp-page-title"><?php echo wp_kses_post( $title ); ?></h1>
 				<?php if ( $lead ) : ?>
-					<p class="lwp-page-lead"><?php echo esc_html( $lead ); ?></p>
+					<div class="lwp-page-lead"><?php echo wp_kses_post( $lead ); ?></div>
 				<?php endif; ?>
 				<?php
 				/**

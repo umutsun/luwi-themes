@@ -4,134 +4,402 @@
   "type": "footer",
   "content": [
     {
-      "id": "tap_newsletter",
+      "id": "tap_f_news",
       "elType": "section",
       "settings": {
         "background_background": "classic",
         "background_color": "#FAF6EE",
-        "padding": { "unit": "px", "top": "64", "right": "32", "bottom": "64", "left": "32", "isLinked": false },
-        "content_width": { "unit": "px", "size": 1372 }
+        "padding": {
+          "unit": "px",
+          "top": "64",
+          "right": "32",
+          "bottom": "64",
+          "left": "32",
+          "isLinked": false
+        },
+        "structure": "10"
       },
       "elements": [
         {
-          "id": "tap_news_col",
+          "id": "tap_f_news_col",
           "elType": "column",
-          "settings": { "_column_size": 100, "content_position": "center" },
+          "settings": {
+            "_column_size": 100,
+            "content_position": "center"
+          },
           "elements": [
             {
-              "id": "tap_news_html",
+              "id": "371c525d",
               "elType": "widget",
-              "widgetType": "html",
+              "widgetType": "lwp-newsletter",
               "settings": {
-                "html": "<div class=\"tap-newsletter\">\n  <span class=\"tap-news-eyebrow\">Atelier dispatch</span>\n  <h2 class=\"tap-news-title\">News from the workshop, twice a month.</h2>\n  <p class=\"tap-news-sub\">New instruments, master interviews, and tuning sessions — straight from Brisighella to your inbox.</p>\n  <form class=\"tap-news-form\" onsubmit=\"event.preventDefault();this.querySelector('button').textContent='✓ Subscribed';setTimeout(()=>this.reset(),2000);\">\n    <input type=\"email\" placeholder=\"your@email.com\" required>\n    <button type=\"submit\">Subscribe →</button>\n  </form>\n  <span class=\"tap-news-fine\">No spam · unsubscribe anytime</span>\n</div>\n<style>\n.tap-newsletter{max-width:640px;margin:0 auto;text-align:center;display:flex;flex-direction:column;gap:14px;align-items:center}\n.tap-news-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.18em;color:#9A7B3A}\n.tap-news-title{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:500;color:#1A1612;margin:0;line-height:1.15}\n.tap-news-sub{font-family:'Inter',sans-serif;font-size:15px;color:#3a342c;margin:0;max-width:520px;line-height:1.6}\n.tap-news-form{display:flex;gap:8px;width:100%;max-width:480px;margin-top:12px}\n.tap-news-form input{flex:1;padding:14px 18px;border:1px solid #E8DFC8;border-radius:8px;background:#fff;font-family:'Inter',sans-serif;font-size:14px;color:#1A1612;outline:0;transition:border-color .18s}\n.tap-news-form input:focus{border-color:#9A7B3A}\n.tap-news-form button{padding:14px 24px;background:#1A1612;color:#fff;border:0;border-radius:8px;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;cursor:pointer;letter-spacing:.02em;transition:background .18s}\n.tap-news-form button:hover{background:#9A7B3A}\n.tap-news-fine{font-family:'JetBrains Mono',monospace;font-size:11px;color:#8b7f6a;letter-spacing:.06em}\n@media(max-width:600px){.tap-news-title{font-size:32px}.tap-news-form{flex-direction:column}}\n</style>"
+                "eyebrow": "Atelier dispatch",
+                "heading": "News from the workshop, twice a month.",
+                "sub": "New instruments, master interviews, and tuning sessions — straight from {{LWP:brand_city}} to your inbox.",
+                "placeholder": "your@email.com",
+                "button_text": "Subscribe →",
+                "success_message": "Subscribed — talk soon.",
+                "fine_print": "No spam · unsubscribe anytime"
               }
             }
           ]
         }
       ]
     },
-
     {
-      "id": "tap_footer_top",
+      "id": "tap_f_main",
       "elType": "section",
       "settings": {
-        "structure": "44",
         "background_background": "classic",
-        "background_color": "#1A1612",
-        "padding": { "unit": "px", "top": "72", "right": "32", "bottom": "48", "left": "32", "isLinked": false },
-        "content_width": { "unit": "px", "size": 1372 },
-        "gap": "extended"
+        "background_color": "#0c0c0c",
+        "padding": {
+          "unit": "px",
+          "top": "64",
+          "right": "32",
+          "bottom": "32",
+          "left": "32",
+          "isLinked": false
+        },
+        "structure": "40"
       },
       "elements": [
         {
-          "id": "tap_foot_brand",
+          "id": "tap_f_main_c1",
           "elType": "column",
-          "settings": { "_column_size": 30 },
+          "settings": {
+            "_column_size": 25
+          },
           "elements": [
             {
-              "id": "tap_foot_brand_html",
+              "id": "df4d5714",
               "elType": "widget",
-              "widgetType": "html",
+              "widgetType": "lwp-footer-brand",
               "settings": {
-                "html": "<div class=\"tap-foot-brand\">\n  <a href=\"/\" class=\"tap-foot-logo\">tapad<span>u</span>m</a>\n  <p>Master luthiers from Istanbul, Tehran &amp; Cairo — atelier in Brisighella, Italy. Every instrument signed, tuned and packed by hand.</p>\n  <div class=\"tap-foot-contact\">\n    <a href=\"tel:+393479746257\">+39 347 974 6257</a>\n    <a href=\"mailto:info@tapadum.com\">info@tapadum.com</a>\n    <span>Via degli Asini, 12 · Brisighella, RA</span>\n  </div>\n  <div class=\"tap-foot-social\">\n    <a href=\"#\" aria-label=\"Instagram\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect width=\"20\" height=\"20\" x=\"2\" y=\"2\" rx=\"5\"/><circle cx=\"12\" cy=\"12\" r=\"4\"/><path d=\"M17.5 6.5h.01\"/></svg></a>\n    <a href=\"#\" aria-label=\"YouTube\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M2.5 17a24 24 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49 49 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24 24 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49 49 0 0 1-16.2 0A2 2 0 0 1 2.5 17\"/><path d=\"m10 15 5-3-5-3z\" fill=\"currentColor\"/></svg></a>\n    <a href=\"#\" aria-label=\"Spotify\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M8 11.5c4-1 8-1 11.5 1\"/><path d=\"M8 14.5c3-1 6-1 9 1\"/><path d=\"M8 8.5c5-1 10-1 13.5 2\"/></svg></a>\n    <a href=\"#\" aria-label=\"WhatsApp\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M3 21l1.5-4.5a8.5 8.5 0 1 1 3 3L3 21\"/><path d=\"M9 10s.5 2 1.5 3 3 1.5 3 1.5l1.5-1.5L17 14l-.5 1.5s-1.5 1.5-3 1.5-4.5-1.5-6-3.5S6 9 6 8s1.5-1.5 1.5-1.5L9 8.5z\"/></svg></a>\n  </div>\n</div>\n<style>\n.tap-foot-brand{display:flex;flex-direction:column;gap:18px;color:#a89d85}\n.tap-foot-logo{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:36px;color:#fff;text-decoration:none;letter-spacing:-.5px;line-height:1}\n.tap-foot-logo span{color:#D4AF37;font-style:italic}\n.tap-foot-brand p{font-family:'Inter',sans-serif;font-size:14px;line-height:1.7;color:#a89d85;margin:0}\n.tap-foot-contact{display:flex;flex-direction:column;gap:6px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.04em}\n.tap-foot-contact a{color:#fff;text-decoration:none}\n.tap-foot-contact a:hover{color:#D4AF37}\n.tap-foot-contact span{color:#a89d85}\n.tap-foot-social{display:flex;gap:10px;margin-top:6px}\n.tap-foot-social a{width:36px;height:36px;border-radius:50%;border:1px solid #3a342c;display:inline-flex;align-items:center;justify-content:center;color:#a89d85;text-decoration:none;transition:all .18s}\n.tap-foot-social a:hover{border-color:#D4AF37;color:#D4AF37;transform:translateY(-2px)}\n</style>"
+                "logo_image": {
+                  "url": ""
+                },
+                "logo_text": "{{LWP:brand_name}}",
+                "accent_index": 5,
+                "logo_url": {
+                  "url": "/"
+                },
+                "tagline": "{{LWP:brand_tagline}}",
+                "phone": "{{LWP:brand_phone}}",
+                "email": "{{LWP:brand_email}}",
+                "address": "{{LWP:brand_address}}",
+                "socials": [
+                  {
+                    "_id": "4c04548c",
+                    "network": "instagram",
+                    "url": {
+                      "url": "{{LWP:social_instagram}}"
+                    }
+                  },
+                  {
+                    "_id": "9cb56fa8",
+                    "network": "youtube",
+                    "url": {
+                      "url": "{{LWP:social_youtube}}"
+                    }
+                  },
+                  {
+                    "_id": "75379c6a",
+                    "network": "spotify",
+                    "url": {
+                      "url": "{{LWP:social_spotify}}"
+                    }
+                  },
+                  {
+                    "_id": "9781b147",
+                    "network": "whatsapp",
+                    "url": {
+                      "url": "{{LWP:social_whatsapp}}"
+                    }
+                  }
+                ]
               }
             }
           ]
         },
         {
-          "id": "tap_foot_col_shop",
+          "id": "tap_f_main_c2",
           "elType": "column",
-          "settings": { "_column_size": 24 },
+          "settings": {
+            "_column_size": 25
+          },
           "elements": [
             {
-              "id": "tap_foot_shop_html",
+              "id": "00d7510e",
               "elType": "widget",
-              "widgetType": "html",
+              "widgetType": "lwp-footer-column",
               "settings": {
-                "html": "<div class=\"tap-foot-col\"><h6>Shop</h6><ul><li><a href=\"/category/string\">String instruments</a></li><li><a href=\"/category/percussions\">Percussions</a></li><li><a href=\"/category/bowed\">Bowed</a></li><li><a href=\"/category/winds\">Winds</a></li><li><a href=\"/category/accessories\">Accessories</a></li><li><a href=\"/customs\">Customs</a></li><li><a href=\"/birthday-sale\" class=\"hot\">Birthday sale</a></li></ul></div><style>.tap-foot-col h6{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:#fff;font-weight:600;margin:0 0 18px;border-bottom:1px solid #3a342c;padding-bottom:12px}.tap-foot-col ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}.tap-foot-col a{color:#a89d85;text-decoration:none;font-family:'Inter',sans-serif;font-size:13px;transition:color .15s}.tap-foot-col a:hover{color:#fff}.tap-foot-col a.hot{color:#D4AF37}</style>"
+                "heading": "Shop",
+                "links": [
+                  {
+                    "_id": "1ac5f9f2",
+                    "label": "{{LWP:cat_1_label}}",
+                    "url": {
+                      "url": "{{LWP:cat_1_url}}"
+                    },
+                    "hot": ""
+                  },
+                  {
+                    "_id": "c69f9e6b",
+                    "label": "{{LWP:cat_2_label}}",
+                    "url": {
+                      "url": "{{LWP:cat_2_url}}"
+                    },
+                    "hot": ""
+                  },
+                  {
+                    "_id": "9e1b5fb2",
+                    "label": "{{LWP:cat_3_label}}",
+                    "url": {
+                      "url": "{{LWP:cat_3_url}}"
+                    },
+                    "hot": ""
+                  },
+                  {
+                    "_id": "2d224eee",
+                    "label": "{{LWP:cat_4_label}}",
+                    "url": {
+                      "url": "{{LWP:cat_4_url}}"
+                    },
+                    "hot": ""
+                  },
+                  {
+                    "_id": "6dbac4b6",
+                    "label": "Accessories",
+                    "url": {
+                      "url": "/category/accessories"
+                    },
+                    "hot": ""
+                  },
+                  {
+                    "_id": "aefb85d8",
+                    "label": "{{LWP:sale_label}}",
+                    "url": {
+                      "url": "{{LWP:sale_url}}"
+                    },
+                    "hot": "yes"
+                  }
+                ]
               }
             }
           ]
         },
         {
-          "id": "tap_foot_col_atelier",
+          "id": "tap_f_main_c3",
           "elType": "column",
-          "settings": { "_column_size": 23 },
+          "settings": {
+            "_column_size": 25
+          },
           "elements": [
             {
-              "id": "tap_foot_atelier_html",
+              "id": "f2ca3355",
               "elType": "widget",
-              "widgetType": "html",
+              "widgetType": "lwp-footer-column",
               "settings": {
-                "html": "<div class=\"tap-foot-col\"><h6>Atelier</h6><ul><li><a href=\"/about\">Our story</a></li><li><a href=\"/masters\">Master luthiers</a></li><li><a href=\"/journal\">Journal</a></li><li><a href=\"/academy\">Academy</a></li><li><a href=\"/visit\">Visit Brisighella</a></li><li><a href=\"/press\">Press</a></li></ul></div>"
+                "heading": "Atelier",
+                "links": [
+                  {
+                    "_id": "5e7bed6a",
+                    "label": "Our story",
+                    "url": {
+                      "url": "/about"
+                    },
+                    "hot": ""
+                  },
+                  {
+                    "_id": "76ba7f11",
+                    "label": "Master luthiers",
+                    "url": {
+                      "url": "/masters"
+                    },
+                    "hot": ""
+                  },
+                  {
+                    "_id": "7e1c928c",
+                    "label": "Journal",
+                    "url": {
+                      "url": "/journal"
+                    },
+                    "hot": ""
+                  },
+                  {
+                    "_id": "9cfd323e",
+                    "label": "Academy",
+                    "url": {
+                      "url": "/academy"
+                    },
+                    "hot": ""
+                  },
+                  {
+                    "_id": "7fc2c6b4",
+                    "label": "Visit us",
+                    "url": {
+                      "url": "/visit"
+                    },
+                    "hot": ""
+                  }
+                ]
               }
             }
           ]
         },
         {
-          "id": "tap_foot_col_help",
+          "id": "tap_f_main_c4",
           "elType": "column",
-          "settings": { "_column_size": 23 },
+          "settings": {
+            "_column_size": 25
+          },
           "elements": [
             {
-              "id": "tap_foot_help_html",
+              "id": "dc9120f5",
               "elType": "widget",
-              "widgetType": "html",
+              "widgetType": "lwp-footer-column",
               "settings": {
-                "html": "<div class=\"tap-foot-col\"><h6>Help</h6><ul><li><a href=\"/shipping\">Shipping &amp; delivery</a></li><li><a href=\"/returns\">Returns &amp; warranty</a></li><li><a href=\"/care\">Instrument care</a></li><li><a href=\"/track-order\">Track your order</a></li><li><a href=\"/contact\">Contact</a></li><li><a href=\"/faq\">FAQ</a></li></ul></div>"
+                "heading": "Help",
+                "links": [
+                  {
+                    "_id": "0b884781",
+                    "label": "Shipping & delivery",
+                    "url": {
+                      "url": "/shipping"
+                    },
+                    "hot": ""
+                  },
+                  {
+                    "_id": "20bf24ba",
+                    "label": "Returns & warranty",
+                    "url": {
+                      "url": "/returns"
+                    },
+                    "hot": ""
+                  },
+                  {
+                    "_id": "056f5afa",
+                    "label": "Instrument care",
+                    "url": {
+                      "url": "/care"
+                    },
+                    "hot": ""
+                  },
+                  {
+                    "_id": "a0cc9273",
+                    "label": "Track your order",
+                    "url": {
+                      "url": "/track-order"
+                    },
+                    "hot": ""
+                  },
+                  {
+                    "_id": "f4bd48be",
+                    "label": "Contact",
+                    "url": {
+                      "url": "/contact"
+                    },
+                    "hot": ""
+                  },
+                  {
+                    "_id": "25bcd419",
+                    "label": "FAQ",
+                    "url": {
+                      "url": "/faq"
+                    },
+                    "hot": ""
+                  }
+                ]
               }
             }
           ]
         }
       ]
     },
-
     {
-      "id": "tap_footer_bottom",
+      "id": "tap_f_bot",
       "elType": "section",
       "settings": {
         "background_background": "classic",
-        "background_color": "#0e0a06",
-        "padding": { "unit": "px", "top": "20", "right": "32", "bottom": "20", "left": "32", "isLinked": false },
-        "content_width": { "unit": "px", "size": 1372 }
+        "background_color": "#0c0c0c",
+        "padding": {
+          "unit": "px",
+          "top": "0",
+          "right": "32",
+          "bottom": "24",
+          "left": "32",
+          "isLinked": false
+        },
+        "structure": "10"
       },
       "elements": [
         {
-          "id": "tap_foot_bot_col",
+          "id": "tap_f_bot_col",
           "elType": "column",
-          "settings": { "_column_size": 100 },
+          "settings": {
+            "_column_size": 100
+          },
           "elements": [
             {
-              "id": "tap_foot_bot_html",
+              "id": "3fd795b2",
               "elType": "widget",
-              "widgetType": "html",
+              "widgetType": "lwp-footer-bottom",
               "settings": {
-                "html": "<div class=\"tap-foot-bot\">\n  <div class=\"tap-foot-bot-l\">\n    <span>© 2025 Tapadum SRL · P.IVA 02145990394</span>\n    <a href=\"/privacy\">Privacy</a>\n    <a href=\"/terms\">Terms</a>\n    <a href=\"/cookies\">Cookies</a>\n  </div>\n  <div class=\"tap-foot-bot-r\">\n    <span>Secure payments</span>\n    <span class=\"tap-pay\">VISA</span><span class=\"tap-pay\">MC</span><span class=\"tap-pay\">AMEX</span><span class=\"tap-pay\">PayPal</span><span class=\"tap-pay\">SEPA</span>\n  </div>\n</div>\n<style>\n.tap-foot-bot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.04em;color:#6b6151}\n.tap-foot-bot-l{display:flex;gap:18px;align-items:center;flex-wrap:wrap}\n.tap-foot-bot-l a{color:#6b6151;text-decoration:none}\n.tap-foot-bot-l a:hover{color:#D4AF37}\n.tap-foot-bot-r{display:flex;gap:8px;align-items:center;flex-wrap:wrap}\n.tap-pay{padding:4px 8px;background:#1A1612;border:1px solid #3a342c;border-radius:4px;color:#a89d85;font-size:10px;font-weight:600;letter-spacing:.08em}\n@media(max-width:768px){.tap-foot-bot{justify-content:center;text-align:center}}\n</style>"
+                "copyright": "© %YEAR% {{LWP:brand_legal_name}} · {{LWP:brand_legal_id}}",
+                "legal_links": [
+                  {
+                    "_id": "842d52c5",
+                    "label": "Privacy",
+                    "url": {
+                      "url": "/privacy"
+                    }
+                  },
+                  {
+                    "_id": "febd7801",
+                    "label": "Terms",
+                    "url": {
+                      "url": "/terms"
+                    }
+                  },
+                  {
+                    "_id": "68ff3454",
+                    "label": "Cookies",
+                    "url": {
+                      "url": "/cookies"
+                    }
+                  }
+                ],
+                "pay_label": "Secure payments",
+                "pay_methods": [
+                  {
+                    "_id": "7e5a2b6c",
+                    "label": "VISA"
+                  },
+                  {
+                    "_id": "ea2b3696",
+                    "label": "MC"
+                  },
+                  {
+                    "_id": "293a85b9",
+                    "label": "AMEX"
+                  },
+                  {
+                    "_id": "d30a7dca",
+                    "label": "PayPal"
+                  },
+                  {
+                    "_id": "58ad6abb",
+                    "label": "SEPA"
+                  }
+                ]
               }
             }
           ]
         }
       ]
     }
-  ]
+  ],
+  "page_settings": {
+    "template": "elementor_canvas"
+  }
 }

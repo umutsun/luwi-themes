@@ -1090,11 +1090,7 @@
 			} );
 		} );
 	}
-	if ( document.readyState === 'loading' ) {
-		document.addEventListener( 'DOMContentLoaded', initAudioCards );
-	} else {
-		initAudioCards();
-	}
+	// Boot consolidated via initLwpWidgets() below — LS-rewrite-immune trigger.
 
 	/* ─────────────────────────────────────────────────────────── */
 	/* Reason chips — Mobile Spec §08 (Contact)                    */
@@ -1117,11 +1113,7 @@
 			} );
 		} );
 	}
-	if ( document.readyState === 'loading' ) {
-		document.addEventListener( 'DOMContentLoaded', initReasonChips );
-	} else {
-		initReasonChips();
-	}
+	// Boot consolidated via initLwpWidgets() below — LS-rewrite-immune trigger.
 
 	/* ─────────────────────────────────────────────────────────── */
 	/* Newsletter widget (lwp-nl__form) — AJAX submit              */
@@ -1352,16 +1344,176 @@
 		}, true ); // capture phase — beats other handlers
 	}
 
-	function initLwpWidgets() {
-		initNewsletter();
-		initStatCounters();
-		initCountdowns();
-		initTestimonials();
-		initPdpThumbClicks();
+	// Overlay system — search + mobile drawer (1.7.37)
+	function initOverlays() {
+		var overlays = document.querySelectorAll( '.lwp-overlay[data-lwp-overlay]' );
+		if ( ! overlays.length ) { return; }
+
+		function openOverlay( key ) {
+			overlays.forEach( function ( o ) {
+				if ( o.getAttribute( 'data-lwp-overlay' ) === key ) {
+					o.hidden = false;
+					document.body.classList.add( 'lwp-overlay-open' );
+					var input = o.querySelector( '[data-lwp-search-input]' );
+					if ( input ) { setTimeout( function () { input.focus(); }, 50 ); }
+				}
+			} );
+		}
+		function closeAll() {
+			overlays.forEach( function ( o ) { o.hidden = true; } );
+			document.body.classList.remove( 'lwp-overlay-open' );
+		}
+
+		document.querySelectorAll( '[data-lwp-trigger]' ).forEach( function ( btn ) {
+			btn.addEventListener( 'click', function ( e ) {
+				e.preventDefault();
+				openOverlay( btn.getAttribute( 'data-lwp-trigger' ) );
+			} );
+		} );
+
+		overlays.forEach( function ( o ) {
+			o.addEventListener( 'click', function ( e ) {
+				if ( e.target === o || ( e.target.hasAttribute && e.target.hasAttribute( 'data-lwp-overlay-close' ) )
+					|| ( e.target.closest && e.target.closest( '[data-lwp-overlay-close]' ) ) ) {
+					closeAll();
+				}
+			} );
+		} );
+
+		document.addEventListener( 'keydown', function ( e ) {
+			if ( e.key === 'Escape' ) { closeAll(); }
+		} );
 	}
-	if ( document.readyState === 'loading' ) {
-		document.addEventListener( 'DOMContentLoaded', initLwpWidgets );
-	} else {
+
+	// Shop toolbar grid/list view toggle (1.7.38)
+	function initShopViewToggle() {
+		var btns = document.querySelectorAll( '.lwp-stb__view-btn[data-lwp-view]' );
+		if ( ! btns.length ) { return; }
+		var stored;
+		try { stored = localStorage.getItem( 'lwp-shop-view' ); } catch ( e ) {}
+		if ( stored ) {
+			document.body.classList.remove( 'lwp-view-grid', 'lwp-view-list' );
+			document.body.classList.add( 'lwp-view-' + stored );
+			btns.forEach( function ( b ) {
+				b.classList.toggle( 'is-on', b.getAttribute( 'data-lwp-view' ) === stored );
+			} );
+		}
+		btns.forEach( function ( btn ) {
+			btn.addEventListener( 'click', function ( e ) {
+				e.preventDefault();
+				var view = btn.getAttribute( 'data-lwp-view' );
+				document.body.classList.remove( 'lwp-view-grid', 'lwp-view-list' );
+				document.body.classList.add( 'lwp-view-' + view );
+				btns.forEach( function ( b ) { b.classList.remove( 'is-on' ); } );
+				btn.classList.add( 'is-on' );
+				try { localStorage.setItem( 'lwp-shop-view', view ); } catch ( err ) {}
+			} );
+		} );
+	}
+
+	// Reading progress (1.8.0) — sticky bar tracks scroll-through target element
+	function initReadingProgress() {
+		var bars = document.querySelectorAll( '[data-lwp-reading-progress]' );
+		if ( ! bars.length ) { return; }
+		bars.forEach( function ( wrap ) {
+			var fill   = wrap.querySelector( '.lwp-rp__bar' );
+			if ( ! fill ) { return; }
+			var sel    = wrap.getAttribute( 'data-target' ) || '';
+			var target = sel ? document.querySelector( sel ) : null;
+			function update() {
+				var pct = 0;
+				if ( target ) {
+					var rect = target.getBoundingClientRect();
+					var h    = target.offsetHeight - window.innerHeight;
+					if ( h > 0 ) {
+						pct = Math.min( 100, Math.max( 0, ( -rect.top / h ) * 100 ) );
+					}
+				} else {
+					var doc = document.documentElement;
+					var max = doc.scrollHeight - window.innerHeight;
+					if ( max > 0 ) {
+						pct = Math.min( 100, ( window.scrollY / max ) * 100 );
+					}
+				}
+				fill.style.width = pct.toFixed( 1 ) + '%';
+			}
+			update();
+			window.addEventListener( 'scroll', update, { passive: true } );
+			window.addEventListener( 'resize', update );
+		} );
+	}
+
+	// Load-more — AJAX append (1.8.0)
+	function initLoadMore() {
+		var btns = document.querySelectorAll( '.lwp-lm__btn[data-lwp-loadmore="ajax"]' );
+		if ( ! btns.length ) { return; }
+		btns.forEach( function ( btn ) {
+			btn.addEventListener( 'click', function ( e ) {
+				e.preventDefault();
+				if ( btn.classList.contains( 'is-loading' ) ) return;
+				btn.classList.add( 'is-loading' );
+				var url    = btn.getAttribute( 'href' );
+				var target = document.querySelector( btn.getAttribute( 'data-lwp-target' ) || '' );
+				if ( ! url || ! target ) { btn.classList.remove( 'is-loading' ); return; }
+				fetch( url, { credentials: 'same-origin' } )
+					.then( function ( r ) { return r.text(); } )
+					.then( function ( html ) {
+						var doc = new DOMParser().parseFromString( html, 'text/html' );
+						var newItems = doc.querySelectorAll( btn.getAttribute( 'data-lwp-target' ) + ' > *' );
+						newItems.forEach( function ( it ) { target.appendChild( it.cloneNode( true ) ); } );
+						// Try to update btn to next page or hide
+						var newBtn = doc.querySelector( '.lwp-lm__btn[data-lwp-loadmore="ajax"]' );
+						if ( newBtn ) {
+							btn.href = newBtn.getAttribute( 'href' );
+							btn.textContent = newBtn.textContent;
+							btn.classList.remove( 'is-loading' );
+						} else {
+							btn.style.display = 'none';
+						}
+					} )
+					.catch( function () { btn.classList.remove( 'is-loading' ); } );
+			} );
+		} );
+	}
+
+	function initLwpWidgets() {
+		// Try/catch around each init so a failure in one doesn't stop the rest.
+		try { initNewsletter();      } catch ( e ) {}
+		try { initStatCounters();    } catch ( e ) {}
+		try { initCountdowns();      } catch ( e ) {}
+		try { initTestimonials();    } catch ( e ) {}
+		try { initPdpThumbClicks();  } catch ( e ) {}
+		try { initAudioCards();      } catch ( e ) {}
+		try { initReasonChips();     } catch ( e ) {}
+		try { initOverlays();        } catch ( e ) {}
+		try { initShopViewToggle();  } catch ( e ) {}
+		try { initReadingProgress(); } catch ( e ) {}
+		try { initLoadMore();        } catch ( e ) {}
+	}
+
+	// LiteSpeed JS-optimization rewrites the literal string 'DOMContentLoaded'
+	// to 'DOMContentLiteSpeedLoaded' inside combined bundles — the standard
+	// listener never fires. Boot via FOUR parallel triggers with an
+	// idempotency guard so we run exactly once regardless of LS rewrite,
+	// defer mode, or readyState at script-eval time.
+	var lwpBooted = false;
+	function bootLwpWidgets() {
+		if ( lwpBooted ) { return; }
+		lwpBooted = true;
 		initLwpWidgets();
+	}
+	if ( document.readyState !== 'loading' ) {
+		bootLwpWidgets();
+	} else {
+		// 1. Standard DOMContentLoaded (works when LS doesn't rewrite).
+		document.addEventListener( 'DOMContentLoaded', bootLwpWidgets );
+		// 2. readystatechange — LS doesn't rename this event.
+		document.addEventListener( 'readystatechange', function () {
+			if ( document.readyState !== 'loading' ) { bootLwpWidgets(); }
+		} );
+		// 3. window.load — final safety net.
+		window.addEventListener( 'load', bootLwpWidgets );
+		// 4. Timer fallback — covers extreme defer/rewrite cases.
+		setTimeout( bootLwpWidgets, 100 );
 	}
 })();

@@ -7,41 +7,64 @@
       "id": "tap_ml_hero",
       "elType": "section",
       "settings": {
-        "structure": "20",
+        "structure": "10",
         "background_background": "classic",
         "background_color": "#FAF6EE",
-        "padding": { "unit": "px", "top": "80", "right": "32", "bottom": "80", "left": "32", "isLinked": false },
-        "content_width": { "unit": "px", "size": 1372 },
+        "padding": {
+          "unit": "px",
+          "top": "80",
+          "right": "32",
+          "bottom": "80",
+          "left": "32",
+          "isLinked": false
+        },
+        "content_width": {
+          "unit": "px",
+          "size": 1372
+        },
         "gap": "extended"
       },
       "elements": [
         {
           "id": "tap_ml_hero_l",
           "elType": "column",
-          "settings": { "_column_size": 40 },
+          "settings": {
+            "_column_size": "100"
+          },
           "elements": [
             {
-              "id": "tap_ml_hero_l_html",
+              "id": "c536d05",
               "elType": "widget",
-              "widgetType": "html",
+              "widgetType": "lwp-master-profile",
               "settings": {
-                "html": "<div class=\"tap-ml-portrait\" style=\"background:linear-gradient(135deg,#9a7b3a,#d4af37)\"><span>F</span></div><style>.tap-ml-portrait{aspect-ratio:1/1;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:200px;font-weight:500;box-shadow:0 30px 60px -20px rgba(60,40,0,.4)}</style>"
-              }
-            }
-          ]
-        },
-        {
-          "id": "tap_ml_hero_r",
-          "elType": "column",
-          "settings": { "_column_size": 60, "content_position": "center" },
-          "elements": [
+                "_element_id": "ml_mp_f8ec35",
+                "portrait": {
+                  "url": ""
+                },
+                "fallback_initial": "{{LWP:master_initial}}",
+                "name": "{{LWP:master_name}}",
+                "location": "{{LWP:master_location}}",
+                "specialty": "{{LWP:master_specialty}}",
+                "count": "{{LWP:master_count}}",
+                "show_count": "yes",
+                "profile_url": {
+                  "url": "{{LWP:master_shop_url}}"
+                },
+                "layout": "feature",
+                "gradient_a": "#9a7b3a",
+                "gradient_b": "#d4af37"
+              },
+              "elements": []
+            },
             {
-              "id": "tap_ml_hero_r_html",
+              "id": "6671fc6",
               "elType": "widget",
-              "widgetType": "html",
+              "widgetType": "text-editor",
               "settings": {
-                "html": "<div class=\"tap-breadcrumb\"><a href=\"/\">Home</a> <span>›</span> <a href=\"{{LWP:masters_url}}\">Masters</a> <span>›</span> <span>{{LWP:master_name}}</span></div><span class=\"tap-eyebrow\" style=\"display:block;margin-top:14px\">— Master luthier</span><h1 class=\"tap-h1\" style=\"font-size:72px\">{{LWP:master_name}}</h1><p class=\"tap-lead\" style=\"max-width:680px\">&ldquo;Each oud takes 14 days. The wood decides when it&rsquo;s ready, not me.&rdquo; — Feramis has been building ouds in his Üsküdar workshop since 1996. Tapadum has worked with him since 2018.</p><div class=\"tap-ml-stats\"><div><span class=\"n\">{{LWP:master_count}}</span><span class=\"l\">Instruments in our atelier</span></div></div><div class=\"tap-hero-cta\"><a href=\"/shop?master=feramis\" class=\"tap-btn-primary\">Browse 42 instruments →</a><a href=\"/blog/14-days-with-feramis\" class=\"tap-btn-link\">Read the workshop visit ↗</a></div><style>.tap-ml-stats{display:flex;gap:48px;padding:24px 0;border-top:1px solid #E8DFC8;border-bottom:1px solid #E8DFC8;margin:24px 0}.tap-ml-stats > div{display:flex;flex-direction:column;gap:4px}.tap-ml-stats .n{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:500;color:#1A1612;line-height:1}.tap-ml-stats .l{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#8b7f6a}</style>"
-              }
+                "_element_id": "ml_bio_ca3743",
+                "editor": "<blockquote class=\"lwp-mp-quote\">“{{LWP:master_quote}}”</blockquote><p>{{LWP:master_bio}}</p><p class=\"lwp-mp-cta-row\"><a class=\"lwp-btn lwp-btn--primary\" href=\"{{LWP:master_shop_url}}\">Browse {{LWP:master_count}} instruments →</a> &nbsp; <a class=\"lwp-btn-link\" href=\"{{LWP:master_journal_url}}\">Read the workshop visit →</a></p>"
+              },
+              "elements": []
             }
           ]
         }
@@ -53,31 +76,60 @@
       "settings": {
         "background_background": "classic",
         "background_color": "#FFFFFF",
-        "padding": { "unit": "px", "top": "100", "right": "32", "bottom": "100", "left": "32", "isLinked": false },
-        "content_width": { "unit": "px", "size": 1372 }
+        "padding": {
+          "unit": "px",
+          "top": "100",
+          "right": "32",
+          "bottom": "100",
+          "left": "32",
+          "isLinked": false
+        },
+        "content_width": {
+          "unit": "px",
+          "size": 1372
+        }
       },
       "elements": [
         {
           "id": "tap_ml_works_col",
           "elType": "column",
-          "settings": { "_column_size": 100 },
+          "settings": {
+            "_column_size": 100
+          },
           "elements": [
             {
-              "id": "tap_ml_works_html",
+              "id": "62d14b9",
               "elType": "widget",
-              "widgetType": "html",
-              "settings": { "html": "<div class=\"tap-section-head\"><div><span class=\"tap-eyebrow\">— His work in our catalogue</span><h2 class=\"tap-section-title\">Instruments by Feramis.</h2></div><a href=\"/shop?master=feramis\" class=\"tap-btn-link\">All 42 →</a></div>" }
+              "widgetType": "lwp-section-head",
+              "settings": {
+                "_element_id": "ml_works_sh_607f11",
+                "eyebrow": "His work in our catalogue",
+                "heading": "Instruments by [em]{{LWP:master_name}}[/em].",
+                "heading_tag": "h2",
+                "cta_label": "All {{LWP:master_count}} →",
+                "cta_url": {
+                  "url": "{{LWP:master_shop_url}}"
+                },
+                "variant": "light",
+                "pills": []
+              },
+              "elements": []
             },
             {
               "id": "tap_ml_works_grid",
               "elType": "widget",
               "widgetType": "shortcode",
-              "settings": { "shortcode": "[products limit=\"4\" columns=\"4\" attribute=\"luthier\" terms=\"feramis-aktas\" class=\"tap-products\"]" }
+              "settings": {
+                "shortcode": "[products limit=\"4\" columns=\"4\" attribute=\"luthier\" terms=\"feramis-aktas\" class=\"tap-products\"]"
+              }
             }
           ]
         }
       ]
     }
   ],
-  "page_settings": { "template": "elementor_canvas", "page_title": "hide" }
+  "page_settings": {
+    "template": "elementor_canvas",
+    "page_title": "hide"
+  }
 }

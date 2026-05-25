@@ -1,13 +1,7 @@
 {
   "version": "0.4",
-  "title": "Tapadum — Journal Archive (Theme Builder)",
+  "title": "Tapadum — Journal Archive",
   "type": "archive",
-  "location_settings": {
-    "include": [
-      { "name": "archive", "sub_name": "all", "value": "" },
-      { "name": "archive", "sub_name": "in_category", "value": "" }
-    ]
-  },
   "content": [
     {
       "id": "tap_arc_hero",
@@ -15,21 +9,75 @@
       "settings": {
         "background_background": "classic",
         "background_color": "#FAF6EE",
-        "padding": { "unit": "px", "top": "80", "right": "32", "bottom": "40", "left": "32", "isLinked": false },
-        "content_width": { "unit": "px", "size": 1372 }
+        "padding": {
+          "unit": "px",
+          "top": "60",
+          "right": "32",
+          "bottom": "32",
+          "left": "32",
+          "isLinked": false
+        },
+        "structure": "10"
       },
       "elements": [
         {
           "id": "tap_arc_hero_col",
           "elType": "column",
-          "settings": { "_column_size": 100 },
+          "settings": {
+            "_column_size": 100
+          },
           "elements": [
             {
-              "id": "tap_arc_hero_html",
+              "id": "928fb432",
               "elType": "widget",
-              "widgetType": "html",
+              "widgetType": "lwp-section-head",
               "settings": {
-                "html": "<div class=\"tap-breadcrumb\"><a href=\"/\">Home</a> <span>›</span> <span>Journal</span></div><span class=\"tap-eyebrow\" style=\"display:block;margin-top:14px\">— The Tapadum Journal</span><h1 class=\"tap-h1\" style=\"font-size:60px\">Notes from <em>the workshop</em>.</h1><p class=\"tap-lead\" style=\"max-width:640px;margin-top:14px;font-size:18px;color:#5b554c\">Field reports, master interviews, tuning logs. Updated weekly from Brisighella and Anatolia.</p>"
+                "eyebrow": "The {{LWP:brand_name}} Journal",
+                "heading": "Field notes, workshop visits\nand [em]long reads[/em].",
+                "heading_tag": "h1",
+                "variant": "light",
+                "pills": [
+                  {
+                    "_id": "588d3071",
+                    "label": "All",
+                    "url": {
+                      "url": "/journal"
+                    },
+                    "active": "yes"
+                  },
+                  {
+                    "_id": "61baa880",
+                    "label": "Workshop visits",
+                    "url": {
+                      "url": "/category/workshop-visits"
+                    },
+                    "active": ""
+                  },
+                  {
+                    "_id": "0e5a4a4a",
+                    "label": "Field notes",
+                    "url": {
+                      "url": "/category/field-notes"
+                    },
+                    "active": ""
+                  },
+                  {
+                    "_id": "f0508fce",
+                    "label": "Long reads",
+                    "url": {
+                      "url": "/category/long-reads"
+                    },
+                    "active": ""
+                  },
+                  {
+                    "_id": "0db57c75",
+                    "label": "Tutorials",
+                    "url": {
+                      "url": "/category/tutorials"
+                    },
+                    "active": ""
+                  }
+                ]
               }
             }
           ]
@@ -37,105 +85,38 @@
       ]
     },
     {
-      "id": "tap_arc_chips",
+      "id": "tap_arc_feat",
       "elType": "section",
       "settings": {
-        "background_background": "classic",
-        "background_color": "#FAF6EE",
-        "padding": { "unit": "px", "top": "0", "right": "32", "bottom": "40", "left": "32", "isLinked": false },
-        "content_width": { "unit": "px", "size": 1372 }
-      },
-      "elements": [
-        {
-          "id": "tap_arc_chips_col",
-          "elType": "column",
-          "settings": { "_column_size": 100 },
-          "elements": [
-            {
-              "id": "tap_arc_chips_html",
-              "elType": "widget",
-              "widgetType": "html",
-              "settings": {
-                "html": "<div class=\"tap-pills tap-pills-scroll\" data-luwi=\"category-chips\"><a class=\"on\" href=\"/journal\">All <span class=\"c\">24</span></a><a href=\"/category/masters\">Masters <span class=\"c\">9</span></a><a href=\"/category/tuning\">Tuning <span class=\"c\">6</span></a><a href=\"/category/field-reports\">Field reports <span class=\"c\">5</span></a><a href=\"/category/repair\">Repair <span class=\"c\">4</span></a></div>"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "tap_arc_featured",
-      "elType": "section",
-      "settings": {
-        "background_background": "classic",
-        "background_color": "#FFFFFF",
-        "padding": { "unit": "px", "top": "60", "right": "32", "bottom": "40", "left": "32", "isLinked": false },
-        "content_width": { "unit": "px", "size": 1372 },
-        "structure": "20"
-      },
-      "elements": [
-        {
-          "id": "tap_arc_feat_col1",
-          "elType": "column",
-          "settings": { "_column_size": 60 },
-          "elements": [
-            {
-              "id": "tap_arc_feat_img",
-              "elType": "widget",
-              "widgetType": "html",
-              "settings": {
-                "html": "<a href=\"#featured-post\" class=\"tap-jnl tap-jnl-feat\"><div class=\"tap-jnl-img\" style=\"aspect-ratio:4/3;background:linear-gradient(135deg,#3a2818,#6a4022);position:relative;border-radius:6px\"><span class=\"tap-chip\" style=\"position:absolute;top:14px;left:14px;background:rgba(27,28,28,.78);color:#fff\">Featured</span></div></a>"
-              }
-            }
-          ]
+        "padding": {
+          "unit": "px",
+          "top": "32",
+          "right": "32",
+          "bottom": "32",
+          "left": "32",
+          "isLinked": false
         },
-        {
-          "id": "tap_arc_feat_col2",
-          "elType": "column",
-          "settings": { "_column_size": 40 },
-          "elements": [
-            {
-              "id": "tap_arc_feat_meta",
-              "elType": "widget",
-              "widgetType": "html",
-              "settings": {
-                "html": "<div class=\"tap-jnl-meta\" style=\"display:flex;flex-direction:column;gap:14px;padding:24px 0\"><span class=\"tap-eyebrow\">Masters · 6 min read</span><h2 class=\"tap-h2\" style=\"font-size:34px\">A week with <em>Cengiz Yildirim</em> · Istanbul</h2><p class=\"tap-lead\" style=\"font-size:16px;color:#5b554c\">In which we learn that a soundboard is mostly a question of patience, and patience is mostly a question of coffee.</p><div class=\"tap-byline\" style=\"display:flex;gap:10px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#a89368\"><span>Apr 28, 2026</span><span>·</span><span>Marco T.</span></div><a href=\"#\" class=\"tap-cta-link\">Read story →</a></div>"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "tap_arc_loop",
-      "elType": "section",
-      "settings": {
-        "background_background": "classic",
-        "background_color": "#FFFFFF",
-        "padding": { "unit": "px", "top": "20", "right": "32", "bottom": "40", "left": "32", "isLinked": false },
-        "content_width": { "unit": "px", "size": 1372 }
+        "structure": "10"
       },
       "elements": [
         {
-          "id": "tap_arc_loop_col",
+          "id": "tap_arc_feat_col",
           "elType": "column",
-          "settings": { "_column_size": 100 },
+          "settings": {
+            "_column_size": 100
+          },
           "elements": [
             {
-              "id": "tap_arc_loop_widget",
+              "id": "61155282",
               "elType": "widget",
-              "widgetType": "posts",
+              "widgetType": "lwp-featured-post",
               "settings": {
-                "posts_per_page": 9,
-                "skin": "classic",
-                "columns": 3,
-                "image_size": "medium_large",
+                "source": "auto-sticky",
+                "post_type": "post",
+                "image_side": "left",
                 "show_excerpt": "yes",
-                "excerpt_length": 22,
-                "show_meta_data": ["date", "author"],
-                "show_read_more": "yes",
-                "read_more_text": "Read →",
-                "_luwi_note": "On mobile (≤768px), CSS overrides switch to image-left list rows; see mobile-spec/styles.css .post-list-row pattern."
+                "show_meta": "yes",
+                "cta_label": "Read on →"
               }
             }
           ]
@@ -143,26 +124,44 @@
       ]
     },
     {
-      "id": "tap_arc_more",
+      "id": "tap_arc_grid",
       "elType": "section",
       "settings": {
-        "background_background": "classic",
-        "background_color": "#FFFFFF",
-        "padding": { "unit": "px", "top": "20", "right": "32", "bottom": "120", "left": "32", "isLinked": false },
-        "content_width": { "unit": "px", "size": 1372 }
+        "padding": {
+          "unit": "px",
+          "top": "32",
+          "right": "32",
+          "bottom": "80",
+          "left": "32",
+          "isLinked": false
+        },
+        "structure": "10"
       },
       "elements": [
         {
-          "id": "tap_arc_more_col",
+          "id": "tap_arc_grid_col",
           "elType": "column",
-          "settings": { "_column_size": 100, "align": "center" },
+          "settings": {
+            "_column_size": 100
+          },
           "elements": [
             {
-              "id": "tap_arc_more_html",
+              "id": "6cb83c47",
               "elType": "widget",
-              "widgetType": "html",
+              "widgetType": "shortcode",
               "settings": {
-                "html": "<div style=\"text-align:center\"><a href=\"#\" class=\"tap-btn-outline\" data-luwi=\"load-more\" data-target=\".elementor-posts-container\">Load 9 more posts</a></div>"
+                "shortcode": "[recent_posts limit=\"9\" columns=\"3\"]"
+              }
+            },
+            {
+              "id": "a92843c1",
+              "elType": "widget",
+              "widgetType": "lwp-load-more",
+              "settings": {
+                "mode": "ajax",
+                "label_template": "Load %d more posts",
+                "target_selector": ".elementor-posts-container, ul.products, .lwp-egrid",
+                "hide_when_done": "yes"
               }
             }
           ]
@@ -170,12 +169,8 @@
       ]
     }
   ],
-  "page_settings": { "template": "elementor_header_footer" },
-  "_luwipress_notes": {
-    "import_target": "Templates → Theme Builder → Archive → Add New → Import",
-    "conditions": "Display on: All Archives  +  Exclude: Product archives (handled by Woo template 04-shop)",
-    "wp_settings": "Settings → Reading → Posts page = `Journal`",
-    "categories_required": ["masters", "tuning", "field-reports", "repair"],
-    "fallback": "If using LuwiPress Free (no Theme Builder Archive), import as Page template instead and assign to /journal slug; rely on default category.php for category archives."
+  "page_settings": {
+    "template": "elementor_header_footer",
+    "page_title": "false"
   }
 }

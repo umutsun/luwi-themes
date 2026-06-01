@@ -825,6 +825,11 @@
 					list.appendChild( aAll );
 				}
 				Array.prototype.forEach.call( subLinks, function ( a ) {
+					// Skip the desktop mega-panel head link ("<Name> View all →") and
+					// its count pill — the drawer already adds its own "↳ <Name>"
+					// parent link above, so cloning the panel head produced a second,
+					// redundant link to the same category URL in the mobile menu.
+					if ( a.closest && a.closest( '.lwp-mm-panel-head' ) ) return;
 					var nm = cleanLabel( a );
 					if ( ! nm ) return;
 					var aSub = document.createElement( 'a' );

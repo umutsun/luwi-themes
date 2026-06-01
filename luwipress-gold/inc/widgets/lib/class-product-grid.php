@@ -166,9 +166,15 @@ class LuwiPress_Gold_Widget_Product_Grid extends Widget_Base {
 		$s          = $this->get_settings_for_display();
 		$source     = $s['source'] ?? 'query';
 		$limit      = max( 1, min( 24, (int) ( $s['limit'] ?? 8 ) ) );
-		$cols       = max( 1, min( 6,  (int) ( $s['columns'] ?? 4 ) ) );
 		$extra      = sanitize_html_class( $s['extra_class'] ?? '', '' );
-		$wrap_class = trim( 'lwp-product-grid products columns-' . $cols . ( $extra ? ' ' . $extra : '' ) );
+		// Column count is applied through the Elementor "Columns" control (it
+		// targets `.lwp-product-grid__list` via {{WRAPPER}}), NOT a class. We
+		// deliberately DON'T emit WooCommerce's `columns-N` class: WC core's
+		// `ul.products.columns-N` rules fight the theme's own CSS grid on mobile,
+		// forcing a fixed width + negative break-out margins that pushed cards
+		// past the left/right viewport edges. Dropping the class lets the
+		// responsive `__list` grid (4→3→2 cols) and gutters behave correctly.
+		$wrap_class = trim( 'lwp-product-grid products' . ( $extra ? ' ' . $extra : '' ) );
 
 		$products = $this->query_products( $source, $s, $limit );
 		if ( empty( $products ) ) {

@@ -33,13 +33,27 @@
 	--radius-input: 6px;
 }
 
-/* Body baseline — Elementor templates expect Inter on body. */
+/* Body baseline — Elementor templates expect Inter on body.
+   Note (1.10.4+): html is locked to the brand-black token while body
+   keeps the cream surface. This kills the "white bottom band" that
+   appeared on every page when the page content + footer didn't fill
+   the viewport — the leftover area below the footer used to inherit
+   body's cream bg. Now any overflow area shows through to html,
+   which is the same colour as the footer, so the page reads as one
+   continuous dark surface from footer to viewport edge. Replaces the
+   V69 Kit CSS layer that handled this at the option level (and could
+   silently truncate near the 412 KB Kit CSS DB ceiling). */
+html {
+	background: #0c0c0c;
+}
 html, body {
-	background: var(--bg);
 	color: var(--ink);
 	font-family: var(--sans);
 	line-height: 1.55;
 	-webkit-font-smoothing: antialiased;
+}
+body {
+	background: var(--bg);
 }
 
 img { max-width: 100%; height: auto; display: block; }

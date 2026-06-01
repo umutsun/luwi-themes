@@ -384,8 +384,11 @@ body { overflow-x: hidden; overflow-x: clip; }
 	color: #fff;
 	flex-shrink: 0;
 	font-size: 16px;
+	background: linear-gradient(135deg, #9A7B3A 0%, #D4AF6E 50%, #9A7B3A 100%);
+	box-shadow: 0 2px 8px rgba(154, 123, 58, 0.3);
 }
-.lwp-ib-icon i, .lwp-ib-icon svg { font-size: 16px; }
+.lwp-ib-icon i, .lwp-ib-icon svg { font-size: 16px; color: #fff; }
+.lwp-ib-icon svg { width: 16px; height: 16px; fill: currentColor; }
 .lwp-ib-text {
 	display: flex;
 	flex-direction: column;
@@ -1205,6 +1208,58 @@ body { overflow-x: hidden; overflow-x: clip; }
 
 @media (max-width: 680px) {
 	.lwp-megabar-inner { gap: 10px; padding: 8px 16px; font-size: 12px; }
+}
+
+/* ═════════════════════════════════════════════════════════════════════ */
+/*  Product Grid widget (lwp-product-grid) base layout (1.10.5+)         */
+/*                                                                       */
+/*  The widget emits `<ul class="lwp-product-grid products columns-N     */
+/*  …__list">`. Columns + gap are wired to Elementor per-instance        */
+/*  controls, but `display:grid` itself was never set in ANY stylesheet  */
+/*  — so when the per-instance Elementor CSS is stale or dropped from    */
+/*  the LiteSpeed-combined sheet, the list falls back to WooCommerce's    */
+/*  float layout while `li.lwp-pcard { margin:0 }` kills the float        */
+/*  gutters → cards render edge-to-edge with zero spacing. These base     */
+/*  rules make the grid self-sufficient. `display:grid` + the li reset    */
+/*  carry `!important` to beat WC's `ul.products.columns-N li.product`    */
+/*  float sizing (specificity 0,4,2); columns/gap stay LOW specificity    */
+/*  so the Elementor controls (0,2,0) still override per instance.        */
+/* ═════════════════════════════════════════════════════════════════════ */
+html body ul.products.lwp-product-grid__list {
+	display: grid !important;
+	list-style: none !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	width: 100%;
+}
+html body ul.products.lwp-product-grid__list > li.product {
+	width: auto !important;
+	margin: 0 !important;
+	float: none !important;
+	clear: none !important;
+}
+html body ul.products.lwp-product-grid__list::before,
+html body ul.products.lwp-product-grid__list::after {
+	content: none !important;
+	display: none !important;
+}
+/* Low-specificity defaults — Elementor's columns/gap controls override. */
+.lwp-product-grid__list {
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 24px;
+}
+.lwp-product-grid__heading {
+	font-family: var(--serif, 'Playfair Display', Georgia, serif);
+	font-size: 28px;
+	font-weight: 500;
+	color: var(--ink, #1b1c1c);
+	margin: 0 0 24px;
+}
+@media (max-width: 1024px) {
+	.lwp-product-grid__list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+}
+@media (max-width: 680px) {
+	.lwp-product-grid__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
 }
 
 /* ═════════════════════════════════════════════════════════════════════ */
@@ -4429,8 +4484,10 @@ html body .lwp-shop-results .lwp-shop-toolbar .woocommerce-ordering {
 .lwp-mobile-drawer__head {
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
-	padding: 18px 20px 16px;
+	/* 1.10.5 — drawer header was too tall + the "Menu" wordmark added no value.
+	 * Brand hidden below, so the close button rides flush-right in a slim bar. */
+	justify-content: flex-end;
+	padding: 8px 14px;
 	flex: none;
 	border-bottom: 1px solid var(--lwp-drw-line);
 	font-family: var(--mono, monospace);
@@ -4439,13 +4496,14 @@ html body .lwp-shop-results .lwp-shop-toolbar .woocommerce-ordering {
 	text-transform: uppercase;
 	color: var(--muted, #8a8780);
 }
-.lwp-mobile-drawer__brand {
+/* 1.10.5 — "Menu" wordmark dropped (operator: no need for it). */
+.lwp-mobile-drawer__brand { display: none; }
+.lwp-mobile-drawer__brand--legacy {
 	font-family: var(--serif, 'Playfair Display', serif);
 	font-size: 24px;
 	font-weight: 500;
 	letter-spacing: -.01em;
 	color: var(--ink, #1b1c1c);
-	display: flex;
 	align-items: baseline;
 	gap: 4px;
 	text-transform: none;
@@ -4463,8 +4521,8 @@ html body .lwp-shop-results .lwp-shop-toolbar .woocommerce-ordering {
 
 /* Close button — circular X mirror of the hamburger trigger */
 .lwp-mobile-drawer__close {
-	width: 42px;
-	height: 42px;
+	width: 34px;
+	height: 34px;
 	border-radius: 50%;
 	border: 1px solid var(--lwp-drw-line);
 	background: var(--lwp-drw-bg-card);
@@ -4509,15 +4567,17 @@ html body .lwp-shop-results .lwp-shop-toolbar .woocommerce-ordering {
 .lwp-mobile-drawer__body::-webkit-scrollbar { width: 4px; }
 .lwp-mobile-drawer__body::-webkit-scrollbar-thumb { background: var(--lwp-drw-line); border-radius: 2px; }
 
-/* Section eyebrow with hairline tail */
+/* Section eyebrow with hairline tail.
+ * 1.10.5 — hidden (operator: the "BROWSE" label adds clutter + steals vertical
+ * space at the top of the drawer). The accordion list reads fine without it. */
 .lwp-mobile-drawer__lbl {
+	display: none;
 	font-family: var(--mono, monospace);
 	font-size: 9.5px;
 	letter-spacing: .24em;
 	text-transform: uppercase;
 	color: var(--muted, #8a8780);
 	padding: 14px 22px 6px;
-	display: flex;
 	align-items: center;
 	gap: 10px;
 }
@@ -4539,9 +4599,9 @@ html body .lwp-shop-results .lwp-shop-toolbar .woocommerce-ordering {
 	align-items: center;
 	justify-content: space-between;
 	gap: 10px;
-	padding: 16px 18px;
+	padding: 12px 18px;
 	font-family: var(--serif, 'Playfair Display', serif);
-	font-size: 19px;
+	font-size: 18px;
 	font-weight: 500;
 	letter-spacing: -.012em;
 	color: var(--ink, #1b1c1c);
@@ -4633,7 +4693,7 @@ html body .lwp-shop-results .lwp-shop-toolbar .woocommerce-ordering {
 	justify-content: space-between;
 	align-items: baseline;
 	gap: 8px;
-	padding: 11px 0;
+	padding: 8px 0;
 	font-size: 15px;
 	color: var(--ink-soft, #4a4a48);
 	text-decoration: none;
@@ -7586,6 +7646,25 @@ body .tap-infobar .tap-info-item .ic {
 .lwp-mgrid--dark  .lwp-mgrid__count { color: #6b6151; border-top: 1px solid #3a342c; }
 .lwp-mgrid--light .lwp-mgrid__count { color: #8b7f6a; border-top: 1px solid #E8DFC8; }
 
+.lwp-mgrid__viewall { text-align: center; margin-top: 28px; }
+.lwp-mgrid__viewall-link {
+  display: inline-block;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-size: 18px;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  padding: 10px 22px;
+  border-radius: 999px;
+  transition: transform 0.18s ease, background 0.18s ease, color 0.18s ease;
+}
+.lwp-mgrid--dark  .lwp-mgrid__viewall-link { color: #D4AF37; border: 1px solid #3a342c; }
+.lwp-mgrid--dark  .lwp-mgrid__viewall-link:hover,
+.lwp-mgrid--dark  .lwp-mgrid__viewall-link:focus-visible { color: #fff; background: #D4AF37; border-color: #D4AF37; transform: translateY(-1px); }
+.lwp-mgrid--light .lwp-mgrid__viewall-link { color: #9A7B3A; border: 1px solid #E8DFC8; }
+.lwp-mgrid--light .lwp-mgrid__viewall-link:hover,
+.lwp-mgrid--light .lwp-mgrid__viewall-link:focus-visible { color: #fff; background: #9A7B3A; border-color: #9A7B3A; transform: translateY(-1px); }
+
 @media (max-width: 1024px) {
   .lwp-mgrid, .lwp-mgrid[data-columns="3"], .lwp-mgrid[data-columns="4"] { grid-template-columns: repeat(2, 1fr); }
 }
@@ -9196,3 +9275,234 @@ body.lwp-view-list ul.products li.product { display: grid !important; grid-templ
 .lwp-404__cta-link { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #1A1612; text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 2px; }
 .lwp-404__cta-link:hover { color: #9A7B3A; }
 /* end 1.8.0 journal/404 widgets */
+
+/* ── 1.9.0+ dynamic post widgets (Pro Theme Builder-free) ───────────────────── */
+
+/* Post Title */
+.lwp-post-title { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 500; font-size: clamp(28px, 5vw, 56px); line-height: 1.15; color: #1A1612; margin: 0 0 0.4em; letter-spacing: -0.01em; }
+.lwp-post-title a { color: inherit; text-decoration: none; transition: color 0.18s; }
+.lwp-post-title a:hover { color: #9A7B3A; }
+
+/* Post Content */
+.lwp-post-content { font-family: "Inter", system-ui, sans-serif; font-size: 17px; line-height: 1.7; color: #3a342c; max-width: 720px; }
+.lwp-post-content > * + * { margin-top: 1em; }
+.lwp-post-content p { margin: 0 0 1.4em; }
+.lwp-post-content h2, .lwp-post-content h3, .lwp-post-content h4, .lwp-post-content h5, .lwp-post-content h6 { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 500; color: #1A1612; line-height: 1.25; margin: 1.6em 0 0.5em; }
+.lwp-post-content h2 { font-size: 32px; }
+.lwp-post-content h3 { font-size: 26px; }
+.lwp-post-content h4 { font-size: 20px; }
+.lwp-post-content a { color: #9A7B3A; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.lwp-post-content a:hover { color: #1A1612; }
+.lwp-post-content img { max-width: 100%; height: auto; border-radius: 10px; margin: 1.4em 0; }
+.lwp-post-content blockquote { margin: 1.6em 0; padding: 0 0 0 24px; border-left: 3px solid #9A7B3A; font-family: "Cormorant Garamond", Georgia, serif; font-style: italic; font-size: 22px; line-height: 1.5; color: #1A1612; }
+.lwp-post-content ul, .lwp-post-content ol { padding-left: 24px; margin: 0 0 1.4em; }
+.lwp-post-content li { margin: 0 0 0.5em; }
+.lwp-post-content code { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 14px; background: #f7f1e3; padding: 2px 6px; border-radius: 4px; }
+.lwp-post-content pre { background: #1A1612; color: #f7f1e3; padding: 18px 22px; border-radius: 10px; overflow-x: auto; margin: 1.4em 0; }
+.lwp-post-content pre code { background: transparent; color: inherit; padding: 0; }
+
+/* Post Featured Image */
+.lwp-post-featured-image { margin: 0 0 1em; line-height: 0; }
+.lwp-post-featured-image img { display: inline-block; max-width: 100%; height: auto; border-radius: 12px; }
+.lwp-post-featured-image__caption { display: block; margin-top: 10px; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.06em; color: #8b7f6a; line-height: 1.4; }
+.lwp-post-featured-image--placeholder { background: linear-gradient(135deg, #f7f1e3 0%, #eae3d4 100%); border-radius: 12px; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; }
+.lwp-fpi-ph { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 12px; letter-spacing: 0.1em; color: #8b7f6a; text-transform: uppercase; }
+/* end 1.9.0 dynamic post widgets */
+
+/* ── 1.9.0+ dynamic WC widgets Tier 1 (Pro WC widget-free) ──────────────────── */
+
+/* WC Title */
+.lwp-wc-title { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 500; font-size: clamp(28px, 5vw, 56px); line-height: 1.1; color: #1A1612; margin: 0 0 0.4em; letter-spacing: -0.01em; }
+.lwp-wc-title a { color: inherit; text-decoration: none; }
+.lwp-wc-title a:hover { color: #9A7B3A; }
+
+/* WC Price */
+.lwp-wc-price { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 500; font-size: 32px; line-height: 1.2; color: #1A1612; margin: 0 0 12px; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.lwp-wc-price .amount { font-weight: 500; }
+.lwp-wc-price del { opacity: 1; color: #8b7f6a; font-size: 22px; font-weight: 400; }
+.lwp-wc-price del .amount { color: inherit; }
+.lwp-wc-price ins { background: none; text-decoration: none; color: #d83131; font-weight: 600; }
+.lwp-wc-price ins .amount { color: inherit; }
+
+/* WC Rating */
+.lwp-wc-rating { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 0 0 12px; }
+.lwp-wc-rating .star-rating { color: #9A7B3A; font-size: 14px; }
+.lwp-wc-rating__count { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.06em; color: #8b7f6a; }
+.lwp-wc-rating__count a { color: inherit; text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.18s; }
+.lwp-wc-rating__count a:hover { border-bottom-color: #9A7B3A; }
+
+/* WC Short Description */
+.lwp-wc-short-desc { font-family: "Inter", system-ui, sans-serif; font-size: 16px; line-height: 1.65; color: #3a342c; max-width: 640px; margin: 0 0 20px; }
+.lwp-wc-short-desc p:last-child { margin-bottom: 0; }
+.lwp-wc-short-desc ul, .lwp-wc-short-desc ol { padding-left: 22px; margin: 0 0 12px; }
+.lwp-wc-short-desc li { margin: 0 0 4px; }
+
+/* WC Meta */
+.lwp-wc-meta { display: grid; grid-template-columns: minmax(80px, auto) 1fr; gap: 4px 16px; margin: 16px 0; font-family: "Inter", system-ui, sans-serif; font-size: 13px; }
+.lwp-wc-meta__label { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #8b7f6a; line-height: 1.6; margin: 0; }
+.lwp-wc-meta__value { color: #1A1612; line-height: 1.6; margin: 0; }
+.lwp-wc-meta__value a { color: #9A7B3A; text-decoration: none; border-bottom: 1px solid transparent; }
+.lwp-wc-meta__value a:hover { border-bottom-color: currentColor; }
+/* end 1.9.0 WC widgets Tier 1 */
+
+/* ── 1.9.0+ WC widgets Tier 2/3 (gallery / related / add-to-cart / tabs) ───── */
+
+/* WC Gallery — anchors WC's stock CSS but tightens spacing */
+.lwp-wc-gallery { margin: 0; }
+.lwp-wc-gallery .woocommerce-product-gallery__image { line-height: 0; border-radius: 12px; overflow: hidden; }
+.lwp-wc-gallery .woocommerce-product-gallery__image img { max-width: 100%; height: auto; }
+.lwp-wc-gallery .flex-control-thumbs { margin-top: 14px; display: flex; gap: 8px; padding: 0; list-style: none; }
+.lwp-wc-gallery .flex-control-thumbs li { width: auto; margin: 0; padding: 0; cursor: pointer; opacity: 0.6; transition: opacity 0.18s; }
+.lwp-wc-gallery .flex-control-thumbs li:hover, .lwp-wc-gallery .flex-control-thumbs li img.flex-active { opacity: 1; }
+.lwp-wc-gallery .flex-control-thumbs li img { width: 72px; height: 72px; object-fit: cover; border-radius: 8px; border: 1px solid transparent; }
+.lwp-wc-gallery .flex-control-thumbs li img.flex-active { border-color: #9A7B3A; }
+.lwp-wc-gallery--placeholder { background: linear-gradient(135deg, #f7f1e3, #eae3d4); aspect-ratio: 1; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+.lwp-wc-gallery__ph { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 12px; letter-spacing: 0.1em; color: #8b7f6a; text-transform: uppercase; }
+
+/* WC Related */
+.lwp-wc-related { margin: 56px 0 0; }
+.lwp-wc-related__heading { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 500; font-size: clamp(22px, 3.5vw, 38px); line-height: 1.2; color: #1A1612; margin: 0 0 28px; letter-spacing: -0.01em; }
+.lwp-wc-related__grid { list-style: none; padding: 0; margin: 0; display: grid; gap: 24px; }
+.lwp-wc-related__grid li.product { margin: 0; }
+.lwp-wc-related__ph { background: #f7f1e3; padding: 32px; border-radius: 10px; text-align: center; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 12px; color: #8b7f6a; }
+
+/* WC Add to Cart */
+.lwp-wc-atc { margin: 16px 0 24px; }
+.lwp-wc-atc form.cart { display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-end; margin: 0; }
+.lwp-wc-atc__qty-label { display: block; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #8b7f6a; margin-bottom: 6px; }
+.lwp-wc-atc .quantity { display: flex; flex-direction: column; }
+.lwp-wc-atc .quantity input.qty { width: 90px; padding: 12px 14px; border: 1px solid #E8DFC8; border-radius: 8px; background: #fff; font-family: "Inter", system-ui, sans-serif; font-size: 15px; color: #1A1612; text-align: center; -moz-appearance: textfield; }
+.lwp-wc-atc .quantity input.qty::-webkit-outer-spin-button, .lwp-wc-atc .quantity input.qty::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.lwp-wc-atc .quantity input.qty:focus { outline: 0; border-color: #9A7B3A; }
+.lwp-wc-atc .single_add_to_cart_button, .lwp-wc-atc button.button { display: inline-flex; align-items: center; justify-content: center; padding: 14px 30px; background: #1A1612; color: #fff; border: 1px solid #1A1612; border-radius: 8px; font-family: "Inter", system-ui, sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; cursor: pointer; transition: background 0.18s, border-color 0.18s; }
+.lwp-wc-atc .single_add_to_cart_button:hover, .lwp-wc-atc button.button:hover { background: #9A7B3A; border-color: #9A7B3A; }
+.lwp-wc-atc .single_add_to_cart_button:disabled, .lwp-wc-atc .single_add_to_cart_button.disabled { opacity: 0.55; cursor: not-allowed; }
+.lwp-wc-atc .single_variation_wrap { margin: 0; padding: 0; }
+.lwp-wc-atc .variations { width: 100%; margin: 0 0 16px; }
+.lwp-wc-atc .variations td, .lwp-wc-atc .variations th { padding: 8px 0; }
+.lwp-wc-atc .variations label { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #8b7f6a; }
+.lwp-wc-atc .variations select { width: 100%; padding: 12px 14px; border: 1px solid #E8DFC8; border-radius: 8px; background: #fff; font-family: "Inter", system-ui, sans-serif; font-size: 14px; color: #1A1612; }
+.lwp-wc-atc .reset_variations { display: inline-block; margin-top: 8px; font-size: 12px; color: #8b7f6a; text-decoration: underline; }
+
+/* WC Tabs */
+.lwp-wc-tabs { margin: 48px 0; }
+.lwp-wc-tabs__tablist { display: flex; gap: 32px; padding: 0; margin: 0 0 24px; border-bottom: 1px solid #E8DFC8; list-style: none; flex-wrap: wrap; }
+.lwp-wc-tabs__tablist li { margin: 0; padding: 0; }
+.lwp-wc-tabs__tab { background: none; border: 0; border-bottom: 2px solid transparent; padding: 12px 0; margin-bottom: -1px; cursor: pointer; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8b7f6a; transition: color 0.18s, border-color 0.18s; }
+.lwp-wc-tabs__tab[aria-selected="true"], .lwp-wc-tabs__tab.is-active { color: #1A1612; border-bottom-color: #1A1612; }
+.lwp-wc-tabs__tab:hover { color: #1A1612; }
+.lwp-wc-tabs__panel { font-family: "Inter", system-ui, sans-serif; font-size: 15px; line-height: 1.65; color: #3a342c; padding: 8px 0; }
+.lwp-wc-tabs__panel[hidden], .lwp-wc-tabs__panel.is-hidden { display: none; }
+.lwp-wc-tabs__panel h2 { font-family: "Cormorant Garamond", Georgia, serif; font-size: 24px; color: #1A1612; margin: 0 0 14px; }
+.lwp-wc-tabs__panel p { margin: 0 0 12px; }
+.lwp-wc-tabs__panel table.shop_attributes { width: 100%; border-collapse: collapse; }
+.lwp-wc-tabs__panel table.shop_attributes th { text-align: left; font-weight: 500; padding: 10px 0; color: #8b7f6a; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; width: 30%; }
+.lwp-wc-tabs__panel table.shop_attributes td { padding: 10px 0; color: #1A1612; border-bottom: 1px solid #f0eadb; }
+
+/* Accordion variant */
+.lwp-wc-tabs--accordion .lwp-wc-tabs__acc { border-bottom: 1px solid #E8DFC8; padding: 0; }
+.lwp-wc-tabs--accordion .lwp-wc-tabs__acc summary { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; cursor: pointer; list-style: none; position: relative; }
+.lwp-wc-tabs--accordion .lwp-wc-tabs__acc summary::-webkit-details-marker { display: none; }
+.lwp-wc-tabs--accordion .lwp-wc-tabs__acc summary::after { content: "+"; font-size: 22px; font-weight: 300; color: #9A7B3A; transition: transform 0.18s; }
+.lwp-wc-tabs--accordion .lwp-wc-tabs__acc[open] summary::after { content: "−"; }
+.lwp-wc-tabs--accordion .lwp-wc-tabs__acc .lwp-wc-tabs__panel { padding: 0 0 20px; }
+/* end 1.9.0 WC widgets Tier 2/3 */
+
+/* ── 1.10.0 People CPT (vendor / atelier / maker) profile + archive + WC integration ── */
+
+/* Master Grid — count chip */
+.lwp-mgrid__count { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: #9A7B3A; margin-top: 4px; }
+
+/* Single Vendor page */
+.lwp-person-page { max-width: 1100px; margin: 0 auto; padding: 60px 24px; }
+.lwp-person__hero { display: grid; grid-template-columns: minmax(0, 360px) 1fr; gap: 48px; align-items: start; margin-bottom: 60px; }
+.lwp-person__portrait img { width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: 14px; box-shadow: 0 20px 60px -20px rgba(60, 40, 0, 0.25); }
+.lwp-person__intro { display: flex; flex-direction: column; gap: 14px; }
+.lwp-person__eyebrow { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #8b7f6a; margin: 0; }
+.lwp-person__eyebrow a { color: inherit; text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.18s; }
+.lwp-person__eyebrow a:hover { border-bottom-color: #9A7B3A; }
+.lwp-person__sep { margin: 0 8px; color: #c8bda6; }
+.lwp-person__name { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 500; font-size: clamp(36px, 6vw, 64px); line-height: 1.05; color: #1A1612; margin: 0; letter-spacing: -0.02em; }
+.lwp-person__occupation { font-family: "Inter", system-ui, sans-serif; font-size: 16px; font-weight: 500; color: #9A7B3A; margin: 0; }
+.lwp-person__lead { font-family: "Inter", system-ui, sans-serif; font-size: 17px; line-height: 1.65; color: #3a342c; margin: 8px 0 0; max-width: 540px; }
+.lwp-person__meta-strip { display: flex; gap: 32px; flex-wrap: wrap; margin-top: 16px; padding-top: 18px; border-top: 1px solid #E8DFC8; }
+.lwp-person__stat { display: flex; flex-direction: column; gap: 2px; }
+.lwp-person__stat-num { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 500; font-size: 22px; line-height: 1.1; color: #1A1612; }
+.lwp-person__stat-label { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #8b7f6a; }
+.lwp-person__socials { list-style: none; padding: 0; margin: 14px 0 0; display: flex; gap: 8px; flex-wrap: wrap; }
+.lwp-person__socials a { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 999px; background: #FAF6EE; color: #1A1612; text-decoration: none; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; transition: background 0.18s, color 0.18s; }
+.lwp-person__socials a:hover { background: #1A1612; color: #fff; }
+.lwp-person__socials i { font-size: 14px; }
+.lwp-person__social-label { line-height: 1; }
+
+.lwp-person__bio { font-family: "Inter", system-ui, sans-serif; font-size: 17px; line-height: 1.7; color: #3a342c; max-width: 720px; margin: 0 0 48px; }
+.lwp-person__bio p { margin: 0 0 1.2em; }
+.lwp-person__bio h2 { font-family: "Cormorant Garamond", Georgia, serif; font-size: 32px; color: #1A1612; margin: 1.6em 0 0.5em; }
+.lwp-person__bio h3 { font-family: "Cormorant Garamond", Georgia, serif; font-size: 24px; color: #1A1612; margin: 1.4em 0 0.5em; }
+.lwp-person__bio a { color: #9A7B3A; text-decoration: underline; text-underline-offset: 3px; }
+
+.lwp-person__quote { background: #FAF6EE; border-left: 4px solid #9A7B3A; padding: 28px 32px; margin: 0 0 48px; max-width: 720px; border-radius: 0 8px 8px 0; }
+.lwp-person__quote blockquote { font-family: "Cormorant Garamond", Georgia, serif; font-style: italic; font-size: 22px; line-height: 1.5; color: #1A1612; margin: 0 0 8px; }
+.lwp-person__quote cite { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #8b7f6a; font-style: normal; }
+
+.lwp-person__work { margin-top: 32px; }
+.lwp-person__work-heading { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 500; font-size: clamp(24px, 3.5vw, 36px); color: #1A1612; margin: 0 0 24px; }
+.lwp-person__work-grid { list-style: none; padding: 0; margin: 0; display: grid; gap: 24px; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+.lwp-person__work-grid li.product { margin: 0; }
+
+@media (max-width: 767px) {
+	.lwp-person__hero { grid-template-columns: 1fr; gap: 28px; }
+	.lwp-person__portrait img { aspect-ratio: 4/5; }
+	.lwp-person__meta-strip { gap: 18px; }
+}
+
+/* Archive Vendor page */
+.lwp-people-archive { max-width: 1240px; margin: 0 auto; padding: 60px 24px; }
+.lwp-people-archive__header { text-align: center; margin-bottom: 56px; padding-bottom: 32px; border-bottom: 1px solid #E8DFC8; }
+.lwp-people-archive__eyebrow { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: #9A7B3A; font-weight: 500; margin: 0 0 8px; }
+.lwp-people-archive__heading { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 500; font-size: clamp(38px, 6vw, 72px); line-height: 1.05; color: #1A1612; margin: 0; letter-spacing: -0.02em; }
+.lwp-people-archive__lead { font-family: "Inter", system-ui, sans-serif; font-size: 17px; line-height: 1.6; color: #3a342c; margin: 16px auto 0; max-width: 540px; }
+.lwp-people-archive__grid { list-style: none; padding: 0; margin: 0; display: grid; gap: 32px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+
+.lwp-people-card { margin: 0; }
+.lwp-people-card__link { display: flex; flex-direction: column; gap: 14px; text-decoration: none; color: inherit; transition: transform 0.2s ease; }
+.lwp-people-card__link:hover { transform: translateY(-4px); }
+.lwp-people-card__portrait { aspect-ratio: 3/4; border-radius: 12px; overflow: hidden; background: linear-gradient(135deg, #FAF6EE, #E8DFC8); }
+.lwp-people-card__portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.lwp-people-card__portrait--initials { display: flex; align-items: center; justify-content: center; }
+.lwp-people-card__portrait--initials span { font-family: "Cormorant Garamond", Georgia, serif; font-size: 96px; font-weight: 500; color: #9A7B3A; line-height: 1; }
+.lwp-people-card__body { display: flex; flex-direction: column; gap: 4px; padding: 0 4px; }
+.lwp-people-card__name { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 500; font-size: 22px; line-height: 1.2; color: #1A1612; margin: 0; }
+.lwp-people-card__location { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #8b7f6a; }
+.lwp-people-card__specialty { font-family: "Inter", system-ui, sans-serif; font-size: 14px; color: #3a342c; }
+.lwp-people-card__years { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10px; letter-spacing: 0.06em; color: #9A7B3A; margin-top: 2px; }
+
+.lwp-people-archive__empty { text-align: center; padding: 80px 24px; color: #8b7f6a; font-style: italic; }
+
+/* PDP "Made by" attribution line (WC integration) */
+.lwp-product-vendors { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 6px 0 16px; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: #8b7f6a; }
+.lwp-product-vendors__label { font-weight: 500; }
+.lwp-product-vendors__name { color: #1A1612; text-decoration: none; font-weight: 600; border-bottom: 1px solid #9A7B3A; padding-bottom: 1px; transition: color 0.18s; }
+.lwp-product-vendors__name:hover { color: #9A7B3A; }
+/* end 1.10.0 People CPT */
+
+/* ── 1.10.3 Contact CTA Card (auto-pulls WA/Telegram from LuwiPress chat) ── */
+.lwp-cta-card { background: #1A1612; color: #fff; padding: 40px; border-radius: 10px; }
+.lwp-cta-card__heading { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 500; font-size: clamp(24px, 3.5vw, 36px); line-height: 1.2; color: #fff; margin: 0 0 8px; letter-spacing: -0.01em; }
+.lwp-cta-card__lead { font-family: "Inter", system-ui, sans-serif; font-size: 14px; line-height: 1.55; color: rgba(255,255,255,0.7); margin: 0 0 24px; }
+.lwp-cta-card__rows { display: flex; flex-direction: column; gap: 12px; }
+.lwp-cta-card__row { display: flex; align-items: center; gap: 12px; padding: 14px 18px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff; text-decoration: none; font-family: "Inter", system-ui, sans-serif; font-size: 14px; transition: background 0.18s, border-color 0.18s, transform 0.18s; }
+.lwp-cta-card__row:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.18); transform: translateX(2px); }
+.lwp-cta-card__row strong { font-weight: 600; }
+.lwp-cta-card__row svg { flex-shrink: 0; }
+.lwp-cta-card__row--whatsapp { background: #25D366; border-color: #25D366; color: #fff; }
+.lwp-cta-card__row--whatsapp:hover { background: #1ebe5d; border-color: #1ebe5d; }
+.lwp-cta-card__row--telegram svg { color: #0088cc; }
+.lwp-cta-card__row--email svg { color: #D4AF6E; }
+.lwp-cta-card__cta { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 14px 18px; background: #9A7B3A; border: 0; border-radius: 8px; color: #1A1612; text-decoration: none; font-family: "Inter", system-ui, sans-serif; font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 6px; transition: background 0.18s; }
+.lwp-cta-card__cta:hover { background: #b08a42; }
+.lwp-cta-card__address { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin: 24px 0 0; }
+@media (max-width: 600px) {
+	.lwp-cta-card { padding: 28px 22px; }
+}
+/* end 1.10.3 Contact CTA Card */

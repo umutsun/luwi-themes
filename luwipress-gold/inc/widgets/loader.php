@@ -100,6 +100,29 @@ add_action( 'elementor/init', function () {
 			'class-reading-progress.php' => 'LuwiPress_Gold_Widget_Reading_Progress',
 			'class-load-more.php'        => 'LuwiPress_Gold_Widget_Load_More',
 			'class-404-hero.php'         => 'LuwiPress_Gold_Widget_404_Hero',
+			// 1.9.0+ dynamic post widgets (Pro Theme Builder-free replacements)
+			'class-post-title.php'           => 'LuwiPress_Gold_Widget_Post_Title',
+			'class-post-content.php'         => 'LuwiPress_Gold_Widget_Post_Content',
+			'class-post-featured-image.php'  => 'LuwiPress_Gold_Widget_Post_Featured_Image',
+			// 1.9.0+ dynamic WC widgets Tier 1 (Pro WooCommerce widget replacements — simple)
+			'class-wc-title.php'             => 'LuwiPress_Gold_Widget_WC_Title',
+			'class-wc-price.php'             => 'LuwiPress_Gold_Widget_WC_Price',
+			'class-wc-rating.php'            => 'LuwiPress_Gold_Widget_WC_Rating',
+			'class-wc-short-description.php' => 'LuwiPress_Gold_Widget_WC_Short_Description',
+			'class-wc-meta.php'              => 'LuwiPress_Gold_Widget_WC_Meta',
+			// 1.9.0+ dynamic WC widgets Tier 2/3 (complex — gallery / related / ATC / tabs)
+			'class-wc-gallery.php'           => 'LuwiPress_Gold_Widget_WC_Gallery',
+			'class-wc-related.php'           => 'LuwiPress_Gold_Widget_WC_Related',
+			'class-wc-add-to-cart.php'       => 'LuwiPress_Gold_Widget_WC_Add_To_Cart',
+			'class-wc-tabs.php'              => 'LuwiPress_Gold_Widget_WC_Tabs',
+			// 1.10.2+ curated products grid (Pro-free wc-products / [products] shortcode replacement)
+			'class-product-grid.php'         => 'LuwiPress_Gold_Widget_Product_Grid',
+			// 1.10.3+ contact CTA card (auto-pulls WhatsApp/Telegram from LuwiPress chat settings)
+			'class-contact-cta.php'          => 'LuwiPress_Gold_Widget_Contact_CTA',
+			// 1.10.5+ generic taxonomy-terms grid (any public taxonomy: product_cat / product_brand / lwp_vendor_group / category / tags)
+			'class-taxonomy-terms.php'       => 'LuwiPress_Gold_Widget_Taxonomy_Terms',
+			// 1.10.6+ generic CPT-Engine grid (any engine post type: lwp_vendor / team / events / operator-defined — CPT Engine Phase 2)
+			'class-cpt-grid.php'             => 'LuwiPress_Gold_Widget_CPT_Grid',
 		];
 
 		foreach ( $widgets as $file => $class ) {

@@ -64,15 +64,21 @@
             {
               "id": "45a0732d",
               "elType": "widget",
-              "widgetType": "theme-post-featured-image",
-              "settings": {}
+              "widgetType": "lwp-post-featured-image",
+              "settings": {
+                "image_size_size": "large",
+                "link_to": "none",
+                "caption": "none"
+              }
             },
             {
               "id": "b6e19bf1",
               "elType": "widget",
-              "widgetType": "theme-post-title",
+              "widgetType": "lwp-post-title",
               "settings": {
-                "size": "h1"
+                "tag": "h1",
+                "link_to": "none",
+                "align": "left"
               }
             },
             {
@@ -113,7 +119,7 @@
             {
               "id": "aae86442",
               "elType": "widget",
-              "widgetType": "theme-post-content",
+              "widgetType": "lwp-post-content",
               "settings": {}
             },
             {

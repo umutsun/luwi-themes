@@ -372,28 +372,32 @@ class LuwiPress_Gold_Importer {
 			wp_cache_delete( $post_id, 'post_meta' );
 		}
 
-		// Apply Elementor display conditions (Pro only — silently skipped otherwise).
-		if ( ! empty( $action['condition_type'] ) && $this->elementor_pro_active() ) {
-			$this->set_template_conditions( $post_id, $action['condition_type'], $action['condition_value'] ?? '' );
+		// Pro-free by design: auto-wire the imported template to the theme's
+		// native template_mod assignment surface (no Elementor Pro touched).
+		if ( ! empty( $action['condition_type'] ) ) {
+			$this->wire_template_to_theme_mod( $post_id, $action['type'] ?? '', $action['condition_type'] );
 		}
 
 		return [ 'template_id' => $post_id, 'type' => $action['type'] ?? 'page' ];
 	}
 
 	/**
-	 * Hook into Elementor Pro's Theme Builder conditions API if available.
+	 * Map wizard-imported templates to the theme's Pro-free assignment surface.
+	 *
+	 * Single Product templates land in `luwipress_gold_pdp_template_id`, which
+	 * is then read by inc/maintenance/elementor-template-force.php and short-circuits
+	 * Elementor's own template resolution — no Pro Theme Builder required.
+	 *
+	 * Header/footer templates are not auto-wired: the theme provides its own
+	 * header.php / footer.php / elementor_header_footer.php; the imported
+	 * template is left in Elementor → Saved Templates for operator embedding
+	 * via shortcode or theme settings.
 	 */
-	private function set_template_conditions( $post_id, $condition_type, $condition_value ) {
-		if ( ! class_exists( '\ElementorPro\Modules\ThemeBuilder\Module' ) ) return;
-		try {
-			$module = \ElementorPro\Modules\ThemeBuilder\Module::instance();
-			if ( $module && method_exists( $module, 'get_conditions_manager' ) ) {
-				$module->get_conditions_manager()->save_conditions( $post_id, [
-					[ 'type' => $condition_type, 'name' => $condition_value, 'sub_id' => 0, 'sub_name' => '' ],
-				] );
-			}
-		} catch ( \Throwable $e ) {
-			// Silently fail — Pro conditions are best-effort.
+	private function wire_template_to_theme_mod( $post_id, $type, $condition_type ) {
+		if ( $type === 'single-product' || $condition_type === 'product' ) {
+			set_theme_mod( 'luwipress_gold_pdp_template_id', (int) $post_id );
+		} elseif ( $type === 'archive' || $type === 'product-archive' ) {
+			set_theme_mod( 'luwipress_gold_archive_template_id', (int) $post_id );
 		}
 	}
 
@@ -404,10 +408,6 @@ class LuwiPress_Gold_Importer {
 		} catch ( \Throwable $e ) {
 			return null;
 		}
-	}
-
-	private function elementor_pro_active() {
-		return defined( 'ELEMENTOR_PRO_VERSION' );
 	}
 
 	/* ------------------------------------------------------------------

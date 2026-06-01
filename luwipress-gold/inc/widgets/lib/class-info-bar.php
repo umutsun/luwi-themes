@@ -86,10 +86,11 @@ class LuwiPress_Gold_Widget_Info_Bar extends Widget_Base {
 		$this->add_control(
 			'icon_bg',
 			[
-				'label'     => __( 'Icon circle background', 'luwipress-gold' ),
-				'type'      => Controls_Manager::COLOR,
-				'default'   => '#d83131',
-				'selectors' => [ '{{WRAPPER}} .lwp-ib-icon' => 'background: {{VALUE}};' ],
+				'label'       => __( 'Icon circle background', 'luwipress-gold' ),
+				'description' => __( 'Pick a flat color. Leave empty to keep the theme default (gradient gold).', 'luwipress-gold' ),
+				'type'        => Controls_Manager::COLOR,
+				'default'     => '',
+				'selectors'   => [ '{{WRAPPER}} .lwp-ib-icon' => 'background: {{VALUE}};' ],
 			]
 		);
 		$this->add_control(
@@ -123,10 +124,12 @@ class LuwiPress_Gold_Widget_Info_Bar extends Widget_Base {
 					<div class="lwp-ib-col">
 						<div class="lwp-ib-icon">
 							<?php
-							if ( ! empty( $item['icon']['value'] ) && function_exists( '\\Elementor\\Icons_Manager::render_icon' ) ) {
+							if ( ! empty( $item['icon']['value'] ) && class_exists( '\\Elementor\\Icons_Manager' ) ) {
+								// render_icon() handles both SVG library + Font Awesome class output,
+								// AND enqueues the icon library's CSS bundle as a side effect.
 								\Elementor\Icons_Manager::render_icon( $item['icon'], [ 'aria-hidden' => 'true' ] );
 							} elseif ( ! empty( $item['icon']['value'] ) && is_string( $item['icon']['value'] ) ) {
-								echo '<i class="' . esc_attr( $item['icon']['value'] ) . '"></i>';
+								echo '<i class="' . esc_attr( $item['icon']['value'] ) . '" aria-hidden="true"></i>';
 							}
 							?>
 						</div>

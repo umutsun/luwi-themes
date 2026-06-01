@@ -62,8 +62,12 @@
             {
               "id": "c67021a8",
               "elType": "widget",
-              "widgetType": "woocommerce-product-images",
-              "settings": {}
+              "widgetType": "lwp-wc-gallery",
+              "settings": {
+                "enable_zoom": "yes",
+                "enable_lightbox": "yes",
+                "image_size": "woocommerce_single"
+              }
             }
           ]
         },
@@ -77,38 +81,54 @@
             {
               "id": "ce09a3fe",
               "elType": "widget",
-              "widgetType": "woocommerce-product-title",
-              "settings": {}
+              "widgetType": "lwp-wc-title",
+              "settings": {
+                "tag": "h1",
+                "align": "left"
+              }
             },
             {
               "id": "9d5ac9b5",
               "elType": "widget",
-              "widgetType": "woocommerce-product-rating",
-              "settings": {}
+              "widgetType": "lwp-wc-rating",
+              "settings": {
+                "show_count": "yes",
+                "hide_when_empty": "",
+                "align": "flex-start"
+              }
             },
             {
               "id": "05729696",
               "elType": "widget",
-              "widgetType": "woocommerce-product-price",
-              "settings": {}
+              "widgetType": "lwp-wc-price",
+              "settings": {
+                "align": "left"
+              }
             },
             {
               "id": "008a3242",
               "elType": "widget",
-              "widgetType": "woocommerce-product-short-description",
+              "widgetType": "lwp-wc-short-desc",
               "settings": {}
             },
             {
               "id": "d831fe97",
               "elType": "widget",
-              "widgetType": "woocommerce-product-add-to-cart",
-              "settings": {}
+              "widgetType": "lwp-wc-add-to-cart",
+              "settings": {
+                "show_quantity_label": "yes",
+                "quantity_label": "Quantity"
+              }
             },
             {
               "id": "8b44b815",
               "elType": "widget",
-              "widgetType": "woocommerce-product-meta",
-              "settings": {}
+              "widgetType": "lwp-wc-meta",
+              "settings": {
+                "show_sku": "yes",
+                "show_categories": "yes",
+                "show_tags": ""
+              }
             },
             {
               "id": "d2defe70",
@@ -174,8 +194,10 @@
             {
               "id": "2a7c11f1",
               "elType": "widget",
-              "widgetType": "woocommerce-product-data-tabs",
-              "settings": {}
+              "widgetType": "lwp-wc-tabs",
+              "settings": {
+                "layout": "tabs"
+              }
             },
             {
               "id": "1817d605",
@@ -239,8 +261,13 @@
             {
               "id": "3ab2d495",
               "elType": "widget",
-              "widgetType": "woocommerce-product-related",
-              "settings": {}
+              "widgetType": "lwp-wc-related",
+              "settings": {
+                "heading": "",
+                "limit": 4,
+                "columns": 4,
+                "order_by": "rand"
+              }
             }
           ]
         }

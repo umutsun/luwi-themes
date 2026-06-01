@@ -75,6 +75,12 @@ if ( ! $elementor_footer_active ) :
 				 function_exists( 'luwipress_gold_footer_render_social_icons' ) ) {
 				luwipress_gold_footer_render_social_icons();
 			}
+			// Contact / address block (Customizer-driven) under the socials —
+			// adds the address / phone / email / hours / VAT content that the
+			// legacy footer carried, without introducing a 5th footer column.
+			if ( function_exists( 'luwipress_gold_footer_render_contact' ) ) {
+				luwipress_gold_footer_render_contact();
+			}
 			?>
 		</div>
 

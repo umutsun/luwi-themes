@@ -589,6 +589,19 @@ body.lwp-layout-boxed .lwp-elementor-page .elementor-section {
 html {
 	background-color: var(--black, #0c0c0c);
 }
+
+/* WooCommerce PhotoSwipe closed-state. The vanilla PDP gallery
+ * (inc/wc-pdp-gallery-override.php) dequeues `photoswipe-default-skin`,
+ * which is where WC's `.pswp { display:none }` closed-state rule lived —
+ * so the still-printed `.pswp` lightbox container (theme keeps
+ * `wc-product-gallery-lightbox` support for the Elementor wc-gallery
+ * widget) rendered as a ~50px empty block below the footer, leaking the
+ * cream body background. Restore the closed state here; PhotoSwipe's JS
+ * sets inline `display:block` when the lightbox opens, so it still works
+ * wherever the Elementor gallery widget genuinely uses it. */
+.pswp {
+	display: none;
+}
 .lwp-site-footer-inner {
 	max-width: var(--content-w, 1372px);
 	margin: 0 auto;

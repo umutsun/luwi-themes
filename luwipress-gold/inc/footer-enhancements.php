@@ -189,6 +189,49 @@ if ( ! function_exists( 'luwipress_gold_footer_customizer' ) ) {
 			'input_attrs' => [ 'min' => 3, 'max' => 12, 'step' => 1 ],
 			'priority'    => 56,
 		] );
+
+		/* --- Contact / address block (shown in the footer brand column) ---
+		 * Generic, opt-in: the whole block is hidden until at least one field
+		 * is filled, so fresh installs stay clean. No store-specific data is
+		 * hard-coded — operators enter their own address / phone / VAT here. */
+		$wp_customize->add_setting( 'luwipress_gold_footer_address', [
+			'type'              => 'theme_mod',
+			'default'           => '',
+			'sanitize_callback' => 'sanitize_textarea_field',
+			'transport'         => 'refresh',
+		] );
+		$wp_customize->add_control( 'luwipress_gold_footer_address', [
+			'label'       => __( 'Contact — address', 'luwipress-gold' ),
+			'description' => __( 'Postal address under the footer logo (multi-line OK). Leave the whole contact group empty to hide it.', 'luwipress-gold' ),
+			'section'     => $section_id,
+			'type'        => 'textarea',
+			'priority'    => 60,
+		] );
+		$contact_fields = [
+			'phone'  => [ __( 'Contact — phone', 'luwipress-gold' ),            '+39 0123 456789' ],
+			'mobile' => [ __( 'Contact — mobile', 'luwipress-gold' ),           '+39 333 1234567' ],
+			'email'  => [ __( 'Contact — email', 'luwipress-gold' ),            'info@example.com' ],
+			'hours'  => [ __( 'Contact — working hours', 'luwipress-gold' ),    'Mon–Fri, 10:00–17:00' ],
+			'vat'    => [ __( 'Contact — VAT / company no.', 'luwipress-gold' ), 'VAT IT 00000000000' ],
+		];
+		$cp = 61;
+		foreach ( $contact_fields as $ck => $ccfg ) {
+			$csid = 'luwipress_gold_footer_' . $ck;
+			$wp_customize->add_setting( $csid, [
+				'type'              => 'theme_mod',
+				'default'           => '',
+				'sanitize_callback' => 'sanitize_text_field',
+				'transport'         => 'refresh',
+			] );
+			$wp_customize->add_control( $csid, [
+				'label'       => $ccfg[0],
+				/* translators: %s: example value */
+				'description' => sprintf( __( 'e.g. %s — leave empty to hide this line.', 'luwipress-gold' ), $ccfg[1] ),
+				'section'     => $section_id,
+				'type'        => 'text',
+				'priority'    => $cp++,
+			] );
+		}
 	}
 	add_action( 'customize_register', 'luwipress_gold_footer_customizer', 30 );
 }
@@ -520,6 +563,66 @@ if ( ! function_exists( 'luwipress_gold_footer_render_payment_row' ) ) {
 	}
 }
 
+if ( ! function_exists( 'luwipress_gold_footer_render_contact' ) ) {
+
+	/**
+	 * Render the contact / address block in the footer brand column.
+	 * Every field is Customizer-driven (LuwiPress Gold → Footer); the whole
+	 * block renders nothing when all fields are empty, so the brand column
+	 * stays clean on fresh installs. Phone/mobile become tel: links, email
+	 * becomes a mailto: link.
+	 */
+	function luwipress_gold_footer_render_contact() {
+		$address = trim( (string) get_theme_mod( 'luwipress_gold_footer_address', '' ) );
+		$phone   = trim( (string) get_theme_mod( 'luwipress_gold_footer_phone', '' ) );
+		$mobile  = trim( (string) get_theme_mod( 'luwipress_gold_footer_mobile', '' ) );
+		$email   = trim( (string) get_theme_mod( 'luwipress_gold_footer_email', '' ) );
+		$hours   = trim( (string) get_theme_mod( 'luwipress_gold_footer_hours', '' ) );
+		$vat     = trim( (string) get_theme_mod( 'luwipress_gold_footer_vat', '' ) );
+
+		if ( '' === $address && '' === $phone && '' === $mobile && '' === $email && '' === $hours && '' === $vat ) {
+			return;
+		}
+
+		$tel = static function ( $n ) { return preg_replace( '/[^0-9+]/', '', (string) $n ); };
+
+		echo '<ul class="lwp-site-footer-contact" role="list">';
+
+		if ( '' !== $address ) {
+			echo '<li class="lwp-fc-address"><span class="lwp-fc-ico" aria-hidden="true">'
+				. '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>'
+				. '</span><span>' . nl2br( esc_html( $address ) ) . '</span></li>';
+		}
+		if ( '' !== $phone || '' !== $mobile ) {
+			echo '<li class="lwp-fc-phone"><span class="lwp-fc-ico" aria-hidden="true">'
+				. '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>'
+				. '</span><span>';
+			if ( '' !== $phone ) {
+				echo '<a href="tel:' . esc_attr( $tel( $phone ) ) . '">' . esc_html( $phone ) . '</a>';
+			}
+			if ( '' !== $mobile ) {
+				echo ( '' !== $phone ? '<br>' : '' ) . '<a href="tel:' . esc_attr( $tel( $mobile ) ) . '">' . esc_html( $mobile ) . '</a>';
+			}
+			echo '</span></li>';
+		}
+		if ( '' !== $email ) {
+			echo '<li class="lwp-fc-email"><span class="lwp-fc-ico" aria-hidden="true">'
+				. '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>'
+				. '</span><span><a href="mailto:' . esc_attr( $email ) . '">' . esc_html( $email ) . '</a></span></li>';
+		}
+		if ( '' !== $hours ) {
+			echo '<li class="lwp-fc-hours"><span class="lwp-fc-ico" aria-hidden="true">'
+				. '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>'
+				. '</span><span>' . esc_html( $hours ) . '</span></li>';
+		}
+		if ( '' !== $vat ) {
+			echo '<li class="lwp-fc-vat"><span>' . esc_html( $vat ) . '</span></li>';
+		}
+
+		echo '</ul>';
+	}
+}
+
 if ( ! function_exists( 'luwipress_gold_footer_print_styles' ) ) {
 
 	/**
@@ -591,6 +694,13 @@ if ( ! function_exists( 'luwipress_gold_footer_print_styles' ) ) {
 	.lwp-site-footer-trust{gap:14px}
 	.lwp-site-footer-trust li:not(:last-child)::after{display:none}
 }
+.lwp-site-footer-contact{list-style:none;margin:18px 0 0;padding:0;display:flex;flex-direction:column;gap:10px}
+.lwp-site-footer-contact li{display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.5;color:rgba(255,255,255,.66)}
+.lwp-site-footer-contact .lwp-fc-ico{flex:0 0 auto;width:18px;height:18px;color:var(--primary-light,#D4AF37);margin-top:1px}
+.lwp-site-footer-contact .lwp-fc-ico svg{width:18px;height:18px;display:block}
+.lwp-site-footer-contact a{color:rgba(255,255,255,.66);text-decoration:none;transition:color .15s}
+.lwp-site-footer-contact a:hover{color:#fff}
+.lwp-site-footer-contact .lwp-fc-vat{font-size:11.5px;letter-spacing:.04em;color:rgba(255,255,255,.45);padding-left:28px}
 </style>
 		<?php
 	}

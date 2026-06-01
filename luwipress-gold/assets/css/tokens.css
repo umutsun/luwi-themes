@@ -1759,3 +1759,36 @@ html {
 	body.single-product main.lwp-pdp { padding-bottom: 32px; }
 	.lwp-site-footer { margin-top: 32px; }
 }
+
+/* ─── Product Grid (lwp-product-grid) mobile/tablet containment ─────────────
+ * widgets.css carries the full grid rules, but on Elementor pages where the
+ * widget was inserted without registering its style dependency (e.g. added via
+ * the REST/MCP page builder), widgets.css is NOT enqueued — so the list falls
+ * back to a per-instance ~500px single-column layout that overflows the viewport
+ * on phones. tokens.css is always loaded, so these rules guarantee the grid
+ * stays contained + responsive there regardless. Column counts use !important to
+ * beat the per-instance Elementor "Columns" CSS on small screens; desktop is
+ * left untouched (the Columns control still governs it). */
+@media (max-width: 1024px) {
+	html body ul.products.lwp-product-grid__list {
+		display: grid !important;
+		grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+		width: 100% !important;
+		max-width: 100% !important;
+		margin: 0 !important;
+		gap: 20px !important;
+	}
+	html body ul.products.lwp-product-grid__list > li.product {
+		width: auto !important;
+		max-width: 100% !important;
+		margin: 0 !important;
+		min-width: 0 !important;
+		float: none !important;
+	}
+}
+@media (max-width: 680px) {
+	html body ul.products.lwp-product-grid__list {
+		grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+		gap: 14px !important;
+	}
+}

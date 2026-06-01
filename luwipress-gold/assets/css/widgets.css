@@ -1366,6 +1366,19 @@ li.lwp-pcard {
 	font-weight: 500;
 }
 
+/* Card text gutter (1.10.7+) — inset the title + price 16px so they line up
+ * with the bottom add-to-cart pill (which sits 16px in via its own margin),
+ * instead of hugging the card's left edge. The media/image stays full-bleed.
+ * Archive cards wrap their text in `.lwp-pcard-meta`; the lwp-product-grid
+ * widget puts the title/price DIRECTLY under `.lwp-pcard-link` — pad whichever
+ * applies (the `>` direct-child guard stops the archive double-padding). */
+.lwp-pcard-meta,
+.lwp-pcard-link > .lwp-pcard-title,
+.lwp-pcard-link > .lwp-pcard-price {
+	padding-left: 16px;
+	padding-right: 16px;
+}
+
 /* ─── Loop card ATC button (1.7.11+) ─────────────────────────────────────
  *
  * Full-width pill anchored at the bottom of the card via flex flow.

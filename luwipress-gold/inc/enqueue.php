@@ -234,6 +234,52 @@ add_action( 'wp_enqueue_scripts', function () {
 }, 9999 );
 
 /**
+ * Keep the theme's core stylesheets OUT of LiteSpeed's CSS optimization.
+ *
+ * LSCWP's "Remove Unused CSS" (UCSS) + "CSS Combine" were mangling the theme's
+ * widget styling: UCSS keeps only selectors it sees while crawling a page, so
+ * rules for widgets inserted later via the REST/MCP page builder (e.g. the
+ * homepage product grid, and several bespoke sections) were dropped, while
+ * editor-built widgets (e.g. the Masters grid) kept theirs — and the combined
+ * chunk was occasionally served stale, so the SAME element measured a different
+ * width between reloads. Net effect: mobile spacing broke inconsistently across
+ * section after section, even though widgets.css ships the correct responsive
+ * rules and is enqueued on every page.
+ *
+ * `data-no-optimize="1"` tells LiteSpeed to load these sheets verbatim (no
+ * combine, no UCSS), so the FULL responsive CSS always applies. Mirrors the
+ * existing frontend.js opt-out above. Costs a couple of un-combined requests —
+ * a fair trade for deterministic styling. (Operator must Purge All once after
+ * deploy so LS drops the old optimized CSS.)
+ */
+add_filter( 'style_loader_tag', function ( $tag, $handle ) {
+	$skip = array( 'luwipress-gold-tokens', 'luwipress-gold-widgets', 'luwipress-gold-woo' );
+	if ( in_array( $handle, $skip, true ) ) {
+		$tag = str_replace( ' href=', ' data-no-optimize="1" data-no-defer="1" data-cfasync="false" href=', $tag );
+	}
+	return $tag;
+}, 10, 2 );
+
+/**
+ * Belt-and-braces: also register the theme CSS paths in LiteSpeed's own CSS
+ * optimize-exclude + UCSS-exclude filters (some LSCWP builds honour the filter,
+ * others the attribute — cover both, mirroring the frontend.js JS excludes).
+ */
+add_filter( 'litespeed_optm_css_excludes', 'luwipress_gold_css_ls_excludes' );
+add_filter( 'litespeed_optm_ucss_file_exc_inline_gen', 'luwipress_gold_css_ls_excludes' );
+if ( ! function_exists( 'luwipress_gold_css_ls_excludes' ) ) {
+	function luwipress_gold_css_ls_excludes( $excludes ) {
+		if ( ! is_array( $excludes ) ) {
+			$excludes = array();
+		}
+		$excludes[] = 'luwipress-gold-elementor/assets/css/tokens.css';
+		$excludes[] = 'luwipress-gold-elementor/assets/css/widgets.css';
+		$excludes[] = 'luwipress-gold-elementor/assets/css/woo-overrides.css';
+		return $excludes;
+	}
+}
+
+/**
  * Critical inline stylesheet — written directly into <head> just before
  * </head>. Wins every specificity fight regardless of plugin enqueue
  * order or LiteSpeed combine. Strictly limited to the chrome reset

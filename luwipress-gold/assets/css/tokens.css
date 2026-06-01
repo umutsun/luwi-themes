@@ -1792,3 +1792,14 @@ html {
 		gap: 14px !important;
 	}
 }
+/* Product-grid card title + price horizontal inset. The product-grid widget
+ * renders the title + price directly inside `.lwp-pcard-link` — it does NOT
+ * use the padded `.lwp-pcard-meta` wrapper that the standalone product-card
+ * widget does, so the text sat flush against the card edge (while the Add-to-cart
+ * button keeps its own 16px margin). Inset them to align with the button. Lives
+ * in tokens.css (always loaded) since widgets.css may not be enqueued here. */
+.lwp-product-grid__list .lwp-pcard-title,
+.lwp-product-grid__list .lwp-pcard-price {
+	padding-left: 16px !important;
+	padding-right: 16px !important;
+}

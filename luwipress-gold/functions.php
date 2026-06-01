@@ -27,7 +27,7 @@ define(
 	'LUWIPRESS_GOLD_VERSION',
 	( $lwp_gold_theme_obj && $lwp_gold_theme_obj->get( 'Version' ) )
 		? (string) $lwp_gold_theme_obj->get( 'Version' )
-		: '1.10.10'
+		: '1.10.11'
 );
 unset( $lwp_gold_theme_obj );
 define( 'LUWIPRESS_GOLD_DIR', get_template_directory() );

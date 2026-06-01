@@ -1803,3 +1803,21 @@ html {
 	padding-left: 16px !important;
 	padding-right: 16px !important;
 }
+
+/* Mobile card-grid side-gutter reclaim. The homepage Elementor sections keep a
+ * 32px desktop side padding at every breakpoint, so on a ~390px phone the card
+ * grids lost 64px (~16%) to side gutters — cards were cramped (the Add-to-cart
+ * label even truncated) and the outer gutters dwarfed the 14px inter-card gap.
+ * Reclaim half the gutter (→16px each side, balanced with the gap) so cards get
+ * meaningfully wider. Bounded at -16px → never exceeds the section's 32px
+ * padding, so no horizontal overflow. Scoped to the boxed card grids only —
+ * NOT the category grid, whose tiles are intentionally full-bleed (0 padding),
+ * where a negative margin WOULD overflow. */
+@media (max-width: 680px) {
+	.lwp-product-grid,
+	.lwp-mgrid,
+	.lwp-editorial-grid {
+		margin-left: -16px !important;
+		margin-right: -16px !important;
+	}
+}

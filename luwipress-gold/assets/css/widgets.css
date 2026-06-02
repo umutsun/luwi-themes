@@ -1262,6 +1262,16 @@ html body ul.products.lwp-product-grid__list::after {
 	.lwp-product-grid__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
 }
 
+/* Content-width parity (1.10.14) — the product-grid wrapper otherwise renders
+ * ~34px wider than the 1372px content width on each side, so its cards break
+ * alignment with every other lwp widget (section heads, category/master grids,
+ * hero, story split). Box it to the content width, centered, like the rest. */
+.lwp-product-grid {
+	max-width: var(--content-w, 1372px);
+	margin-left: auto;
+	margin-right: auto;
+}
+
 /* ═════════════════════════════════════════════════════════════════════ */
 /*  Reference-faithful WooCommerce components (1.1.0)                    */
 /*  Tapadum Gold Claude Design — content-product / cart / dashboard /    */

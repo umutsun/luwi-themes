@@ -133,6 +133,14 @@ $archive_desc  = get_the_archive_description();
 				</nav>
 			<?php endif; ?>
 
+			<?php
+			// Infinite scroll / load-more over the crawlable pagination above.
+			// Covers Event CPT + blog/category/tag/author/date archives.
+			if ( function_exists( 'lwp_gold_loadmore_render' ) ) {
+				lwp_gold_loadmore_render();
+			}
+			?>
+
 		<?php else : ?>
 
 			<div class="lwp-jnl-empty">

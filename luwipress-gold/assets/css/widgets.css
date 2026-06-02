@@ -546,6 +546,76 @@ body { overflow-x: hidden; overflow-x: clip; }
 	.lwp-eg-head { flex-direction: column; align-items: flex-start; gap: 18px; }
 }
 
+/* ─── Generic archive Load More / Infinite Scroll (1.10.17) ──────────── */
+/* Drives the Vendor, Event + blog/category archives via loadmore.js. Styles
+ * live here (widgets.css is site-wide) so non-WooCommerce archives get them;
+ * the WC shop carries a duplicate set in woo-overrides.css. */
+.lwp-loadmore-wrap {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 12px;
+	padding: 28px 0 12px;
+}
+.lwp-loadmore-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 26px;
+	background: var(--ink, #1b1c1c);
+	color: #fff;
+	border: 0;
+	border-radius: 999px;
+	font-family: var(--mono, ui-monospace, monospace);
+	font-size: 12px;
+	letter-spacing: .12em;
+	text-transform: uppercase;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background .14s ease, transform .14s ease;
+}
+.lwp-loadmore-btn:hover { background: var(--primary, #735c00); }
+.lwp-loadmore-btn:disabled { opacity: .55; cursor: progress; }
+.lwp-loadmore-btn[hidden] { display: none; }
+.lwp-loadmore-spinner {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 12px;
+	background: var(--bg-alt, #f5f0e6);
+	border: 1px solid var(--border, #e8dfc9);
+	border-radius: 999px;
+}
+.lwp-loadmore-spinner[hidden] { display: none; }
+.lwp-loadmore-spinner__ring {
+	width: 18px;
+	height: 18px;
+	border-radius: 50%;
+	border: 2px solid var(--border, #e8dfc9);
+	border-top-color: var(--primary, #735c00);
+	animation: lwp-loadmore-spin .9s linear infinite;
+	display: inline-block;
+}
+.lwp-loadmore-status {
+	font-family: var(--mono, ui-monospace, monospace);
+	font-size: 11px;
+	letter-spacing: .12em;
+	color: var(--muted, #7f7663);
+	min-height: 14px;
+}
+@keyframes lwp-loadmore-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+	.lwp-loadmore-spinner__ring { animation: none; }
+}
+/* While load-more is active, hide the native pagination. The links stay in the
+ * DOM (display:none is still crawlable) so SEO/discovery is unaffected. */
+.lwp-loadmore-active .lwp-jnl-pagination,
+.lwp-loadmore-active nav.pagination,
+.lwp-loadmore-active .lwp-people-archive__pagination,
+.lwp-loadmore-active .woocommerce-pagination {
+	display: none !important;
+}
+
 /* ─────────────────────────────────────────────────────────────────── */
 /* Hero                                                                */
 /* ─────────────────────────────────────────────────────────────────── */

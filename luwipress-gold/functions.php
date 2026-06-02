@@ -27,7 +27,7 @@ define(
 	'LUWIPRESS_GOLD_VERSION',
 	( $lwp_gold_theme_obj && $lwp_gold_theme_obj->get( 'Version' ) )
 		? (string) $lwp_gold_theme_obj->get( 'Version' )
-		: '1.10.16'
+		: '1.10.17'
 );
 unset( $lwp_gold_theme_obj );
 define( 'LUWIPRESS_GOLD_DIR', get_template_directory() );
@@ -145,6 +145,11 @@ require_once LUWIPRESS_GOLD_DIR . '/inc/mega-menu-customizer.php';
 // with the JS handler in assets/js/frontend.js which removes the boot
 // class on window.load.
 require_once LUWIPRESS_GOLD_DIR . '/inc/page-loader.php';
+
+// Generic archive Load More / Infinite Scroll — drives the Vendor + Event CPT
+// archives and blog/category/tag archives (SEO-safe progressive enhancement
+// over the real paginated links). WC shop archive has its own setup.
+require_once LUWIPRESS_GOLD_DIR . '/inc/loadmore.php';
 
 // Onboarding wizard — admin-only.
 if ( is_admin() ) {

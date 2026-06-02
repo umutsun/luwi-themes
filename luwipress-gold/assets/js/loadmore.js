@@ -1,32 +1,51 @@
 /**
- * LuwiPress Gold — Shop archive Load More
+ * LuwiPress Gold — generic archive Load More / Infinite Scroll.
  *
- * Activates when the operator toggles `luwipress_gold_shop_loadmore` on.
- * Hijacks the woocommerce_pagination output:
- *   • mode="button"   shows a "Load more products" button below the grid
- *   • mode="infinite" auto-fetches the next page when the sentinel scrolls
- *                     into view (IntersectionObserver, prefers-reduced-motion respected)
+ * Works for ANY archive (WooCommerce shop, Vendor/Luthier CPT, Event CPT,
+ * blog/category/tag, future CPTs). Each `.lwp-loadmore-wrap` describes its own
+ * selectors via data attributes, so one script drives every listing:
  *
- * Strategy: fetch the next paginated archive URL (?paged=N), parse the HTML,
- * pluck `<ul class="products">` and the existing pagination block, append
- * products to the current grid, replace pagination so navigation stays
- * functional for SEO/accessibility (we hide it visually via CSS).
+ *   data-grid        items container to append into   (e.g. ".lwp-people-archive__grid")
+ *   data-pagination  pagination block to keep in sync (e.g. ".pagination")
+ *   data-next        the "next page" link selector     (e.g. ".pagination a.next")
+ *   data-mode        "infinite" (default) | "button"
+ *   data-current / data-max   current page / total pages
+ *
+ * SEO-SAFE BY DESIGN: the real paginated links (/page/2/, ?paged=2) stay in the
+ * DOM (only visually hidden via .lwp-loadmore-active in CSS), so search engines
+ * crawl every page. The script is pure progressive enhancement over them —
+ * it fetches the next page's HTML, appends the items, and swaps the pagination
+ * block so the cycle continues.
+ *
+ * Backward-compatible: a wrap with no data-* selectors falls back to the
+ * WooCommerce shop defaults (ul.products / .woocommerce-pagination).
  */
 ( function () {
 	'use strict';
-	if ( typeof window.LWP_GOLD_LM === 'undefined' ) { return; }
-	var cfg = window.LWP_GOLD_LM;
+
+	var cfg = window.LWP_GOLD_LM || { i18n: {}, mode: 'infinite' };
+	var I18N = cfg.i18n || {};
 
 	function $( sel, root ) { return ( root || document ).querySelector( sel ); }
 	function $$( sel, root ) { return Array.from( ( root || document ).querySelectorAll( sel ) ); }
+
+	// Per-wrap selector resolution (data-* with WooCommerce fallbacks).
+	function sel( wrap ) {
+		var grid = wrap.getAttribute( 'data-grid' ) || 'ul.products';
+		var pag  = wrap.getAttribute( 'data-pagination' ) || '.woocommerce-pagination';
+		var next = wrap.getAttribute( 'data-next' ) || ( pag + ' a.next' );
+		return { grid: grid, pag: pag, next: next };
+	}
+
+	function mode( wrap ) {
+		return wrap.getAttribute( 'data-mode' ) || cfg.mode || 'infinite';
+	}
 
 	function setStatus( wrap, msg ) {
 		var s = wrap.querySelector( '.lwp-loadmore-status' );
 		if ( s ) { s.textContent = msg || ''; }
 	}
 
-	// Spinner shown during the fetch so users see immediate visual feedback
-	// when infinite-scroll triggers. Without it the page feels stalled.
 	function setSpinner( wrap, on ) {
 		var sp = wrap.querySelector( '.lwp-loadmore-spinner' );
 		if ( ! sp ) { return; }
@@ -39,53 +58,33 @@
 		}
 	}
 
+	// The next-page URL is simply the href of the live "next" link — that link
+	// is the WP-correct URL for the current permalink structure, and it's the
+	// crawlable element search engines follow. No manual page math needed.
 	function nextUrl( wrap ) {
-		var current = parseInt( wrap.dataset.current || '1', 10 );
-		var max     = parseInt( wrap.dataset.max || '1', 10 );
-		if ( current >= max ) { return null; }
-		var next = current + 1;
-		// Prefer the actual "next" link from the existing pagination — that
-		// gives us the WP-correct URL shape for our permalink structure.
-		var nextLink = $( '.woocommerce-pagination a.next' );
-		if ( nextLink && nextLink.href ) {
-			// Replace ?paged=X / /page/X/ in the next link with our target page.
-			var hrefURL = new URL( nextLink.href, window.location.origin );
-			if ( hrefURL.searchParams.has( 'paged' ) ) {
-				hrefURL.searchParams.set( 'paged', next );
-				return hrefURL.toString();
-			}
-			// Fall through to manual construction.
-		}
-		// Manual construction: append /page/N/ to current pathname.
-		var url = new URL( window.location.href );
-		var path = url.pathname.replace( /\/page\/\d+\/?$/, '/' );
-		if ( path.slice( -1 ) !== '/' ) { path += '/'; }
-		url.pathname = path + 'page/' + next + '/';
-		return url.toString();
+		var s = sel( wrap );
+		var a = $( s.next );
+		return ( a && a.href ) ? a.href : null;
 	}
 
-	// Symbolic state markers — language-neutral so we don't ship 4 i18n strings
-	// per state across FR/IT/ES/DE/AR/etc. Glyphs picked from common Unicode
-	// punctuation present in every modern font:
-	//   '·'   while loading (resting; spinner ring covers active state)
-	//   'X / Y'  numeric pagination after each successful append
-	//   '✓'   end of list
-	//   '⚠'   error
+	// Symbolic state markers — language-neutral (no per-locale strings):
+	//   ''     resting / loading (spinner ring covers the active state)
+	//   'X / Y' numeric pagination after each successful append
+	//   '✓'    end of list   ·   '⚠' error
 	var SYM = { loading: '', done: '✓', error: '⚠' };
 
 	function loadNext( wrap, btn ) {
 		var url = nextUrl( wrap );
 		if ( ! url ) {
-			btn && ( btn.hidden = true );
+			if ( btn ) { btn.hidden = true; }
 			setSpinner( wrap, false );
 			setStatus( wrap, SYM.done );
 			return;
 		}
-		btn && ( btn.disabled = true );
+		var s = sel( wrap );
+		if ( btn ) { btn.disabled = true; }
 		var origLabel = btn ? btn.textContent : '';
-		// Button label stays textual ONLY in button-mode (operator opt-in);
-		// infinite mode hides the button so text label never renders.
-		if ( btn ) { btn.textContent = cfg.i18n.loading; }
+		if ( btn ) { btn.textContent = I18N.loading || 'Loading…'; }
 		setStatus( wrap, SYM.loading );
 		setSpinner( wrap, true );
 
@@ -97,45 +96,45 @@
 			.then( function ( html ) {
 				var dom = new DOMParser().parseFromString( html, 'text/html' );
 
-				// Append product cards from the next page's `<ul.products>`.
-				var newUl = dom.querySelector( 'ul.products' );
-				var ourUl = $( 'ul.products' );
-				if ( newUl && ourUl ) {
-					Array.from( newUl.children ).forEach( function ( li ) {
-						ourUl.appendChild( li );
+				// Append the next page's items into our grid.
+				var newGrid = dom.querySelector( s.grid );
+				var ourGrid = $( s.grid );
+				if ( newGrid && ourGrid ) {
+					Array.from( newGrid.children ).forEach( function ( child ) {
+						ourGrid.appendChild( child );
 					} );
 				}
 
-				// Sync pagination so the next click hits page+1 again. We
-				// keep WC's pagination markup visually hidden (.lwp-loadmore-active
-				// hides .woocommerce-pagination) so the cycle continues.
-				var newPag = dom.querySelector( '.woocommerce-pagination' );
-				var ourPag = $( '.woocommerce-pagination' );
+				// Swap the pagination block so the "next" link advances + stays
+				// crawlable (CSS keeps it visually hidden while load-more is active).
+				var newPag = dom.querySelector( s.pag );
+				var ourPag = $( s.pag );
 				if ( newPag && ourPag ) {
 					ourPag.innerHTML = newPag.innerHTML;
+				} else if ( ! newPag && ourPag ) {
+					// No pagination on the fetched page = we just loaded the last one.
+					ourPag.innerHTML = '';
 				}
 
-				// Bump current.
-				var current = parseInt( wrap.dataset.current || '1', 10 );
+				var current = parseInt( wrap.dataset.current || '1', 10 ) + 1;
 				var max     = parseInt( wrap.dataset.max || '1', 10 );
-				current++;
 				wrap.dataset.current = String( current );
 				setSpinner( wrap, false );
-				if ( current >= max ) {
+
+				if ( current >= max || ! nextUrl( wrap ) ) {
 					if ( btn ) { btn.hidden = true; }
 					setStatus( wrap, SYM.done );
 				} else {
-					if ( btn ) { btn.disabled = false; btn.textContent = origLabel || cfg.i18n.load_more; }
+					if ( btn ) { btn.disabled = false; btn.textContent = origLabel || I18N.load_more || 'Load more'; }
 					setStatus( wrap, current + ' / ' + max );
 				}
 
-				// Trigger any lazy-load observer on newly appended images.
 				if ( typeof window.dispatchEvent === 'function' ) {
 					window.dispatchEvent( new CustomEvent( 'lwp:loadmore:appended' ) );
 				}
 			} )
 			.catch( function () {
-				if ( btn ) { btn.disabled = false; btn.textContent = origLabel || cfg.i18n.load_more; }
+				if ( btn ) { btn.disabled = false; btn.textContent = origLabel || I18N.load_more || 'Load more'; }
 				setSpinner( wrap, false );
 				setStatus( wrap, SYM.error );
 			} );
@@ -144,25 +143,22 @@
 	function bindButton( wrap ) {
 		var btn = wrap.querySelector( '.lwp-loadmore-btn' );
 		if ( ! btn ) { return; }
+		btn.hidden = false;
 		btn.addEventListener( 'click', function () { loadNext( wrap, btn ); } );
 	}
 
 	function bindInfinite( wrap ) {
-		// Infinite mode hides the explicit button; uses an IntersectionObserver
-		// over the wrapper itself.
 		var btn = wrap.querySelector( '.lwp-loadmore-btn' );
 		if ( btn ) { btn.hidden = true; }
-		if ( ! ( 'IntersectionObserver' in window ) ) {
-			// No-op: surface as a visible button for older browsers.
-			if ( btn ) { btn.hidden = false; bindButton( wrap ); }
-			return;
-		}
+
+		// Fall back to an explicit button when IntersectionObserver is missing
+		// or the user prefers reduced motion (never auto-fetch on scroll then).
 		var prefersReduced = window.matchMedia && window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches;
-		if ( prefersReduced ) {
-			// Never auto-fetch when motion is reduced; show the button.
-			if ( btn ) { btn.hidden = false; bindButton( wrap ); }
+		if ( ! ( 'IntersectionObserver' in window ) || prefersReduced ) {
+			bindButton( wrap );
 			return;
 		}
+
 		var fetching = false;
 		var io = new IntersectionObserver( function ( entries ) {
 			entries.forEach( function ( e ) {
@@ -171,26 +167,29 @@
 				var max     = parseInt( wrap.dataset.max || '1', 10 );
 				if ( current >= max ) { io.disconnect(); return; }
 				fetching = true;
-				setStatus( wrap, cfg.i18n.loading );
 				loadNext( wrap, null );
-				// Throttle: re-arm after a tick so we don't fire twice.
 				setTimeout( function () { fetching = false; }, 1000 );
 			} );
-		}, { rootMargin: '200px 0px' } );
+		}, { rootMargin: '300px 0px' } );
 		io.observe( wrap );
 	}
 
-	document.addEventListener( 'DOMContentLoaded', function () {
+	function init() {
 		var wraps = $$( '.lwp-loadmore-wrap' );
 		if ( ! wraps.length ) { return; }
-		// Apply mode marker to the page so CSS hides the woocommerce_pagination.
 		document.body.classList.add( 'lwp-loadmore-active' );
 		wraps.forEach( function ( w ) {
-			if ( cfg.mode === 'infinite' ) {
+			if ( mode( w ) === 'infinite' ) {
 				bindInfinite( w );
 			} else {
 				bindButton( w );
 			}
 		} );
-	} );
+	}
+
+	if ( document.readyState === 'loading' ) {
+		document.addEventListener( 'DOMContentLoaded', init );
+	} else {
+		init();
+	}
 } )();

@@ -97,12 +97,22 @@ $plural = class_exists( 'LuwiPress_Vendors' )
 		</ul>
 
 		<?php
-		// Native WP pagination — works regardless of theme version.
+		// Native WP pagination — kept in the DOM (and crawlable) for SEO. When
+		// load-more is active it is hidden via CSS and driven by loadmore.js.
 		the_posts_pagination( array(
 			'mid_size'  => 1,
 			'prev_text' => __( '← Previous', 'luwipress-gold' ),
 			'next_text' => __( 'Next →', 'luwipress-gold' ),
 		) );
+
+		// Infinite scroll / load-more over the real paginated links above.
+		if ( function_exists( 'lwp_gold_loadmore_render' ) ) {
+			lwp_gold_loadmore_render( array(
+				'grid'       => '.lwp-people-archive__grid',
+				'pagination' => '.pagination',
+				'next'       => '.pagination a.next',
+			) );
+		}
 		?>
 	<?php else : ?>
 		<p class="lwp-people-archive__empty">

@@ -174,8 +174,14 @@ class LuwiPress_Gold_Widget_Editorial_Grid extends Widget_Base {
 					<div class="lwp-eg-meta">
 						<?php if ( $cat ) : ?><span class="lwp-eg-cat"><?php echo esc_html( $cat ); ?></span><?php endif; ?>
 						<h3 class="lwp-eg-title"><?php the_title(); ?></h3>
-						<?php if ( $i === 1 ) : ?>
-							<p class="lwp-eg-excerpt"><?php echo esc_html( wp_trim_words( get_the_excerpt(), 28 ) ); ?></p>
+						<?php
+						// Excerpt on EVERY card (not just the featured one) so the
+						// compact cards don't render as a title + a big empty gap.
+						// The featured card has more room, so it gets a longer trim.
+						$excerpt = get_the_excerpt();
+						if ( '' !== trim( (string) $excerpt ) ) :
+							?>
+							<p class="lwp-eg-excerpt"><?php echo esc_html( wp_trim_words( $excerpt, $i === 1 ? 28 : 20 ) ); ?></p>
 						<?php endif; ?>
 						<span class="lwp-eg-byline"><?php echo esc_html( get_the_date() ); ?></span>
 					</div>

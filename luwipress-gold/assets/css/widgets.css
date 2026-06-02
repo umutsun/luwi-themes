@@ -431,7 +431,10 @@ body { overflow-x: hidden; overflow-x: clip; }
 	max-width: 1372px;
 	margin-left: auto;
 	margin-right: auto;
-	padding: 0 32px;
+	/* No horizontal padding (1.10.15) — the 32px inset pushed the eyebrow +
+	 * "From the Journal" heading 32px in from the cards below + every other
+	 * section heading. Flush to the content edge so it lines up. */
+	padding: 0;
 }
 .lwp-eg-eyebrow {
 	font-family: var(--mono, 'JetBrains Mono', monospace);

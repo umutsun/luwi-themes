@@ -27,7 +27,7 @@ define(
 	'LUWIPRESS_GOLD_VERSION',
 	( $lwp_gold_theme_obj && $lwp_gold_theme_obj->get( 'Version' ) )
 		? (string) $lwp_gold_theme_obj->get( 'Version' )
-		: '1.10.17'
+		: '1.10.18'
 );
 unset( $lwp_gold_theme_obj );
 define( 'LUWIPRESS_GOLD_DIR', get_template_directory() );
@@ -150,6 +150,11 @@ require_once LUWIPRESS_GOLD_DIR . '/inc/page-loader.php';
 // archives and blog/category/tag archives (SEO-safe progressive enhancement
 // over the real paginated links). WC shop archive has its own setup.
 require_once LUWIPRESS_GOLD_DIR . '/inc/loadmore.php';
+
+// Engine-CPT template routing — gives operator-defined CPT Engine types
+// (Team, Events, …) a styled single + archive (generic Vendor chrome) instead
+// of the bare blog fallback. A type-specific template still wins.
+require_once LUWIPRESS_GOLD_DIR . '/inc/engine-cpt-templates.php';
 
 // Onboarding wizard — admin-only.
 if ( is_admin() ) {

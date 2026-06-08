@@ -11,6 +11,78 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Theme-string translation that works regardless of WPML's "theme localization"
+ * mode. WPML hooks `override_load_textdomain` and — when set to translate the
+ * theme via WPML String Translation rather than .mo files — swallows
+ * `load_theme_textdomain()`, so the .mo we ship never loads and theme chrome
+ * (mega menu "View all" / "Open", footer blurb, widget labels) renders in English
+ * on /fr/ /it/ /es/. We bypass that entirely: read the shipped .mo ourselves,
+ * keyed to the request language (WPML/Polylang aware), and filter `gettext`
+ * directly. The filter fires per __()/_e()/esc_html__() call at render time, when
+ * the request language is already resolved, so timing is a non-issue too.
+ */
+function luwipress_gold_i18n_locale() {
+	$code = '';
+	if ( defined( 'ICL_LANGUAGE_CODE' ) && ICL_LANGUAGE_CODE ) {
+		$code = ICL_LANGUAGE_CODE;
+	} elseif ( function_exists( 'pll_current_language' ) ) {
+		$code = (string) pll_current_language( 'slug' );
+	}
+	if ( $code ) {
+		$langs = apply_filters( 'wpml_active_languages', null );
+		if ( is_array( $langs ) && ! empty( $langs[ $code ]['default_locale'] ) ) {
+			return $langs[ $code ]['default_locale'];
+		}
+		$map = array( 'fr' => 'fr_FR', 'it' => 'it_IT', 'es' => 'es_ES', 'de' => 'de_DE', 'en' => 'en_US' );
+		if ( isset( $map[ $code ] ) ) {
+			return $map[ $code ];
+		}
+	}
+	return function_exists( 'determine_locale' ) ? determine_locale() : get_locale();
+}
+
+function luwipress_gold_i18n_map() {
+	static $cache = array();
+	$locale = luwipress_gold_i18n_locale();
+	if ( array_key_exists( $locale, $cache ) ) {
+		return $cache[ $locale ];
+	}
+	$map  = array();
+	$file = LUWIPRESS_GOLD_DIR . '/languages/luwipress-gold-' . $locale . '.mo';
+	if ( $locale && is_readable( $file ) ) {
+		if ( ! class_exists( 'MO' ) ) {
+			require_once ABSPATH . 'wp-includes/pomo/mo.php';
+		}
+		$mo = new MO();
+		if ( $mo->import_from_file( $file ) ) {
+			foreach ( $mo->entries as $entry ) {
+				if ( isset( $entry->singular ) && ! empty( $entry->translations[0] ) ) {
+					$map[ $entry->singular ] = $entry->translations[0];
+				}
+			}
+		}
+	}
+	$cache[ $locale ] = $map;
+	return $map;
+}
+
+add_filter( 'gettext', function ( $translation, $text, $domain ) {
+	if ( 'luwipress-gold' !== $domain || $translation !== $text ) {
+		return $translation;
+	}
+	$map = luwipress_gold_i18n_map();
+	return isset( $map[ $text ] ) ? $map[ $text ] : $translation;
+}, 999, 3 );
+
+add_filter( 'gettext_with_context', function ( $translation, $text, $context, $domain ) {
+	if ( 'luwipress-gold' !== $domain || $translation !== $text ) {
+		return $translation;
+	}
+	$map = luwipress_gold_i18n_map();
+	return isset( $map[ $text ] ) ? $map[ $text ] : $translation;
+}, 999, 4 );
+
 add_action( 'after_setup_theme', function () {
 	load_theme_textdomain( 'luwipress-gold', LUWIPRESS_GOLD_DIR . '/languages' );
 

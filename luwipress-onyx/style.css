@@ -1,0 +1,25 @@
+/*
+Theme Name: LuwiPress Onyx
+Theme URI: https://luwi.dev/luwipress
+Author: LuwiPress
+Author URI: https://luwi.dev/luwipress
+Description: LuwiPress-powered, Elementor-ready dark-luxury real-estate theme — "quiet luxury, after dark." The midnight-and-champagne member of the LuwiPress jewel-coded theme family (sister to Gold = editorial luxury, Emerald = B2B consulting and Amber = travel). Built for premium property agencies and developers: an editorial split hero, advanced listings (filter sidebar, sort, grid/list, favourites, mobile filter drawer), rich single-property pages (gallery + lightbox, spec bar, amenities, payment-plan timeline, live mortgage calculator, sticky CTA), a filtered gallery, an about/team page, a journal, a live site search and a Contact page with a working form + map. Onyx-black base (#0E0E10) with a muted champagne-gold accent (#C9A24B) and a platinum-gradient primary CTA; full parallel light mode (toggle persisted in localStorage). Headlines + prices on Bodoni Moda, body/UI on Nunito. FAQ + Residence schema for AEO/SEO. Ships with the LuwiPress companion plumbing — AI search, the onboarding wizard, the maintenance suite and the ecosystem dashboard — plus the Onyx chrome: utility bar, sticky header with a Residences mega menu, off-canvas drawer, dark/light toggle, and a customer-chat launcher that defers to LuwiPress core. Colours are fully overrideable from Customizer → LuwiPress Onyx → Brand. Built on the WC / WPML / Elementor backbone shared across the family.
+Version: 1.0.0
+Requires at least: 6.4
+Tested up to: 6.9
+Requires PHP: 8.1
+Requires Plugins: elementor, luwipress
+License: GPL-2.0-or-later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: luwipress-onyx
+Tags: real-estate, blog, news, woocommerce, elementor, custom-logo, custom-menu, custom-colors, full-width-template, footer-widgets, theme-options, threaded-comments, translation-ready, rtl-language-support, sticky-header, mega-menu
+
+LuwiPress Onyx is licensed under the GPL v2 or later.
+https://www.gnu.org/licenses/gpl-2.0.html
+
+Built from the ArshaHomes "Onyx" design exploration
+(Claude Design handoff bundle — Quiet luxury, after dark).
+*/
+
+/* The actual styles live in assets/css/*.css and are enqueued from functions.php.
+   This file exists for theme metadata + WordPress recognition only. */

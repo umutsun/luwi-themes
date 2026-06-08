@@ -1,0 +1,76 @@
+/* ===== Onyx — Contact + Search pages ===== */
+
+/* ---------- contact ---------- */
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(36px,5vw,80px); align-items: start; }
+@media (max-width: 860px){ .contact-grid { grid-template-columns: 1fr; } }
+
+.cform { display: grid; gap: 22px; }
+.cform .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+@media (max-width: 480px){ .cform .row2 { grid-template-columns: 1fr; } }
+.cform .field { display: flex; flex-direction: column; gap: 9px; position: static; }
+.cform .field::after { display: none; }
+.cform .field label { position: static; left: auto; top: auto; pointer-events: auto; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); transition: none; }
+.cform .field input, .cform .field select, .cform .field textarea {
+  background: var(--onyx-850); border: 1px solid var(--hair-soft); color: var(--ink);
+  font-family: var(--body); font-size: 15px; padding: 14px 16px; outline: none; border-radius: 0;
+  transition: border-color .3s, background .3s; width: 100%;
+}
+.cform .field textarea { resize: vertical; min-height: 130px; }
+.cform .field input:focus, .cform .field select:focus, .cform .field textarea:focus { border-color: var(--gold); }
+.cform .field select { -webkit-appearance: none; appearance: none; cursor: pointer;
+  background-image: linear-gradient(45deg, transparent 50%, var(--gold) 50%), linear-gradient(135deg, var(--gold) 50%, transparent 50%);
+  background-position: calc(100% - 20px) 21px, calc(100% - 14px) 21px; background-size: 6px 6px, 6px 6px; background-repeat: no-repeat; }
+.cform .btn-gold { justify-self: start; }
+.cform-note { font-size: 12.5px; color: var(--faint); line-height: 1.6; }
+
+.cform-done { border: 1px solid var(--hair); background: var(--onyx-850); padding: clamp(34px,4vw,52px); text-align: center; }
+.cform-done .ic { color: var(--gold); }
+.cform-done h3 { font-family: var(--display); font-size: clamp(28px,3vw,40px); color: var(--ink); margin: 16px 0 10px; font-weight: 300; }
+.cform-done p { color: var(--muted); max-width: 40ch; margin: 0 auto; }
+
+.cinfo { display: grid; gap: 0; border: 1px solid var(--hair-soft); }
+.cinfo .ci { display: grid; grid-template-columns: 52px 1fr; gap: 18px; align-items: start; padding: 26px 28px; border-bottom: 1px solid var(--hair-soft); }
+.cinfo .ci:last-child { border-bottom: 0; }
+.cinfo .ci .ci-ic { width: 52px; height: 52px; border: 1px solid var(--hair); display: flex; align-items: center; justify-content: center; color: var(--gold); }
+.cinfo .ci .ci-l { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--faint); margin-bottom: 7px; }
+.cinfo .ci .ci-v { color: var(--ink); font-size: 16px; line-height: 1.5; }
+.cinfo .ci .ci-v a { transition: color .3s; }
+.cinfo .ci .ci-v a:hover { color: var(--gold); }
+.cinfo .ci .ci-sub { color: var(--muted); font-size: 13px; margin-top: 4px; }
+
+.cmap { margin-top: clamp(40px,5vw,72px); border: 1px solid var(--hair-soft); position: relative; overflow: hidden; }
+.cmap iframe { width: 100%; height: clamp(320px, 42vh, 460px); border: 0; display: block; filter: grayscale(0.3) contrast(1.05); }
+[data-theme="dark"] .cmap iframe { filter: invert(0.92) hue-rotate(180deg) grayscale(0.35) contrast(0.95); }
+.cmap-pin { position: absolute; top: 18px; left: 18px; z-index: 3; display: inline-flex; align-items: center; gap: 10px; background: var(--glass-2); border: 1px solid var(--hair); padding: 11px 16px; backdrop-filter: blur(6px); }
+.cmap-pin .ic { color: var(--gold); }
+.cmap-pin span { font-size: 12px; letter-spacing: 0.08em; color: var(--ink); }
+
+/* ---------- search ---------- */
+.search-hero { padding-top: clamp(60px,7vw,96px); padding-bottom: clamp(34px,4vw,52px); border-bottom: 1px solid var(--hair-soft); }
+.search-box { display: flex; align-items: center; gap: 14px; border: 1px solid var(--hair); background: var(--onyx-850); padding: 6px 6px 6px 22px; margin-top: 30px; max-width: 720px; }
+.search-box .ic { color: var(--gold); flex: 0 0 auto; }
+.search-box input { flex: 1; background: transparent; border: 0; outline: none; color: var(--ink); font-family: var(--body); font-size: clamp(16px,1.6vw,20px); padding: 14px 0; }
+.search-box input::placeholder { color: var(--faint); }
+.search-box .btn-gold { flex: 0 0 auto; }
+.search-meta { color: var(--muted); font-size: 14px; margin: 26px 0 4px; }
+.search-meta b { color: var(--ink); font-family: var(--display); font-size: 20px; font-weight: 400; }
+.search-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.search-chips .sc-l { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--faint); align-self: center; margin-right: 4px; }
+.search-chips button { background: transparent; border: 1px solid var(--hair-soft); color: var(--muted); font-size: 12.5px; padding: 8px 14px; transition: all .3s; }
+.search-chips button:hover { color: var(--ink); border-color: var(--hair); }
+
+.sresults { display: flex; flex-direction: column; gap: 1px; background: var(--hair-soft); border: 1px solid var(--hair-soft); margin-top: 6px; }
+.sresult { display: grid; grid-template-columns: 150px 1fr auto; gap: 26px; align-items: center; background: var(--onyx-900); padding: 22px 26px; transition: background .3s; }
+.sresult:hover { background: var(--onyx-850); }
+.sresult .sr-media { width: 150px; height: 96px; position: relative; overflow: hidden; }
+.sresult .sr-media .ph, .sresult .sr-media .photo { position: absolute; inset: 0; }
+.sresult .sr-kind { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); }
+.sresult h3 { font-family: var(--display); font-size: clamp(20px,2vw,26px); color: var(--ink); font-weight: 400; margin: 7px 0; line-height: 1.1; }
+.sresult p { color: var(--muted); font-size: 13.5px; max-width: 58ch; }
+.sresult .sr-go { width: 44px; height: 44px; border: 1px solid var(--hair); display: flex; align-items: center; justify-content: center; color: var(--gold); transition: all .35s; flex: 0 0 auto; }
+.sresult:hover .sr-go { background: var(--gold); color: #15130c; }
+@media (max-width: 680px){
+  .sresult { grid-template-columns: 1fr; gap: 14px; }
+  .sresult .sr-media { width: 100%; height: 160px; }
+  .sresult .sr-go { display: none; }
+}

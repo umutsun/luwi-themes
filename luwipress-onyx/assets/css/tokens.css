@@ -1,0 +1,113 @@
+/* ============================================================
+   LuwiPress Onyx — brand-knob token bridge.
+
+   onyx.css ships the literal "quiet luxury, after dark" design
+   system (dark `:root` + `[data-theme="light"]` overrides). This
+   thin layer (enqueued AFTER the design system) re-points the
+   *accent* gold at the Customizer-overridable `--primary` name so an
+   operator can rebrand from Appearance → Customize → LuwiPress Onyx →
+   Brand without touching CSS. output-css.php re-declares `--primary`
+   inline on this same stylesheet handle (`luwipress-onyx-tokens`).
+
+   Only the gold accent is bridged — base / text / hairline tokens
+   stay managed by onyx.css, which flips them per [data-theme]. The
+   gold itself flips (champagne #C9A24B dark → darker #9C7A28 light)
+   so the bridge re-declares it in BOTH modes: a `--primary` override
+   recolours the default (dark) accent, light keeps its contrast-safe
+   darkened gold unless separately rebranded.
+   ============================================================ */
+:root {
+	/* Customizer-overridable brand inputs (output-css.php overrides these). */
+	--primary:       #C9A24B; /* champagne gold — primary accent (dark) */
+	--primary-light: #D8B868; /* soft gold — headline / hover accent */
+	--accent:        #C9A24B; /* same gold — single-accent palette */
+	--ink:           #F4F1EA; /* warm off-white text */
+	--bg:            #0E0E10; /* page base (onyx) */
+	--black:         #0E0E10; /* deepest base — utility bar / footer band */
+
+	/* Bridge: the design system's gold reads from the brand knob so a
+	   --primary change cascades through every CTA, badge and accent. */
+	--gold:      var(--primary);
+	--gold-soft: var(--primary-light);
+
+	/* Back-compat aliases for any inherited widget that still reads the
+	   amber/coral names — resolve to the onyx gold so nothing renders bare. */
+	--amber:      var(--primary);
+	--amber-soft: var(--primary-light);
+	--coral:      var(--primary);
+	--coral-deep: var(--primary-light);
+	--grad-cta:   linear-gradient(135deg, var(--gold) 0%, var(--gold-soft) 100%);
+}
+
+/* Light mode keeps the contrast-safe darkened gold; still bridged so a
+   custom --primary in light mode flows through if the operator sets one. */
+[data-theme="light"] {
+	--primary:       #9C7A28;
+	--primary-light: #B8923A;
+	--gold:      var(--primary);
+	--gold-soft: var(--primary-light);
+}
+
+/* Lock html to the active page base so any area above the utility bar or
+   below the footer (short pages) reads as one continuous surface. */
+html { background: var(--onyx-900, #0E0E10); }
+
+/* Inherited "amber" CTA button class → map onto the onyx ghost button so any
+   leftover widget markup using .btn--amber stays usable. */
+.btn--amber { background: transparent; color: var(--ink); border: 1px solid var(--hair); }
+.btn--amber:hover { border-color: var(--gold); color: var(--gold); }
+
+/* ============================================================
+   Supplemental — WordPress output the design CSS doesn't cover
+   (the_content typography, pagination, comments, alignment).
+   ============================================================ */
+
+/* the_posts_pagination / paginate_links inside Onyx pages */
+.navigation.pagination, nav.pagination { display: flex; justify-content: center; margin-top: clamp(40px, 5vw, 64px); }
+.navigation.pagination .nav-links { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.navigation.pagination .page-numbers,
+.navigation.pagination a.page-numbers { min-width: 46px; height: 46px; display: inline-flex; align-items: center; justify-content: center; padding: 0 12px; border: 1px solid var(--hair-soft); color: var(--muted); font-family: var(--display); font-size: 17px; transition: all .3s; }
+.navigation.pagination .page-numbers.current { border-color: var(--gold); color: var(--ink); background: rgba(201,162,75,0.07); }
+.navigation.pagination a.page-numbers:hover { color: var(--ink); border-color: var(--hair); }
+
+/* Editorial reading column — extend .article to native the_content markup */
+.article h2 { font-family: var(--display); font-weight: 400; font-size: clamp(28px,3vw,38px); color: var(--ink); margin: 48px 0 18px; line-height: 1.12; }
+.article h4 { font-family: var(--display); font-weight: 400; font-size: 22px; color: var(--ink); margin: 32px 0 14px; }
+.article a { color: var(--gold-soft); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--hair); transition: text-decoration-color .3s; }
+.article a:hover { text-decoration-color: var(--gold); }
+.article ul, .article ol { color: var(--muted); font-weight: 300; font-size: 17px; line-height: 1.8; margin: 0 0 24px; padding-left: 22px; }
+.article li { margin-bottom: 8px; }
+.article img, .article figure { margin: 32px 0; }
+.article figure img { margin: 0; }
+.article figcaption { color: var(--faint); font-size: 13px; margin-top: 10px; text-align: center; }
+.article strong, .article b { color: var(--ink); font-weight: 600; }
+.article hr { border: 0; height: 1px; background: var(--hair-soft); margin: 40px 0; }
+
+/* WP alignment helpers */
+.aligncenter { margin-left: auto; margin-right: auto; display: block; }
+.alignright { float: right; margin: 0 0 20px 28px; }
+.alignleft { float: left; margin: 0 28px 20px 0; }
+.wp-caption { max-width: 100%; }
+.wp-caption-text { color: var(--faint); font-size: 13px; margin-top: 8px; }
+.article .wp-block-quote, .article .wp-block-pullquote { margin: 40px 0; padding-left: 28px; border-left: 2px solid var(--gold); font-family: var(--display); font-size: 24px; line-height: 1.4; color: var(--ink); font-weight: 300; }
+.sticky, .bypostauthor { display: block; }
+
+/* Comments — minimal Onyx treatment */
+.comment-list { list-style: none; margin: 0; padding: 0; }
+.comment-list li { border-bottom: 1px solid var(--hair-soft); padding: 22px 0; }
+.comment-list .comment-author { color: var(--ink); font-family: var(--display); font-size: 18px; }
+.comment-list .comment-metadata, .comment-list .comment-metadata a { color: var(--faint); font-size: 12px; }
+.comment-content { color: var(--muted); font-weight: 300; margin-top: 10px; }
+.comment-respond { margin-top: 40px; }
+.comment-respond .comment-reply-title { font-family: var(--display); font-size: 26px; color: var(--ink); margin-bottom: 18px; }
+.comment-form input[type=text], .comment-form input[type=email], .comment-form input[type=url], .comment-form textarea { width: 100%; background: var(--onyx-850); border: 1px solid var(--hair-soft); color: var(--ink); font-family: var(--body); padding: 14px 16px; margin-bottom: 16px; outline: none; }
+.comment-form input:focus, .comment-form textarea:focus { border-color: var(--gold); }
+.comment-form .submit { display: inline-flex; align-items: center; padding: 16px 28px; font-family: var(--body); font-size: 13px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #18171a; background: linear-gradient(135deg, #F4F2EE 0%, #D6D4CE 30%, #ABA89F 52%, #C9C6BF 70%, #EBE9E4 100%); border: 1px solid rgba(255,255,255,0.5); cursor: pointer; }
+
+/* WooCommerce — keep it compatible & dark-readable (links/buttons use gold) */
+.woocommerce a.button, .woocommerce button.button, .woocommerce #respond input#submit, .woocommerce-page a.button {
+	background: linear-gradient(135deg, #F4F2EE 0%, #D6D4CE 30%, #ABA89F 52%, #C9C6BF 70%, #EBE9E4 100%);
+	color: #18171a; border-radius: 0; font-family: var(--body); font-weight: 600; letter-spacing: 0.06em;
+}
+.woocommerce .price, .woocommerce-Price-amount { color: var(--gold) !important; font-family: var(--display); }
+.woocommerce ul.products li.product .price { color: var(--gold); }

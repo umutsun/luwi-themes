@@ -1,0 +1,20 @@
+/* LuwiPress Amber — activation notice (loaded on every admin screen) */
+.luwipress-amber-notice {
+	border-left: 4px solid #735c00 !important;
+	background: linear-gradient(135deg, #fcf9f8, #fff) !important;
+}
+.luwipress-amber-notice strong {
+	color: #1b1c1c;
+}
+.luwipress-amber-notice p {
+	margin: 12px 0;
+}
+.luwipress-amber-notice .button-primary {
+	background: linear-gradient(135deg, #735c00, #D4AF37);
+	border-color: #735c00;
+	color: #fff;
+	box-shadow: 0 6px 16px -8px rgba(115, 92, 0, .5);
+}
+.luwipress-amber-notice .button-primary:hover {
+	background: linear-gradient(135deg, #574500, #b8961f);
+}

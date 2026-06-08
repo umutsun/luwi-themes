@@ -1,0 +1,43 @@
+/* ============================================================
+   LuwiPress Amber — brand-knob token bridge.
+
+   amber.css ships the literal golden-hour design system. This thin
+   layer (enqueued AFTER amber.css) re-points the *accent* design
+   tokens at the Customizer-overridable names so an operator can
+   rebrand from Appearance → Customize → LuwiPress Amber → Brand
+   without touching CSS. output-css.php re-declares these names inline
+   on this same stylesheet handle (`luwipress-amber-tokens`).
+
+   Only accents are bridged — base / text / line tokens stay managed
+   by amber.css (which flips them per [data-theme="light"]); the
+   amber→coral identity is what the brand knob actually controls.
+   ============================================================ */
+:root {
+	/* Customizer-overridable brand inputs (output-css.php overrides these). */
+	--primary:       #E5A23D; /* amber  — primary accent */
+	--primary-light: #F0C277; /* soft amber — secondary / headline accent */
+	--accent:        #E8744F; /* sunset coral — energy / CTA end */
+	--sale:          #C9572F; /* coral-deep — hover / urgent */
+	--icon-red:      #E8744F;
+	--ink:           #F7F0E6; /* warm off-white text */
+	--bg:            #211710; /* page base (warm dusk) */
+	--black:         #1A1412; /* deepest base — utility bar / footer */
+
+	/* Bridge: amber.css design tokens read from the Customizer inputs so a
+	   primary/accent change cascades through every CTA, badge and brand mark. */
+	--amber:      var(--primary);
+	--amber-soft: var(--primary-light);
+	--coral:      var(--accent);
+	--coral-deep: var(--sale);
+	--grad-cta:   linear-gradient(100deg, var(--amber) 0%, var(--coral) 100%);
+}
+
+/* Lock html to the deepest base so any area below the footer (short pages)
+   reads as one continuous warm-dark surface — no flash-of-cream band. */
+html { background: var(--black, #1A1412); }
+
+/* ── Travel booking — interactive-state hooks not covered by pages.css ── */
+.datepick.dp-error .dp-trigger { border-color: var(--coral); box-shadow: 0 0 0 3px rgba(232,116,79,.16); }
+.book-box .bb-slot { width: 100%; padding: 12px 14px; border-radius: var(--radius-sm, 12px); background: var(--bg-2); color: var(--text); border: 1px solid var(--line-strong); }
+.book-box--placeholder { padding: 22px; border: 1px dashed var(--line-strong); border-radius: var(--radius, 18px); color: var(--muted); background: var(--surface); }
+.tours-grid { display: grid; gap: 24px; }

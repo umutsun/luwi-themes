@@ -1,0 +1,46 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 2,
+  "settings": {
+    "appearanceTools": true,
+    "color": {
+      "palette": [
+        { "slug": "primary",       "color": "#E5A23D", "name": "Amber" },
+        { "slug": "primary-light", "color": "#F0C277", "name": "Amber soft" },
+        { "slug": "accent",        "color": "#E8744F", "name": "Sunset coral" },
+        { "slug": "accent-deep",   "color": "#C9572F", "name": "Coral deep" },
+        { "slug": "ink",           "color": "#F7F0E6", "name": "Text" },
+        { "slug": "muted",         "color": "#B7A99A", "name": "Muted" },
+        { "slug": "faint",         "color": "#8C7E70", "name": "Faint" },
+        { "slug": "bg",            "color": "#211710", "name": "Background" },
+        { "slug": "bg-alt",        "color": "#241B16", "name": "Background lifted" },
+        { "slug": "surface",       "color": "#2A201A", "name": "Surface (card)" },
+        { "slug": "surface-2",     "color": "#322519", "name": "Surface elevated" },
+        { "slug": "black",         "color": "#1A1412", "name": "Deepest base" }
+      ]
+    },
+    "typography": {
+      "fontFamilies": [
+        { "fontFamily": "'Fraunces', Georgia, serif",          "slug": "serif", "name": "Fraunces" },
+        { "fontFamily": "'Inter', -apple-system, sans-serif",  "slug": "sans",  "name": "Inter" }
+      ]
+    },
+    "layout": {
+      "contentSize": "1280px",
+      "wideSize": "1280px"
+    },
+    "spacing": {
+      "units": ["px", "em", "rem", "%"]
+    }
+  },
+  "styles": {
+    "color": {
+      "background": "var(--wp--preset--color--bg)",
+      "text": "var(--wp--preset--color--ink)"
+    },
+    "typography": {
+      "fontFamily": "var(--wp--preset--font-family--sans)",
+      "lineHeight": "1.55"
+    }
+  }
+}

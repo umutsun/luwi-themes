@@ -1,0 +1,196 @@
+{
+  "version": "0.4",
+  "title": "Tapadum — Journal Single",
+  "type": "single-post",
+  "content": [
+    {
+      "id": "tap_sg_progress",
+      "elType": "section",
+      "settings": {
+        "padding": {
+          "unit": "px",
+          "top": "0",
+          "right": "0",
+          "bottom": "0",
+          "left": "0",
+          "isLinked": true
+        },
+        "structure": "10"
+      },
+      "elements": [
+        {
+          "id": "tap_sg_progress_col",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "774c6ce3",
+              "elType": "widget",
+              "widgetType": "lwp-reading-progress",
+              "settings": {
+                "target_selector": ".lwp-journal-article, .entry-content, article",
+                "position": "top",
+                "height": 3
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tap_sg_hero",
+      "elType": "section",
+      "settings": {
+        "padding": {
+          "unit": "px",
+          "top": "40",
+          "right": "32",
+          "bottom": "32",
+          "left": "32",
+          "isLinked": false
+        },
+        "structure": "10"
+      },
+      "elements": [
+        {
+          "id": "tap_sg_hero_col",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "45a0732d",
+              "elType": "widget",
+              "widgetType": "lwp-post-featured-image",
+              "settings": {
+                "image_size_size": "large",
+                "link_to": "none",
+                "caption": "none"
+              }
+            },
+            {
+              "id": "b6e19bf1",
+              "elType": "widget",
+              "widgetType": "lwp-post-title",
+              "settings": {
+                "tag": "h1",
+                "link_to": "none",
+                "align": "left"
+              }
+            },
+            {
+              "id": "dd5825fd",
+              "elType": "widget",
+              "widgetType": "lwp-byline-card",
+              "settings": {
+                "source": "auto",
+                "show_read_time": "yes"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tap_sg_content",
+      "elType": "section",
+      "settings": {
+        "padding": {
+          "unit": "px",
+          "top": "32",
+          "right": "32",
+          "bottom": "48",
+          "left": "32",
+          "isLinked": false
+        },
+        "structure": "10"
+      },
+      "elements": [
+        {
+          "id": "tap_sg_content_col",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "aae86442",
+              "elType": "widget",
+              "widgetType": "lwp-post-content",
+              "settings": {}
+            },
+            {
+              "id": "6604aca0",
+              "elType": "widget",
+              "widgetType": "lwp-pullquote",
+              "settings": {
+                "quote": "{{LWP:pullquote_text}}",
+                "attribution": "",
+                "citation_url": {
+                  "url": ""
+                },
+                "show_mark": "yes",
+                "alignment": "left"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tap_sg_related",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#FAF6EE",
+        "padding": {
+          "unit": "px",
+          "top": "48",
+          "right": "32",
+          "bottom": "64",
+          "left": "32",
+          "isLinked": false
+        },
+        "structure": "10"
+      },
+      "elements": [
+        {
+          "id": "tap_sg_related_col",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "50409b50",
+              "elType": "widget",
+              "widgetType": "lwp-section-head",
+              "settings": {
+                "eyebrow": "Keep reading",
+                "heading": "More from [em]the journal[/em].",
+                "heading_tag": "h2",
+                "variant": "light",
+                "pills": []
+              }
+            },
+            {
+              "id": "877f826d",
+              "elType": "widget",
+              "widgetType": "shortcode",
+              "settings": {
+                "shortcode": "[recent_posts limit=\"3\" columns=\"3\" exclude_current=\"true\"]"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "page_settings": {
+    "template": "elementor_header_footer",
+    "page_title": "false"
+  }
+}

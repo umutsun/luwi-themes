@@ -1,0 +1,254 @@
+/* LuwiPress Amber — AI surface (1.3.0)
+ *
+ *   Section A — Search suggestions panel inside the existing search overlay
+ *   Section B — Sticky chat widget (bubble + panel)
+ *   Section C — KG-related rail on single-product
+ *
+ *   All selectors namespaced under `.lwp-` and scoped enough to win
+ *   plugin-stack specificity ties.
+ */
+
+/* ════════════════════════════════════════════════════════════════════
+ *  A. Search suggestions
+ * ════════════════════════════════════════════════════════════════════ */
+
+.lwp-search-suggest {
+	margin-top: 28px;
+	padding-top: 28px;
+	border-top: 1px solid var(--line, #e8e2d3);
+}
+
+.lwp-search-suggest__products {
+	display: grid;
+	grid-template-columns: repeat( auto-fit, minmax( 220px, 1fr ) );
+	gap: 16px;
+	margin-bottom: 20px;
+}
+
+.lwp-search-suggest__card {
+	display: flex;
+	gap: 14px;
+	padding: 12px;
+	border: 1px solid var(--line, #e8e2d3);
+	border-radius: 8px;
+	background: var(--card, #fff);
+	color: var(--ink, #1A1612);
+	text-decoration: none;
+	transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+}
+
+.lwp-search-suggest__card:hover {
+	border-color: var(--primary, #9A7B3A);
+	transform: translateY( -2px );
+	box-shadow: 0 8px 20px -10px rgba(60,40,0,.18);
+}
+
+.lwp-search-suggest__card-img {
+	flex: 0 0 64px;
+	width: 64px;
+	height: 64px;
+	border-radius: 6px;
+	overflow: hidden;
+	background: var(--bg-alt, #f6f3f2);
+	position: relative;
+}
+
+.lwp-search-suggest__card-img img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.lwp-search-suggest__card-img .lwp-skel {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+.lwp-search-suggest__card-meta {
+	flex: 1 1 auto;
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 4px;
+}
+
+.lwp-search-suggest__card-title {
+	font-family: var(--lwp-serif, 'Playfair Display', Georgia, serif);
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 1.25;
+	margin: 0;
+	color: var(--ink, #1A1612);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+}
+
+.lwp-search-suggest__card-price {
+	font-family: var(--lwp-mono, 'JetBrains Mono', ui-monospace, monospace);
+	font-size: 12px;
+	color: var(--primary, #9A7B3A);
+	font-weight: 600;
+}
+.lwp-search-suggest__card-price del { color: var(--muted, #8b7f6a); margin-right: 6px; }
+.lwp-search-suggest__card-price ins { text-decoration: none; }
+
+.lwp-search-suggest__chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	align-items: center;
+}
+
+.lwp-search-suggest__chips-label {
+	font-family: var(--lwp-mono, 'JetBrains Mono', ui-monospace, monospace);
+	font-size: 10px;
+	letter-spacing: .14em;
+	text-transform: uppercase;
+	color: var(--muted, #8b7f6a);
+	margin-right: 4px;
+}
+
+.lwp-search-suggest__chip {
+	background: var(--bone, #F2EAD3);
+	border: 1px solid var(--line, #e8e2d3);
+	color: var(--ink, #1A1612);
+	padding: 7px 14px;
+	border-radius: 999px;
+	font-family: var(--lwp-sans, 'Inter', system-ui, sans-serif);
+	font-size: 12px;
+	font-weight: 500;
+	cursor: pointer;
+	transition: background .2s ease, border-color .2s ease, color .2s ease;
+}
+.lwp-search-suggest__chip:hover,
+.lwp-search-suggest__chip:focus {
+	background: var(--primary, #9A7B3A);
+	border-color: var(--primary, #9A7B3A);
+	color: #fff;
+	outline: none;
+}
+
+.lwp-search-suggest__empty {
+	font-family: var(--lwp-sans, 'Inter', system-ui, sans-serif);
+	font-size: 14px;
+	color: var(--muted, #8b7f6a);
+	text-align: center;
+	padding: 16px 0;
+}
+
+
+/* ════════════════════════════════════════════════════════════════════
+ *  C. KG-related rail
+ * ════════════════════════════════════════════════════════════════════ */
+
+.lwp-related-rail {
+	max-width: var( --content-w, 1372px );
+	margin: 64px auto 32px;
+	padding: 0 32px;
+}
+
+.lwp-related-rail__head {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	align-items: end;
+	gap: 16px 32px;
+	margin-bottom: 28px;
+	border-top: 1px solid var(--line, #e8e2d3);
+	padding-top: 32px;
+}
+
+.lwp-related-rail__eyebrow {
+	grid-column: 1 / -1;
+	display: inline-block;
+	margin-bottom: 8px;
+}
+
+.lwp-related-rail__title {
+	font-family: var(--lwp-serif, 'Playfair Display', Georgia, serif);
+	font-weight: 500;
+	font-size: clamp( 24px, 2.4vw, 34px );
+	letter-spacing: -.015em;
+	margin: 0;
+	color: var(--ink, #1A1612);
+}
+
+.lwp-related-rail__more {
+	font-family: var(--lwp-mono, 'JetBrains Mono', ui-monospace, monospace);
+	font-size: 11px;
+	letter-spacing: .14em;
+	text-transform: uppercase;
+	color: var(--ink, #1A1612);
+	text-decoration: none;
+	white-space: nowrap;
+}
+
+.lwp-related-rail__grid {
+	display: grid;
+	grid-template-columns: repeat( 4, 1fr );
+	gap: 24px;
+}
+
+@media ( max-width: 1024px ) {
+	.lwp-related-rail__grid { grid-template-columns: repeat( 2, 1fr ); }
+}
+@media ( max-width: 540px ) {
+	.lwp-related-rail__grid { grid-template-columns: 1fr; }
+}
+
+.lwp-related-rail__card {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	color: var(--ink, #1A1612);
+	text-decoration: none;
+	transition: transform .25s ease;
+}
+.lwp-related-rail__card:hover { transform: translateY( -3px ); }
+
+.lwp-related-rail__card-img {
+	aspect-ratio: 1 / 1;
+	background: var(--bg-alt, #f6f3f2);
+	border-radius: 8px;
+	overflow: hidden;
+	position: relative;
+}
+.lwp-related-rail__card-img img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+	transition: transform .4s ease;
+}
+.lwp-related-rail__card:hover .lwp-related-rail__card-img img {
+	transform: scale( 1.04 );
+}
+
+.lwp-related-rail__card-meta {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.lwp-related-rail__card-title {
+	font-family: var(--lwp-serif, 'Playfair Display', Georgia, serif);
+	font-weight: 500;
+	font-size: 19px;
+	line-height: 1.25;
+	margin: 0;
+	letter-spacing: -.01em;
+}
+
+.lwp-related-rail__card-price {
+	font-family: var(--lwp-mono, 'JetBrains Mono', ui-monospace, monospace);
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--primary, #9A7B3A);
+}
+.lwp-related-rail__card-price del { color: var(--muted, #8b7f6a); margin-right: 6px; font-weight: 400; }
+.lwp-related-rail__card-price ins { text-decoration: none; }

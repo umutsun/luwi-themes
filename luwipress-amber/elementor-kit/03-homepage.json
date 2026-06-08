@@ -1,0 +1,446 @@
+{
+  "version": "0.4",
+  "title": "Tapadum — Homepage",
+  "type": "page",
+  "content": [
+    {
+      "id": "tap_hp_hero",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#FAF6EE",
+        "padding": {
+          "unit": "px",
+          "top": "80",
+          "right": "32",
+          "bottom": "120",
+          "left": "32",
+          "isLinked": false
+        },
+        "content_width": {
+          "unit": "px",
+          "size": 1372
+        }
+      },
+      "elements": [
+        {
+          "id": "tap_hero_col",
+          "elType": "column",
+          "settings": { "_column_size": 100 },
+          "elements": [
+            {
+              "id": "tap_hero_w",
+              "elType": "widget",
+              "widgetType": "lwp-hero-split",
+              "settings": {
+                "eyebrow": "Est. atelier · Worldwide shipping",
+                "heading": "Hand-crafted instruments\nfrom [em]Anatolia, Persia & the Mediterranean[/em].",
+                "lead": "From the Brisighella atelier to your studio — every saz, oud and santur is signed by the luthier who made it and tuned by hand before dispatch.",
+                "cta1_label": "Browse the catalogue →",
+                "cta1_url": { "url": "/shop", "is_external": "", "nofollow": "" },
+                "cta2_label": "Visit the atelier →",
+                "cta2_url": { "url": "/about", "is_external": "", "nofollow": "" },
+                "stats": [
+                  { "_id": "hst_1", "num": "240+", "label": "Products\nin catalogue" },
+                  { "_id": "hst_2", "num": "42",   "label": "Countries\nshipped to" },
+                  { "_id": "hst_3", "num": "26",   "label": "Master luthiers\nin the network" }
+                ],
+                "image": { "url": "" },
+                "image_grad_from": "#3d2f1f",
+                "image_grad_to": "#7a5a2c",
+                "pill_text": "In atelier · Tuning",
+                "tag_eyebrow": "Featured this week",
+                "tag_title": "Sultan Turkish Oud",
+                "quote_avatar": { "url": "" },
+                "quote_initial": "F",
+                "quote_name": "Feramis Aktas",
+                "quote_role": "Istanbul · Oud luthier",
+                "quote_text": "Each oud takes 14 days. The wood decides when it's ready."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tap_hp_infobar",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#1A1612",
+        "padding": {
+          "unit": "px",
+          "top": "20",
+          "right": "32",
+          "bottom": "20",
+          "left": "32",
+          "isLinked": false
+        },
+        "content_width": {
+          "unit": "px",
+          "size": 1372
+        }
+      },
+      "elements": [
+        {
+          "id": "tap_infobar_col",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "tap_infobar_widget",
+              "elType": "widget",
+              "widgetType": "lwp-info-bar",
+              "settings": {
+                "bar_bg": "#1A1612",
+                "icon_bg": "rgba(212,175,55,0.12)",
+                "title_color": "#ffffff",
+                "desc_color": "#a89d85",
+                "items": [
+                  { "_id": "ib_1", "title": "Hand-tuned",     "desc": "Before every dispatch",   "icon": { "value": "fas fa-cog",           "library": "fa-solid" } },
+                  { "_id": "ib_2", "title": "Worldwide DHL",  "desc": "Insured · 3–7 days",      "icon": { "value": "fas fa-shipping-fast", "library": "fa-solid" } },
+                  { "_id": "ib_3", "title": "14-day returns", "desc": "No questions asked",      "icon": { "value": "fas fa-undo-alt",      "library": "fa-solid" } },
+                  { "_id": "ib_4", "title": "4.9 / 5",        "desc": "1,287 verified reviews",  "icon": { "value": "fas fa-star",          "library": "fa-solid" } }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tap_hp_products",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#FFFFFF",
+        "padding": {
+          "unit": "px",
+          "top": "100",
+          "right": "32",
+          "bottom": "80",
+          "left": "32",
+          "isLinked": false
+        },
+        "content_width": {
+          "unit": "px",
+          "size": 1372
+        }
+      },
+      "elements": [
+        {
+          "id": "tap_prod_col",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "tap_prod_head",
+              "elType": "widget",
+              "widgetType": "lwp-section-head",
+              "settings": {
+                "eyebrow": "Birthday sale · until Nov 30",
+                "heading": "Best-selling instruments\n[em]up to −27% off.[/em]",
+                "heading_tag": "h2",
+                "cta_label": "View all 240 →",
+                "cta_url": { "url": "/shop", "is_external": "", "nofollow": "" },
+                "variant": "light",
+                "pills": [
+                  { "_id": "pl_1", "label": "All",         "url": { "url": "#", "is_external": "", "nofollow": "" }, "active": "yes" },
+                  { "_id": "pl_2", "label": "String",      "url": { "url": "/category/string",      "is_external": "", "nofollow": "" }, "active": "" },
+                  { "_id": "pl_3", "label": "Percussions", "url": { "url": "/category/percussions", "is_external": "", "nofollow": "" }, "active": "" },
+                  { "_id": "pl_4", "label": "Bowed",       "url": { "url": "/category/bowed",       "is_external": "", "nofollow": "" }, "active": "" },
+                  { "_id": "pl_5", "label": "Winds",       "url": { "url": "/category/winds",       "is_external": "", "nofollow": "" }, "active": "" }
+                ]
+              }
+            },
+            {
+              "id": "tap_prod_grid",
+              "elType": "widget",
+              "widgetType": "shortcode",
+              "settings": {
+                "shortcode": "[products limit=\"8\" columns=\"4\" orderby=\"popularity\" class=\"tap-products\"]"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tap_hp_categories",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#FAF6EE",
+        "padding": {
+          "unit": "px",
+          "top": "100",
+          "right": "32",
+          "bottom": "100",
+          "left": "32",
+          "isLinked": false
+        },
+        "content_width": {
+          "unit": "px",
+          "size": 1372
+        }
+      },
+      "elements": [
+        {
+          "id": "tap_cat_col",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "tap_cat_head",
+              "elType": "widget",
+              "widgetType": "lwp-section-head",
+              "settings": {
+                "eyebrow": "Browse by family",
+                "heading": "Pick the voice\nyou're looking for.",
+                "heading_tag": "h2",
+                "cta_label": "All categories →",
+                "cta_url": { "url": "/shop", "is_external": "", "nofollow": "" },
+                "variant": "light"
+              }
+            },
+            {
+              "id": "tap_cat_grid",
+              "elType": "widget",
+              "widgetType": "lwp-category-grid",
+              "settings": {
+                "source": "manual",
+                "columns": "4",
+                "items": [
+                  { "_id": "cat_1", "eyebrow": "62 instruments", "title": "String",      "sub": "Oud · Saz · Setar · Tanbur · Kanun · Santur",  "url": { "url": "/category/string",      "is_external": "", "nofollow": "" }, "image": { "url": "" }, "grad_from": "#d4b97a", "grad_to": "#7a5a2c" },
+                  { "_id": "cat_2", "eyebrow": "48 instruments", "title": "Percussions", "sub": "Darbuka · Bendir · Riq · Handpan · Steel Tongue", "url": { "url": "/category/percussions", "is_external": "", "nofollow": "" }, "image": { "url": "" }, "grad_from": "#3d2f1f", "grad_to": "#7a5a2c" },
+                  { "_id": "cat_3", "eyebrow": "28 instruments", "title": "Bowed",       "sub": "Kemence · Kamancheh · Kabak Kemane",           "url": { "url": "/category/bowed",       "is_external": "", "nofollow": "" }, "image": { "url": "" }, "grad_from": "#5a3a2a", "grad_to": "#c89a5a" },
+                  { "_id": "cat_4", "eyebrow": "36 instruments", "title": "Winds",       "sub": "Ney · Duduk · Kaval · Mey · Zurna",            "url": { "url": "/category/winds",       "is_external": "", "nofollow": "" }, "image": { "url": "" }, "grad_from": "#2a3d3a", "grad_to": "#7aa494" }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tap_hp_atelier",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#FFFFFF",
+        "padding": {
+          "unit": "px",
+          "top": "120",
+          "right": "32",
+          "bottom": "120",
+          "left": "32",
+          "isLinked": false
+        },
+        "content_width": {
+          "unit": "px",
+          "size": 1372
+        }
+      },
+      "elements": [
+        {
+          "id": "tap_atelier_col",
+          "elType": "column",
+          "settings": { "_column_size": 100 },
+          "elements": [
+            {
+              "id": "tap_atelier_w",
+              "elType": "widget",
+              "widgetType": "lwp-story-split",
+              "settings": {
+                "image_side": "left",
+                "image": { "url": "" },
+                "image_alt_grad_from": "#3d2f1f",
+                "image_alt_grad_to": "#7a5a2c",
+                "card_eyebrow": "Atelier hours",
+                "card_title": "Open by appointment",
+                "card_sub": "Tuesday – Saturday · 10:00 – 18:00",
+                "eyebrow": "Our story · since 2014",
+                "heading": "A workshop for instruments\nthat [em]don't fit[/em] a category.",
+                "lead": "Tapadum started as a duo of Italian musicians chasing a single Turkish oud across three Istanbul workshops. Eleven years later, our atelier in Brisighella is the home address for 26 master luthiers across the Mediterranean — and the shipping desk for nearly 2,500 hand-tuned instruments delivered worldwide.",
+                "cta_label": "Read the full story →",
+                "cta_url": { "url": "/about", "is_external": "", "nofollow": "" },
+                "bullets": [
+                  { "_id": "atel_b1", "title": "Direct from masters.",       "body": "No middlemen. Each instrument is signed by the luthier who made it." },
+                  { "_id": "atel_b2", "title": "Tuned before dispatch.",      "body": "Every saz, oud and santur is set up and intonated by our atelier team." },
+                  { "_id": "atel_b3", "title": "Worldwide insured shipping.", "body": "DHL Express in custom-built crates · 3–7 working days." },
+                  { "_id": "atel_b4", "title": "Lifetime support.",            "body": "Free maintenance for two years · paid service forever after." }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tap_hp_masters",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#1A1612",
+        "padding": {
+          "unit": "px",
+          "top": "100",
+          "right": "32",
+          "bottom": "100",
+          "left": "32",
+          "isLinked": false
+        },
+        "content_width": {
+          "unit": "px",
+          "size": 1372
+        }
+      },
+      "elements": [
+        {
+          "id": "tap_masters_col",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "tap_masters_head",
+              "elType": "widget",
+              "widgetType": "lwp-section-head",
+              "settings": {
+                "eyebrow": "The hands behind the work",
+                "heading": "Master luthiers in the network.",
+                "heading_tag": "h2",
+                "cta_label": "All 26 masters →",
+                "cta_url": { "url": "/masters", "is_external": "", "nofollow": "" },
+                "variant": "dark"
+              }
+            },
+            {
+              "id": "tap_masters_grid",
+              "elType": "widget",
+              "widgetType": "lwp-master-grid",
+              "settings": {
+                "variant": "dark",
+                "columns": "4",
+                "items": [
+                  { "_id": "mst_1", "name": "Feramis Aktas",      "initial": "F", "location": "Istanbul · TR", "specialty": "Oud · 28 years",          "count": "42 instruments", "url": { "url": "/masters/feramis-aktas",      "is_external": "", "nofollow": "" }, "grad_from": "#9a7b3a", "grad_to": "#d4af37" },
+                  { "_id": "mst_2", "name": "Yildirim Palabiyik", "initial": "Y", "location": "Istanbul · TR", "specialty": "Saz · Tanbur · 32 years", "count": "68 instruments", "url": { "url": "/masters/yildirim-palabiyik", "is_external": "", "nofollow": "" }, "grad_from": "#5a3a2a", "grad_to": "#a87a4a" },
+                  { "_id": "mst_3", "name": "Hamid",              "initial": "H", "location": "Tehran · IR",   "specialty": "Setar · Tar · 24 years",  "count": "31 instruments", "url": { "url": "/masters/hamid",              "is_external": "", "nofollow": "" }, "grad_from": "#3d2f1f", "grad_to": "#7a5a2c" },
+                  { "_id": "mst_4", "name": "A. Golestani",       "initial": "A", "location": "Tehran · IR",   "specialty": "Tar · Kamancheh · 35 years","count": "22 instruments", "url": { "url": "/masters/golestani",          "is_external": "", "nofollow": "" }, "grad_from": "#7a5a3a", "grad_to": "#b89a6a" }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tap_hp_youtube",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#FAF6EE",
+        "padding": {
+          "unit": "px",
+          "top": "100",
+          "right": "32",
+          "bottom": "100",
+          "left": "32",
+          "isLinked": false
+        },
+        "content_width": {
+          "unit": "px",
+          "size": 1372
+        }
+      },
+      "elements": [
+        {
+          "id": "tap_yt_col",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "tap_yt_head",
+              "elType": "widget",
+              "widgetType": "lwp-youtube-channel",
+              "settings": {
+                "eyebrow": "Listen before you buy",
+                "heading": "Every instrument, played\nin our atelier.",
+                "cta_label": "YouTube channel →",
+                "cta_url": { "url": "", "is_external": "on", "nofollow": "" },
+                "show_subscribe": "yes",
+                "subscribe_label": "Subscribe",
+                "columns": "4",
+                "videos": [
+                  { "_id": "ytv_oud01",   "video": "", "title": "Sultan Turkish Oud — solo taksim in Hicaz", "byline": "Yildirim Palabiyik · 14k views",  "duration": "3:42", "thumb_quality": "hq" },
+                  { "_id": "ytv_pro12",   "video": "", "title": "Tapadum Pro 12 — handpan in D Hicaz",       "byline": "In-house atelier · 28k views",    "duration": "5:18", "thumb_quality": "hq" },
+                  { "_id": "ytv_setar",   "video": "", "title": "Persian Setar by Hamid — Mahour mode",     "byline": "Hamid · 9.2k views",              "duration": "2:54", "thumb_quality": "hq" },
+                  { "_id": "ytv_ney",     "video": "", "title": "Master Ney — Feramis Aktas plays Saba",    "byline": "Feramis Aktas · 11k views",        "duration": "4:08", "thumb_quality": "hq" }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tap_hp_journal",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#FFFFFF",
+        "padding": {
+          "unit": "px",
+          "top": "100",
+          "right": "32",
+          "bottom": "100",
+          "left": "32",
+          "isLinked": false
+        },
+        "content_width": {
+          "unit": "px",
+          "size": 1372
+        }
+      },
+      "elements": [
+        {
+          "id": "tap_journal_col",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "tap_journal_widget",
+              "elType": "widget",
+              "widgetType": "lwp-editorial-grid",
+              "settings": {
+                "post_type": "post",
+                "count": 3,
+                "orderby": "date",
+                "category": [],
+                "eyebrow": "Long reads from the atelier",
+                "heading": "From the journal.",
+                "all_link": { "url": "/journal", "is_external": "", "nofollow": "" },
+                "all_label": "All posts →"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "page_settings": {
+    "template": "elementor_canvas",
+    "page_title": "hide"
+  }
+}

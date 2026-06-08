@@ -1,0 +1,134 @@
+{
+  "version": "0.4",
+  "title": "Tapadum — Contact",
+  "type": "page",
+  "content": [
+    {
+      "id": "tap_ct_main",
+      "elType": "section",
+      "settings": {
+        "structure": "20",
+        "background_background": "classic",
+        "background_color": "#FAF6EE",
+        "padding": {
+          "unit": "px",
+          "top": "100",
+          "right": "32",
+          "bottom": "100",
+          "left": "32",
+          "isLinked": false
+        },
+        "content_width": {
+          "unit": "px",
+          "size": 1372
+        },
+        "gap": "extended"
+      },
+      "elements": [
+        {
+          "id": "tap_ct_l",
+          "elType": "column",
+          "settings": {
+            "_column_size": 50
+          },
+          "elements": [
+            {
+              "id": "9385c4c",
+              "elType": "widget",
+              "widgetType": "lwp-section-head",
+              "settings": {
+                "_element_id": "ct_sh_4924b2",
+                "eyebrow": "Visit · write · ring",
+                "heading": "Three ways to\nreach the [em]atelier[/em].",
+                "heading_tag": "h1",
+                "variant": "light",
+                "pills": []
+              },
+              "elements": []
+            },
+            {
+              "id": "29b7b13",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "_element_id": "ct_info_83395f",
+                "editor": "<div class=\"lwp-ct-blocks\" style=\"display:flex;flex-direction:column;gap:24px;margin-top:32px\">\n<div style=\"padding:18px 0;border-top:1px solid #E8DFC8\">\n<span style=\"font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#9A7B3A;font-weight:600;display:block;margin-bottom:6px\">Atelier address</span>\n<strong style=\"font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:500;color:#1A1612;display:block;margin-bottom:6px\">Tapadum srl</strong>\n<p style=\"font-family:'Inter',sans-serif;font-size:14px;line-height:1.6;color:#3a342c;margin:0\">Via della Rocca 14<br>48013 Brisighella RA<br>Italy</p>\n</div>\n<div style=\"padding:18px 0;border-top:1px solid #E8DFC8\">\n<span style=\"font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#9A7B3A;font-weight:600;display:block;margin-bottom:6px\">Hours</span>\n<strong style=\"font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:500;color:#1A1612;display:block;margin-bottom:6px\">Tue–Sat · 10:00 – 18:00</strong>\n<p style=\"font-family:'Inter',sans-serif;font-size:14px;line-height:1.6;color:#3a342c;margin:0\">By appointment for instrument try-outs. Wednesdays open to walk-ins.</p>\n</div>\n<div style=\"padding:18px 0;border-top:1px solid #E8DFC8;border-bottom:1px solid #E8DFC8\">\n<span style=\"font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#9A7B3A;font-weight:600;display:block;margin-bottom:6px\">Direct</span>\n<strong style=\"font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:500;color:#1A1612;display:block;margin-bottom:6px\">info@tapadum.com</strong>\n<p style=\"font-family:'Inter',sans-serif;font-size:14px;line-height:1.6;color:#3a342c;margin:0\">+39 0546 81 234<br>WhatsApp · @tapadum</p>\n</div>\n</div>"
+              },
+              "elements": []
+            }
+          ]
+        },
+        {
+          "id": "tap_ct_r",
+          "elType": "column",
+          "settings": {
+            "_column_size": 50
+          },
+          "elements": [
+            {
+              "id": "tap_ct_form",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<form class=\"tap-form\" onsubmit=\"event.preventDefault();this.querySelector('.tap-form-msg').style.display='block'\">\n  <h3>Send us a note.</h3>\n  <p class=\"sub\">We reply within 1 working day · usually faster.</p>\n  <div class=\"tap-form-row\"><label>Name<input type=\"text\" required></label><label>Email<input type=\"email\" required></label></div>\n  <label>Subject<select><option>General question</option><option>About a specific instrument</option><option>Atelier visit</option><option>Wholesale / partnership</option><option>Press</option></select></label>\n  <label>Message<textarea rows=\"6\" required></textarea></label>\n  <label class=\"chk\"><input type=\"checkbox\"> Subscribe me to the monthly journal newsletter.</label>\n  <button type=\"submit\" class=\"tap-btn-primary\">Send message →</button>\n  <div class=\"tap-form-msg\">Thank you — we'll be in touch within 1 working day.</div>\n</form>\n<style>\n.tap-form{background:#fff;border:1px solid #E8DFC8;border-radius:10px;padding:36px;display:flex;flex-direction:column;gap:18px}\n.tap-form h3{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:30px;margin:0}\n.tap-form .sub{font-family:'Inter',sans-serif;font-size:13px;color:#8b7f6a;margin:0 0 8px}\n.tap-form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}\n.tap-form label{display:flex;flex-direction:column;gap:6px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#1A1612;font-weight:600}\n.tap-form input,.tap-form select,.tap-form textarea{padding:12px 14px;border:1px solid #E8DFC8;border-radius:6px;font-family:'Inter',sans-serif;font-size:14px;color:#1A1612;background:#fff;letter-spacing:0;text-transform:none;font-weight:400}\n.tap-form input:focus,.tap-form select:focus,.tap-form textarea:focus{outline:none;border-color:#9A7B3A;box-shadow:0 0 0 3px rgba(154,123,58,.15)}\n.tap-form textarea{resize:vertical;font-family:'Inter',sans-serif}\n.tap-form .chk{flex-direction:row;align-items:center;gap:10px;text-transform:none;letter-spacing:0;font-family:'Inter',sans-serif;font-size:13px;font-weight:400;color:#3a342c}\n.tap-form .chk input{accent-color:#9A7B3A}\n.tap-form-msg{display:none;background:#F2EAD3;border:1px solid #D4AF37;color:#1A1612;padding:14px;border-radius:6px;font-family:'Inter',sans-serif;font-size:13px;text-align:center}\n@media(max-width:600px){.tap-form{padding:24px}.tap-form-row{grid-template-columns:1fr}}\n</style>"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tap_ct_map",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#FFFFFF",
+        "padding": {
+          "unit": "px",
+          "top": "0",
+          "right": "0",
+          "bottom": "0",
+          "left": "0",
+          "isLinked": true
+        },
+        "content_width": {
+          "unit": "px",
+          "size": 1920
+        }
+      },
+      "elements": [
+        {
+          "id": "tap_ct_map_col",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "88452a1",
+              "elType": "widget",
+              "widgetType": "google_maps",
+              "settings": {
+                "_element_id": "ct_map_9d3a9e",
+                "address": "Via della Rocca 14, 48013 Brisighella RA, Italy",
+                "zoom": {
+                  "size": 14,
+                  "unit": "px"
+                },
+                "height": {
+                  "size": 420,
+                  "unit": "px"
+                }
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "page_settings": {
+    "template": "elementor_canvas",
+    "page_title": "hide"
+  }
+}

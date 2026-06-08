@@ -1,0 +1,135 @@
+{
+  "version": "0.4",
+  "title": "Tapadum — Master Luthier",
+  "type": "page",
+  "content": [
+    {
+      "id": "tap_ml_hero",
+      "elType": "section",
+      "settings": {
+        "structure": "10",
+        "background_background": "classic",
+        "background_color": "#FAF6EE",
+        "padding": {
+          "unit": "px",
+          "top": "80",
+          "right": "32",
+          "bottom": "80",
+          "left": "32",
+          "isLinked": false
+        },
+        "content_width": {
+          "unit": "px",
+          "size": 1372
+        },
+        "gap": "extended"
+      },
+      "elements": [
+        {
+          "id": "tap_ml_hero_l",
+          "elType": "column",
+          "settings": {
+            "_column_size": "100"
+          },
+          "elements": [
+            {
+              "id": "c536d05",
+              "elType": "widget",
+              "widgetType": "lwp-master-profile",
+              "settings": {
+                "_element_id": "ml_mp_f8ec35",
+                "portrait": {
+                  "url": ""
+                },
+                "fallback_initial": "{{LWP:master_initial}}",
+                "name": "{{LWP:master_name}}",
+                "location": "{{LWP:master_location}}",
+                "specialty": "{{LWP:master_specialty}}",
+                "count": "{{LWP:master_count}}",
+                "show_count": "yes",
+                "profile_url": {
+                  "url": "{{LWP:master_shop_url}}"
+                },
+                "layout": "feature",
+                "gradient_a": "#9a7b3a",
+                "gradient_b": "#d4af37"
+              },
+              "elements": []
+            },
+            {
+              "id": "6671fc6",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "_element_id": "ml_bio_ca3743",
+                "editor": "<blockquote class=\"lwp-mp-quote\">“{{LWP:master_quote}}”</blockquote><p>{{LWP:master_bio}}</p><p class=\"lwp-mp-cta-row\"><a class=\"lwp-btn lwp-btn--primary\" href=\"{{LWP:master_shop_url}}\">Browse {{LWP:master_count}} instruments →</a> &nbsp; <a class=\"lwp-btn-link\" href=\"{{LWP:master_journal_url}}\">Read the workshop visit →</a></p>"
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tap_ml_works",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#FFFFFF",
+        "padding": {
+          "unit": "px",
+          "top": "100",
+          "right": "32",
+          "bottom": "100",
+          "left": "32",
+          "isLinked": false
+        },
+        "content_width": {
+          "unit": "px",
+          "size": 1372
+        }
+      },
+      "elements": [
+        {
+          "id": "tap_ml_works_col",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "62d14b9",
+              "elType": "widget",
+              "widgetType": "lwp-section-head",
+              "settings": {
+                "_element_id": "ml_works_sh_607f11",
+                "eyebrow": "His work in our catalogue",
+                "heading": "Instruments by [em]{{LWP:master_name}}[/em].",
+                "heading_tag": "h2",
+                "cta_label": "All {{LWP:master_count}} →",
+                "cta_url": {
+                  "url": "{{LWP:master_shop_url}}"
+                },
+                "variant": "light",
+                "pills": []
+              },
+              "elements": []
+            },
+            {
+              "id": "tap_ml_works_grid",
+              "elType": "widget",
+              "widgetType": "shortcode",
+              "settings": {
+                "shortcode": "[products limit=\"4\" columns=\"4\" attribute=\"luthier\" terms=\"feramis-aktas\" class=\"tap-products\"]"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "page_settings": {
+    "template": "elementor_canvas",
+    "page_title": "hide"
+  }
+}

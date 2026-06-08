@@ -1,0 +1,129 @@
+{
+  "version": "0.4",
+  "title": "Tapadum — Shop",
+  "type": "page",
+  "content": [
+    {
+      "id": "tap_shop_hero",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#FAF6EE",
+        "padding": {
+          "unit": "px",
+          "top": "60",
+          "right": "32",
+          "bottom": "40",
+          "left": "32",
+          "isLinked": false
+        },
+        "structure": "10"
+      },
+      "elements": [
+        {
+          "id": "tap_shop_hero_col",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "5ed59390",
+              "elType": "widget",
+              "widgetType": "lwp-section-head",
+              "settings": {
+                "eyebrow": "Catalogue · {{LWP:product_count}} instruments",
+                "heading": "All hand-tuned, signed\nand [em]ready to ship[/em].",
+                "heading_tag": "h1",
+                "variant": "light",
+                "pills": []
+              }
+            },
+            {
+              "id": "b38d4b7c",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "<p class=\"lwp-lead\" style=\"max-width:680px;font-family:'Inter',sans-serif;font-size:16px;line-height:1.6;color:#3a342c;\">Filter by family, master, country or price. Every instrument is set up in our atelier before dispatch.</p>"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tap_shop_main",
+      "elType": "section",
+      "settings": {
+        "padding": {
+          "unit": "px",
+          "top": "32",
+          "right": "32",
+          "bottom": "64",
+          "left": "32",
+          "isLinked": false
+        },
+        "structure": "23"
+      },
+      "elements": [
+        {
+          "id": "tap_shop_filters_col",
+          "elType": "column",
+          "settings": {
+            "_column_size": 25
+          },
+          "elements": [
+            {
+              "id": "da913461",
+              "elType": "widget",
+              "widgetType": "lwp-shop-filters",
+              "settings": {
+                "show_category": "yes",
+                "label_category": "Family",
+                "show_price": "yes",
+                "label_price": "Price",
+                "show_stock": "yes",
+                "label_stock": "Availability",
+                "apply_label": "Apply filters",
+                "clear_label": "Clear all",
+                "custom_blocks": []
+              }
+            }
+          ]
+        },
+        {
+          "id": "tap_shop_main_col",
+          "elType": "column",
+          "settings": {
+            "_column_size": 75
+          },
+          "elements": [
+            {
+              "id": "2eb9ba07",
+              "elType": "widget",
+              "widgetType": "lwp-shop-toolbar",
+              "settings": {
+                "show_count": "yes",
+                "count_template": "%d results",
+                "show_view_toggle": "yes",
+                "show_sort": "yes"
+              }
+            },
+            {
+              "id": "f9607310",
+              "elType": "widget",
+              "widgetType": "shortcode",
+              "settings": {
+                "shortcode": "[products limit=\"24\" columns=\"3\" paginate=\"true\"]"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "page_settings": {
+    "template": "elementor_header_footer",
+    "page_title": "false"
+  }
+}

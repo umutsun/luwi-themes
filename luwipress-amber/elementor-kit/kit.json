@@ -1,0 +1,146 @@
+{
+  "version": "0.4",
+  "title": "Tapadum Site Kit",
+  "type": "kit",
+  "site-settings": {
+    "site_name": "Tapadum",
+    "site_description": "Hand-crafted instruments from Anatolia, Persia & the Mediterranean",
+    "system_colors": [
+      { "_id": "primary", "title": "Primary", "color": "#9A7B3A" },
+      { "_id": "secondary", "title": "Secondary", "color": "#D4AF37" },
+      { "_id": "text", "title": "Text", "color": "#1A1612" },
+      { "_id": "accent", "title": "Accent", "color": "#C84B3A" }
+    ],
+    "custom_colors": [
+      { "_id": "tap_gold", "title": "Tapadum Gold", "color": "#9A7B3A" },
+      { "_id": "tap_gold_light", "title": "Gold Light", "color": "#D4AF37" },
+      { "_id": "tap_ink", "title": "Ink", "color": "#1A1612" },
+      { "_id": "tap_ink_soft", "title": "Ink Soft", "color": "#3a342c" },
+      { "_id": "tap_cream", "title": "Cream", "color": "#F5EFE1" },
+      { "_id": "tap_cream_alt", "title": "Cream Alt", "color": "#FAF6EE" },
+      { "_id": "tap_line", "title": "Line", "color": "#E8DFC8" },
+      { "_id": "tap_muted", "title": "Muted", "color": "#8b7f6a" },
+      { "_id": "tap_sale", "title": "Sale", "color": "#C84B3A" },
+      { "_id": "tap_success", "title": "Success", "color": "#3A7A4A" }
+    ],
+    "system_typography": [
+      {
+        "_id": "primary",
+        "title": "Headings (Serif)",
+        "typography_typography": "custom",
+        "typography_font_family": "Cormorant Garamond",
+        "typography_font_weight": "500",
+        "typography_letter_spacing": { "unit": "px", "size": -0.5 }
+      },
+      {
+        "_id": "secondary",
+        "title": "Subheadings (Serif Italic)",
+        "typography_typography": "custom",
+        "typography_font_family": "Cormorant Garamond",
+        "typography_font_weight": "400",
+        "typography_font_style": "italic"
+      },
+      {
+        "_id": "text",
+        "title": "Body (Sans)",
+        "typography_typography": "custom",
+        "typography_font_family": "Inter",
+        "typography_font_weight": "400",
+        "typography_font_size": { "unit": "px", "size": 16 },
+        "typography_line_height": { "unit": "em", "size": 1.6 }
+      },
+      {
+        "_id": "accent",
+        "title": "Eyebrow (Mono)",
+        "typography_typography": "custom",
+        "typography_font_family": "JetBrains Mono",
+        "typography_font_weight": "500",
+        "typography_text_transform": "uppercase",
+        "typography_letter_spacing": { "unit": "px", "size": 2 },
+        "typography_font_size": { "unit": "px", "size": 11 }
+      }
+    ],
+    "custom_typography": [
+      {
+        "_id": "tap_display",
+        "title": "Hero Display",
+        "typography_typography": "custom",
+        "typography_font_family": "Cormorant Garamond",
+        "typography_font_weight": "500",
+        "typography_font_size": { "unit": "px", "size": 72 },
+        "typography_line_height": { "unit": "em", "size": 1.05 }
+      },
+      {
+        "_id": "tap_section_title",
+        "title": "Section Title",
+        "typography_typography": "custom",
+        "typography_font_family": "Cormorant Garamond",
+        "typography_font_weight": "500",
+        "typography_font_size": { "unit": "px", "size": 44 }
+      },
+      {
+        "_id": "tap_card_title",
+        "title": "Card Title",
+        "typography_typography": "custom",
+        "typography_font_family": "Cormorant Garamond",
+        "typography_font_weight": "500",
+        "typography_font_size": { "unit": "px", "size": 20 }
+      },
+      {
+        "_id": "tap_caption",
+        "title": "Caption",
+        "typography_typography": "custom",
+        "typography_font_family": "Inter",
+        "typography_font_weight": "400",
+        "typography_font_size": { "unit": "px", "size": 13 }
+      }
+    ],
+    "container_width": { "unit": "px", "size": 1372 },
+    "space_between_widgets": { "unit": "px", "size": 20 },
+    "page_title_selector": "h1.entry-title",
+    "viewport_lg": 1025,
+    "viewport_md": 768,
+    "default_generic_fonts": "Sans-serif",
+
+    "button_typography_typography": "custom",
+    "button_typography_font_family": "Inter",
+    "button_typography_font_weight": "600",
+    "button_typography_font_size": { "unit": "px", "size": 13 },
+    "button_typography_letter_spacing": { "unit": "px", "size": 0.4 },
+    "button_text_color": "#FFFFFF",
+    "button_background_color": "#9A7B3A",
+    "button_hover_text_color": "#FFFFFF",
+    "button_hover_background_color": "#1A1612",
+    "button_border_radius": { "unit": "px", "top": 8, "right": 8, "bottom": 8, "left": 8, "isLinked": true },
+    "button_padding": { "unit": "px", "top": 14, "right": 28, "bottom": 14, "left": 28, "isLinked": false },
+
+    "form_label_typography_typography": "custom",
+    "form_label_typography_font_family": "Inter",
+    "form_label_typography_font_weight": "500",
+    "form_label_typography_font_size": { "unit": "px", "size": 12 },
+    "form_label_typography_text_transform": "uppercase",
+    "form_label_typography_letter_spacing": { "unit": "px", "size": 1.5 },
+    "form_field_typography_typography": "custom",
+    "form_field_typography_font_family": "Inter",
+    "form_field_typography_font_size": { "unit": "px", "size": 14 },
+    "form_field_text_color": "#1A1612",
+    "form_field_background_color": "#FFFFFF",
+    "form_field_border_color": "#E8DFC8",
+    "form_field_border_radius": { "unit": "px", "size": 6 },
+
+    "image_border_radius": { "unit": "px", "size": 6 },
+
+    "global_image_lightbox": "yes",
+
+    "body_color": "#1A1612",
+    "body_background_color": "#FFFFFF",
+    "body_typography_typography": "custom",
+    "body_typography_font_family": "Inter"
+  },
+  "manifest": {
+    "name": "Tapadum Kit",
+    "description": "Heritage instruments e-commerce — gold/cream palette, serif/sans pairing.",
+    "author": "Tapadum atelier",
+    "version": "1.0.0"
+  }
+}

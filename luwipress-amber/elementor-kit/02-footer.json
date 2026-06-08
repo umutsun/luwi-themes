@@ -1,0 +1,405 @@
+{
+  "version": "0.4",
+  "title": "Tapadum — Footer",
+  "type": "footer",
+  "content": [
+    {
+      "id": "tap_f_news",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#FAF6EE",
+        "padding": {
+          "unit": "px",
+          "top": "64",
+          "right": "32",
+          "bottom": "64",
+          "left": "32",
+          "isLinked": false
+        },
+        "structure": "10"
+      },
+      "elements": [
+        {
+          "id": "tap_f_news_col",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100,
+            "content_position": "center"
+          },
+          "elements": [
+            {
+              "id": "371c525d",
+              "elType": "widget",
+              "widgetType": "lwp-newsletter",
+              "settings": {
+                "eyebrow": "Atelier dispatch",
+                "heading": "News from the workshop, twice a month.",
+                "sub": "New instruments, master interviews, and tuning sessions — straight from {{LWP:brand_city}} to your inbox.",
+                "placeholder": "your@email.com",
+                "button_text": "Subscribe →",
+                "success_message": "Subscribed — talk soon.",
+                "fine_print": "No spam · unsubscribe anytime"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tap_f_main",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#0c0c0c",
+        "padding": {
+          "unit": "px",
+          "top": "64",
+          "right": "32",
+          "bottom": "32",
+          "left": "32",
+          "isLinked": false
+        },
+        "structure": "40"
+      },
+      "elements": [
+        {
+          "id": "tap_f_main_c1",
+          "elType": "column",
+          "settings": {
+            "_column_size": 25
+          },
+          "elements": [
+            {
+              "id": "df4d5714",
+              "elType": "widget",
+              "widgetType": "lwp-footer-brand",
+              "settings": {
+                "logo_image": {
+                  "url": ""
+                },
+                "logo_text": "{{LWP:brand_name}}",
+                "accent_index": 5,
+                "logo_url": {
+                  "url": "/"
+                },
+                "tagline": "{{LWP:brand_tagline}}",
+                "phone": "{{LWP:brand_phone}}",
+                "email": "{{LWP:brand_email}}",
+                "address": "{{LWP:brand_address}}",
+                "socials": [
+                  {
+                    "_id": "4c04548c",
+                    "network": "instagram",
+                    "url": {
+                      "url": "{{LWP:social_instagram}}"
+                    }
+                  },
+                  {
+                    "_id": "9cb56fa8",
+                    "network": "youtube",
+                    "url": {
+                      "url": "{{LWP:social_youtube}}"
+                    }
+                  },
+                  {
+                    "_id": "75379c6a",
+                    "network": "spotify",
+                    "url": {
+                      "url": "{{LWP:social_spotify}}"
+                    }
+                  },
+                  {
+                    "_id": "9781b147",
+                    "network": "whatsapp",
+                    "url": {
+                      "url": "{{LWP:social_whatsapp}}"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "tap_f_main_c2",
+          "elType": "column",
+          "settings": {
+            "_column_size": 25
+          },
+          "elements": [
+            {
+              "id": "00d7510e",
+              "elType": "widget",
+              "widgetType": "lwp-footer-column",
+              "settings": {
+                "heading": "Shop",
+                "links": [
+                  {
+                    "_id": "1ac5f9f2",
+                    "label": "{{LWP:cat_1_label}}",
+                    "url": {
+                      "url": "{{LWP:cat_1_url}}"
+                    },
+                    "hot": ""
+                  },
+                  {
+                    "_id": "c69f9e6b",
+                    "label": "{{LWP:cat_2_label}}",
+                    "url": {
+                      "url": "{{LWP:cat_2_url}}"
+                    },
+                    "hot": ""
+                  },
+                  {
+                    "_id": "9e1b5fb2",
+                    "label": "{{LWP:cat_3_label}}",
+                    "url": {
+                      "url": "{{LWP:cat_3_url}}"
+                    },
+                    "hot": ""
+                  },
+                  {
+                    "_id": "2d224eee",
+                    "label": "{{LWP:cat_4_label}}",
+                    "url": {
+                      "url": "{{LWP:cat_4_url}}"
+                    },
+                    "hot": ""
+                  },
+                  {
+                    "_id": "6dbac4b6",
+                    "label": "Accessories",
+                    "url": {
+                      "url": "/category/accessories"
+                    },
+                    "hot": ""
+                  },
+                  {
+                    "_id": "aefb85d8",
+                    "label": "{{LWP:sale_label}}",
+                    "url": {
+                      "url": "{{LWP:sale_url}}"
+                    },
+                    "hot": "yes"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "tap_f_main_c3",
+          "elType": "column",
+          "settings": {
+            "_column_size": 25
+          },
+          "elements": [
+            {
+              "id": "f2ca3355",
+              "elType": "widget",
+              "widgetType": "lwp-footer-column",
+              "settings": {
+                "heading": "Atelier",
+                "links": [
+                  {
+                    "_id": "5e7bed6a",
+                    "label": "Our story",
+                    "url": {
+                      "url": "/about"
+                    },
+                    "hot": ""
+                  },
+                  {
+                    "_id": "76ba7f11",
+                    "label": "Master luthiers",
+                    "url": {
+                      "url": "/masters"
+                    },
+                    "hot": ""
+                  },
+                  {
+                    "_id": "7e1c928c",
+                    "label": "Journal",
+                    "url": {
+                      "url": "/journal"
+                    },
+                    "hot": ""
+                  },
+                  {
+                    "_id": "9cfd323e",
+                    "label": "Academy",
+                    "url": {
+                      "url": "/academy"
+                    },
+                    "hot": ""
+                  },
+                  {
+                    "_id": "7fc2c6b4",
+                    "label": "Visit us",
+                    "url": {
+                      "url": "/visit"
+                    },
+                    "hot": ""
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "tap_f_main_c4",
+          "elType": "column",
+          "settings": {
+            "_column_size": 25
+          },
+          "elements": [
+            {
+              "id": "dc9120f5",
+              "elType": "widget",
+              "widgetType": "lwp-footer-column",
+              "settings": {
+                "heading": "Help",
+                "links": [
+                  {
+                    "_id": "0b884781",
+                    "label": "Shipping & delivery",
+                    "url": {
+                      "url": "/shipping"
+                    },
+                    "hot": ""
+                  },
+                  {
+                    "_id": "20bf24ba",
+                    "label": "Returns & warranty",
+                    "url": {
+                      "url": "/returns"
+                    },
+                    "hot": ""
+                  },
+                  {
+                    "_id": "056f5afa",
+                    "label": "Instrument care",
+                    "url": {
+                      "url": "/care"
+                    },
+                    "hot": ""
+                  },
+                  {
+                    "_id": "a0cc9273",
+                    "label": "Track your order",
+                    "url": {
+                      "url": "/track-order"
+                    },
+                    "hot": ""
+                  },
+                  {
+                    "_id": "f4bd48be",
+                    "label": "Contact",
+                    "url": {
+                      "url": "/contact"
+                    },
+                    "hot": ""
+                  },
+                  {
+                    "_id": "25bcd419",
+                    "label": "FAQ",
+                    "url": {
+                      "url": "/faq"
+                    },
+                    "hot": ""
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tap_f_bot",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#0c0c0c",
+        "padding": {
+          "unit": "px",
+          "top": "0",
+          "right": "32",
+          "bottom": "24",
+          "left": "32",
+          "isLinked": false
+        },
+        "structure": "10"
+      },
+      "elements": [
+        {
+          "id": "tap_f_bot_col",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "3fd795b2",
+              "elType": "widget",
+              "widgetType": "lwp-footer-bottom",
+              "settings": {
+                "copyright": "© %YEAR% {{LWP:brand_legal_name}} · {{LWP:brand_legal_id}}",
+                "legal_links": [
+                  {
+                    "_id": "842d52c5",
+                    "label": "Privacy",
+                    "url": {
+                      "url": "/privacy"
+                    }
+                  },
+                  {
+                    "_id": "febd7801",
+                    "label": "Terms",
+                    "url": {
+                      "url": "/terms"
+                    }
+                  },
+                  {
+                    "_id": "68ff3454",
+                    "label": "Cookies",
+                    "url": {
+                      "url": "/cookies"
+                    }
+                  }
+                ],
+                "pay_label": "Secure payments",
+                "pay_methods": [
+                  {
+                    "_id": "7e5a2b6c",
+                    "label": "VISA"
+                  },
+                  {
+                    "_id": "ea2b3696",
+                    "label": "MC"
+                  },
+                  {
+                    "_id": "293a85b9",
+                    "label": "AMEX"
+                  },
+                  {
+                    "_id": "d30a7dca",
+                    "label": "PayPal"
+                  },
+                  {
+                    "_id": "58ad6abb",
+                    "label": "SEPA"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "page_settings": {
+    "template": "elementor_canvas"
+  }
+}

@@ -1,0 +1,324 @@
+{
+  "version": "0.4",
+  "title": "Tapadum — Header",
+  "type": "header",
+  "content": [
+    {
+      "id": "tap_h_topbar",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#1A1612",
+        "padding": {
+          "unit": "px",
+          "top": "0",
+          "right": "0",
+          "bottom": "0",
+          "left": "0",
+          "isLinked": true
+        },
+        "structure": "10"
+      },
+      "elements": [
+        {
+          "id": "tap_h_topbar_col",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "41bbcd05",
+              "elType": "widget",
+              "widgetType": "lwp-topbar",
+              "settings": {
+                "left_items": [
+                  {
+                    "_id": "9be7e4ae",
+                    "text": "— Atelier · Brisighella · Italy",
+                    "url": {
+                      "url": ""
+                    }
+                  },
+                  {
+                    "_id": "452de2ad",
+                    "text": "+39 347 974 6257",
+                    "url": {
+                      "url": "tel:+393479746257"
+                    }
+                  },
+                  {
+                    "_id": "b106565d",
+                    "text": "info@example.com",
+                    "url": {
+                      "url": "mailto:info@example.com"
+                    }
+                  }
+                ],
+                "show_lang_switcher": "yes",
+                "lang_mode": "auto",
+                "langs": [
+                  {
+                    "_id": "a545798a",
+                    "code": "EN",
+                    "active": "yes",
+                    "url": {
+                      "url": "/"
+                    }
+                  },
+                  {
+                    "_id": "847554c2",
+                    "code": "IT",
+                    "active": "",
+                    "url": {
+                      "url": "/it/"
+                    }
+                  },
+                  {
+                    "_id": "3561adc5",
+                    "code": "FR",
+                    "active": "",
+                    "url": {
+                      "url": "/fr/"
+                    }
+                  },
+                  {
+                    "_id": "d6662793",
+                    "code": "ES",
+                    "active": "",
+                    "url": {
+                      "url": "/es/"
+                    }
+                  }
+                ],
+                "right_links": [
+                  {
+                    "_id": "0c2e04a0",
+                    "label": "Track order →",
+                    "url": {
+                      "url": "/track-order"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tap_h_main",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#ffffff",
+        "padding": {
+          "unit": "px",
+          "top": "18",
+          "right": "32",
+          "bottom": "18",
+          "left": "32",
+          "isLinked": false
+        },
+        "structure": "30"
+      },
+      "elements": [
+        {
+          "id": "tap_h_main_l",
+          "elType": "column",
+          "settings": {
+            "_column_size": 25,
+            "content_position": "center"
+          },
+          "elements": [
+            {
+              "id": "de4b800b",
+              "elType": "widget",
+              "widgetType": "lwp-logo",
+              "settings": {
+                "image": {
+                  "url": ""
+                },
+                "text": "{{LWP:brand_name}}",
+                "accent_index": 5,
+                "link_url": {
+                  "url": "/"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "tap_h_main_m",
+          "elType": "column",
+          "settings": {
+            "_column_size": 50,
+            "content_position": "center"
+          },
+          "elements": [
+            {
+              "id": "4d713dec",
+              "elType": "widget",
+              "widgetType": "lwp-mega-menu",
+              "settings": {
+                "menu_id": "0"
+              }
+            }
+          ]
+        },
+        {
+          "id": "tap_h_main_r",
+          "elType": "column",
+          "settings": {
+            "_column_size": 25,
+            "content_position": "center"
+          },
+          "elements": [
+            {
+              "id": "b3d8a9f9",
+              "elType": "widget",
+              "widgetType": "lwp-header-actions",
+              "settings": {
+                "show_search": "yes",
+                "show_account": "yes",
+                "account_url": {
+                  "url": "/my-account"
+                },
+                "show_cart": "yes",
+                "cart_url": {
+                  "url": "/cart"
+                },
+                "cta_label": "",
+                "cta_url": {
+                  "url": ""
+                },
+                "show_burger": "yes"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tap_h_megabar",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#FAF6EE",
+        "padding": {
+          "unit": "px",
+          "top": "10",
+          "right": "32",
+          "bottom": "10",
+          "left": "32",
+          "isLinked": false
+        },
+        "structure": "10"
+      },
+      "elements": [
+        {
+          "id": "tap_h_megabar_col",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "08275189",
+              "elType": "widget",
+              "widgetType": "lwp-megabar",
+              "settings": {
+                "items": [
+                  {
+                    "_id": "27e92082",
+                    "label": "{{LWP:cat_1_label}}",
+                    "url": {
+                      "url": "{{LWP:cat_1_url}}"
+                    }
+                  },
+                  {
+                    "_id": "49680dc8",
+                    "label": "{{LWP:cat_2_label}}",
+                    "url": {
+                      "url": "{{LWP:cat_2_url}}"
+                    }
+                  },
+                  {
+                    "_id": "8bc6b227",
+                    "label": "{{LWP:cat_3_label}}",
+                    "url": {
+                      "url": "{{LWP:cat_3_url}}"
+                    }
+                  },
+                  {
+                    "_id": "c23d320f",
+                    "label": "{{LWP:cat_4_label}}",
+                    "url": {
+                      "url": "{{LWP:cat_4_url}}"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tap_h_overlays",
+      "elType": "section",
+      "settings": {
+        "padding": {
+          "unit": "px",
+          "top": "0",
+          "right": "0",
+          "bottom": "0",
+          "left": "0",
+          "isLinked": true
+        },
+        "structure": "10"
+      },
+      "elements": [
+        {
+          "id": "tap_h_overlays_col",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "209cc30d",
+              "elType": "widget",
+              "widgetType": "lwp-search-overlay",
+              "settings": {
+                "eyebrow": "Search the catalogue",
+                "placeholder": "Try a product, master, or category…",
+                "search_param": "s",
+                "search_action_url": {
+                  "url": "/"
+                },
+                "suggest_blocks": [
+                  {
+                    "_id": "4be66aa6",
+                    "label": "Trending",
+                    "chips": "{{LWP:trending_chips}}"
+                  },
+                  {
+                    "_id": "7779a2ef",
+                    "label": "Categories",
+                    "chips": "{{LWP:category_chips}}"
+                  }
+                ],
+                "show_mobile_drawer": "yes",
+                "mobile_drawer_title": "Menu"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "page_settings": {
+    "template": "elementor_canvas"
+  }
+}

@@ -1,0 +1,185 @@
+{
+  "version": "0.4",
+  "title": "Tapadum — About / Atelier",
+  "type": "page",
+  "content": [
+    {
+      "id": "tap_ab_hero",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#FAF6EE",
+        "padding": {
+          "unit": "px",
+          "top": "100",
+          "right": "32",
+          "bottom": "100",
+          "left": "32",
+          "isLinked": false
+        },
+        "content_width": {
+          "unit": "px",
+          "size": 1372
+        }
+      },
+      "elements": [
+        {
+          "id": "tap_ab_hero_col",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "24e1935",
+              "elType": "widget",
+              "widgetType": "lwp-section-head",
+              "settings": {
+                "_element_id": "ab_hero_sh_5914ae",
+                "eyebrow": "Est. 2014 · Brisighella, Italy",
+                "heading": "Two musicians went to Istanbul\nlooking for [em]one oud[/em].\nEleven years later, this is what came of it.",
+                "heading_tag": "h1",
+                "variant": "light",
+                "pills": []
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tap_ab_story",
+      "elType": "section",
+      "settings": {
+        "structure": "10",
+        "background_background": "classic",
+        "background_color": "#FFFFFF",
+        "padding": {
+          "unit": "px",
+          "top": "100",
+          "right": "32",
+          "bottom": "100",
+          "left": "32",
+          "isLinked": false
+        },
+        "content_width": {
+          "unit": "px",
+          "size": 1372
+        },
+        "gap": "extended"
+      },
+      "elements": [
+        {
+          "id": "tap_ab_story_l",
+          "elType": "column",
+          "settings": {
+            "_column_size": "100"
+          },
+          "elements": [
+            {
+              "id": "0a17d80",
+              "elType": "widget",
+              "widgetType": "lwp-story-split",
+              "settings": {
+                "_element_id": "ab_story_split_e7eff9",
+                "image_side": "left",
+                "image": {
+                  "url": ""
+                },
+                "image_alt_grad_from": "#3d2f1f",
+                "image_alt_grad_to": "#7a5a2c",
+                "card_eyebrow": "Brisighella",
+                "card_title": "The atelier",
+                "card_sub": "Est. 2014",
+                "eyebrow": "Our story",
+                "heading": "A workshop, a network,\nand a [em]shipping desk[/em].",
+                "lead": "Tapadum opened in a converted barn in Brisighella in 2014. Eleven years later, we work with 26 master luthiers across Turkey, Iran, Egypt and Italy. We've delivered nearly 2,500 hand-tuned instruments to musicians in 47 countries.\n\nWe do three things, and we try to do them well: meet the makers, set up the instruments, and ship them out so they arrive playable.",
+                "cta_label": "",
+                "cta_url": {
+                  "url": ""
+                },
+                "bullets": []
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tap_ab_timeline",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#1A1612",
+        "padding": {
+          "unit": "px",
+          "top": "100",
+          "right": "32",
+          "bottom": "100",
+          "left": "32",
+          "isLinked": false
+        },
+        "content_width": {
+          "unit": "px",
+          "size": 1372
+        }
+      },
+      "elements": [
+        {
+          "id": "tap_ab_tl_col",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "b101392",
+              "elType": "widget",
+              "widgetType": "lwp-timeline",
+              "settings": {
+                "_element_id": "ab_tl_bf0e0a",
+                "eyebrow": "A short history",
+                "heading": "Eleven years, four chapters.",
+                "rows": [
+                  {
+                    "_id": "ba773904",
+                    "year": "2014",
+                    "title": "The barn in Brisighella",
+                    "body": "Lorenzo and Sara open the first workshop after a six-month trip across Anatolia and the Caucasus. The first product was a single Turkish oud they couldn't find at home."
+                  },
+                  {
+                    "_id": "c886e87a",
+                    "year": "2017",
+                    "title": "First master agreements",
+                    "body": "Direct partnerships signed with Yildirim in Istanbul and Hamid in Tehran — no middlemen, signed instruments, fixed margins."
+                  },
+                  {
+                    "_id": "b79a229f",
+                    "year": "2021",
+                    "title": "Tapadum Pro handpan launch",
+                    "body": "Our first in-house instrument — a steel handpan tuned in our atelier. 600 units shipped in the first year."
+                  },
+                  {
+                    "_id": "6933d4e0",
+                    "year": "2025",
+                    "title": "26 masters, 47 countries",
+                    "body": "The network now spans Turkey, Iran, Egypt, Greece and Italy. Nearly 2,500 instruments delivered worldwide."
+                  }
+                ],
+                "background": "#0c0c0c",
+                "year_color": "#D4AF37"
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "page_settings": {
+    "template": "elementor_canvas",
+    "page_title": "hide"
+  }
+}

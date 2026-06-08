@@ -1,0 +1,29 @@
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+*.swp
+*.swo
+
+# Editor / IDE
+.idea/
+.vscode/
+*.sublime-*
+
+# Build / cache
+node_modules/
+vendor/
+*.log
+*.cache
+
+# WordPress local helpers
+*.zip
+wp-config-local.php
+languages/*.mo
+
+# Screenshots not yet captured
+screenshot-original.*
+
+# Local notes
+NOTES.local.md

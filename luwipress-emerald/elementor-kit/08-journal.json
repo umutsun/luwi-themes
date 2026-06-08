@@ -1,0 +1,64 @@
+{
+  "version": "0.4",
+  "title": "Tapadum — Journal",
+  "type": "page",
+  "content": [
+    {
+      "id": "tap_jr_hero",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#FAF6EE",
+        "padding": { "unit": "px", "top": "80", "right": "32", "bottom": "60", "left": "32", "isLinked": false },
+        "content_width": { "unit": "px", "size": 1372 }
+      },
+      "elements": [
+        {
+          "id": "tap_jr_hero_col",
+          "elType": "column",
+          "settings": { "_column_size": 100 },
+          "elements": [
+            {
+              "id": "tap_jr_hero_html",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": { "html": "<div class=\"tap-breadcrumb\"><a href=\"/\">Home</a> <span>›</span> <span>Journal</span></div><span class=\"tap-eyebrow\" style=\"display:block;margin-top:14px\">— Long reads from the atelier</span><h1 class=\"tap-h1\" style=\"font-size:60px\">Field notes, workshop visits<br>and <em>long reads</em>.</h1>" }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tap_jr_grid",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#FFFFFF",
+        "padding": { "unit": "px", "top": "60", "right": "32", "bottom": "100", "left": "32", "isLinked": false },
+        "content_width": { "unit": "px", "size": 1372 }
+      },
+      "elements": [
+        {
+          "id": "tap_jr_grid_col",
+          "elType": "column",
+          "settings": { "_column_size": 100 },
+          "elements": [
+            {
+              "id": "tap_jr_pills",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": { "html": "<div class=\"tap-pills\" style=\"margin-bottom:32px\"><a class=\"on\" href=\"#\">All</a><a href=\"#\">Workshop visits</a><a href=\"#\">Field notes</a><a href=\"#\">Long reads</a><a href=\"#\">Tutorials</a></div>" }
+            },
+            {
+              "id": "tap_jr_posts",
+              "elType": "widget",
+              "widgetType": "shortcode",
+              "settings": { "shortcode": "[recent_posts limit=\"9\" columns=\"3\"]" }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "page_settings": { "template": "elementor_canvas", "page_title": "hide" }
+}

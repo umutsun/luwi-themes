@@ -1,0 +1,62 @@
+{
+  "name": "LuwiPress Gold — Theme Kit",
+  "version": "1.1.0",
+  "title": "LuwiPress Gold — World Instruments Theme",
+  "description": "Editorial WooCommerce theme kit for hand-crafted instruments. Standalone Elementor theme — works with any Elementor-compatible base theme. Built for Tapadum, Brisighella.",
+  "author": "LuwiPress",
+  "elementor_version_required": "3.18+",
+  "elementor_pro_required": false,
+  "recommended_plugins": [
+    { "slug": "elementor", "name": "Elementor", "required": true },
+    { "slug": "elementskit-lite", "name": "ElementsKit Lite (mega menu, header/footer builder)", "required": true },
+    { "slug": "woocommerce", "name": "WooCommerce", "required": true }
+  ],
+  "compatible_base_themes": ["hello-elementor", "astra", "generatepress", "kadence", "any-elementor-compatible"],
+  "global_kit": "kit.json",
+  "animations": "00-animations.json",
+  "templates": {
+    "header": { "file": "01-header.json", "type": "header", "location": "header" },
+    "footer": { "file": "02-footer.json", "type": "footer", "location": "footer" },
+    "homepage": { "file": "03-homepage.json", "type": "page", "set_as": "front_page" },
+    "shop": { "file": "04-shop.json", "type": "page", "slug": "shop" },
+    "single_product": { "file": "05-single-product.json", "type": "single-product", "location": "single-product" },
+    "about": { "file": "06-about.json", "type": "page", "slug": "about" },
+    "master_profile": { "file": "07-master-profile.json", "type": "page", "slug": "masters/_template" },
+    "journal": { "file": "08-journal.json", "type": "page", "slug": "journal" },
+    "journal_archive": { "file": "08a-journal-archive.json", "type": "archive", "location": "archive", "_note": "Theme Builder Archive — overrides default category/tag/date archives. Falls back to 08-journal.json if Theme Builder unavailable." },
+    "journal_single": { "file": "08b-journal-single.json", "type": "single", "location": "single-post", "_note": "Theme Builder Single — applied to all blog posts. Requires [tapadum_post_meta] + [tapadum_author_card] shortcodes registered in functions.php." },
+    "contact": { "file": "09-contact.json", "type": "page", "slug": "contact" },
+    "404": { "file": "10-404.json", "type": "404", "location": "404" }
+  },
+  "fonts": {
+    "primary": "Cormorant Garamond (Google Fonts)",
+    "body": "Inter (Google Fonts)",
+    "mono": "JetBrains Mono (Google Fonts)"
+  },
+  "colors": {
+    "ink": "#1A1612",
+    "cream": "#FAF6EE",
+    "bone": "#F2EAD3",
+    "border": "#E8DFC8",
+    "gold": "#9A7B3A",
+    "gold_bright": "#D4AF37",
+    "rust": "#C84B3A",
+    "muted": "#8b7f6a"
+  },
+  "features": [
+    "Page loader with brand mark + progress bar",
+    "Scroll-reveal (data-lwp-reveal) with left/right/scale variants",
+    "Stagger animation (data-lwp-stagger) for grids",
+    "Skeleton shimmer placeholders (.lwp-skel)",
+    "Cart icon bump animation on WooCommerce added_to_cart",
+    "Underline-grow links (.lwp-ulink)",
+    "prefers-reduced-motion respected"
+  ],
+  "install_order": [
+    "kit.json (global colors + typography)",
+    "00-animations.json (inject site-wide via functions.php OR drop on homepage)",
+    "01-header.json + 02-footer.json (set as site header/footer)",
+    "03-homepage.json (set as Front Page in Reading Settings)",
+    "04 → 10 (import as page templates)"
+  ]
+}

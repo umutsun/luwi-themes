@@ -1,0 +1,20 @@
+/* LuwiPress Emerald — activation notice (loaded on every admin screen) */
+.luwipress-emerald-notice {
+	border-left: 4px solid #735c00 !important;
+	background: linear-gradient(135deg, #fcf9f8, #fff) !important;
+}
+.luwipress-emerald-notice strong {
+	color: #1b1c1c;
+}
+.luwipress-emerald-notice p {
+	margin: 12px 0;
+}
+.luwipress-emerald-notice .button-primary {
+	background: linear-gradient(135deg, #735c00, #D4AF37);
+	border-color: #735c00;
+	color: #fff;
+	box-shadow: 0 6px 16px -8px rgba(115, 92, 0, .5);
+}
+.luwipress-emerald-notice .button-primary:hover {
+	background: linear-gradient(135deg, #574500, #b8961f);
+}

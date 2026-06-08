@@ -1,0 +1,37 @@
+{
+  "version": "0.4",
+  "title": "Tapadum — 404",
+  "type": "404",
+  "content": [
+    {
+      "id": "tap_404_sec",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#FAF6EE",
+        "padding": { "unit": "px", "top": "120", "right": "32", "bottom": "120", "left": "32", "isLinked": false },
+        "content_width": { "unit": "px", "size": 900 },
+        "min_height": { "unit": "vh", "size": 80 },
+        "content_position": "middle"
+      },
+      "elements": [
+        {
+          "id": "tap_404_col",
+          "elType": "column",
+          "settings": { "_column_size": 100 },
+          "elements": [
+            {
+              "id": "tap_404_html",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div class=\"tap-404\"><div class=\"tap-404-num\">404</div><span class=\"tap-eyebrow\">— Page not found</span><h1 class=\"tap-h1\" style=\"font-size:60px\">This <em>tune</em> is not in our songbook.</h1><p class=\"tap-lead\">The page you're looking for doesn't exist, has been moved, or was never here. Try one of these:</p><div class=\"tap-hero-cta\"><a href=\"/\" class=\"tap-btn-primary\">Back to home →</a><a href=\"/shop\" class=\"tap-btn-link\">Browse the catalogue ↗</a></div><div class=\"tap-404-links\"><h5>Popular pages</h5><a href=\"/category/string\">Stringed instruments</a><a href=\"/masters\">Master luthiers</a><a href=\"/journal\">The journal</a><a href=\"/contact\">Get in touch</a></div></div><style>.tap-404{display:flex;flex-direction:column;gap:18px;text-align:center;align-items:center}.tap-404-num{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:200px;color:#D4AF37;line-height:1;font-weight:500;letter-spacing:-4px;text-shadow:0 12px 30px rgba(154,123,58,.25)}.tap-404 p{max-width:520px;margin:0 auto}.tap-404 .tap-hero-cta{justify-content:center}.tap-404-links{margin-top:40px;padding-top:32px;border-top:1px solid #E8DFC8;width:100%;display:flex;flex-direction:column;gap:10px}.tap-404-links h5{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8b7f6a;font-weight:600;margin:0 0 8px}.tap-404-links a{font-family:'Inter',sans-serif;font-size:14px;color:#1A1612;text-decoration:none}.tap-404-links a:hover{color:#9A7B3A}</style>"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "page_settings": { "template": "elementor_canvas", "page_title": "hide" }
+}

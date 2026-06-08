@@ -1,0 +1,25 @@
+/*
+Theme Name: LuwiPress Emerald
+Theme URI: https://luwi.dev/luwipress
+Author: LuwiPress
+Author URI: https://luwi.dev/luwipress
+Description: LuwiPress-powered, Elementor-ready consulting & professional services theme. Sister to LuwiPress Gold but tuned for B2B engagements, agencies, and knowledge work: editorial typography on Inter, ledger-precise numerics on JetBrains Mono, sticky shrinking header, slide-in cart drawer, deep-ink CTA band with animated sheen, reveal-on-scroll motion. Ships with the same LuwiPress companion plumbing as Gold — AI product/article search, sticky customer chat, Knowledge-Graph-curated related content, full onboarding wizard, 23-tool maintenance suite (canonical / hreflang / redirect-chain / slug-collision / language-drift audits), and the ecosystem dashboard. Visual language: slate neutrals + emerald jewel green built around #047857 primary, fully overrideable from Customizer. Built on the same WC / WPML / Elementor backbone as Gold — same fork tree, different aesthetic.
+Version: 1.0.0
+Requires at least: 6.4
+Tested up to: 6.9
+Requires PHP: 8.1
+Requires Plugins: elementor, luwipress
+License: GPL-2.0-or-later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: luwipress-emerald
+Tags: e-commerce, blog, news, woocommerce, elementor, custom-logo, custom-menu, custom-colors, full-width-template, footer-widgets, theme-options, threaded-comments, translation-ready, rtl-language-support, sticky-header, mega-menu
+
+LuwiPress Emerald is licensed under the GPL v2 or later.
+https://www.gnu.org/licenses/gpl-2.0.html
+
+Built on top of the Acme / Emerald design exploration
+(Claude Design handoff bundle — 23 pages + 6 chrome partials).
+*/
+
+/* The actual styles live in assets/css/*.css and are enqueued from functions.php.
+   This file exists for theme metadata + WordPress recognition only. */

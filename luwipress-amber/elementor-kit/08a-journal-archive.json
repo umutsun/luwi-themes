@@ -1,0 +1,176 @@
+{
+  "version": "0.4",
+  "title": "Tapadum — Journal Archive",
+  "type": "archive",
+  "content": [
+    {
+      "id": "tap_arc_hero",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#FAF6EE",
+        "padding": {
+          "unit": "px",
+          "top": "60",
+          "right": "32",
+          "bottom": "32",
+          "left": "32",
+          "isLinked": false
+        },
+        "structure": "10"
+      },
+      "elements": [
+        {
+          "id": "tap_arc_hero_col",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "928fb432",
+              "elType": "widget",
+              "widgetType": "lwp-section-head",
+              "settings": {
+                "eyebrow": "The {{LWP:brand_name}} Journal",
+                "heading": "Field notes, workshop visits\nand [em]long reads[/em].",
+                "heading_tag": "h1",
+                "variant": "light",
+                "pills": [
+                  {
+                    "_id": "588d3071",
+                    "label": "All",
+                    "url": {
+                      "url": "/journal"
+                    },
+                    "active": "yes"
+                  },
+                  {
+                    "_id": "61baa880",
+                    "label": "Workshop visits",
+                    "url": {
+                      "url": "/category/workshop-visits"
+                    },
+                    "active": ""
+                  },
+                  {
+                    "_id": "0e5a4a4a",
+                    "label": "Field notes",
+                    "url": {
+                      "url": "/category/field-notes"
+                    },
+                    "active": ""
+                  },
+                  {
+                    "_id": "f0508fce",
+                    "label": "Long reads",
+                    "url": {
+                      "url": "/category/long-reads"
+                    },
+                    "active": ""
+                  },
+                  {
+                    "_id": "0db57c75",
+                    "label": "Tutorials",
+                    "url": {
+                      "url": "/category/tutorials"
+                    },
+                    "active": ""
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tap_arc_feat",
+      "elType": "section",
+      "settings": {
+        "padding": {
+          "unit": "px",
+          "top": "32",
+          "right": "32",
+          "bottom": "32",
+          "left": "32",
+          "isLinked": false
+        },
+        "structure": "10"
+      },
+      "elements": [
+        {
+          "id": "tap_arc_feat_col",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "61155282",
+              "elType": "widget",
+              "widgetType": "lwp-featured-post",
+              "settings": {
+                "source": "auto-sticky",
+                "post_type": "post",
+                "image_side": "left",
+                "show_excerpt": "yes",
+                "show_meta": "yes",
+                "cta_label": "Read on →"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tap_arc_grid",
+      "elType": "section",
+      "settings": {
+        "padding": {
+          "unit": "px",
+          "top": "32",
+          "right": "32",
+          "bottom": "80",
+          "left": "32",
+          "isLinked": false
+        },
+        "structure": "10"
+      },
+      "elements": [
+        {
+          "id": "tap_arc_grid_col",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "6cb83c47",
+              "elType": "widget",
+              "widgetType": "shortcode",
+              "settings": {
+                "shortcode": "[recent_posts limit=\"9\" columns=\"3\"]"
+              }
+            },
+            {
+              "id": "a92843c1",
+              "elType": "widget",
+              "widgetType": "lwp-load-more",
+              "settings": {
+                "mode": "ajax",
+                "label_template": "Load %d more posts",
+                "target_selector": ".elementor-posts-container, ul.products, .lwp-egrid",
+                "hide_when_done": "yes"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "page_settings": {
+    "template": "elementor_header_footer",
+    "page_title": "false"
+  }
+}

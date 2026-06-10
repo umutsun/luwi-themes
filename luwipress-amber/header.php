@@ -172,14 +172,14 @@ if ( ! $elementor_header_active ) :
 				$wpml = apply_filters( 'wpml_active_languages', null, 'orderby=code' );
 				if ( is_array( $wpml ) ) {
 					foreach ( $wpml as $code => $l ) {
-						$amber_langs[] = [ 'code' => strtoupper( $l['language_code'] ?? $code ), 'url' => $l['url'] ?? '#', 'active' => ! empty( $l['active'] ) ];
+						$amber_langs[] = [ 'code' => strtoupper( explode( '-', (string) ( $l['language_code'] ?? $code ) )[0] ), 'url' => $l['url'] ?? '#', 'active' => ! empty( $l['active'] ) ];
 					}
 				}
 			} elseif ( function_exists( 'pll_the_languages' ) ) {
 				$pll = pll_the_languages( [ 'raw' => 1, 'hide_if_empty' => 0 ] );
 				if ( is_array( $pll ) ) {
 					foreach ( $pll as $code => $l ) {
-						$amber_langs[] = [ 'code' => strtoupper( $l['slug'] ?? $code ), 'url' => $l['url'] ?? '#', 'active' => ! empty( $l['current_lang'] ) ];
+						$amber_langs[] = [ 'code' => strtoupper( explode( '-', (string) ( $l['slug'] ?? $code ) )[0] ), 'url' => $l['url'] ?? '#', 'active' => ! empty( $l['current_lang'] ) ];
 					}
 				}
 			}

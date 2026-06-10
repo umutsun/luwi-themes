@@ -177,6 +177,14 @@ add_action( 'wp_enqueue_scripts', function () {
 		[ 'luwipress-amber-fonts' ],
 		$asset_ver( '/assets/css/amber.css' )
 	);
+	// Native Elementor widget styles (lwp-* widgets). Ported from Gold, re-tokenised
+	// to the amber palette so a widgetized homepage / page renders on-brand.
+	wp_enqueue_style(
+		'luwipress-amber-widgets',
+		$uri . '/assets/css/widgets.css',
+		[ 'luwipress-amber-design' ],
+		$asset_ver( '/assets/css/widgets.css' )
+	);
 	wp_enqueue_style(
 		'luwipress-amber-pages',
 		$uri . '/assets/css/pages.css',
@@ -203,7 +211,7 @@ add_action( 'wp_enqueue_scripts', function () {
  * serves stale combined chunks. `data-no-optimize="1"` loads them verbatim.
  */
 add_filter( 'style_loader_tag', function ( $tag, $handle ) {
-	$skip = [ 'luwipress-amber-design', 'luwipress-amber-pages', 'luwipress-amber-page-styles', 'luwipress-amber-tokens' ];
+	$skip = [ 'luwipress-amber-design', 'luwipress-amber-widgets', 'luwipress-amber-pages', 'luwipress-amber-page-styles', 'luwipress-amber-tokens' ];
 	if ( in_array( $handle, $skip, true ) ) {
 		$tag = str_replace( ' href=', ' data-no-optimize="1" data-no-defer="1" data-cfasync="false" href=', $tag );
 	}
@@ -218,6 +226,7 @@ if ( ! function_exists( 'luwipress_amber_css_ls_excludes' ) ) {
 			$excludes = array();
 		}
 		$excludes[] = 'luwipress-amber-elementor/assets/css/amber.css';
+			$excludes[] = 'luwipress-amber-elementor/assets/css/widgets.css';
 		$excludes[] = 'luwipress-amber-elementor/assets/css/pages.css';
 		$excludes[] = 'luwipress-amber-elementor/assets/css/page-styles.css';
 		$excludes[] = 'luwipress-amber-elementor/assets/css/tokens.css';

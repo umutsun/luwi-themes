@@ -365,6 +365,7 @@ class LuwiPress_Amber_Content_Compiler {
 			case 'site_description': return $this->safe( get_bloginfo( 'description' ) );
 			case 'admin_email':      return $this->safe( get_option( 'admin_email' ) );
 			case 'home_url':         return esc_url( home_url( '/' ) );
+			case 'theme_uri':        return esc_url( get_template_directory_uri() );
 			case 'shop_url':         return function_exists( 'wc_get_page_permalink' ) ? esc_url( wc_get_page_permalink( 'shop' ) ) : esc_url( home_url( '/shop/' ) );
 			case 'about_url':        return esc_url( home_url( '/about/' ) );
 			case 'journal_url':

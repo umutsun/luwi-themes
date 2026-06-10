@@ -1,446 +1,647 @@
 {
-  "version": "0.4",
-  "title": "Tapadum — Homepage",
-  "type": "page",
-  "content": [
-    {
-      "id": "tap_hp_hero",
-      "elType": "section",
-      "settings": {
-        "background_background": "classic",
-        "background_color": "#FAF6EE",
-        "padding": {
-          "unit": "px",
-          "top": "80",
-          "right": "32",
-          "bottom": "120",
-          "left": "32",
-          "isLinked": false
-        },
-        "content_width": {
-          "unit": "px",
-          "size": 1372
-        }
-      },
-      "elements": [
-        {
-          "id": "tap_hero_col",
-          "elType": "column",
-          "settings": { "_column_size": 100 },
-          "elements": [
-            {
-              "id": "tap_hero_w",
-              "elType": "widget",
-              "widgetType": "lwp-hero-split",
-              "settings": {
-                "eyebrow": "Est. atelier · Worldwide shipping",
-                "heading": "Hand-crafted instruments\nfrom [em]Anatolia, Persia & the Mediterranean[/em].",
-                "lead": "From the Brisighella atelier to your studio — every saz, oud and santur is signed by the luthier who made it and tuned by hand before dispatch.",
-                "cta1_label": "Browse the catalogue →",
-                "cta1_url": { "url": "/shop", "is_external": "", "nofollow": "" },
-                "cta2_label": "Visit the atelier →",
-                "cta2_url": { "url": "/about", "is_external": "", "nofollow": "" },
-                "stats": [
-                  { "_id": "hst_1", "num": "240+", "label": "Products\nin catalogue" },
-                  { "_id": "hst_2", "num": "42",   "label": "Countries\nshipped to" },
-                  { "_id": "hst_3", "num": "26",   "label": "Master luthiers\nin the network" }
-                ],
-                "image": { "url": "" },
-                "image_grad_from": "#3d2f1f",
-                "image_grad_to": "#7a5a2c",
-                "pill_text": "In atelier · Tuning",
-                "tag_eyebrow": "Featured this week",
-                "tag_title": "Sultan Turkish Oud",
-                "quote_avatar": { "url": "" },
-                "quote_initial": "F",
-                "quote_name": "Feramis Aktas",
-                "quote_role": "Istanbul · Oud luthier",
-                "quote_text": "Each oud takes 14 days. The wood decides when it's ready."
-              }
-            }
-          ]
-        }
-      ]
+ "version": "0.4",
+ "title": "Fly By Deniz Homepage",
+ "type": "page",
+ "content": [
+  {
+   "id": "fbd00001",
+   "elType": "section",
+   "settings": {
+    "content_width": "full",
+    "gap": "no",
+    "structure": "10",
+    "padding": {
+     "unit": "px",
+     "top": "0",
+     "right": "0",
+     "bottom": "0",
+     "left": "0",
+     "isLinked": true
     },
-    {
-      "id": "tap_hp_infobar",
-      "elType": "section",
-      "settings": {
-        "background_background": "classic",
-        "background_color": "#1A1612",
-        "padding": {
-          "unit": "px",
-          "top": "20",
-          "right": "32",
-          "bottom": "20",
-          "left": "32",
-          "isLinked": false
-        },
-        "content_width": {
-          "unit": "px",
-          "size": 1372
-        }
-      },
-      "elements": [
-        {
-          "id": "tap_infobar_col",
-          "elType": "column",
-          "settings": {
-            "_column_size": 100
-          },
-          "elements": [
-            {
-              "id": "tap_infobar_widget",
-              "elType": "widget",
-              "widgetType": "lwp-info-bar",
-              "settings": {
-                "bar_bg": "#1A1612",
-                "icon_bg": "rgba(212,175,55,0.12)",
-                "title_color": "#ffffff",
-                "desc_color": "#a89d85",
-                "items": [
-                  { "_id": "ib_1", "title": "Hand-tuned",     "desc": "Before every dispatch",   "icon": { "value": "fas fa-cog",           "library": "fa-solid" } },
-                  { "_id": "ib_2", "title": "Worldwide DHL",  "desc": "Insured · 3–7 days",      "icon": { "value": "fas fa-shipping-fast", "library": "fa-solid" } },
-                  { "_id": "ib_3", "title": "14-day returns", "desc": "No questions asked",      "icon": { "value": "fas fa-undo-alt",      "library": "fa-solid" } },
-                  { "_id": "ib_4", "title": "4.9 / 5",        "desc": "1,287 verified reviews",  "icon": { "value": "fas fa-star",          "library": "fa-solid" } }
-                ]
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "tap_hp_products",
-      "elType": "section",
-      "settings": {
-        "background_background": "classic",
-        "background_color": "#FFFFFF",
-        "padding": {
-          "unit": "px",
-          "top": "100",
-          "right": "32",
-          "bottom": "80",
-          "left": "32",
-          "isLinked": false
-        },
-        "content_width": {
-          "unit": "px",
-          "size": 1372
-        }
-      },
-      "elements": [
-        {
-          "id": "tap_prod_col",
-          "elType": "column",
-          "settings": {
-            "_column_size": 100
-          },
-          "elements": [
-            {
-              "id": "tap_prod_head",
-              "elType": "widget",
-              "widgetType": "lwp-section-head",
-              "settings": {
-                "eyebrow": "Birthday sale · until Nov 30",
-                "heading": "Best-selling instruments\n[em]up to −27% off.[/em]",
-                "heading_tag": "h2",
-                "cta_label": "View all 240 →",
-                "cta_url": { "url": "/shop", "is_external": "", "nofollow": "" },
-                "variant": "light",
-                "pills": [
-                  { "_id": "pl_1", "label": "All",         "url": { "url": "#", "is_external": "", "nofollow": "" }, "active": "yes" },
-                  { "_id": "pl_2", "label": "String",      "url": { "url": "/category/string",      "is_external": "", "nofollow": "" }, "active": "" },
-                  { "_id": "pl_3", "label": "Percussions", "url": { "url": "/category/percussions", "is_external": "", "nofollow": "" }, "active": "" },
-                  { "_id": "pl_4", "label": "Bowed",       "url": { "url": "/category/bowed",       "is_external": "", "nofollow": "" }, "active": "" },
-                  { "_id": "pl_5", "label": "Winds",       "url": { "url": "/category/winds",       "is_external": "", "nofollow": "" }, "active": "" }
-                ]
-              }
-            },
-            {
-              "id": "tap_prod_grid",
-              "elType": "widget",
-              "widgetType": "shortcode",
-              "settings": {
-                "shortcode": "[products limit=\"8\" columns=\"4\" orderby=\"popularity\" class=\"tap-products\"]"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "tap_hp_categories",
-      "elType": "section",
-      "settings": {
-        "background_background": "classic",
-        "background_color": "#FAF6EE",
-        "padding": {
-          "unit": "px",
-          "top": "100",
-          "right": "32",
-          "bottom": "100",
-          "left": "32",
-          "isLinked": false
-        },
-        "content_width": {
-          "unit": "px",
-          "size": 1372
-        }
-      },
-      "elements": [
-        {
-          "id": "tap_cat_col",
-          "elType": "column",
-          "settings": {
-            "_column_size": 100
-          },
-          "elements": [
-            {
-              "id": "tap_cat_head",
-              "elType": "widget",
-              "widgetType": "lwp-section-head",
-              "settings": {
-                "eyebrow": "Browse by family",
-                "heading": "Pick the voice\nyou're looking for.",
-                "heading_tag": "h2",
-                "cta_label": "All categories →",
-                "cta_url": { "url": "/shop", "is_external": "", "nofollow": "" },
-                "variant": "light"
-              }
-            },
-            {
-              "id": "tap_cat_grid",
-              "elType": "widget",
-              "widgetType": "lwp-category-grid",
-              "settings": {
-                "source": "manual",
-                "columns": "4",
-                "items": [
-                  { "_id": "cat_1", "eyebrow": "62 instruments", "title": "String",      "sub": "Oud · Saz · Setar · Tanbur · Kanun · Santur",  "url": { "url": "/category/string",      "is_external": "", "nofollow": "" }, "image": { "url": "" }, "grad_from": "#d4b97a", "grad_to": "#7a5a2c" },
-                  { "_id": "cat_2", "eyebrow": "48 instruments", "title": "Percussions", "sub": "Darbuka · Bendir · Riq · Handpan · Steel Tongue", "url": { "url": "/category/percussions", "is_external": "", "nofollow": "" }, "image": { "url": "" }, "grad_from": "#3d2f1f", "grad_to": "#7a5a2c" },
-                  { "_id": "cat_3", "eyebrow": "28 instruments", "title": "Bowed",       "sub": "Kemence · Kamancheh · Kabak Kemane",           "url": { "url": "/category/bowed",       "is_external": "", "nofollow": "" }, "image": { "url": "" }, "grad_from": "#5a3a2a", "grad_to": "#c89a5a" },
-                  { "_id": "cat_4", "eyebrow": "36 instruments", "title": "Winds",       "sub": "Ney · Duduk · Kaval · Mey · Zurna",            "url": { "url": "/category/winds",       "is_external": "", "nofollow": "" }, "image": { "url": "" }, "grad_from": "#2a3d3a", "grad_to": "#7aa494" }
-                ]
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "tap_hp_atelier",
-      "elType": "section",
-      "settings": {
-        "background_background": "classic",
-        "background_color": "#FFFFFF",
-        "padding": {
-          "unit": "px",
-          "top": "120",
-          "right": "32",
-          "bottom": "120",
-          "left": "32",
-          "isLinked": false
-        },
-        "content_width": {
-          "unit": "px",
-          "size": 1372
-        }
-      },
-      "elements": [
-        {
-          "id": "tap_atelier_col",
-          "elType": "column",
-          "settings": { "_column_size": 100 },
-          "elements": [
-            {
-              "id": "tap_atelier_w",
-              "elType": "widget",
-              "widgetType": "lwp-story-split",
-              "settings": {
-                "image_side": "left",
-                "image": { "url": "" },
-                "image_alt_grad_from": "#3d2f1f",
-                "image_alt_grad_to": "#7a5a2c",
-                "card_eyebrow": "Atelier hours",
-                "card_title": "Open by appointment",
-                "card_sub": "Tuesday – Saturday · 10:00 – 18:00",
-                "eyebrow": "Our story · since 2014",
-                "heading": "A workshop for instruments\nthat [em]don't fit[/em] a category.",
-                "lead": "Tapadum started as a duo of Italian musicians chasing a single Turkish oud across three Istanbul workshops. Eleven years later, our atelier in Brisighella is the home address for 26 master luthiers across the Mediterranean — and the shipping desk for nearly 2,500 hand-tuned instruments delivered worldwide.",
-                "cta_label": "Read the full story →",
-                "cta_url": { "url": "/about", "is_external": "", "nofollow": "" },
-                "bullets": [
-                  { "_id": "atel_b1", "title": "Direct from masters.",       "body": "No middlemen. Each instrument is signed by the luthier who made it." },
-                  { "_id": "atel_b2", "title": "Tuned before dispatch.",      "body": "Every saz, oud and santur is set up and intonated by our atelier team." },
-                  { "_id": "atel_b3", "title": "Worldwide insured shipping.", "body": "DHL Express in custom-built crates · 3–7 working days." },
-                  { "_id": "atel_b4", "title": "Lifetime support.",            "body": "Free maintenance for two years · paid service forever after." }
-                ]
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "tap_hp_masters",
-      "elType": "section",
-      "settings": {
-        "background_background": "classic",
-        "background_color": "#1A1612",
-        "padding": {
-          "unit": "px",
-          "top": "100",
-          "right": "32",
-          "bottom": "100",
-          "left": "32",
-          "isLinked": false
-        },
-        "content_width": {
-          "unit": "px",
-          "size": 1372
-        }
-      },
-      "elements": [
-        {
-          "id": "tap_masters_col",
-          "elType": "column",
-          "settings": {
-            "_column_size": 100
-          },
-          "elements": [
-            {
-              "id": "tap_masters_head",
-              "elType": "widget",
-              "widgetType": "lwp-section-head",
-              "settings": {
-                "eyebrow": "The hands behind the work",
-                "heading": "Master luthiers in the network.",
-                "heading_tag": "h2",
-                "cta_label": "All 26 masters →",
-                "cta_url": { "url": "/masters", "is_external": "", "nofollow": "" },
-                "variant": "dark"
-              }
-            },
-            {
-              "id": "tap_masters_grid",
-              "elType": "widget",
-              "widgetType": "lwp-master-grid",
-              "settings": {
-                "variant": "dark",
-                "columns": "4",
-                "items": [
-                  { "_id": "mst_1", "name": "Feramis Aktas",      "initial": "F", "location": "Istanbul · TR", "specialty": "Oud · 28 years",          "count": "42 instruments", "url": { "url": "/masters/feramis-aktas",      "is_external": "", "nofollow": "" }, "grad_from": "#9a7b3a", "grad_to": "#d4af37" },
-                  { "_id": "mst_2", "name": "Yildirim Palabiyik", "initial": "Y", "location": "Istanbul · TR", "specialty": "Saz · Tanbur · 32 years", "count": "68 instruments", "url": { "url": "/masters/yildirim-palabiyik", "is_external": "", "nofollow": "" }, "grad_from": "#5a3a2a", "grad_to": "#a87a4a" },
-                  { "_id": "mst_3", "name": "Hamid",              "initial": "H", "location": "Tehran · IR",   "specialty": "Setar · Tar · 24 years",  "count": "31 instruments", "url": { "url": "/masters/hamid",              "is_external": "", "nofollow": "" }, "grad_from": "#3d2f1f", "grad_to": "#7a5a2c" },
-                  { "_id": "mst_4", "name": "A. Golestani",       "initial": "A", "location": "Tehran · IR",   "specialty": "Tar · Kamancheh · 35 years","count": "22 instruments", "url": { "url": "/masters/golestani",          "is_external": "", "nofollow": "" }, "grad_from": "#7a5a3a", "grad_to": "#b89a6a" }
-                ]
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "tap_hp_youtube",
-      "elType": "section",
-      "settings": {
-        "background_background": "classic",
-        "background_color": "#FAF6EE",
-        "padding": {
-          "unit": "px",
-          "top": "100",
-          "right": "32",
-          "bottom": "100",
-          "left": "32",
-          "isLinked": false
-        },
-        "content_width": {
-          "unit": "px",
-          "size": 1372
-        }
-      },
-      "elements": [
-        {
-          "id": "tap_yt_col",
-          "elType": "column",
-          "settings": {
-            "_column_size": 100
-          },
-          "elements": [
-            {
-              "id": "tap_yt_head",
-              "elType": "widget",
-              "widgetType": "lwp-youtube-channel",
-              "settings": {
-                "eyebrow": "Listen before you buy",
-                "heading": "Every instrument, played\nin our atelier.",
-                "cta_label": "YouTube channel →",
-                "cta_url": { "url": "", "is_external": "on", "nofollow": "" },
-                "show_subscribe": "yes",
-                "subscribe_label": "Subscribe",
-                "columns": "4",
-                "videos": [
-                  { "_id": "ytv_oud01",   "video": "", "title": "Sultan Turkish Oud — solo taksim in Hicaz", "byline": "Yildirim Palabiyik · 14k views",  "duration": "3:42", "thumb_quality": "hq" },
-                  { "_id": "ytv_pro12",   "video": "", "title": "Tapadum Pro 12 — handpan in D Hicaz",       "byline": "In-house atelier · 28k views",    "duration": "5:18", "thumb_quality": "hq" },
-                  { "_id": "ytv_setar",   "video": "", "title": "Persian Setar by Hamid — Mahour mode",     "byline": "Hamid · 9.2k views",              "duration": "2:54", "thumb_quality": "hq" },
-                  { "_id": "ytv_ney",     "video": "", "title": "Master Ney — Feramis Aktas plays Saba",    "byline": "Feramis Aktas · 11k views",        "duration": "4:08", "thumb_quality": "hq" }
-                ]
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "tap_hp_journal",
-      "elType": "section",
-      "settings": {
-        "background_background": "classic",
-        "background_color": "#FFFFFF",
-        "padding": {
-          "unit": "px",
-          "top": "100",
-          "right": "32",
-          "bottom": "100",
-          "left": "32",
-          "isLinked": false
-        },
-        "content_width": {
-          "unit": "px",
-          "size": 1372
-        }
-      },
-      "elements": [
-        {
-          "id": "tap_journal_col",
-          "elType": "column",
-          "settings": {
-            "_column_size": 100
-          },
-          "elements": [
-            {
-              "id": "tap_journal_widget",
-              "elType": "widget",
-              "widgetType": "lwp-editorial-grid",
-              "settings": {
-                "post_type": "post",
-                "count": 3,
-                "orderby": "date",
-                "category": [],
-                "eyebrow": "Long reads from the atelier",
-                "heading": "From the journal.",
-                "all_link": { "url": "/journal", "is_external": "", "nofollow": "" },
-                "all_label": "All posts →"
-              }
-            }
-          ]
-        }
-      ]
+    "margin": {
+     "unit": "px",
+     "top": "0",
+     "right": "0",
+     "bottom": "0",
+     "left": "0",
+     "isLinked": true
     }
-  ],
-  "page_settings": {
-    "template": "elementor_canvas",
-    "page_title": "hide"
+   },
+   "elements": [
+    {
+     "id": "fbd00002",
+     "elType": "column",
+     "settings": {
+      "_column_size": 100,
+      "_inline_size": null,
+      "padding": {
+       "unit": "px",
+       "top": "0",
+       "right": "0",
+       "bottom": "0",
+       "left": "0",
+       "isLinked": true
+      }
+     },
+     "elements": [
+      {
+       "id": "fbd00003",
+       "elType": "widget",
+       "widgetType": "html",
+       "settings": {
+        "html": "<section class=\"hero\">\n  <div class=\"scene\" style=\"position:absolute;inset:0;\">\n    <div class=\"scene-sky\"></div>\n    <div class=\"scene-sun\"></div>\n    <div class=\"scene-dunes\" style=\"position:absolute;inset:0;\"></div>\n    <video class=\"scene-video\" autoplay muted loop playsinline preload=\"auto\" poster=\"https://www.flybydeniz.com/wp-content/uploads/2025/06/heli.jpg\"></video>\n    <div class=\"scene-scrim\"></div>\n  </div>\n  <div class=\"wrap\">\n    <span class=\"eyebrow\">Welcome to Fly By Deniz</span>\n    <h1>Unforgettable Dubai, <em>effortlessly</em> yours.</h1>\n    <p class=\"sub\">Curated adventures and seamless travel — visas, transfers, private tours and the moments in between, handled end to end by your Dubai concierge.</p>\n    <div class=\"cta-row\">\n      <a href=\"#contact\" class=\"btn btn--amber\">Plan My Trip\n        <svg class=\"arrow\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg>\n      </a>\n      <a href=\"#activities\" class=\"btn btn--ghost\">Explore Experiences</a>\n    </div>\n    <!-- booking bar -->\n    <div class=\"bookbar\">\n      <div class=\"field\">\n        <div class=\"lbl\">Experience</div>\n        <div class=\"val\">Desert Safari\n          <svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path d=\"M6 9l6 6 6-6\"/></svg>\n        </div>\n      </div>\n      <div class=\"field\">\n        <div class=\"lbl\">Date</div>\n        <div class=\"val\">Add dates</div>\n      </div>\n      <div class=\"field\">\n        <div class=\"lbl\">Guests</div>\n        <div class=\"val\">2 travellers</div>\n      </div>\n      <button class=\"go\" aria-label=\"Search\">\n        <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"m21 21-4.3-4.3\"/></svg>\n      </button>\n    </div>\n  </div>\n  <div class=\"scroll-hint\"><span>Scroll</span><span class=\"line\"></span></div>\n</section>"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fbd00004",
+   "elType": "section",
+   "settings": {
+    "content_width": "full",
+    "gap": "no",
+    "structure": "10",
+    "padding": {
+     "unit": "px",
+     "top": "0",
+     "right": "0",
+     "bottom": "0",
+     "left": "0",
+     "isLinked": true
+    },
+    "margin": {
+     "unit": "px",
+     "top": "0",
+     "right": "0",
+     "bottom": "0",
+     "left": "0",
+     "isLinked": true
+    }
+   },
+   "elements": [
+    {
+     "id": "fbd00005",
+     "elType": "column",
+     "settings": {
+      "_column_size": 100,
+      "_inline_size": null,
+      "padding": {
+       "unit": "px",
+       "top": "0",
+       "right": "0",
+       "bottom": "0",
+       "left": "0",
+       "isLinked": true
+      }
+     },
+     "elements": [
+      {
+       "id": "fbd00006",
+       "elType": "widget",
+       "widgetType": "html",
+       "settings": {
+        "html": "<section class=\"trust section--tight\">\n  <div class=\"wrap\">\n    <div class=\"trust-head\">\n      <span class=\"eyebrow\">Why Fly By Deniz</span>\n      <h2 class=\"trust-statement\">A Dubai-based agency turning first visits and returning adventures into <em>effortless, memorable journeys.</em></h2>\n    </div>\n    <div class=\"trust-cards\">\n      <div class=\"tcard\">\n        <span class=\"idx\">01</span>\n        <span class=\"tc-ic\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\"><path d=\"M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6l-8-4Z\"/><path d=\"m9 12 2 2 4-4\"/></svg></span>\n        <h3>Seasoned specialists</h3>\n        <p>Years of on-the-ground Dubai expertise behind every itinerary.</p>\n      </div>\n      <div class=\"tcard\">\n        <span class=\"idx\">02</span>\n        <span class=\"tc-ic\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\"><path d=\"m12 2 2.4 7.3H22l-6 4.5 2.3 7.2L12 16.5 5.7 21l2.3-7.2-6-4.5h7.6L12 2Z\"/></svg></span>\n        <h3>Hand-picked only</h3>\n        <p>Every experience is one we&rsquo;d happily book ourselves.</p>\n      </div>\n      <div class=\"tcard\">\n        <span class=\"idx\">03</span>\n        <span class=\"tc-ic\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M3 12h18M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18Z\"/></svg></span>\n        <h3>Local insight, global standards</h3>\n        <p>On the ground daily, delivered to international standards.</p>\n      </div>\n      <div class=\"tcard\">\n        <span class=\"idx\">04</span>\n        <span class=\"tc-ic\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\"><path d=\"M21 11.5a8.4 8.4 0 0 1-9 8.4L3 21l1.1-3.3A8.5 8.5 0 1 1 21 11.5Z\"/></svg></span>\n        <h3>24/7 concierge</h3>\n        <p>Reachable on WhatsApp around the clock, every day of your stay.</p>\n      </div>\n    </div>\n  </div>\n</section>"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fbd00007",
+   "elType": "section",
+   "settings": {
+    "content_width": "full",
+    "gap": "no",
+    "structure": "10",
+    "padding": {
+     "unit": "px",
+     "top": "0",
+     "right": "0",
+     "bottom": "0",
+     "left": "0",
+     "isLinked": true
+    },
+    "margin": {
+     "unit": "px",
+     "top": "0",
+     "right": "0",
+     "bottom": "0",
+     "left": "0",
+     "isLinked": true
+    }
+   },
+   "elements": [
+    {
+     "id": "fbd00008",
+     "elType": "column",
+     "settings": {
+      "_column_size": 100,
+      "_inline_size": null,
+      "padding": {
+       "unit": "px",
+       "top": "0",
+       "right": "0",
+       "bottom": "0",
+       "left": "0",
+       "isLinked": true
+      }
+     },
+     "elements": [
+      {
+       "id": "fbd00009",
+       "elType": "widget",
+       "widgetType": "html",
+       "settings": {
+        "html": "<section class=\"section\" id=\"services\">\n  <div class=\"wrap\">\n    <div class=\"sec-head\">\n      <div class=\"row\">\n        <div>\n          <span class=\"eyebrow\">Our Services</span>\n          <h2 class=\"h2\">Everything for your <em>Dubai journey</em></h2>\n        </div>\n        <a href=\"#\" class=\"text-link\">View All Services\n          <svg class=\"arrow\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg>\n        </a>\n      </div>\n    </div>\n    <div class=\"services-grid\">\n\n      <div class=\"svc\">\n        <div class=\"photo scene scene-warm-int\"><div class=\"scene-sky\"></div><img class=\"scene-img\" src=\"https://www.flybydeniz.com/wp-content/uploads/2025/06/visa.jpg\" alt=\"Dubai visa services\" loading=\"lazy\"><span class=\"scene-label\">Visa</span></div>\n        <div class=\"body\">\n          <h3>Visa Services</h3>\n          <p>Tourist visa assistance with the right deal and fast, guided processing — no guesswork.</p>\n          <a href=\"#\" class=\"more\">Learn more <svg class=\"arrow\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></a>\n        </div>\n      </div>\n\n      <div class=\"svc\">\n        <div class=\"photo scene scene-sea\"><div class=\"scene-sky\"></div><img class=\"scene-img\" src=\"https://www.flybydeniz.com/wp-content/uploads/2025/06/car.jpg\" alt=\"Private transport in Dubai\" loading=\"lazy\"><span class=\"scene-label\">Transport</span></div>\n        <div class=\"body\">\n          <h3>Transport Services</h3>\n          <p>Airport and city transfers in private chauffeured comfort, on your schedule.</p>\n          <a href=\"#\" class=\"more\">Learn more <svg class=\"arrow\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></a>\n        </div>\n      </div>\n\n      <div class=\"svc\">\n        <div class=\"photo scene scene-sky-city\"><div class=\"scene-sky\"></div><div class=\"scene-city-band\"></div><img class=\"scene-img\" src=\"https://www.flybydeniz.com/wp-content/uploads/2025/06/muse.jpg\" alt=\"Dubai attraction tickets\" loading=\"lazy\"><span class=\"scene-label\">Tickets</span></div>\n        <div class=\"body\">\n          <h3>Tour Tickets</h3>\n          <p>Skip-the-line access to Dubai's headline attractions, museums and observation decks.</p>\n          <a href=\"#\" class=\"more\">Learn more <svg class=\"arrow\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></a>\n        </div>\n      </div>\n\n      <div class=\"svc\">\n        <div class=\"photo scene scene-dunes\"><div class=\"scene-sky\"></div><div class=\"scene-sun\"></div><img class=\"scene-img\" src=\"https://www.flybydeniz.com/wp-content/uploads/2025/06/excu.jpg\" alt=\"Dubai excursions\" loading=\"lazy\"><span class=\"scene-label\">Excursions</span></div>\n        <div class=\"body\">\n          <h3>Excursions</h3>\n          <p>Desert safaris, dune dinners and guided day trips beyond the city skyline.</p>\n          <a href=\"#\" class=\"more\">Learn more <svg class=\"arrow\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></a>\n        </div>\n      </div>\n\n      <div class=\"svc\">\n        <div class=\"photo scene scene-sky-city\"><div class=\"scene-sky\"></div><div class=\"scene-city-band\"></div><img class=\"scene-img\" src=\"https://www.flybydeniz.com/wp-content/uploads/2025/06/mice.jpg\" alt=\"MICE events in Dubai\" loading=\"lazy\"><span class=\"scene-label\">MICE</span></div>\n        <div class=\"body\">\n          <h3>MICE Events</h3>\n          <p>Meetings, incentives and conferences staged with venues, logistics and flair.</p>\n          <a href=\"#\" class=\"more\">Learn more <svg class=\"arrow\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></a>\n        </div>\n      </div>\n\n      <div class=\"svc\">\n        <div class=\"photo scene scene-sea\"><div class=\"scene-sky\"></div><img class=\"scene-img\" src=\"https://www.flybydeniz.com/wp-content/uploads/2025/06/burj.jpg\" alt=\"Dubai tour packages\" loading=\"lazy\"><span class=\"scene-label\">Packages</span></div>\n        <div class=\"body\">\n          <h3>Tour Packages</h3>\n          <p>End-to-end itineraries for individuals, families and groups — designed around you.</p>\n          <a href=\"#\" class=\"more\">Learn more <svg class=\"arrow\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></a>\n        </div>\n      </div>\n\n    </div>\n  </div>\n</section>"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fbd0000a",
+   "elType": "section",
+   "settings": {
+    "content_width": "full",
+    "gap": "no",
+    "structure": "10",
+    "padding": {
+     "unit": "px",
+     "top": "0",
+     "right": "0",
+     "bottom": "0",
+     "left": "0",
+     "isLinked": true
+    },
+    "margin": {
+     "unit": "px",
+     "top": "0",
+     "right": "0",
+     "bottom": "0",
+     "left": "0",
+     "isLinked": true
+    }
+   },
+   "elements": [
+    {
+     "id": "fbd0000b",
+     "elType": "column",
+     "settings": {
+      "_column_size": 100,
+      "_inline_size": null,
+      "padding": {
+       "unit": "px",
+       "top": "0",
+       "right": "0",
+       "bottom": "0",
+       "left": "0",
+       "isLinked": true
+      }
+     },
+     "elements": [
+      {
+       "id": "fbd0000c",
+       "elType": "widget",
+       "widgetType": "html",
+       "settings": {
+        "html": "<section class=\"section activities\" id=\"activities\">\n  <div class=\"wrap\">\n    <div class=\"sec-head\">\n      <div class=\"row\">\n        <div>\n          <span class=\"eyebrow\">Top Activities in Dubai</span>\n          <h2 class=\"h2\">The best adventures <em>Dubai has to offer</em></h2>\n        </div>\n        <div class=\"act-nav\">\n          <button id=\"actPrev\" aria-label=\"Previous\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path d=\"M15 18l-6-6 6-6\"/></svg></button>\n          <button id=\"actNext\" aria-label=\"Next\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path d=\"M9 6l6 6-6 6\"/></svg></button>\n        </div>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"act-scroller\" id=\"actScroller\">\n\n    <article class=\"act-card\">\n      <div class=\"scene scene-sky-city\" style=\"position:absolute;inset:0;\"><div class=\"scene-sky\"></div><div class=\"scene-city-band\"></div><img class=\"scene-img\" src=\"https://www.flybydeniz.com/wp-content/uploads/2025/06/heli.jpg\" alt=\"Helicopter tour over Dubai\" loading=\"lazy\"></div>\n      <div class=\"act-scrim\"></div>\n      <div class=\"act-top\">\n        <span class=\"chip price\">From AED 1,450</span>\n        <span class=\"chip\"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 7v5l3 2\"/></svg>17 min</span>\n      </div>\n      <div class=\"act-body\">\n        <span class=\"tag\">Aerial</span>\n        <h3>Helicopter Tours</h3>\n        <p>Bank over the Palm and Burj Khalifa at golden hour — Dubai's skyline from the only seat that counts.</p>\n        <a href=\"#\" class=\"book\">Book <svg class=\"arrow\" width=\"15\" height=\"15\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></a>\n      </div>\n    </article>\n\n    <article class=\"act-card\">\n      <div class=\"scene scene-dunes\" style=\"position:absolute;inset:0;\"><div class=\"scene-sky\"></div><div class=\"scene-sun\"></div><img class=\"scene-img\" src=\"https://www.flybydeniz.com/wp-content/uploads/2025/06/desert-safari.jpg\" alt=\"Desert safari at sunset\" loading=\"lazy\"></div>\n      <div class=\"act-scrim\"></div>\n      <div class=\"act-top\">\n        <span class=\"chip price\">From AED 240</span>\n        <span class=\"chip\"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 7v5l3 2\"/></svg>6 hrs</span>\n      </div>\n      <div class=\"act-body\">\n        <span class=\"tag\">Desert</span>\n        <h3>Desert Safari</h3>\n        <p>Dune-bash the red sands, then dine under the stars with falconry, fire and the quiet of the open desert.</p>\n        <a href=\"#\" class=\"book\">Book <svg class=\"arrow\" width=\"15\" height=\"15\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></a>\n      </div>\n    </article>\n\n    <article class=\"act-card\">\n      <div class=\"scene scene-sea-day\" style=\"position:absolute;inset:0;\"><div class=\"scene-sky\"></div><img class=\"scene-img\" src=\"https://www.flybydeniz.com/wp-content/uploads/2025/06/YAHT.jpg\" alt=\"Private yacht tour on the Dubai Marina\" loading=\"lazy\"></div>\n      <div class=\"act-scrim\"></div>\n      <div class=\"act-top\">\n        <span class=\"chip price\">From AED 600</span>\n        <span class=\"chip\"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 7v5l3 2\"/></svg>3 hrs</span>\n      </div>\n      <div class=\"act-body\">\n        <span class=\"tag\">Marina</span>\n        <h3>Yacht Tour</h3>\n        <p>Cut warm Gulf water past the Marina and Ain Dubai on a private charter — sundowners optional, views guaranteed.</p>\n        <a href=\"#\" class=\"book\">Book <svg class=\"arrow\" width=\"15\" height=\"15\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></a>\n      </div>\n    </article>\n\n    <article class=\"act-card\">\n      <div class=\"scene scene-sky-city\" style=\"position:absolute;inset:0;\"><div class=\"scene-sky\"></div><div class=\"scene-city-band\"></div><img class=\"scene-img\" src=\"https://www.flybydeniz.com/wp-content/uploads/2025/06/BURRJ.jpg\" alt=\"Burj Khalifa at dusk\" loading=\"lazy\"></div>\n      <div class=\"act-scrim\"></div>\n      <div class=\"act-top\">\n        <span class=\"chip price\">From AED 169</span>\n        <span class=\"chip\"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 7v5l3 2\"/></svg>2 hrs</span>\n      </div>\n      <div class=\"act-body\">\n        <span class=\"tag\">Iconic</span>\n        <h3>Burj Khalifa</h3>\n        <p>Rise to the world's highest observation deck for the city laid out in light — booked at the perfect hour.</p>\n        <a href=\"#\" class=\"book\">Book <svg class=\"arrow\" width=\"15\" height=\"15\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></a>\n      </div>\n    </article>\n\n  </div>\n  <div class=\"wrap\" style=\"margin-top:30px;\">\n    <a href=\"#\" class=\"text-link\">View All Activities\n      <svg class=\"arrow\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg>\n    </a>\n  </div>\n</section>"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fbd0000d",
+   "elType": "section",
+   "settings": {
+    "content_width": "full",
+    "gap": "no",
+    "structure": "10",
+    "padding": {
+     "unit": "px",
+     "top": "0",
+     "right": "0",
+     "bottom": "0",
+     "left": "0",
+     "isLinked": true
+    },
+    "margin": {
+     "unit": "px",
+     "top": "0",
+     "right": "0",
+     "bottom": "0",
+     "left": "0",
+     "isLinked": true
+    }
+   },
+   "elements": [
+    {
+     "id": "fbd0000e",
+     "elType": "column",
+     "settings": {
+      "_column_size": 100,
+      "_inline_size": null,
+      "padding": {
+       "unit": "px",
+       "top": "0",
+       "right": "0",
+       "bottom": "0",
+       "left": "0",
+       "isLinked": true
+      }
+     },
+     "elements": [
+      {
+       "id": "fbd0000f",
+       "elType": "widget",
+       "widgetType": "html",
+       "settings": {
+        "html": "<section class=\"section\" id=\"about\">\n  <div class=\"wrap\">\n    <div class=\"about-grid\">\n      <div class=\"about-media\">\n        <div class=\"scene scene-warm-int\"><div class=\"scene-sky\"></div><img class=\"scene-img\" src=\"https://www.flybydeniz.com/wp-content/uploads/2025/06/burj.jpg\" alt=\"Fly By Deniz Dubai travel experiences\" loading=\"lazy\"><span class=\"scene-label\">Lifestyle</span></div>\n        <div class=\"float-card\">\n          <div class=\"num\">100%</div>\n          <div class=\"lbl\">Tailored to individuals, families & groups</div>\n        </div>\n      </div>\n      <div class=\"about-copy\">\n        <span class=\"eyebrow\">About Us</span>\n        <h2>A travel agency that handles the details — so you don't.</h2>\n        <p>Fly By Deniz is a Dubai-based travel agency providing expert services for travellers from all over the world. With years of experience in tourism, we offer tailored solutions for individual guests, families and groups.</p>\n        <p>Our services span tourist visa assistance, tour packages, hotel reservations, airport and city transfers, flight bookings, and private guided tours. Every journey is designed for comfort, reliability and a genuinely memorable experience — premium service with local insight and international standards.</p>\n        <div class=\"sig\">\n          <span class=\"av\" style=\"background:linear-gradient(135deg,#F0C277,#C9572F)\">A</span>\n          <span>\n            <div class=\"nm\">Ayhan</div>\n            <div class=\"ro\">Founder, Fly By Deniz Tourism LLC</div>\n          </span>\n        </div>\n        <div style=\"margin-top:26px;\">\n          <a href=\"#\" class=\"btn btn--ghost\">Know More\n            <svg class=\"arrow\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg>\n          </a>\n        </div>\n      </div>\n    </div>\n  </div>\n</section>"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fbd00010",
+   "elType": "section",
+   "settings": {
+    "content_width": "full",
+    "gap": "no",
+    "structure": "10",
+    "padding": {
+     "unit": "px",
+     "top": "0",
+     "right": "0",
+     "bottom": "0",
+     "left": "0",
+     "isLinked": true
+    },
+    "margin": {
+     "unit": "px",
+     "top": "0",
+     "right": "0",
+     "bottom": "0",
+     "left": "0",
+     "isLinked": true
+    }
+   },
+   "elements": [
+    {
+     "id": "fbd00011",
+     "elType": "column",
+     "settings": {
+      "_column_size": 100,
+      "_inline_size": null,
+      "padding": {
+       "unit": "px",
+       "top": "0",
+       "right": "0",
+       "bottom": "0",
+       "left": "0",
+       "isLinked": true
+      }
+     },
+     "elements": [
+      {
+       "id": "fbd00012",
+       "elType": "widget",
+       "widgetType": "html",
+       "settings": {
+        "html": "<section class=\"section why\">\n  <div class=\"wrap\">\n    <div class=\"sec-head center\">\n      <span class=\"eyebrow centered\">Why book with us</span>\n      <h2 class=\"h2\">Concierge care, <em>start to finish</em></h2>\n    </div>\n    <div class=\"why-grid\">\n      <div class=\"why-card\">\n        <span class=\"ic\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\"><path d=\"M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6l-8-4Z\"/><path d=\"m9 12 2 2 4-4\"/></svg></span>\n        <h3>End-to-end concierge</h3>\n        <p>One point of contact for every booking, transfer and reservation across your trip.</p>\n      </div>\n      <div class=\"why-card\">\n        <span class=\"ic\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\"><rect x=\"3\" y=\"5\" width=\"18\" height=\"14\" rx=\"2\"/><path d=\"M3 9h18M7 14h5\"/></svg></span>\n        <h3>Tourist visa assistance</h3>\n        <p>The right visa, processed quickly with clear guidance from start to approval.</p>\n      </div>\n      <div class=\"why-card\">\n        <span class=\"ic\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\"><path d=\"M12 21s-7-5.6-7-11a7 7 0 0 1 14 0c0 5.4-7 11-7 11Z\"/><circle cx=\"12\" cy=\"10\" r=\"2.5\"/></svg></span>\n        <h3>Private guided tours</h3>\n        <p>Local guides who know the moments worth catching — and the hour to catch them.</p>\n      </div>\n      <div class=\"why-card\">\n        <span class=\"ic\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 7v5l3 2\"/></svg></span>\n        <h3>24/7 support</h3>\n        <p>Plans change. We're reachable on WhatsApp around the clock, every day of your stay.</p>\n      </div>\n    </div>\n  </div>\n</section>"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fbd00013",
+   "elType": "section",
+   "settings": {
+    "content_width": "full",
+    "gap": "no",
+    "structure": "10",
+    "padding": {
+     "unit": "px",
+     "top": "0",
+     "right": "0",
+     "bottom": "0",
+     "left": "0",
+     "isLinked": true
+    },
+    "margin": {
+     "unit": "px",
+     "top": "0",
+     "right": "0",
+     "bottom": "0",
+     "left": "0",
+     "isLinked": true
+    }
+   },
+   "elements": [
+    {
+     "id": "fbd00014",
+     "elType": "column",
+     "settings": {
+      "_column_size": 100,
+      "_inline_size": null,
+      "padding": {
+       "unit": "px",
+       "top": "0",
+       "right": "0",
+       "bottom": "0",
+       "left": "0",
+       "isLinked": true
+      }
+     },
+     "elements": [
+      {
+       "id": "fbd00015",
+       "elType": "widget",
+       "widgetType": "html",
+       "settings": {
+        "html": "<section class=\"section partners\">\n  <div class=\"wrap\">\n    <div class=\"sec-head center\">\n      <span class=\"eyebrow centered\">Our Partners</span>\n      <h2 class=\"h2\">Airlines, hotels &amp; experiences <em>we work with</em></h2>\n    </div>\n    <div class=\"partner-grid\">\n      <div class=\"partner-chip\"><img src=\"{{LWP:theme_uri}}/logos/emirates.png\" alt=\"Emirates\"></div>\n      <div class=\"partner-chip\"><img src=\"{{LWP:theme_uri}}/logos/turkish-airlines.png\" alt=\"Turkish Airlines\"></div>\n      <div class=\"partner-chip\"><img src=\"{{LWP:theme_uri}}/logos/sunexpress.png\" alt=\"SunExpress\"></div>\n      <div class=\"partner-chip\"><img src=\"{{LWP:theme_uri}}/logos/flydubai.png\" alt=\"flydubai\"></div>\n      <div class=\"partner-chip\"><img src=\"{{LWP:theme_uri}}/logos/airarabia.png\" alt=\"Air Arabia\"></div>\n      <div class=\"partner-chip\"><img src=\"{{LWP:theme_uri}}/logos/anantara.png\" alt=\"Anantara Hotels Resorts Spas\"></div>\n      <div class=\"partner-chip\"><img src=\"{{LWP:theme_uri}}/logos/two-seasons.png\" alt=\"Two Seasons Resort\"></div>\n      <div class=\"partner-chip\"><img src=\"{{LWP:theme_uri}}/logos/five.png\" alt=\"FIVE Hotels\"></div>\n      <div class=\"partner-chip\"><img src=\"{{LWP:theme_uri}}/logos/hilton.png\" alt=\"Hilton Hotels & Resorts\"></div>\n      <div class=\"partner-chip\"><img src=\"{{LWP:theme_uri}}/logos/rixos.png\" alt=\"Rixos Hotels\"></div>\n      <div class=\"partner-chip\"><img src=\"{{LWP:theme_uri}}/logos/museum-future.png\" alt=\"Museum of the Future\"></div>\n      <div class=\"partner-chip\"><img src=\"{{LWP:theme_uri}}/logos/ferrari-world.png\" alt=\"Ferrari World Abu Dhabi\"></div>\n      <div class=\"partner-chip\"><img src=\"{{LWP:theme_uri}}/logos/emaar.png\" alt=\"Emaar\"></div>\n      <div class=\"partner-chip\"><img src=\"{{LWP:theme_uri}}/logos/la-perle.png\" alt=\"La Perle by Dragone\"></div>\n      <div class=\"partner-chip\"><img src=\"{{LWP:theme_uri}}/logos/dubai-parks.png\" alt=\"Dubai Parks and Resorts\"></div>\n    </div>\n  </div>\n</section>"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fbd00016",
+   "elType": "section",
+   "settings": {
+    "content_width": "full",
+    "gap": "no",
+    "structure": "10",
+    "padding": {
+     "unit": "px",
+     "top": "0",
+     "right": "0",
+     "bottom": "0",
+     "left": "0",
+     "isLinked": true
+    },
+    "margin": {
+     "unit": "px",
+     "top": "0",
+     "right": "0",
+     "bottom": "0",
+     "left": "0",
+     "isLinked": true
+    }
+   },
+   "elements": [
+    {
+     "id": "fbd00017",
+     "elType": "column",
+     "settings": {
+      "_column_size": 100,
+      "_inline_size": null,
+      "padding": {
+       "unit": "px",
+       "top": "0",
+       "right": "0",
+       "bottom": "0",
+       "left": "0",
+       "isLinked": true
+      }
+     },
+     "elements": [
+      {
+       "id": "fbd00018",
+       "elType": "widget",
+       "widgetType": "html",
+       "settings": {
+        "html": "<section class=\"section\" id=\"gallery\">\n  <div class=\"wrap\">\n    <div class=\"sec-head center\">\n      <span class=\"eyebrow centered\">Moments</span>\n      <h2 class=\"h2\">A Dubai reel, <em>frame by frame</em></h2>\n    </div>\n    <div class=\"gallery-grid\">\n      <div class=\"g-tile g-big scene scene-dunes\"><div class=\"scene-sky\"></div><div class=\"scene-sun\"></div><img class=\"scene-img\" src=\"https://www.flybydeniz.com/wp-content/uploads/2025/06/desert-safari.jpg\" alt=\"\" loading=\"lazy\"><div class=\"scene-scrim\"></div><span class=\"g-cap\">Desert at golden hour</span></div>\n      <div class=\"g-tile scene scene-sea-day\"><div class=\"scene-sky\"></div><img class=\"scene-img\" src=\"https://www.flybydeniz.com/wp-content/uploads/2025/06/YAHT.jpg\" alt=\"\" loading=\"lazy\"><div class=\"scene-scrim\"></div><span class=\"g-cap\">Marina afternoon</span></div>\n      <div class=\"g-tile scene scene-sky-city\"><div class=\"scene-sky\"></div><div class=\"scene-city-band\"></div><img class=\"scene-img\" src=\"https://www.flybydeniz.com/wp-content/uploads/2025/06/BURRJ.jpg\" alt=\"\" loading=\"lazy\"><div class=\"scene-scrim\"></div><span class=\"g-cap\">Skyline at dusk</span></div>\n      <div class=\"g-tile g-wide scene scene-sky-city\"><div class=\"scene-sky\"></div><div class=\"scene-city-band\"></div><img class=\"scene-img\" src=\"https://www.flybydeniz.com/wp-content/uploads/2025/06/BURRJ.jpg\" alt=\"\" loading=\"lazy\"><div class=\"scene-scrim\"></div><span class=\"g-cap\">Downtown lights</span></div>\n      <div class=\"g-tile scene scene-warm-int\"><div class=\"scene-sky\"></div><img class=\"scene-img\" src=\"https://www.flybydeniz.com/wp-content/uploads/2025/06/muse.jpg\" alt=\"\" loading=\"lazy\"><div class=\"scene-scrim\"></div><span class=\"g-cap\">City moments</span></div>\n      <div class=\"g-tile scene scene-dunes\"><div class=\"scene-sky\"></div><div class=\"scene-sun\"></div><img class=\"scene-img\" src=\"https://www.flybydeniz.com/wp-content/uploads/2025/06/excu.jpg\" alt=\"\" loading=\"lazy\"><div class=\"scene-scrim\"></div><span class=\"g-cap\">Dune camp</span></div>\n      <div class=\"g-tile g-wide scene scene-sea-day\"><div class=\"scene-sky\"></div><img class=\"scene-img\" src=\"https://www.flybydeniz.com/wp-content/uploads/2025/06/heli.jpg\" alt=\"\" loading=\"lazy\"><div class=\"scene-scrim\"></div><span class=\"g-cap\">Aerial Dubai</span></div>\n    </div>\n  </div>\n</section>"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fbd00019",
+   "elType": "section",
+   "settings": {
+    "content_width": "full",
+    "gap": "no",
+    "structure": "10",
+    "padding": {
+     "unit": "px",
+     "top": "0",
+     "right": "0",
+     "bottom": "0",
+     "left": "0",
+     "isLinked": true
+    },
+    "margin": {
+     "unit": "px",
+     "top": "0",
+     "right": "0",
+     "bottom": "0",
+     "left": "0",
+     "isLinked": true
+    }
+   },
+   "elements": [
+    {
+     "id": "fbd0001a",
+     "elType": "column",
+     "settings": {
+      "_column_size": 100,
+      "_inline_size": null,
+      "padding": {
+       "unit": "px",
+       "top": "0",
+       "right": "0",
+       "bottom": "0",
+       "left": "0",
+       "isLinked": true
+      }
+     },
+     "elements": [
+      {
+       "id": "fbd0001b",
+       "elType": "widget",
+       "widgetType": "html",
+       "settings": {
+        "html": "<section class=\"section package\">\n  <div class=\"scene scene-dunes\"><div class=\"scene-sky\"></div><div class=\"scene-sun\"></div><img class=\"scene-img\" src=\"https://www.flybydeniz.com/wp-content/uploads/2025/06/desert-safari.jpg\" alt=\"\" loading=\"lazy\"><div class=\"scene-scrim\"></div></div>\n  <div class=\"wrap\">\n    <div class=\"pk-copy\">\n      <span class=\"eyebrow\">Featured Package</span>\n      <h2>Five days of Dubai, <em>perfectly paced</em></h2>\n      <p class=\"lead\">Our most-booked itinerary blends the icons with the in-between — the desert, the water, the skyline and the quiet luxuries that make a trip feel personal.</p>\n    </div>\n    <div class=\"pk-card\">\n      <span class=\"pk-tag\">Best Seller</span>\n      <h3>5-Day Dubai Discovery</h3>\n      <ul class=\"incl\">\n        <li><span class=\"ck\"><svg width=\"12\" height=\"12\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\"><path d=\"M20 6 9 17l-5-5\"/></svg></span>Airport transfers & daily private transport</li>\n        <li><span class=\"ck\"><svg width=\"12\" height=\"12\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\"><path d=\"M20 6 9 17l-5-5\"/></svg></span>Desert safari with dune dinner</li>\n        <li><span class=\"ck\"><svg width=\"12\" height=\"12\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\"><path d=\"M20 6 9 17l-5-5\"/></svg></span>Burj Khalifa & Dubai Frame tickets</li>\n        <li><span class=\"ck\"><svg width=\"12\" height=\"12\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\"><path d=\"M20 6 9 17l-5-5\"/></svg></span>Private yacht afternoon on the Marina</li>\n        <li><span class=\"ck\"><svg width=\"12\" height=\"12\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\"><path d=\"M20 6 9 17l-5-5\"/></svg></span>Tourist visa assistance & 24/7 support</li>\n      </ul>\n      <div class=\"pk-foot\">\n        <div class=\"price\">\n          <div class=\"from\">From</div>\n          <div class=\"amt\">AED 4,900 <span>/ guest</span></div>\n        </div>\n        <a href=\"#contact\" class=\"btn btn--coral\">Reserve Your Spot\n          <svg class=\"arrow\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg>\n        </a>\n      </div>\n    </div>\n  </div>\n</section>"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fbd0001c",
+   "elType": "section",
+   "settings": {
+    "content_width": "full",
+    "gap": "no",
+    "structure": "10",
+    "padding": {
+     "unit": "px",
+     "top": "0",
+     "right": "0",
+     "bottom": "0",
+     "left": "0",
+     "isLinked": true
+    },
+    "margin": {
+     "unit": "px",
+     "top": "0",
+     "right": "0",
+     "bottom": "0",
+     "left": "0",
+     "isLinked": true
+    }
+   },
+   "elements": [
+    {
+     "id": "fbd0001d",
+     "elType": "column",
+     "settings": {
+      "_column_size": 100,
+      "_inline_size": null,
+      "padding": {
+       "unit": "px",
+       "top": "0",
+       "right": "0",
+       "bottom": "0",
+       "left": "0",
+       "isLinked": true
+      }
+     },
+     "elements": [
+      {
+       "id": "fbd0001e",
+       "elType": "widget",
+       "widgetType": "html",
+       "settings": {
+        "html": "<section class=\"section testi\">\n  <div class=\"wrap\">\n    <div class=\"sec-head center\">\n      <span class=\"eyebrow centered\">Traveller Stories</span>\n      <h2 class=\"h2\">Trips they still <em>talk about</em></h2>\n    </div>\n    <div class=\"testi-track\">\n      <div class=\"testi-slide active\">\n        <div class=\"q-card\">\n          <div class=\"stars\">★★★★★</div>\n          <blockquote>\"They handled our visas, transfers and the desert night without a single hiccup. We just showed up and enjoyed Dubai.\"</blockquote>\n          <div class=\"who\"><span class=\"av\" style=\"background:linear-gradient(135deg,#F0C277,#E8744F)\">M</span><span><div class=\"nm\">Marta K.</div><div class=\"ct\"> Germany</div></span></div>\n        </div>\n        <div class=\"q-card\">\n          <div class=\"stars\">★★★★★</div>\n          <blockquote>\"The helicopter tour at golden hour was the highlight of our year. Fly By Deniz timed it perfectly.\"</blockquote>\n          <div class=\"who\"><span class=\"av\" style=\"background:linear-gradient(135deg,#E8964A,#C95A38)\">J</span><span><div class=\"nm\">James O.</div><div class=\"ct\"> United Kingdom</div></span></div>\n        </div>\n        <div class=\"q-card\">\n          <div class=\"stars\">★★★★★</div>\n          <blockquote>\"Travelling with three kids is hard — they made it feel easy. Private guide, flexible plan, always reachable.\"</blockquote>\n          <div class=\"who\"><span class=\"av\" style=\"background:linear-gradient(135deg,#E0B14A,#E06B82)\">A</span><span><div class=\"nm\">Aisha R.</div><div class=\"ct\"> Saudi Arabia</div></span></div>\n        </div>\n      </div>\n      <div class=\"testi-slide\">\n        <div class=\"q-card\">\n          <div class=\"stars\">★★★★★</div>\n          <blockquote>\"We booked a last-minute yacht afternoon and they arranged everything within the hour. Genuinely seamless.\"</blockquote>\n          <div class=\"who\"><span class=\"av\" style=\"background:linear-gradient(135deg,#D9B23C,#EE8A3C)\">S</span><span><div class=\"nm\">Sergey V.</div><div class=\"ct\"> Kazakhstan</div></span></div>\n        </div>\n        <div class=\"q-card\">\n          <div class=\"stars\">★★★★★</div>\n          <blockquote>\"Local insight you can't get from an app. Their recommendations made the whole trip feel curated for us.\"</blockquote>\n          <div class=\"who\"><span class=\"av\" style=\"background:linear-gradient(135deg,#ECCB9C,#C96B4A)\">C</span><span><div class=\"nm\">Chloé D.</div><div class=\"ct\"> France</div></span></div>\n        </div>\n        <div class=\"q-card\">\n          <div class=\"stars\">★★★★★</div>\n          <blockquote>\"Our MICE event ran flawlessly — venue, logistics and transfers all handled by one responsive team.\"</blockquote>\n          <div class=\"who\"><span class=\"av\" style=\"background:linear-gradient(135deg,#F7C969,#D9453F)\">D</span><span><div class=\"nm\">Daniel M.</div><div class=\"ct\"> United States</div></span></div>\n        </div>\n      </div>\n    </div>\n    <div class=\"testi-dots\">\n      <button class=\"active\" data-slide=\"0\" aria-label=\"Stories 1\"></button>\n      <button data-slide=\"1\" aria-label=\"Stories 2\"></button>\n    </div>\n  </div>\n</section>"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fbd0001f",
+   "elType": "section",
+   "settings": {
+    "content_width": "full",
+    "gap": "no",
+    "structure": "10",
+    "padding": {
+     "unit": "px",
+     "top": "0",
+     "right": "0",
+     "bottom": "0",
+     "left": "0",
+     "isLinked": true
+    },
+    "margin": {
+     "unit": "px",
+     "top": "0",
+     "right": "0",
+     "bottom": "0",
+     "left": "0",
+     "isLinked": true
+    }
+   },
+   "elements": [
+    {
+     "id": "fbd00020",
+     "elType": "column",
+     "settings": {
+      "_column_size": 100,
+      "_inline_size": null,
+      "padding": {
+       "unit": "px",
+       "top": "0",
+       "right": "0",
+       "bottom": "0",
+       "left": "0",
+       "isLinked": true
+      }
+     },
+     "elements": [
+      {
+       "id": "fbd00021",
+       "elType": "widget",
+       "widgetType": "html",
+       "settings": {
+        "html": "<section class=\"section ctaband\">\n  <div class=\"scene scene-sea\"><div class=\"scene-sky\"></div><img class=\"scene-img\" src=\"https://www.flybydeniz.com/wp-content/uploads/2025/06/BURRJ.jpg\" alt=\"\" loading=\"lazy\"><div class=\"scene-scrim\"></div></div>\n  <div class=\"wrap\">\n    <span class=\"eyebrow centered\">Start the journey</span>\n    <h2>Your Dubai adventure <em>starts here</em></h2>\n    <div class=\"cta-row\">\n      <a href=\"#contact\" class=\"btn btn--amber\">Plan My Trip\n        <svg class=\"arrow\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg>\n      </a>\n      <a href=\"#\" class=\"btn btn--wa\">\n        <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8 0-1.3.7-2 .9-2.2.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2.1.4 0 .5l-.4.5c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.2.1.4.1.6-.1l.7-.9c.2-.2.4-.2.6-.1l1.8.9c.3.1.4.2.5.3.1.2.1.7-.1 1.2Z\"/></svg>\n        WhatsApp Us\n      </a>\n    </div>\n  </div>\n</section>"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fbd00022",
+   "elType": "section",
+   "settings": {
+    "content_width": "full",
+    "gap": "no",
+    "structure": "10",
+    "padding": {
+     "unit": "px",
+     "top": "0",
+     "right": "0",
+     "bottom": "0",
+     "left": "0",
+     "isLinked": true
+    },
+    "margin": {
+     "unit": "px",
+     "top": "0",
+     "right": "0",
+     "bottom": "0",
+     "left": "0",
+     "isLinked": true
+    }
+   },
+   "elements": [
+    {
+     "id": "fbd00023",
+     "elType": "column",
+     "settings": {
+      "_column_size": 100,
+      "_inline_size": null,
+      "padding": {
+       "unit": "px",
+       "top": "0",
+       "right": "0",
+       "bottom": "0",
+       "left": "0",
+       "isLinked": true
+      }
+     },
+     "elements": [
+      {
+       "id": "fbd00024",
+       "elType": "widget",
+       "widgetType": "html",
+       "settings": {
+        "html": "<section class=\"section why\" id=\"faq\">\n  <div class=\"wrap\">\n    <div class=\"faq-grid\">\n      <div>\n        <span class=\"eyebrow\">FAQ</span>\n        <h2 class=\"h2\" style=\"font-size:clamp(30px,3.4vw,46px);\">Good to <em>know</em></h2>\n        <p class=\"lead\" style=\"margin-top:18px;\">A few quick answers. For anything else, message us on WhatsApp — we usually reply within minutes.</p>\n        <a href=\"#\" class=\"text-link\" style=\"margin-top:22px;\">Read full FAQ\n          <svg class=\"arrow\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg>\n        </a>\n      </div>\n      <div class=\"faq-list\">\n        <div class=\"faq-item open\">\n          <button class=\"faq-q\">Can you help with my tourist visa?<span class=\"pm\">+</span></button>\n          <div class=\"faq-a\"><p>Yes — visa assistance is one of our core services. We advise on the right visa for your trip and handle processing with clear, guided steps from application to approval.</p></div>\n        </div>\n        <div class=\"faq-item\">\n          <button class=\"faq-q\">How do payments work?<span class=\"pm\">+</span></button>\n          <div class=\"faq-a\"><p>We confirm your itinerary and pricing up front, with secure payment options. A deposit secures your booking and the balance is settled before your experiences begin.</p></div>\n        </div>\n        <div class=\"faq-item\">\n          <button class=\"faq-q\">Do you arrange group bookings?<span class=\"pm\">+</span></button>\n          <div class=\"faq-a\"><p>Absolutely. We design tailored packages for families, friends and corporate groups — including MICE events — with logistics, transfers and private guides handled end to end.</p></div>\n        </div>\n        <div class=\"faq-item\">\n          <button class=\"faq-q\">Are airport transfers included?<span class=\"pm\">+</span></button>\n          <div class=\"faq-a\"><p>Private airport and city transfers can be added to any package, or booked on their own. Your driver tracks your flight, so timing flexes with you.</p></div>\n        </div>\n      </div>\n    </div>\n  </div>\n</section>"
+       }
+      }
+     ]
+    }
+   ]
   }
+ ],
+ "page_settings": {
+  "template": "default",
+  "page_title": "hide"
+ }
 }

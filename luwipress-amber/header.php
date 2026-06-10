@@ -118,17 +118,27 @@ if ( ! $elementor_header_active ) :
 	$amber_arrow = '<svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 	$amber_chev  = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>';
 
-	// Brand mark (custom logo) + wordmark (site name, last word bolded).
+	// Brand mark (custom logo) + wordmark. The wordmark is capped to the first
+	// three words so a long legal site name ("… Tourism LLC") can't blow out the
+	// header width and collide with the nav. It is shown ONLY when no logo image
+	// is uploaded — an uploaded logo already carries the brand name, so printing
+	// the wordmark next to it double-brands and overlaps (see Fly By Deniz).
 	$amber_site_name = get_bloginfo( 'name' );
 	$amber_words     = preg_split( '/\s+/', trim( $amber_site_name ) );
+	$amber_words     = array_slice( $amber_words, 0, 3 ); // cap long legal names
 	if ( count( $amber_words ) > 1 ) {
 		$amber_last  = array_pop( $amber_words );
 		$amber_word  = esc_html( implode( ' ', $amber_words ) ) . ' <b>' . esc_html( $amber_last ) . '</b>';
 	} else {
 		$amber_word  = '<b>' . esc_html( $amber_site_name ) . '</b>';
 	}
-	$amber_logo_id  = (int) get_theme_mod( 'custom_logo' );
-	$amber_logo_src = $amber_logo_id ? wp_get_attachment_image_url( $amber_logo_id, 'medium' ) : '';
+	// Logo: uploaded custom logo wins; otherwise fall back to the shipped gold
+	// Fly By Deniz emblem so the brand is on-art out of the box.
+	$amber_logo_id   = (int) get_theme_mod( 'custom_logo' );
+	$amber_logo_src  = $amber_logo_id
+		? wp_get_attachment_image_url( $amber_logo_id, 'full' )
+		: get_template_directory_uri() . '/logos/fbd-emblem.png';
+	$amber_show_word = ! $amber_logo_id; // hide wordmark when a logo image is uploaded
 ?>
 
 <!-- ============ UTILITY BAR ============ -->
@@ -221,7 +231,9 @@ if ( ! $elementor_header_active ) :
 			<?php if ( $amber_logo_src ) : ?>
 				<img class="mark" src="<?php echo esc_url( $amber_logo_src ); ?>" alt="<?php echo esc_attr( $amber_site_name ); ?>">
 			<?php endif; ?>
-			<span class="word"><?php echo $amber_word; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped — built from esc_html'd parts ?></span>
+			<?php if ( $amber_show_word ) : ?>
+				<span class="word"><?php echo $amber_word; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped — built from esc_html'd parts ?></span>
+			<?php endif; ?>
 		</a>
 
 		<nav class="nav" aria-label="<?php esc_attr_e( 'Primary', 'luwipress-amber' ); ?>">
@@ -240,14 +252,59 @@ if ( ! $elementor_header_active ) :
 							<button><?php echo $label; ?> <?php echo $amber_chev; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></button>
 							<div class="mega">
 								<div class="mega-inner wrap">
-									<div class="mega-col">
-										<span class="mega-h"><?php echo $label; ?></span>
-										<?php foreach ( $children as $child ) :
-											$desc = trim( (string) $child->description ); ?>
-											<a href="<?php echo esc_url( $child->url ); ?>"><b><?php echo esc_html( $child->title ); ?></b><?php if ( $desc !== '' ) : ?><small><?php echo esc_html( $desc ); ?></small><?php endif; ?></a>
-										<?php endforeach; ?>
-										<a href="<?php echo $url; ?>" class="mega-all"><?php esc_html_e( 'View all', 'luwipress-amber' ); ?> <?php echo $amber_arrow; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
-									</div>
+									<?php
+									// Design layout: when the item points at a product category,
+									// render its sub-items as the "By Experience" column and the
+									// newest products as a "Popular" column (image+price). Otherwise
+									// split the children across two columns. A featured card follows
+									// either way, filling the 3-col grid the stylesheet expects.
+									$amber_pop = function_exists( 'luwipress_amber_mega_products' ) ? luwipress_amber_mega_products( $top->url, 4 ) : array();
+									if ( ! empty( $amber_pop ) ) : ?>
+										<div class="mega-col">
+											<span class="mega-h"><?php echo $label; ?></span>
+											<?php foreach ( $children as $child ) :
+												$desc = trim( (string) $child->description ); ?>
+												<a href="<?php echo esc_url( $child->url ); ?>"><b><?php echo esc_html( $child->title ); ?></b><?php if ( $desc !== '' ) : ?><small><?php echo esc_html( $desc ); ?></small><?php endif; ?></a>
+											<?php endforeach; ?>
+											<a href="<?php echo $url; ?>" class="mega-all"><?php esc_html_e( 'View all', 'luwipress-amber' ); ?> <?php echo $amber_arrow; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
+										</div>
+										<div class="mega-col">
+											<span class="mega-h"><?php esc_html_e( 'Popular', 'luwipress-amber' ); ?></span>
+											<?php foreach ( $amber_pop as $amber_pp ) : ?>
+												<a href="<?php echo esc_url( $amber_pp['url'] ); ?>"><b><?php echo esc_html( $amber_pp['title'] ); ?></b><?php if ( $amber_pp['price'] ) : ?><small><?php echo wp_kses_post( $amber_pp['price'] ); ?></small><?php endif; ?></a>
+											<?php endforeach; ?>
+										</div>
+									<?php else :
+										$amber_per_col = (int) ceil( count( $children ) / 2 );
+										$amber_cols    = array_chunk( $children, max( 1, $amber_per_col ) );
+										foreach ( $amber_cols as $amber_ci => $amber_col_items ) : ?>
+											<div class="mega-col">
+												<span class="mega-h"><?php echo $amber_ci === 0 ? $label : esc_html__( 'More', 'luwipress-amber' ); ?></span>
+												<?php foreach ( $amber_col_items as $child ) :
+													$desc = trim( (string) $child->description ); ?>
+													<a href="<?php echo esc_url( $child->url ); ?>"><b><?php echo esc_html( $child->title ); ?></b><?php if ( $desc !== '' ) : ?><small><?php echo esc_html( $desc ); ?></small><?php endif; ?></a>
+												<?php endforeach; ?>
+												<?php if ( $amber_ci === count( $amber_cols ) - 1 ) : ?>
+													<a href="<?php echo $url; ?>" class="mega-all"><?php esc_html_e( 'View all', 'luwipress-amber' ); ?> <?php echo $amber_arrow; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
+												<?php endif; ?>
+											</div>
+										<?php endforeach;
+									endif; ?>
+									<?php
+									// Featured card — newest product in the category this item
+									// points at (falls back to newest product overall).
+									$amber_feat = function_exists( 'luwipress_amber_mega_featured' ) ? luwipress_amber_mega_featured( $top->url ) : null;
+									if ( $amber_feat ) : ?>
+										<a class="mega-feature scene" href="<?php echo esc_url( $amber_feat['url'] ); ?>">
+											<?php if ( $amber_feat['img'] ) : ?><img class="scene-img" src="<?php echo esc_url( $amber_feat['img'] ); ?>" alt="<?php echo esc_attr( $amber_feat['title'] ); ?>" loading="lazy"><?php endif; ?>
+											<div class="mf-scrim"></div>
+											<div class="mf-body">
+												<span class="mf-tag">&#9733; <?php esc_html_e( 'Featured', 'luwipress-amber' ); ?></span>
+												<h4><?php echo esc_html( $amber_feat['title'] ); ?></h4>
+												<?php if ( $amber_feat['price'] ) : ?><div class="mf-meta"><span class="price"><?php echo wp_kses_post( $amber_feat['price'] ); ?></span></div><?php endif; ?>
+											</div>
+										</a>
+									<?php endif; ?>
 								</div>
 							</div>
 						</div>
@@ -285,7 +342,7 @@ if ( ! $elementor_header_active ) :
 		<div class="d-top">
 			<span class="brand">
 				<?php if ( $amber_logo_src ) : ?><img class="mark" src="<?php echo esc_url( $amber_logo_src ); ?>" alt="<?php echo esc_attr( $amber_site_name ); ?>"><?php endif; ?>
-				<span class="word"><?php echo $amber_word; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+				<?php if ( $amber_show_word ) : ?><span class="word"><?php echo $amber_word; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span><?php endif; ?>
 			</span>
 			<div class="d-top-actions">
 				<button class="d-theme" id="drawerTheme" aria-label="<?php esc_attr_e( 'Toggle theme', 'luwipress-amber' ); ?>">

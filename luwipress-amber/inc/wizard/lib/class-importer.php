@@ -337,7 +337,7 @@ class LuwiPress_Amber_Importer {
 
 		// Build the Elementor template post.
 		$content = $json['content'] ?? [];
-		$encoded = wp_json_encode( $content );
+		$encoded = self::mb4_safe( wp_json_encode( $content ) );
 		$post_id = wp_insert_post( [
 			'post_title'  => $action['name'] ?? basename( $file ),
 			'post_status' => 'publish',
@@ -538,6 +538,33 @@ class LuwiPress_Amber_Importer {
 		return [ 'skipped' => true, 'reason' => 'no_action' ];
 	}
 
+	/**
+	 * Strip astral-plane (4-byte UTF-8) characters — flag emojis and the like —
+	 * from Elementor JSON before it is written to `_elementor_data`.
+	 *
+	 * On databases whose postmeta column is `utf8` (not `utf8mb4`), a single
+	 * 4-byte character makes the whole update_post_meta() fail silently in MySQL
+	 * strict mode, leaving the OLD value in place. The wizard then reports a
+	 * successful import while the page keeps whatever it had before — typically
+	 * the previous theme's demo content (the "I see something completely
+	 * different" symptom). Stripping the astral plane keeps the import
+	 * deterministic on every host. Filterable for known-utf8mb4 installs that
+	 * want to keep emojis.
+	 *
+	 * @param string $json Encoded Elementor JSON.
+	 * @return string
+	 */
+	private static function mb4_safe( $json ) {
+		if ( ! is_string( $json ) || $json === '' ) {
+			return $json;
+		}
+		if ( ! apply_filters( 'luwipress_amber_strip_astral', true, $json ) ) {
+			return $json;
+		}
+		$stripped = preg_replace( '/[\x{10000}-\x{10FFFF}]/u', '', $json );
+		return ( null === $stripped ) ? $json : $stripped; // preg failure → keep original
+	}
+
 	private function apply_template_to_page( $page_id, $kit_file, $context = [] ) {
 		$file = trailingslashit( $this->kit_dir() ) . $kit_file;
 		if ( ! file_exists( $file ) ) return [ 'skipped' => true, 'reason' => 'kit_missing' ];
@@ -565,7 +592,7 @@ class LuwiPress_Amber_Importer {
 		}
 
 		$content = $json['content'] ?? [];
-		$encoded = wp_json_encode( $content );
+		$encoded = self::mb4_safe( wp_json_encode( $content ) );
 
 		// Write meta — split + re-read so save_post hooks from other plugins
 		// can't strip the values silently (Tapadum-class sites with 100+ plugins).

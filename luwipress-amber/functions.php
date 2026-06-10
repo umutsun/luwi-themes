@@ -180,3 +180,126 @@ require_once LUWIPRESS_AMBER_DIR . '/inc/customizer/bootstrap.php';
 // baseline rules that previously forced `padding-left: 20px !important` on
 // `ul.products`. See `feedback_mobile_card_width_override_via_p999.md`.
 require_once LUWIPRESS_AMBER_DIR . '/inc/mobile-card-width-override.php';
+
+/**
+ * Resolve a "featured" product for a mega-menu panel.
+ *
+ * When the top-level menu item points at a product-category archive, returns
+ * the newest published product in that category; otherwise the newest product
+ * overall. Cached per category for an hour. Returns null when WooCommerce is
+ * absent or no product is found, so the header simply omits the featured card.
+ *
+ * @param string $menu_url Top-level menu item URL.
+ * @return array{title:string,url:string,img:string,price:string}|null
+ */
+function luwipress_amber_mega_featured( $menu_url ) {
+	if ( ! function_exists( 'wc_get_products' ) ) {
+		return null;
+	}
+	$term_slug = '';
+	if ( preg_match( '#/product-category/([^/?#]+)#', (string) $menu_url, $m ) ) {
+		$term_slug = $m[1];
+	}
+	$cache_key = 'lwp_amber_megafeat2_' . ( $term_slug !== '' ? $term_slug : 'all' );
+	$cached    = get_transient( $cache_key );
+	if ( is_array( $cached ) ) {
+		return ! empty( $cached ) ? $cached : null;
+	}
+	$products = luwipress_amber_query_products( $term_slug, 1 );
+	$out      = array();
+	if ( ! empty( $products ) ) {
+		$p   = $products[0];
+		$img = wp_get_attachment_image_url( $p->get_image_id(), 'large' );
+		$out = array(
+			'title' => $p->get_name(),
+			'url'   => get_permalink( $p->get_id() ),
+			'img'   => $img ? $img : '',
+			'price' => $p->get_price_html(),
+		);
+	}
+	set_transient( $cache_key, $out, HOUR_IN_SECONDS );
+	return ! empty( $out ) ? $out : null;
+}
+
+/**
+ * Products for a mega-menu panel's "Popular" column.
+ *
+ * Returns up to $limit newest published products in the product category the
+ * menu item points at. Empty array when the item isn't category-linked or WC
+ * is absent (the header then falls back to a two-column children layout).
+ * Cached per category for an hour.
+ *
+ * @param string $menu_url Top-level menu item URL.
+ * @param int    $limit    Max products.
+ * @return array<int,array{title:string,url:string,price:string}>
+ */
+function luwipress_amber_mega_products( $menu_url, $limit = 4 ) {
+	if ( ! function_exists( 'wc_get_products' ) ) {
+		return array();
+	}
+	$term_slug = '';
+	if ( preg_match( '#/product-category/([^/?#]+)#', (string) $menu_url, $m ) ) {
+		$term_slug = $m[1];
+	}
+	if ( $term_slug === '' ) {
+		return array();
+	}
+	$cache_key = 'lwp_amber_megaprod2_' . $term_slug . '_' . (int) $limit;
+	$cached    = get_transient( $cache_key );
+	if ( is_array( $cached ) ) {
+		return $cached;
+	}
+	$products = luwipress_amber_query_products( $term_slug, (int) $limit );
+	$out = array();
+	foreach ( $products as $p ) {
+		$out[] = array(
+			'title' => $p->get_name(),
+			'url'   => get_permalink( $p->get_id() ),
+			'price' => $p->get_price_html(),
+		);
+	}
+	set_transient( $cache_key, $out, HOUR_IN_SECONDS );
+	return $out;
+}
+
+/**
+ * Reliable product query for mega-menu panels — explicit product_cat tax_query
+ * (include_children) so a category-linked menu item really filters by category.
+ * wc_get_products()'s 'category' arg proved unreliable on this install. Returns
+ * WC_Product objects.
+ *
+ * @param string $term_slug product_cat slug ('' = newest overall).
+ * @param int    $limit     Max products.
+ * @return array<int,\WC_Product>
+ */
+function luwipress_amber_query_products( $term_slug, $limit ) {
+	if ( ! function_exists( 'wc_get_product' ) ) {
+		return array();
+	}
+	$q = array(
+		'post_type'           => 'product',
+		'post_status'         => 'publish',
+		'posts_per_page'      => (int) $limit,
+		'orderby'             => 'date',
+		'order'               => 'DESC',
+		'fields'              => 'ids',
+		'no_found_rows'       => true,
+		'ignore_sticky_posts' => true,
+	);
+	if ( $term_slug !== '' ) {
+		$q['tax_query'] = array( array(
+			'taxonomy'         => 'product_cat',
+			'field'            => 'slug',
+			'terms'            => $term_slug,
+			'include_children' => true,
+		) );
+	}
+	$out = array();
+	foreach ( get_posts( $q ) as $id ) {
+		$p = wc_get_product( $id );
+		if ( $p ) {
+			$out[] = $p;
+		}
+	}
+	return $out;
+}

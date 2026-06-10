@@ -44,11 +44,11 @@ if ( ! $elementor_footer_active ) :
 				<span class="brand">
 					<?php
 					$f_logo_id  = (int) get_theme_mod( 'custom_logo' );
-					$f_logo_src = $f_logo_id ? wp_get_attachment_image_url( $f_logo_id, 'medium' ) : '';
+					$f_logo_src = $f_logo_id ? wp_get_attachment_image_url( $f_logo_id, 'full' ) : get_template_directory_uri() . '/logos/fbd-full.png';
 					if ( $f_logo_src ) : ?>
 						<img class="mark" src="<?php echo esc_url( $f_logo_src ); ?>" alt="<?php echo esc_attr( $site_name ); ?>">
 					<?php endif; ?>
-					<span class="word"><?php echo esc_html( $site_name ); ?></span>
+					<?php if ( ! $f_logo_src ) : ?><span class="word"><?php echo esc_html( $site_name ); ?></span><?php endif; ?>
 				</span>
 				<?php if ( $blurb !== '' ) : ?><p><?php echo esc_html( $blurb ); ?></p><?php endif; ?>
 				<div class="foot-social">
@@ -71,7 +71,17 @@ if ( ! $elementor_footer_active ) :
 						'fallback_cb'    => false,
 					] );
 				} else {
-					wp_list_pages( [ 'title_li' => '', 'depth' => 1, 'number' => 6 ] );
+					// Curated fallback — never dump Cart / Checkout / My-Account into
+					// the footer (the old wp_list_pages() alphabetical dump did).
+					$f_quick = array(
+						home_url( '/' )         => __( 'Home', 'luwipress-amber' ),
+						home_url( '/about/' )   => __( 'About Us', 'luwipress-amber' ),
+						( function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/shop/' ) ) => __( 'Tours', 'luwipress-amber' ),
+						home_url( '/contact/' ) => __( 'Contact', 'luwipress-amber' ),
+					);
+					foreach ( $f_quick as $f_href => $f_label ) {
+						printf( '<a href="%s">%s</a>', esc_url( $f_href ), esc_html( $f_label ) );
+					}
 				}
 				?>
 			</div>

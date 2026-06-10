@@ -55,11 +55,28 @@
   --bg-alt: #2A201A;
   --ink-soft: #B7A99A;
   --gold: #E5A23D;
+  --card: #2A201A;            /* widgets.css card surface (was #fff) */
+  --border: rgba(231,200,150,.16);
+  --line-light: rgba(231,200,150,.10);
+  --primary-dark: #C9572F;
+  --primary-light: #F0C277;
 }
 :root[data-theme="light"] {
   --bg-alt: #F6F3EC;
   --ink-soft: #4D4635;
   --gold: #B0641E;
+  --card: #FFFFFF;
+  --border: rgba(90,50,20,.14);
+  --line-light: rgba(90,50,20,.08);
+  --primary-dark: #B0641E;
+  --primary-light: #E5A23D;
+}
+/* layout + font aliases widgets.css references (mode-agnostic) */
+:root {
+  --content-w: var(--maxw, 1280px);
+  --mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  --radius-card: var(--radius, 18px);
+  --radius-pill: 999px;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -298,7 +315,7 @@ h1,h2,h3 { font-family: var(--serif); font-weight: 500; line-height: 1.04; lette
 .brand .word { font-family: var(--serif); font-weight: 600; font-size: 19px; letter-spacing: .14em; white-space: nowrap; }
 .brand .word b { color: var(--amber-soft); font-weight: 600; }
 
-.nav { display: flex; align-items: center; gap: 34px; }
+.nav { display: flex; align-items: center; gap: 34px; margin-left: auto; margin-right: 52px; }
 .nav > a, .nav > .has-drop > button {
   font-size: 14.5px; font-weight: 500; color: var(--text); letter-spacing: .01em;
   display: inline-flex; align-items: center; gap: 6px; padding: 6px 0; position: relative;

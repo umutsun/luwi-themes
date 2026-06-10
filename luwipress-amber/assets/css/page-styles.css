@@ -370,8 +370,6 @@
   .result .r-thumb { aspect-ratio: 16/9; }
 }
 
-
-
 /* ==========================================================================
    AMBER WOOCOMMERCE ADAPTER (1.1.0)
    The design system (pages.css / page-styles.css) targets the mockup's
@@ -1255,14 +1253,32 @@ body.woocommerce-checkout main.lwp-fallback-main {
 .woocommerce-checkout input.input-text, .woocommerce-checkout textarea.input-text,
 .woocommerce-checkout input[type="text"], .woocommerce-checkout input[type="email"],
 .woocommerce-checkout input[type="tel"], .woocommerce-checkout input[type="password"],
-.woocommerce-checkout textarea, .woocommerce-cart input[type="text"] {
+.woocommerce-checkout textarea, .woocommerce-cart input[type="text"],
+.woocommerce-account input.input-text, .woocommerce-account input[type="text"],
+.woocommerce-account input[type="email"], .woocommerce-account input[type="password"],
+.woocommerce-account input[type="tel"], .woocommerce-account textarea,
+.woocommerce form .form-row input.input-text, .woocommerce form .form-row textarea {
   background: var(--surface-2, #322519) !important;
   color: var(--ink, #F7F0E6) !important;
   border: 1px solid var(--line, rgba(231,200,150,.22)) !important;
   border-radius: 10px !important;
 }
-.woocommerce-checkout input::placeholder, .woocommerce-checkout textarea::placeholder { color: var(--faint, #8C7E70) !important; }
-.woocommerce-checkout input:focus, .woocommerce-checkout textarea:focus { border-color: var(--primary, #E5A23D) !important; outline: none !important; }
+.woocommerce-checkout input::placeholder, .woocommerce-checkout textarea::placeholder,
+.woocommerce-account input::placeholder { color: var(--faint, #8C7E70) !important; }
+.woocommerce-checkout input:focus, .woocommerce-checkout textarea:focus,
+.woocommerce-account input:focus { border-color: var(--primary, #E5A23D) !important; outline: none !important; }
+/* account: nav tabs + panels dark */
+.woocommerce-account .woocommerce-MyAccount-navigation { background: var(--surface, #2A201A) !important; border: 1px solid var(--line, rgba(231,200,150,.16)) !important; border-radius: 16px !important; }
+.woocommerce-account .woocommerce-MyAccount-navigation a { color: var(--muted, #B7A99A) !important; }
+.woocommerce-account .woocommerce-MyAccount-navigation li.is-active a,
+.woocommerce-account .woocommerce-MyAccount-navigation a:hover { color: var(--primary, #E5A23D) !important; }
+.woocommerce-account .woocommerce-MyAccount-content { color: var(--muted, #B7A99A) !important; }
+.woocommerce-account .woocommerce-MyAccount-content a { color: var(--primary, #E5A23D) !important; }
+.woocommerce-account form.login, .woocommerce-account form.register,
+.woocommerce-account .u-column1, .woocommerce-account .u-column2 {
+  background: var(--surface, #2A201A) !important; border: 1px solid var(--line, rgba(231,200,150,.16)) !important;
+  border-radius: 16px !important; padding: 28px !important;
+}
 /* select2 dropdowns dark */
 .woocommerce-checkout .select2-selection,
 .select2-container--default .select2-selection--single {

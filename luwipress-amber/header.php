@@ -106,13 +106,15 @@ if ( ! $elementor_header_active ) :
 	}
 
 	$amber_book_label = get_theme_mod( 'luwipress_amber_header_cta_label', '' );
-	$amber_book_label = $amber_book_label !== '' ? $amber_book_label : __( 'Book Now', 'luwipress-amber' );
+	$amber_book_label = $amber_book_label !== '' ? $amber_book_label : __( 'Plan My Trip', 'luwipress-amber' );
 	$amber_book_url   = get_theme_mod( 'luwipress_amber_header_cta_url', '' );
 	$amber_book_url   = $amber_book_url !== '' ? $amber_book_url : home_url( '/contact/' );
 
-	$amber_phone    = trim( (string) get_theme_mod( 'luwipress_amber_topbar_phone', '' ) );
-	$amber_email    = trim( (string) get_theme_mod( 'luwipress_amber_topbar_email', get_option( 'admin_email' ) ) );
-	$amber_location = trim( (string) get_theme_mod( 'luwipress_amber_topbar_location', '' ) );
+	// Topbar contact details. Defaults are the Fly By Deniz concierge line; any
+	// site overrides them via Customizer → LuwiPress Amber → Topbar. Filterable.
+	$amber_phone    = trim( (string) get_theme_mod( 'luwipress_amber_topbar_phone', apply_filters( 'luwipress_amber_default_phone', '+971 56 776 1946' ) ) );
+	$amber_email    = trim( (string) get_theme_mod( 'luwipress_amber_topbar_email', apply_filters( 'luwipress_amber_default_email', 'ayhan@flybydeniz.com' ) ) );
+	$amber_location = trim( (string) get_theme_mod( 'luwipress_amber_topbar_location', apply_filters( 'luwipress_amber_default_location', 'Dubai, United Arab Emirates' ) ) );
 
 	// Arrow + chevron SVGs reused across the chrome.
 	$amber_arrow = '<svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';

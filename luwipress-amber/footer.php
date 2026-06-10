@@ -44,11 +44,11 @@ if ( ! $elementor_footer_active ) :
 				<span class="brand">
 					<?php
 					$f_logo_id  = (int) get_theme_mod( 'custom_logo' );
-					$f_logo_src = $f_logo_id ? wp_get_attachment_image_url( $f_logo_id, 'full' ) : get_template_directory_uri() . '/logos/fbd-full.png';
+					$f_logo_src = $f_logo_id ? wp_get_attachment_image_url( $f_logo_id, 'full' ) : get_template_directory_uri() . '/logos/fbd-emblem.png';
 					if ( $f_logo_src ) : ?>
 						<img class="mark" src="<?php echo esc_url( $f_logo_src ); ?>" alt="<?php echo esc_attr( $site_name ); ?>">
 					<?php endif; ?>
-					<?php if ( ! $f_logo_src ) : ?><span class="word"><?php echo esc_html( $site_name ); ?></span><?php endif; ?>
+					<?php if ( apply_filters( 'luwipress_amber_show_wordmark', true ) ) : ?><span class="word"><?php echo esc_html( $site_name ); ?></span><?php endif; ?>
 				</span>
 				<?php if ( $blurb !== '' ) : ?><p><?php echo esc_html( $blurb ); ?></p><?php endif; ?>
 				<div class="foot-social">

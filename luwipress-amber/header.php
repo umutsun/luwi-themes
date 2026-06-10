@@ -138,7 +138,9 @@ if ( ! $elementor_header_active ) :
 	$amber_logo_src  = $amber_logo_id
 		? wp_get_attachment_image_url( $amber_logo_id, 'full' )
 		: get_template_directory_uri() . '/logos/fbd-emblem.png';
-	$amber_show_word = ! $amber_logo_id; // hide wordmark when a logo image is uploaded
+	// Show the wordmark next to the (emblem) logo, per the design — emblem +
+	// "Fly By DENIZ". Filterable for sites whose logo already bakes in the name.
+	$amber_show_word = (bool) apply_filters( 'luwipress_amber_show_wordmark', true );
 ?>
 
 <!-- ============ UTILITY BAR ============ -->
@@ -325,6 +327,54 @@ if ( ! $elementor_header_active ) :
 		</nav>
 
 		<div class="header-actions">
+			<?php
+			// WooCommerce header chrome — search overlay trigger, account popover,
+			// cart drawer trigger. JS lives in frontend.js (setupSearchOverlay /
+			// setupAccountPopover / setupCartDrawer); styled by widgets.css.
+			if ( class_exists( 'WooCommerce' ) ) : ?>
+				<a href="<?php echo esc_url( home_url( '/?s=' ) ); ?>" class="lwp-icon-btn lwp-search-btn" data-lwp-search-toggle aria-label="<?php esc_attr_e( 'Search', 'luwipress-amber' ); ?>">
+					<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+				</a>
+				<div class="lwp-account-wrap">
+					<a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>" class="lwp-icon-btn lwp-account-btn" data-lwp-account-toggle aria-label="<?php esc_attr_e( 'Account', 'luwipress-amber' ); ?>" aria-expanded="false">
+						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+					</a>
+					<div class="lwp-account-pop" role="menu" aria-hidden="true">
+						<?php if ( is_user_logged_in() ) : $amber_cu = wp_get_current_user(); ?>
+							<div class="lwp-account-pop__head">
+								<span class="lwp-account-pop__hi"><?php printf( esc_html__( 'Hi, %s.', 'luwipress-amber' ), esc_html( $amber_cu->first_name ?: $amber_cu->display_name ) ); ?></span>
+								<span class="lwp-account-pop__em"><?php echo esc_html( $amber_cu->user_email ); ?></span>
+							</div>
+							<nav class="lwp-account-pop__nav" aria-label="<?php esc_attr_e( 'Account quick links', 'luwipress-amber' ); ?>">
+								<a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>"><?php esc_html_e( 'Dashboard', 'luwipress-amber' ); ?> <span>&rarr;</span></a>
+								<a href="<?php echo esc_url( wc_get_account_endpoint_url( 'orders' ) ); ?>"><?php esc_html_e( 'My bookings', 'luwipress-amber' ); ?> <span>&rarr;</span></a>
+								<a href="<?php echo esc_url( wc_get_account_endpoint_url( 'edit-address' ) ); ?>"><?php esc_html_e( 'Addresses', 'luwipress-amber' ); ?> <span>&rarr;</span></a>
+								<a href="<?php echo esc_url( wc_get_account_endpoint_url( 'edit-account' ) ); ?>"><?php esc_html_e( 'Account details', 'luwipress-amber' ); ?> <span>&rarr;</span></a>
+							</nav>
+							<a href="<?php echo esc_url( wp_logout_url( home_url( '/' ) ) ); ?>" class="lwp-account-pop__signout"><?php esc_html_e( 'Sign out &rarr;', 'luwipress-amber' ); ?></a>
+						<?php else : $amber_login_url = wc_get_page_permalink( 'myaccount' ); ?>
+							<div class="lwp-account-pop__head">
+								<span class="lwp-account-pop__hi"><?php esc_html_e( 'Welcome', 'luwipress-amber' ); ?></span>
+								<span class="lwp-account-pop__em"><?php esc_html_e( 'Sign in to view bookings, vouchers and trip details.', 'luwipress-amber' ); ?></span>
+							</div>
+							<form class="lwp-account-pop__form" method="post" action="<?php echo esc_url( $amber_login_url ); ?>">
+								<label class="lwp-account-pop__label"><?php esc_html_e( 'Email or username', 'luwipress-amber' ); ?><input type="text" name="username" autocomplete="username" required /></label>
+								<label class="lwp-account-pop__label"><?php esc_html_e( 'Password', 'luwipress-amber' ); ?><input type="password" name="password" autocomplete="current-password" required /></label>
+								<?php wp_nonce_field( 'woocommerce-login', 'woocommerce-login-nonce' ); ?>
+								<button type="submit" name="login" value="1" class="btn btn--amber" style="width:100%;justify-content:center"><?php esc_html_e( 'Sign in', 'luwipress-amber' ); ?></button>
+							</form>
+							<div class="lwp-account-pop__alts">
+								<a href="<?php echo esc_url( wp_lostpassword_url() ); ?>"><?php esc_html_e( 'Forgot password?', 'luwipress-amber' ); ?></a>
+								<a href="<?php echo esc_url( $amber_login_url ); ?>"><?php esc_html_e( 'Create account', 'luwipress-amber' ); ?></a>
+							</div>
+						<?php endif; ?>
+					</div>
+				</div>
+				<?php $amber_cart_count = WC()->cart ? WC()->cart->get_cart_contents_count() : 0; ?>
+				<a href="<?php echo esc_url( wc_get_cart_url() ); ?>" class="lwp-icon-btn lwp-cart-btn lwp-cart-icon" data-lwp-cart-toggle aria-label="<?php esc_attr_e( 'Cart', 'luwipress-amber' ); ?>">
+					<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M6 7h12l-1.2 11a2 2 0 0 1-2 1.8H9.2a2 2 0 0 1-2-1.8L6 7z"/><path d="M9 7V5a3 3 0 1 1 6 0v2"/></svg><?php if ( $amber_cart_count > 0 ) : ?><span class="lwp-cart-badge"><?php echo (int) $amber_cart_count; ?></span><?php endif; ?>
+				</a>
+			<?php endif; ?>
 			<a href="<?php echo esc_url( $amber_book_url ); ?>" class="btn btn--amber"><?php echo esc_html( $amber_book_label ); ?> <?php echo $amber_arrow; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 			<button class="theme-toggle" id="headerTheme" aria-label="<?php esc_attr_e( 'Toggle theme', 'luwipress-amber' ); ?>">
 				<svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
@@ -334,6 +384,37 @@ if ( ! $elementor_header_active ) :
 		</div>
 	</div>
 </header>
+
+<?php if ( class_exists( 'WooCommerce' ) ) : ?>
+<!-- ============ SEARCH OVERLAY ============ -->
+<div class="lwp-search-overlay" role="dialog" aria-modal="true" aria-label="<?php esc_attr_e( 'Search', 'luwipress-amber' ); ?>">
+	<div class="lwp-search-panel">
+		<button type="button" class="lwp-search-close" aria-label="<?php esc_attr_e( 'Close search', 'luwipress-amber' ); ?>">&times;</button>
+		<form role="search" method="get" class="lwp-search-form" action="<?php echo esc_url( home_url( '/' ) ); ?>">
+			<label for="lwp-search-input" class="lwp-search-label"><?php esc_html_e( 'Search tours & experiences', 'luwipress-amber' ); ?></label>
+			<div class="lwp-search-input-wrap">
+				<span class="lwp-search-icon" aria-hidden="true">&#9906;</span>
+				<input id="lwp-search-input" type="search" name="s" class="lwp-search-input" placeholder="<?php esc_attr_e( 'Try “desert safari”, “helicopter”, “Burj Khalifa”…', 'luwipress-amber' ); ?>" autocomplete="off" />
+				<?php if ( post_type_exists( 'product' ) ) : ?><input type="hidden" name="post_type" value="product" /><?php endif; ?>
+			</div>
+			<div class="lwp-search-hint"><?php esc_html_e( 'Press Enter to search · Esc to close', 'luwipress-amber' ); ?></div>
+		</form>
+	</div>
+</div>
+
+<!-- ============ CART DRAWER (slide-in from right) ============ -->
+<aside class="lwp-cart-drawer" role="dialog" aria-modal="true" aria-label="<?php esc_attr_e( 'Cart', 'luwipress-amber' ); ?>">
+	<div class="lwp-cart-drawer__panel">
+		<div class="lwp-cart-drawer__head">
+			<h3><?php esc_html_e( 'Your cart', 'luwipress-amber' ); ?></h3>
+			<button type="button" class="lwp-cart-drawer__close" aria-label="<?php esc_attr_e( 'Close cart', 'luwipress-amber' ); ?>">&times;</button>
+		</div>
+		<div class="lwp-cart-drawer__body widget_shopping_cart_content">
+			<?php woocommerce_mini_cart(); ?>
+		</div>
+	</div>
+</aside>
+<?php endif; ?>
 
 <!-- ============ MOBILE DRAWER ============ -->
 <div class="drawer-overlay" id="drawerOverlay"></div>

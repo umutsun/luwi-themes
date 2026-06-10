@@ -24,7 +24,7 @@ add_action( 'wp_enqueue_scripts', function () {
 	// + Inter (body / UI). preconnect + display=swap to avoid layout shift.
 	wp_enqueue_style(
 		'luwipress-amber-fonts',
-		'https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap',
+		'https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,500&family=Cinzel:wght@500;600&family=Inter:wght@400;500;600;700&display=swap',
 		[],
 		null
 	);

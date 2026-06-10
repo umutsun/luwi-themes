@@ -312,7 +312,10 @@ h1,h2,h3 { font-family: var(--serif); font-weight: 500; line-height: 1.04; lette
   width: auto; height: 58px; display: block; border-radius: 0; background: none; box-shadow: none;
   filter: drop-shadow(0 4px 12px rgba(232,116,79,.28));
 }
-.brand .word { font-family: var(--serif); font-weight: 600; font-size: 19px; letter-spacing: .14em; white-space: nowrap; }
+/* Wordmark is a crafted LOGOTYPE, not body type: Cinzel Roman caps, uppercase,
+   wide tracking — deliberately distinct from the site's Fraunces headings so it
+   reads as part of the brand mark beside the emblem. */
+.brand .word { font-family: 'Cinzel', var(--serif); font-weight: 600; font-size: 20px; letter-spacing: .10em; text-transform: uppercase; line-height: 1; white-space: nowrap; }
 .brand .word b { color: var(--amber-soft); font-weight: 600; }
 
 .nav { display: flex; align-items: center; gap: 34px; margin-left: auto; margin-right: 52px; }

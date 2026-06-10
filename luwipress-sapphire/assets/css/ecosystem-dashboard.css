@@ -1,0 +1,233 @@
+/* LuwiPress Sapphire — Ecosystem Dashboard (admin)
+ * Read-only panel that mirrors the storefront design language inside
+ * wp-admin so the operator gets a coherent identity across both surfaces.
+ */
+
+.lwp-eco {
+	max-width: 1240px;
+	margin: 24px auto 60px;
+	font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+	color: #E8EDF7;
+}
+
+.lwp-eco__eyebrow {
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 10px;
+	letter-spacing: .18em;
+	text-transform: uppercase;
+	color: #2563EB;
+	display: inline-block;
+}
+
+/* ── Hero ── */
+
+.lwp-eco__hero {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	gap: 32px;
+	align-items: end;
+	background: #0A1124;
+	border: 1px solid #1E2A44;
+	border-radius: 12px;
+	padding: 32px;
+	margin-bottom: 28px;
+}
+
+.lwp-eco__title {
+	font-family: 'Playfair Display', Georgia, serif;
+	font-weight: 500;
+	font-size: 36px;
+	letter-spacing: -.02em;
+	margin: 8px 0 12px;
+	line-height: 1.1;
+}
+
+.lwp-eco__lead {
+	font-size: 15px;
+	line-height: 1.6;
+	color: #B6C2DA;
+	max-width: 60ch;
+	margin: 0;
+}
+
+.lwp-eco__hero-stats {
+	display: flex;
+	gap: 12px;
+	flex-wrap: wrap;
+}
+
+.lwp-eco__stat {
+	background: var(--card);
+	border: 1px solid #1E2A44;
+	border-radius: 8px;
+	padding: 14px 18px;
+	min-width: 120px;
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.lwp-eco__stat-label {
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 10px;
+	letter-spacing: .12em;
+	text-transform: uppercase;
+	color: #93A1BC;
+}
+
+.lwp-eco__stat-value {
+	font-family: 'Playfair Display', Georgia, serif;
+	font-size: 22px;
+	font-weight: 500;
+	color: #E8EDF7;
+}
+
+.lwp-eco__stat--ok .lwp-eco__stat-value   { color: #2a7a3a; }
+.lwp-eco__stat--warn .lwp-eco__stat-value { color: #C84B3A; }
+.lwp-eco__stat--idle .lwp-eco__stat-value { color: #93A1BC; }
+
+/* ── Alert ── */
+
+.lwp-eco__alert {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	padding: 14px 20px;
+	border-radius: 8px;
+	margin-bottom: 28px;
+	font-size: 14px;
+	line-height: 1.55;
+}
+.lwp-eco__alert--warn {
+	background: #fff8e1;
+	border-left: 4px solid #C84B3A;
+	color: #E8EDF7;
+}
+.lwp-eco__alert .button {
+	margin-left: auto;
+}
+
+/* ── Sections ── */
+
+.lwp-eco__section {
+	margin-bottom: 36px;
+}
+
+.lwp-eco__section-title {
+	font-family: 'Playfair Display', Georgia, serif;
+	font-weight: 500;
+	font-size: 24px;
+	letter-spacing: -.015em;
+	margin: 0 0 18px;
+	color: #E8EDF7;
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+/* ── AI surface cards ── */
+
+.lwp-eco__cards {
+	display: grid;
+	grid-template-columns: repeat( 3, 1fr );
+	gap: 20px;
+}
+
+@media ( max-width: 960px ) {
+	.lwp-eco__cards { grid-template-columns: 1fr; }
+	.lwp-eco__hero  { grid-template-columns: 1fr; }
+}
+
+.lwp-eco__card {
+	background: var(--card);
+	border: 1px solid #1E2A44;
+	border-radius: 10px;
+	padding: 20px 22px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	position: relative;
+	overflow: hidden;
+}
+
+.lwp-eco__card::before {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	width: 3px;
+	background: #1E2A44;
+}
+.lwp-eco__card--on::before  { background: linear-gradient( 180deg, #2563EB, #3B82F6 ); }
+.lwp-eco__card--off::before { background: #1E2A44; }
+
+.lwp-eco__card header { margin-bottom: 4px; }
+
+.lwp-eco__chip {
+	display: inline-block;
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 11px;
+	letter-spacing: .12em;
+	text-transform: uppercase;
+	background: #F2EAD3;
+	color: #E8EDF7;
+	padding: 4px 10px;
+	border-radius: 999px;
+}
+
+.lwp-eco__card--on .lwp-eco__chip {
+	background: linear-gradient( 135deg, #2563EB, #3B82F6 );
+	color: #fff;
+}
+
+.lwp-eco__card p {
+	margin: 0;
+	font-size: 13.5px;
+	line-height: 1.6;
+	color: #B6C2DA;
+}
+
+.lwp-eco__card .button {
+	align-self: flex-start;
+	margin-top: 4px;
+}
+
+/* ── Friendly plugins table ── */
+
+.lwp-eco__table {
+	border: 1px solid #1E2A44 !important;
+	border-radius: 10px;
+	overflow: hidden;
+	border-collapse: separate;
+	border-spacing: 0;
+}
+
+.lwp-eco__table th {
+	background: #0A1124;
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 11px;
+	letter-spacing: .12em;
+	text-transform: uppercase;
+	color: #B6C2DA;
+	padding: 12px 14px;
+}
+
+.lwp-eco__table td {
+	padding: 14px;
+	font-size: 13.5px;
+	line-height: 1.55;
+	color: #E8EDF7;
+	border-top: 1px solid #1E2A44;
+}
+
+.lwp-eco__row--ok td:first-child strong   { color: #2a7a3a; }
+.lwp-eco__row--idle td:first-child strong { color: #93A1BC; }
+
+/* ── Quick links ── */
+
+.lwp-eco__links {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}

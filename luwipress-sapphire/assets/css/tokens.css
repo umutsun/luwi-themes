@@ -1,0 +1,145 @@
+/* ============================================================
+   LuwiPress Sapphire — brand-knob token bridge.
+
+   sapphire.css ships the full "Midnight Sapphire" design system
+   (dark `:root` + `[data-theme="light"]` overrides — base, surface,
+   ink and hairline tokens all flip per mode). This thin layer is
+   enqueued AFTER the design system and does ONE job: re-point the
+   *accent* at the Customizer-overridable `--primary` so an operator
+   can rebrand from Appearance → Customize → LuwiPress Sapphire → Brand
+   without touching CSS. output-css.php re-declares `--primary` inline
+   on this same stylesheet handle (`luwipress-sapphire-tokens`) when a
+   brand colour is set.
+
+   IMPORTANT: this file must NOT pin `--ink` / base / surface tokens in a
+   flat `:root` — those flip per `[data-theme]` inside sapphire.css, and
+   re-pinning them here (later in source order, same specificity) would
+   clobber the light-mode flip and leave text unreadable. Only the accent
+   and its brand inputs live here.
+   ============================================================ */
+:root {
+	/* Customizer-overridable brand inputs (output-css.php overrides these
+	   only when the operator sets a colour; otherwise these defaults win). */
+	--primary:       #2563EB; /* electric sapphire — primary accent (dark) */
+	--primary-light: #3B82F6; /* brighter sapphire — headline / hover accent */
+
+	/* Bridge: the design system's accent reads from the brand knob so a
+	   single --primary change cascades through every CTA, badge and link. */
+	--accent:      var(--primary);
+	--accent-soft: var(--primary-light);
+
+	/* Back-compat aliases for any inherited widget markup (forked from the
+	   gold/amber/coral siblings) that still reads those names — resolve to
+	   sapphire so nothing renders bare. */
+	--gold:  var(--primary); --gold-soft:  var(--primary-light);
+	--amber: var(--primary); --amber-soft: var(--primary-light);
+	--coral: var(--primary); --coral-deep: var(--primary-light);
+
+	--grad-cta: linear-gradient(135deg, var(--accent-soft) 0%, var(--accent) 55%, #1D4ED8 100%);
+}
+
+/* Light mode keeps a contrast-safe deeper sapphire; still bridged so a
+   custom --primary set for light mode flows through if the operator sets one. */
+[data-theme="light"] {
+	--primary:       #1D4ED8;
+	--primary-light: #2563EB;
+	--accent:      var(--primary);
+	--accent-soft: var(--primary-light);
+}
+
+/* ============================================================
+   Gold fork-tree compatibility aliases.
+   The ported widget suite (widgets.css), WooCommerce chrome
+   (sapphire-wc.css) and woo-overrides.css consume the Gold token
+   vocabulary. Map those names onto Sapphire's tokens so the
+   var-driven majority of that CSS adopts sapphire colours AND
+   flips per mode. (Hardcoded hexes in those files were recoloured
+   to dark at port time, so the suite is dark-primary; these
+   aliases keep everything var-driven correct in both modes.)
+   ============================================================ */
+:root {
+	--ink-soft:      #B6C2DA;
+	--bg:            var(--sapphire-900);
+	--bg-alt:        var(--sapphire-850);
+	--card:          var(--surface);
+	--line:          var(--hair);
+	--line-light:    var(--hair-soft);
+	--sale:          #F43F5E;
+	--black:         #04060E;
+	--icon-red:      var(--accent);
+	--primary-hover: #1D4ED8;
+	--serif:         var(--display);
+	--sans:          var(--body);
+	--content-w:     var(--maxw);
+	--gutter:        32px;
+	--gutter-mobile: 20px;
+	--radius-card:   var(--radius);
+	--radius-input:  8px;
+}
+[data-theme="light"] {
+	--ink-soft: #334155;
+}
+
+/* Lock html to the active page base so any area above the utility bar or
+   below the footer (short pages) reads as one continuous surface. */
+html { background: var(--sapphire-900, #070B16); }
+
+/* Inherited "amber" CTA button class → map onto the sapphire ghost button so any
+   leftover widget markup using .btn--amber stays usable. */
+.btn--amber { background: transparent; color: var(--ink); border: 1px solid var(--hair); }
+.btn--amber:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ============================================================
+   Supplemental — WordPress output the design CSS doesn't cover
+   (the_content typography, pagination, comments, alignment).
+   ============================================================ */
+
+/* the_posts_pagination / paginate_links inside Sapphire pages */
+.navigation.pagination, nav.pagination { display: flex; justify-content: center; margin-top: clamp(40px, 5vw, 64px); }
+.navigation.pagination .nav-links { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.navigation.pagination .page-numbers,
+.navigation.pagination a.page-numbers { min-width: 46px; height: 46px; display: inline-flex; align-items: center; justify-content: center; padding: 0 12px; border: 1px solid var(--hair-soft); border-radius: var(--radius-sm, 8px); color: var(--muted); font-family: var(--mono, monospace); font-size: 15px; transition: all .3s; }
+.navigation.pagination .page-numbers.current { border-color: var(--accent); color: var(--ink); background: rgba(59,130,246,0.10); }
+.navigation.pagination a.page-numbers:hover { color: var(--ink); border-color: var(--hair); }
+
+/* Editorial reading column — extend .article to native the_content markup */
+.article h2 { font-family: var(--display); font-weight: 600; font-size: clamp(28px,3vw,38px); color: var(--ink); margin: 48px 0 18px; line-height: 1.14; letter-spacing: -0.02em; }
+.article h4 { font-family: var(--display); font-weight: 600; font-size: 22px; color: var(--ink); margin: 32px 0 14px; letter-spacing: -0.01em; }
+.article a { color: var(--accent-soft); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--hair); transition: text-decoration-color .3s; }
+.article a:hover { text-decoration-color: var(--accent); }
+.article ul, .article ol { color: var(--muted); font-weight: 400; font-size: 17px; line-height: 1.8; margin: 0 0 24px; padding-left: 22px; }
+.article li { margin-bottom: 8px; }
+.article img, .article figure { margin: 32px 0; }
+.article figure img { margin: 0; border-radius: var(--radius, 12px); }
+.article figcaption { color: var(--faint); font-size: 13px; margin-top: 10px; text-align: center; }
+.article strong, .article b { color: var(--ink); font-weight: 700; }
+.article hr { border: 0; height: 1px; background: var(--hair-soft); margin: 40px 0; }
+
+/* WP alignment helpers */
+.aligncenter { margin-left: auto; margin-right: auto; display: block; }
+.alignright { float: right; margin: 0 0 20px 28px; }
+.alignleft { float: left; margin: 0 28px 20px 0; }
+.wp-caption { max-width: 100%; }
+.wp-caption-text { color: var(--faint); font-size: 13px; margin-top: 8px; }
+.article .wp-block-quote, .article .wp-block-pullquote { margin: 40px 0; padding-left: 28px; border-left: 2px solid var(--accent); font-family: var(--display); font-size: 24px; line-height: 1.4; color: var(--ink); font-weight: 500; }
+.sticky, .bypostauthor { display: block; }
+
+/* Comments — minimal Sapphire treatment */
+.comment-list { list-style: none; margin: 0; padding: 0; }
+.comment-list li { border-bottom: 1px solid var(--hair-soft); padding: 22px 0; }
+.comment-list .comment-author { color: var(--ink); font-family: var(--display); font-weight: 600; font-size: 18px; }
+.comment-list .comment-metadata, .comment-list .comment-metadata a { color: var(--faint); font-size: 12px; font-family: var(--mono, monospace); }
+.comment-content { color: var(--muted); font-weight: 400; margin-top: 10px; }
+.comment-respond { margin-top: 40px; }
+.comment-respond .comment-reply-title { font-family: var(--display); font-weight: 600; font-size: 26px; color: var(--ink); margin-bottom: 18px; }
+.comment-form input[type=text], .comment-form input[type=email], .comment-form input[type=url], .comment-form textarea { width: 100%; background: var(--sapphire-850); border: 1px solid var(--hair-soft); border-radius: var(--radius-sm, 8px); color: var(--ink); font-family: var(--body); padding: 14px 16px; margin-bottom: 16px; outline: none; }
+.comment-form input:focus, .comment-form textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(59,130,246,0.18); }
+.comment-form .submit { display: inline-flex; align-items: center; padding: 15px 28px; border-radius: var(--radius, 12px); font-family: var(--body); font-size: 13px; font-weight: 600; letter-spacing: 0.10em; text-transform: uppercase; color: #fff; background: var(--grad-cta); border: 1px solid rgba(96,165,250,0.45); cursor: pointer; }
+
+/* WooCommerce — keep it compatible & readable in both modes (buttons use the sapphire CTA) */
+.woocommerce a.button, .woocommerce button.button, .woocommerce #respond input#submit, .woocommerce-page a.button {
+	background: var(--grad-cta);
+	color: #fff; border-radius: var(--radius, 12px); font-family: var(--body); font-weight: 600; letter-spacing: 0.04em;
+}
+.woocommerce .price, .woocommerce-Price-amount { color: var(--accent) !important; font-family: var(--display); font-weight: 600; }
+.woocommerce ul.products li.product .price { color: var(--accent); }

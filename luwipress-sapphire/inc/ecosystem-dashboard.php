@@ -1,0 +1,341 @@
+<?php
+/**
+ * Ecosystem dashboard — admin page that surfaces the full LuwiPress
+ * ecosystem from the theme's perspective.
+ *
+ * This is the cleanest demonstration of "tam entegrasyon": one panel
+ * that reads from the plugin's plugin detector + AI engine + chat module
+ * + token tracker, then projects the result back through the theme's
+ * design language. The operator sees one story — theme + plugin + every
+ * friendly plugin — instead of bouncing between two admin sections.
+ *
+ * Page lives at Appearance → LuwiPress Sapphire (top-level page if Appearance
+ * isn't suitable). Read-only by design — every setting is owned by either
+ * the LuwiPress plugin or the Customizer; this panel just observes.
+ *
+ * @package luwipress-sapphire
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+add_action( 'admin_menu', function () {
+	add_theme_page(
+		__( 'LuwiPress Sapphire', 'luwipress-sapphire' ),
+		__( 'LuwiPress Sapphire', 'luwipress-sapphire' ),
+		'manage_options',
+		'luwipress-sapphire-ecosystem',
+		'lwp_sapphire_render_ecosystem_dashboard'
+	);
+}, 9 );
+
+add_action( 'admin_enqueue_scripts', function ( $hook ) {
+	if ( 'appearance_page_luwipress-sapphire-ecosystem' !== $hook ) {
+		return;
+	}
+	wp_enqueue_style(
+		'luwipress-sapphire-ecosystem',
+		LUWIPRESS_SAPPHIRE_URI . '/assets/css/ecosystem-dashboard.css',
+		array(),
+		LUWIPRESS_SAPPHIRE_VERSION
+	);
+} );
+
+/**
+ * Main dashboard renderer. Composes:
+ *   - Hero strip with theme version + LuwiPress version + WC version
+ *   - Ecosystem health grid: required (LuwiPress, Elementor, WC) + friendly
+ *   - AI surface state: chat enabled? search suggestions cache hits? token spend
+ *   - Theme features earned by each detected plugin
+ *   - Quick links to relevant LuwiPress admin sections
+ */
+function lwp_sapphire_render_ecosystem_dashboard() {
+	if ( ! current_user_can( 'manage_options' ) ) {
+		wp_die( esc_html__( 'You do not have permission to view this page.', 'luwipress-sapphire' ) );
+	}
+
+	$lp_active = lwp_sapphire_lp_active();
+	$detector  = lwp_sapphire_lp_detector();
+
+	$lp_version    = $lp_active ? LUWIPRESS_VERSION : '';
+	$theme_version = LUWIPRESS_SAPPHIRE_VERSION;
+	$el_active     = did_action( 'elementor/loaded' );
+	$el_version    = $el_active && defined( 'ELEMENTOR_VERSION' ) ? ELEMENTOR_VERSION : '';
+	$wc_active     = class_exists( 'WooCommerce' );
+	$wc_version    = $wc_active && defined( 'WC_VERSION' ) ? WC_VERSION : '';
+
+	// Friendly-plugin signals (each is null if undetected).
+	$seo  = $detector ? $detector->detect_seo()         : null;
+	$lang = $detector ? $detector->detect_translation() : null;
+	$pb   = $detector ? $detector->detect_page_builder() : null;
+	$cache = $detector ? $detector->detect_cache()      : null;
+	$crm  = $detector ? $detector->detect_crm()         : null;
+
+	$features = apply_filters( 'luwipress_sapphire_ecosystem_features', array() );
+
+	$chat_enabled  = lwp_sapphire_lp_chat_enabled();
+	$chat_greeting = $chat_enabled ? (string) get_option( 'luwipress_chat_greeting', '' ) : '';
+
+	?>
+	<div class="wrap lwp-eco">
+
+		<header class="lwp-eco__hero">
+			<div class="lwp-eco__hero-text">
+				<span class="lwp-eco__eyebrow">— <?php esc_html_e( 'LuwiPress ecosystem', 'luwipress-sapphire' ); ?></span>
+				<h1 class="lwp-eco__title">
+					<?php
+					printf(
+						/* translators: %s: theme version */
+						esc_html__( 'LuwiPress Sapphire %s', 'luwipress-sapphire' ),
+						esc_html( $theme_version )
+					);
+					?>
+				</h1>
+				<p class="lwp-eco__lead">
+					<?php esc_html_e( 'Your theme reads from the LuwiPress plugin’s AI engine, knowledge graph, and plugin detector. Every friendly plugin you activate amplifies a feature on the storefront.', 'luwipress-sapphire' ); ?>
+				</p>
+			</div>
+			<div class="lwp-eco__hero-stats">
+				<?php
+				$stats = array(
+					array(
+						'label' => __( 'LuwiPress', 'luwipress-sapphire' ),
+						'value' => $lp_version ?: '—',
+						'state' => $lp_active ? 'ok' : 'warn',
+					),
+					array(
+						'label' => __( 'Elementor', 'luwipress-sapphire' ),
+						'value' => $el_version ?: '—',
+						'state' => $el_active ? 'ok' : 'warn',
+					),
+					array(
+						'label' => __( 'WooCommerce', 'luwipress-sapphire' ),
+						'value' => $wc_version ?: '—',
+						'state' => $wc_active ? 'ok' : 'idle',
+					),
+				);
+				foreach ( $stats as $stat ) :
+				?>
+					<div class="lwp-eco__stat lwp-eco__stat--<?php echo esc_attr( $stat['state'] ); ?>">
+						<span class="lwp-eco__stat-label"><?php echo esc_html( $stat['label'] ); ?></span>
+						<span class="lwp-eco__stat-value"><?php echo esc_html( $stat['value'] ); ?></span>
+					</div>
+				<?php endforeach; ?>
+			</div>
+		</header>
+
+		<?php if ( ! $lp_active ) : ?>
+			<div class="lwp-eco__alert lwp-eco__alert--warn">
+				<strong><?php esc_html_e( 'LuwiPress plugin is not active.', 'luwipress-sapphire' ); ?></strong>
+				<?php esc_html_e( 'AI search, customer chat, and Knowledge-Graph-curated related products will stay dark until you activate it.', 'luwipress-sapphire' ); ?>
+				<a class="button button-primary" href="<?php echo esc_url( admin_url( 'plugin-install.php?s=luwipress&tab=search&type=term' ) ); ?>">
+					<?php esc_html_e( 'Install LuwiPress', 'luwipress-sapphire' ); ?>
+				</a>
+			</div>
+		<?php endif; ?>
+
+		<section class="lwp-eco__section">
+			<h2 class="lwp-eco__section-title">
+				<span class="lwp-eco__eyebrow">— <?php esc_html_e( 'AI surfaces', 'luwipress-sapphire' ); ?></span>
+				<?php esc_html_e( 'What’s live on the storefront', 'luwipress-sapphire' ); ?>
+			</h2>
+
+			<div class="lwp-eco__cards">
+				<article class="lwp-eco__card lwp-eco__card--<?php echo $lp_active ? 'on' : 'off'; ?>">
+					<header>
+						<span class="lwp-eco__chip"><?php esc_html_e( 'AI search', 'luwipress-sapphire' ); ?></span>
+					</header>
+					<p>
+						<?php
+						echo $lp_active
+							? esc_html__( 'Search overlay shows product matches plus AI-suggested next searches as the visitor types. Cached 30 minutes per query.', 'luwipress-sapphire' )
+							: esc_html__( 'Idle — activate LuwiPress to bring this online.', 'luwipress-sapphire' );
+						?>
+					</p>
+				</article>
+
+				<article class="lwp-eco__card lwp-eco__card--<?php echo $chat_enabled ? 'on' : 'off'; ?>">
+					<header>
+						<span class="lwp-eco__chip"><?php esc_html_e( 'Customer chat', 'luwipress-sapphire' ); ?></span>
+					</header>
+					<?php if ( $chat_enabled ) : ?>
+						<p>
+							<?php esc_html_e( 'Sticky bubble live. Greeting:', 'luwipress-sapphire' ); ?>
+							<em>"<?php echo esc_html( $chat_greeting ); ?>"</em>
+						</p>
+						<a class="button button-secondary" href="<?php echo esc_url( admin_url( 'admin.php?page=luwipress&tab=customer-chat' ) ); ?>">
+							<?php esc_html_e( 'Tune chat settings →', 'luwipress-sapphire' ); ?>
+						</a>
+					<?php else : ?>
+						<p><?php esc_html_e( 'Disabled — turn on Customer Chat in the LuwiPress plugin to surface the bubble.', 'luwipress-sapphire' ); ?></p>
+						<?php if ( $lp_active ) : ?>
+							<a class="button button-secondary" href="<?php echo esc_url( admin_url( 'admin.php?page=luwipress&tab=customer-chat' ) ); ?>">
+								<?php esc_html_e( 'Enable chat →', 'luwipress-sapphire' ); ?>
+							</a>
+						<?php endif; ?>
+					<?php endif; ?>
+				</article>
+
+				<article class="lwp-eco__card lwp-eco__card--<?php echo $wc_active ? 'on' : 'off'; ?>">
+					<header>
+						<span class="lwp-eco__chip"><?php esc_html_e( 'KG-related rail', 'luwipress-sapphire' ); ?></span>
+					</header>
+					<p>
+						<?php
+						echo $wc_active
+							? esc_html__( 'On every single-product page: 4 sibling instruments curated by master / luthier with category fallback. Cached 1 hour per product.', 'luwipress-sapphire' )
+							: esc_html__( 'Idle — needs WooCommerce active.', 'luwipress-sapphire' );
+						?>
+					</p>
+				</article>
+			</div>
+		</section>
+
+		<section class="lwp-eco__section">
+			<h2 class="lwp-eco__section-title">
+				<span class="lwp-eco__eyebrow">— <?php esc_html_e( 'Friendly plugins', 'luwipress-sapphire' ); ?></span>
+				<?php esc_html_e( 'Detected and amplified', 'luwipress-sapphire' ); ?>
+			</h2>
+
+			<table class="widefat lwp-eco__table">
+				<thead>
+					<tr>
+						<th><?php esc_html_e( 'Capability', 'luwipress-sapphire' ); ?></th>
+						<th><?php esc_html_e( 'Plugin', 'luwipress-sapphire' ); ?></th>
+						<th><?php esc_html_e( 'What it gains the storefront', 'luwipress-sapphire' ); ?></th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+					$rows = array();
+
+					// SEO
+					if ( $seo && $seo['plugin'] !== 'none' ) {
+						$rows[] = array(
+							'cap'    => __( 'SEO', 'luwipress-sapphire' ),
+							'plugin' => sprintf( '%s %s', $seo['plugin'], $seo['version'] ?: '' ),
+							'gain'   => __( 'Theme breadcrumb yields to the SEO plugin’s rendered breadcrumb. Schema and meta keys auto-detected.', 'luwipress-sapphire' ),
+							'state'  => 'ok',
+						);
+					} else {
+						$rows[] = array(
+							'cap'    => __( 'SEO', 'luwipress-sapphire' ),
+							'plugin' => __( 'none detected', 'luwipress-sapphire' ),
+							'gain'   => __( 'Theme falls back to its own breadcrumb markup.', 'luwipress-sapphire' ),
+							'state'  => 'idle',
+						);
+					}
+
+					// Translation
+					if ( $lang && $lang['plugin'] !== 'none' ) {
+						$active = isset( $lang['active_languages'] ) && is_array( $lang['active_languages'] )
+							? implode( ', ', array_map( 'strtoupper', $lang['active_languages'] ) )
+							: '';
+						$rows[] = array(
+							'cap'    => __( 'Translation', 'luwipress-sapphire' ),
+							'plugin' => sprintf( '%s %s', $lang['plugin'], $lang['version'] ?: '' ),
+							'gain'   => sprintf(
+								/* translators: %s: comma-separated active language codes */
+								__( 'Topbar language pill renders %s. Hreflang tags auto-injected when the SEO plugin doesn’t emit them.', 'luwipress-sapphire' ),
+								$active
+							),
+							'state'  => 'ok',
+						);
+					}
+
+					// Page builder
+					if ( $pb && $pb['plugin'] !== 'none' ) {
+						$rows[] = array(
+							'cap'    => __( 'Page builder', 'luwipress-sapphire' ),
+							'plugin' => sprintf( '%s %s', $pb['plugin'], $pb['version'] ?? '' ),
+							'gain'   => __( 'Theme yields header/footer to Theme Builder when configured. Custom Elementor widgets registered.', 'luwipress-sapphire' ),
+							'state'  => 'ok',
+						);
+					}
+
+					// Cache
+					if ( $cache && $cache['plugin'] !== 'none' ) {
+						$rows[] = array(
+							'cap'    => __( 'Cache', 'luwipress-sapphire' ),
+							'plugin' => sprintf( '%s %s', $cache['plugin'], $cache['version'] ?? '' ),
+							'gain'   => __( 'Theme respects the cache plugin’s headers; AI surface endpoints are marked no-store at the plugin layer.', 'luwipress-sapphire' ),
+							'state'  => 'ok',
+						);
+					}
+
+					// CRM
+					if ( $crm && $crm['plugin'] !== 'none' ) {
+						$rows[] = array(
+							'cap'    => __( 'CRM', 'luwipress-sapphire' ),
+							'plugin' => sprintf( '%s %s', $crm['plugin'], $crm['version'] ?? '' ),
+							'gain'   => __( 'LuwiPress avoids duplicating contact lists. Theme account popover stays single-source.', 'luwipress-sapphire' ),
+							'state'  => 'ok',
+						);
+					}
+
+					// Newsletter
+					if ( ! empty( $features['newsletter_form']['providers'] ) ) {
+						$rows[] = array(
+							'cap'    => __( 'Newsletter form', 'luwipress-sapphire' ),
+							'plugin' => implode( ', ', $features['newsletter_form']['providers'] ),
+							'gain'   => __( 'Footer newsletter slot is ready to render the operator-picked shortcode.', 'luwipress-sapphire' ),
+							'state'  => 'ok',
+						);
+					}
+
+					if ( empty( $rows ) ) {
+						?>
+						<tr><td colspan="3"><em><?php esc_html_e( 'No friendly plugins detected yet.', 'luwipress-sapphire' ); ?></em></td></tr>
+						<?php
+					} else {
+						foreach ( $rows as $r ) :
+							?>
+							<tr class="lwp-eco__row lwp-eco__row--<?php echo esc_attr( $r['state'] ); ?>">
+								<td><strong><?php echo esc_html( $r['cap'] ); ?></strong></td>
+								<td><?php echo esc_html( $r['plugin'] ); ?></td>
+								<td><?php echo esc_html( $r['gain'] ); ?></td>
+							</tr>
+							<?php
+						endforeach;
+					}
+					?>
+				</tbody>
+			</table>
+		</section>
+
+		<section class="lwp-eco__section">
+			<h2 class="lwp-eco__section-title">
+				<span class="lwp-eco__eyebrow">— <?php esc_html_e( 'Quick links', 'luwipress-sapphire' ); ?></span>
+				<?php esc_html_e( 'Where to tune things', 'luwipress-sapphire' ); ?>
+			</h2>
+
+			<div class="lwp-eco__links">
+				<a class="button" href="<?php echo esc_url( admin_url( 'customize.php' ) ); ?>">
+					<?php esc_html_e( 'Theme Customizer', 'luwipress-sapphire' ); ?>
+				</a>
+				<?php if ( $lp_active ) : ?>
+					<a class="button" href="<?php echo esc_url( admin_url( 'admin.php?page=luwipress' ) ); ?>">
+						<?php esc_html_e( 'LuwiPress dashboard', 'luwipress-sapphire' ); ?>
+					</a>
+					<a class="button" href="<?php echo esc_url( admin_url( 'admin.php?page=luwipress&tab=customer-chat' ) ); ?>">
+						<?php esc_html_e( 'Customer chat', 'luwipress-sapphire' ); ?>
+					</a>
+					<a class="button" href="<?php echo esc_url( admin_url( 'admin.php?page=luwipress-knowledge-graph' ) ); ?>">
+						<?php esc_html_e( 'Knowledge graph', 'luwipress-sapphire' ); ?>
+					</a>
+					<a class="button" href="<?php echo esc_url( admin_url( 'admin.php?page=luwipress-usage' ) ); ?>">
+						<?php esc_html_e( 'Token usage', 'luwipress-sapphire' ); ?>
+					</a>
+				<?php endif; ?>
+				<?php if ( $el_active ) : ?>
+					<a class="button" href="<?php echo esc_url( admin_url( 'admin.php?page=elementor' ) ); ?>">
+						<?php esc_html_e( 'Elementor settings', 'luwipress-sapphire' ); ?>
+					</a>
+				<?php endif; ?>
+			</div>
+		</section>
+
+	</div>
+	<?php
+}

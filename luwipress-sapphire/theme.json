@@ -1,0 +1,47 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 2,
+  "settings": {
+    "appearanceTools": true,
+    "color": {
+      "palette": [
+        { "slug": "primary",       "color": "#2563EB", "name": "Electric sapphire" },
+        { "slug": "primary-light", "color": "#3B82F6", "name": "Bright sapphire" },
+        { "slug": "accent",        "color": "#2563EB", "name": "Sapphire accent" },
+        { "slug": "accent-glow",   "color": "#60A5FA", "name": "Sapphire glow" },
+        { "slug": "ink",           "color": "#E8EDF7", "name": "Text" },
+        { "slug": "muted",         "color": "#93A1BC", "name": "Muted" },
+        { "slug": "faint",         "color": "#5C6A86", "name": "Faint" },
+        { "slug": "bg",            "color": "#070B16", "name": "Midnight (background)" },
+        { "slug": "bg-alt",        "color": "#0A1124", "name": "Background lifted" },
+        { "slug": "surface",       "color": "#121C36", "name": "Surface (card)" },
+        { "slug": "surface-2",     "color": "#18254A", "name": "Surface elevated" },
+        { "slug": "black",         "color": "#070B16", "name": "Deepest base" }
+      ]
+    },
+    "typography": {
+      "fontFamilies": [
+        { "fontFamily": "'Space Grotesk', Inter, -apple-system, system-ui, sans-serif", "slug": "display", "name": "Space Grotesk" },
+        { "fontFamily": "'Inter', -apple-system, system-ui, 'Segoe UI', sans-serif", "slug": "body", "name": "Inter" },
+        { "fontFamily": "'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace", "slug": "mono", "name": "JetBrains Mono" }
+      ]
+    },
+    "layout": {
+      "contentSize": "1320px",
+      "wideSize": "1320px"
+    },
+    "spacing": {
+      "units": ["px", "em", "rem", "%", "vw", "vh"]
+    }
+  },
+  "styles": {
+    "color": {
+      "background": "var(--wp--preset--color--bg)",
+      "text": "var(--wp--preset--color--ink)"
+    },
+    "typography": {
+      "fontFamily": "var(--wp--preset--font-family--body)",
+      "lineHeight": "1.65"
+    }
+  }
+}

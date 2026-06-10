@@ -1,0 +1,25 @@
+/*
+Theme Name: LuwiPress Sapphire
+Theme URI: https://luwi.dev/luwipress
+Author: LuwiPress
+Author URI: https://luwi.dev/luwipress
+Description: LuwiPress-powered, Elementor-ready SaaS & digital-product theme — "Midnight Sapphire." The blue, trust-and-innovation member of the LuwiPress jewel-coded theme family (sister to Gold = editorial luxury, Emerald = B2B consulting, Amber = travel, Ruby = editorial/fashion and Onyx = real-estate). Built for software companies, SaaS platforms and digital-product brands: a product-shot split hero with a sapphire aurora wash, a feature grid, an integrations wall, three-tier pricing sold as WooCommerce plans/licenses, a logo/trust strip, animated stat counters, a changelog/roadmap timeline, testimonials, FAQ with FAQPage JSON-LD and a contact band. Deep midnight-navy base (#070B16) with an electric sapphire accent (#2563EB → #3B82F6) and a sapphire-gradient primary CTA; full parallel light "Ice & Sapphire" mode (toggle persisted in localStorage). Headlines on Space Grotesk, body/UI on Inter, code/eyebrows/numerics on JetBrains Mono. SoftwareApplication + FAQ schema for AEO/SEO. Ships with the LuwiPress companion plumbing — AI search, the onboarding wizard, the maintenance suite and the ecosystem dashboard — plus the Sapphire chrome: utility bar, sticky header with a Product mega menu, off-canvas drawer, dark/light toggle, and a customer-chat launcher that defers to LuwiPress core. Colours are fully overrideable from Customizer → LuwiPress Sapphire → Brand. Built on the WC / WPML / Elementor backbone shared across the family.
+Version: 1.0.0
+Requires at least: 6.4
+Tested up to: 6.9
+Requires PHP: 8.1
+Requires Plugins: elementor, luwipress
+License: GPL-2.0-or-later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: luwipress-sapphire
+Tags: e-commerce, blog, news, woocommerce, elementor, custom-logo, custom-menu, custom-colors, full-width-template, footer-widgets, theme-options, threaded-comments, translation-ready, rtl-language-support, sticky-header, mega-menu
+
+LuwiPress Sapphire is licensed under the GPL v2 or later.
+https://www.gnu.org/licenses/gpl-2.0.html
+
+Built from the LuwiPress "Midnight Sapphire" design exploration
+(SaaS & digital-product art direction — electric sapphire on midnight navy).
+*/
+
+/* The actual styles live in assets/css/*.css and are enqueued from functions.php.
+   This file exists for theme metadata + WordPress recognition only. */

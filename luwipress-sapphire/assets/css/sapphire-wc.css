@@ -1,0 +1,1038 @@
+/* ============================================================
+   LuwiPress Sapphire — WooCommerce + page chrome.
+   Ported from the Gold fork-tree (tokens.css WC section) so the
+   shared WC templates (single-product / archive / cart / checkout /
+   my-account) render styled. Re-skinned to sapphire dark via the
+   token aliases in tokens.css + a role-based hex recolor.
+   ============================================================ */
+.pswp {
+	display: none;
+}
+
+/* ─────────────────────────────────────────────────────────────────── */
+/* WooCommerce shop archive wrapper                                    */
+/* ─────────────────────────────────────────────────────────────────── */
+
+.lwp-shop-main {
+	padding: 48px 0 80px;
+	background: var(--bg, #070B16);
+}
+.lwp-shop-container {
+	max-width: var(--content-w, 1372px);
+	margin: 0 auto;
+	padding: 0 var(--gutter, 32px);
+}
+
+/* Page heading + result count + sort dropdown (WC native) */
+.woocommerce-products-header__title {
+	font-family: var(--serif, 'Playfair Display', Georgia, serif);
+	font-size: clamp(36px, 4vw, 56px);
+	font-weight: 500;
+	letter-spacing: -.02em;
+	margin-bottom: 24px;
+	color: var(--ink, #E8EDF7);
+}
+.woocommerce-result-count {
+	font-family: var(--mono, monospace);
+	font-size: 12px;
+	letter-spacing: .12em;
+	color: var(--muted, #93A1BC);
+	text-transform: uppercase;
+}
+.woocommerce-ordering select {
+	border: 1px solid var(--line, #1E2A44);
+	border-radius: 6px;
+	padding: 8px 14px;
+	font-family: var(--sans, 'Inter', sans-serif);
+	background: var(--card);
+	color: var(--ink, #E8EDF7);
+}
+
+/* Product grid — force 4-col on desktop, override WC defaults */
+.lwp-shop-container ul.products,
+.woocommerce-page ul.products {
+	display: grid !important;
+	grid-template-columns: repeat(4, 1fr) !important;
+	gap: 24px !important;
+	list-style: none;
+	margin: 32px 0 0 !important;
+	padding: 0 !important;
+}
+.lwp-shop-container ul.products li.product,
+.woocommerce-page ul.products li.product {
+	width: auto !important;
+	margin: 0 !important;
+	padding: 14px !important;
+	background: var(--card);
+	border-radius: 10px;
+	border: 1px solid var(--line, #1E2A44);
+	transition: transform .25s, box-shadow .25s;
+}
+.lwp-shop-container ul.products li.product:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 18px 40px -22px rgba(115, 92, 0, .25);
+	border-color: var(--primary-light, #3B82F6);
+}
+.lwp-shop-container ul.products li.product img,
+.woocommerce-page ul.products li.product img {
+	width: 100%;
+	aspect-ratio: 1 / 1;
+	object-fit: cover;
+	border-radius: 6px;
+	margin-bottom: 14px;
+}
+.lwp-shop-container ul.products li.product .woocommerce-loop-product__title,
+.woocommerce-page ul.products li.product .woocommerce-loop-product__title {
+	font-family: var(--serif, 'Playfair Display', Georgia, serif);
+	font-size: 17px;
+	font-weight: 500;
+	line-height: 1.25;
+	color: var(--ink, #E8EDF7);
+	padding: 0 !important;
+	margin: 0 0 6px !important;
+}
+.lwp-shop-container ul.products li.product .price,
+.woocommerce-page ul.products li.product .price {
+	font-family: var(--serif, 'Playfair Display', Georgia, serif);
+	color: var(--primary, #2563EB) !important;
+	font-size: 18px !important;
+	font-weight: 500 !important;
+}
+.lwp-shop-container ul.products li.product .price del,
+.woocommerce-page ul.products li.product .price del {
+	color: var(--muted, #93A1BC) !important;
+	font-family: var(--sans, 'Inter', sans-serif);
+	font-size: 13px !important;
+	margin-right: 8px;
+}
+.lwp-shop-container ul.products li.product .button,
+.woocommerce-page ul.products li.product .button {
+	margin-top: 10px;
+	background: var(--surface-2) !important;
+	color: #fff !important;
+	font-family: var(--sans, 'Inter', sans-serif);
+	font-size: 11px;
+	letter-spacing: .12em;
+	text-transform: uppercase;
+	border-radius: 999px;
+	padding: 10px 18px !important;
+	transition: background .2s;
+}
+.lwp-shop-container ul.products li.product .button:hover,
+.woocommerce-page ul.products li.product .button:hover {
+	background: var(--primary, #2563EB) !important;
+}
+
+/* Sale flash badge — WC's `.onsale` */
+.lwp-shop-container ul.products li.product .onsale,
+.woocommerce-page ul.products li.product .onsale {
+	background: var(--sale, #F43F5E) !important;
+	color: #fff !important;
+	font-family: var(--mono, monospace);
+	font-size: 10px;
+	letter-spacing: .1em;
+	border-radius: 3px !important;
+	padding: 4px 10px !important;
+	min-height: auto !important;
+	min-width: auto !important;
+	line-height: 1.4 !important;
+	top: 18px !important;
+	left: 18px !important;
+	right: auto !important;
+}
+
+/* Pagination */
+.lwp-shop-container .woocommerce-pagination ul.page-numbers {
+	display: flex;
+	gap: 8px;
+	justify-content: center;
+	list-style: none;
+	margin: 48px 0 0;
+	padding: 0;
+	border: 0;
+}
+.lwp-shop-container .woocommerce-pagination .page-numbers {
+	border: 1px solid var(--line, #1E2A44);
+	border-radius: 6px;
+	padding: 8px 14px;
+	font-family: var(--mono, monospace);
+	color: var(--ink-soft, #B6C2DA);
+	text-decoration: none;
+}
+.lwp-shop-container .woocommerce-pagination .page-numbers.current {
+	background: var(--surface-2);
+	color: #fff;
+	border-color: var(--ink, #E8EDF7);
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+	.lwp-shop-container ul.products,
+	.woocommerce-page ul.products { grid-template-columns: repeat(3, 1fr) !important; }
+}
+@media (max-width: 768px) {
+	.lwp-shop-container ul.products,
+	.woocommerce-page ul.products { grid-template-columns: repeat(2, 1fr) !important; gap: 14px !important; }
+}
+@media (max-width: 460px) {
+	.lwp-shop-container ul.products,
+	.woocommerce-page ul.products { grid-template-columns: 1fr !important; }
+}
+
+/* ─────────────────────────────────────────────────────────────────── */
+/* Page chrome (used by WC archive / single-product / my-account /     */
+/* generic page templates). Mirrors the reference design tokens —      */
+/* breadcrumb + page-title + lead + 260px sidebar grid.                */
+/* ─────────────────────────────────────────────────────────────────── */
+
+.lwp-page {
+	padding: 64px 0 96px;
+	background: var(--bg, #070B16);
+}
+.lwp-page-container {
+	max-width: var(--content-w, 1372px);
+	margin: 0 auto;
+	padding: 0 var(--gutter, 32px);
+}
+.lwp-crumb {
+	font-family: var(--mono, 'JetBrains Mono', monospace);
+	font-size: 11px;
+	letter-spacing: .14em;
+	text-transform: uppercase;
+	color: var(--muted, #93A1BC);
+	margin-bottom: 32px;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	flex-wrap: wrap;
+}
+.lwp-crumb a { color: var(--muted, #93A1BC); text-decoration: none; }
+.lwp-crumb a:hover { color: var(--primary, #2563EB); }
+.lwp-crumb .sep { color: var(--line, #1E2A44); }
+.lwp-crumb .current { color: var(--ink, #E8EDF7); }
+.lwp-page-title {
+	font-family: var(--serif, 'Playfair Display', Georgia, serif);
+	font-weight: 500;
+	font-size: clamp(40px, 5vw, 72px);
+	line-height: 1.04;
+	letter-spacing: -.025em;
+	margin: 8px 0 0;
+	text-wrap: balance;
+}
+.lwp-page-title em { font-style: italic; color: var(--primary, #2563EB); }
+.lwp-page-lead {
+	font-size: 17px;
+	color: var(--ink-soft, #B6C2DA);
+	max-width: 62ch;
+	line-height: 1.65;
+	margin-top: 24px;
+	text-wrap: pretty;
+}
+
+/* Two-column shop archive: filter sidebar + results */
+.lwp-shop-grid-wrap {
+	display: grid;
+	grid-template-columns: 260px 1fr;
+	gap: 48px;
+	margin-top: 48px;
+	align-items: start;
+}
+.lwp-shop-sidebar {
+	position: sticky;
+	top: 120px;
+	display: flex;
+	flex-direction: column;
+	gap: 28px;
+}
+.lwp-filter-block h5 {
+	font-family: var(--mono, monospace);
+	font-size: 11px;
+	letter-spacing: .18em;
+	text-transform: uppercase;
+	color: var(--ink, #E8EDF7);
+	margin: 0 0 14px;
+	font-weight: 600;
+	border-bottom: 1px solid var(--line, #1E2A44);
+	padding-bottom: 10px;
+}
+.lwp-filter-block label {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	padding: 6px 0;
+	font-size: 13.5px;
+	color: var(--ink-soft, #B6C2DA);
+	cursor: pointer;
+}
+.lwp-filter-block label input { margin-right: 8px; accent-color: var(--primary, #2563EB); }
+.lwp-filter-block label span {
+	font-family: var(--mono, monospace);
+	font-size: 10.5px;
+	color: var(--muted, #93A1BC);
+}
+.lwp-shop-toolbar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-bottom: 1px solid var(--line, #1E2A44);
+	padding-bottom: 16px;
+	margin-bottom: 32px;
+	font-size: 13px;
+	color: var(--ink-soft, #B6C2DA);
+	flex-wrap: wrap;
+	gap: 12px;
+}
+.lwp-shop-toolbar strong { color: var(--ink, #E8EDF7); font-weight: 600; }
+.lwp-shop-toolbar select {
+	padding: 8px 14px;
+	border: 1px solid var(--line, #1E2A44);
+	border-radius: 6px;
+	background: var(--card);
+	font-size: 13px;
+	color: var(--ink, #E8EDF7);
+	font-family: var(--sans, 'Inter', sans-serif);
+}
+
+@media (max-width: 900px) {
+	.lwp-shop-grid-wrap { grid-template-columns: 1fr; gap: 32px; }
+	.lwp-shop-sidebar { position: static; }
+}
+
+/* ─────────────────────────────────────────────────────────────────── */
+/* Single-product page (PDP) chrome                                     */
+/* ─────────────────────────────────────────────────────────────────── */
+
+.lwp-pdp { padding: 48px 0 96px; background: var(--bg, #070B16); }
+.lwp-pdp-container {
+	max-width: var(--content-w, 1372px);
+	margin: 0 auto;
+	padding: 0 var(--gutter, 32px);
+}
+/* PDP layout: the actual 2-col grid lives on `<div class="product">`
+ * (WC's wrapper), NOT on `.lwp-pdp-grid`. Earlier versions used
+ * `display: contents` on `.product` to hoist its children up to the
+ * outer grid; that worked for layout but broke `position: sticky` on
+ * the gallery — Chromium's containing-block resolution falls back to
+ * the document root for sticky descendants of a `display: contents`
+ * grid parent, so the gallery would bleed sticky across the whole
+ * grid (or vanish mid-scroll when force-released by JS). Making
+ * `.product` the actual grid restores the gallery's grid area as its
+ * sticky containing block — the pin naturally releases at the end of
+ * row 2 (tabs end), exactly where row 3 (related) begins. */
+.lwp-pdp-grid {
+	margin-top: 32px;
+}
+.lwp-pdp-grid > .product {
+	display: grid;
+	grid-template-columns: 1.05fr 1fr;
+	grid-template-rows: auto auto auto;
+	grid-template-areas:
+		"gallery summary"
+		"gallery tabs"
+		"related related";
+	/* Row-gap is 0 -- spacing between rows is controlled by explicit
+	 * margins so we can tighten summary->tabs while keeping gallery->
+	 * related wide. 64px column gap stays. */
+	gap: 0 64px;
+	align-items: start;
+	/* Containing block for WC's `<span class="onsale">` which is
+	 * absolutely positioned at top:12 left:12. Without this `.onsale`
+	 * climbs up to the body and lands in the topbar zone. */
+	position: relative;
+}
+/* Gallery LEFT — sticky so it stays pinned while the operator scrolls
+ * through summary + tabs on the right. Spans both grid rows in col 1
+ * so the sticky behaviour has a tall track to anchor against.
+ *
+ * As of 1.7.10 (override path) we render our own `.lwp-gallery` instead
+ * of WC's `.woocommerce-product-gallery` — vanilla JS, no Flexslider,
+ * immune to LiteSpeed JS Defer. The legacy `.woocommerce-product-gallery`
+ * selector remains for any fallback render path or WC plugin compat.
+ */
+/* Sticky column wrapper — owns the grid-area: gallery placement (rows
+ * 1-2 span). Sticky containing block is this wrapper, NOT `.product`.
+ * That's the trick: when row 2 (tabs) ends, the wrapper ends, sticky
+ * releases, related products on row 3 start clean full-width. */
+.lwp-pdp-grid .lwp-pdp-sticky-col {
+	grid-area: gallery;
+	position: relative;
+	align-self: stretch;
+	height: 100%;
+}
+/* Gallery element itself sticks inside the wrapper. */
+.lwp-pdp-grid .lwp-pdp-sticky-col .lwp-gallery,
+.lwp-pdp-grid .woocommerce-product-gallery {
+	float: none !important;
+	width: 100% !important;
+	max-width: none !important;
+	position: sticky !important;
+	top: 100px !important;
+	max-height: calc(100vh - 120px);
+}
+/* Legacy fallback path — when WC default gallery is rendered without
+ * the sticky-col wrapper (some plugin compat scenarios), keep the old
+ * grid-area placement so layout doesn't collapse. */
+.lwp-pdp-grid > .product > .woocommerce-product-gallery {
+	grid-area: gallery;
+	align-self: start;
+}
+
+/* ===== Vanilla PDP gallery (1.7.10 override) =====
+ * Minimal flex layout: thumb strip LEFT (fixed 80px), main viewer RIGHT
+ * (fills remaining space). No grid, no row overlap.
+ */
+.lwp-gallery {
+	display: flex;
+	gap: 16px;
+	align-items: flex-start;
+	/* Sticky parent verir viewport sınırını; çocuk flex sabit
+	 * kolonu (80px thumbs) + esnek (1fr main) zarar görmez. */
+	max-height: 100%;
+}
+.lwp-gallery--single {
+	display: block;
+}
+.lwp-gallery__thumbs {
+	flex: 0 0 72px;
+	width: 72px;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	max-height: calc(100vh - 120px);
+	overflow-y: auto;
+	overflow-x: hidden;
+	/* Hide native scrollbar — products with 8-10+ thumbs were rendering a
+	 * visible thin scrollbar that drew attention away from the gallery.
+	 * The container still scrolls (mouse wheel + touch), the UI is just
+	 * cleaner. */
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+}
+.lwp-gallery__thumbs::-webkit-scrollbar { display: none; width: 0; }
+.lwp-gallery__thumb {
+	display: block;
+	margin: 0;
+	padding: 0;
+}
+.lwp-gallery__thumb button {
+	display: block;
+	width: 72px;
+	height: 72px;
+	padding: 4px;
+	margin: 0;
+	background: var(--card);
+	border: 2px solid var(--line, #1E2A44);
+	border-radius: 6px;
+	cursor: pointer;
+	overflow: hidden;
+	transition: border-color 160ms ease;
+}
+.lwp-gallery__thumb button:hover {
+	border-color: var(--primary-light, #3B82F6);
+}
+.lwp-gallery__thumb.is-active button {
+	border-color: var(--primary, #2563EB);
+}
+.lwp-gallery__thumb button img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	display: block;
+}
+.lwp-gallery__main {
+	flex: 1 1 auto;
+	min-width: 0;
+	position: relative;
+	background: var(--card);
+	border: 1px solid var(--line, #1E2A44);
+	border-radius: var(--radius-card, 8px);
+	aspect-ratio: 1 / 1;
+	max-height: calc(100vh - 120px);
+	overflow: hidden;
+}
+.lwp-gallery__slide {
+	position: absolute;
+	inset: 0;
+	display: none;
+	background: var(--card);
+	text-decoration: none;
+}
+.lwp-gallery__slide.is-active {
+	display: block;
+}
+.lwp-gallery__slide img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	object-position: center;
+	display: block;
+}
+.lwp-gallery:focus { outline: none; }
+.lwp-gallery:focus-visible {
+	outline: 2px solid var(--primary, #2563EB);
+	outline-offset: 4px;
+	border-radius: var(--radius-card, 8px);
+}
+/* Summary (title + price + add-to-cart + meta) sits in col 2 row 1,
+ * tabs (Description / Additional Information / Reviews) sit in col 2
+ * row 2 directly below. This keeps the buy column tight at top and
+ * gives the long-form copy the same right-hand reading column. */
+.lwp-pdp-grid .summary {
+	float: none !important;
+	width: 100% !important;
+	margin: 0 !important;
+	grid-area: summary;
+}
+.lwp-pdp-grid .woocommerce-tabs {
+	grid-area: tabs;
+	/* 16px clean-cut spacing between SKU / Categories meta block (last
+	 * thing inside summary) and the Description / Additional-info tabs
+	 * row. Replaces the older 56px row-gap which made the transition
+	 * feel disconnected. No top border. */
+	margin: 16px 0 0 !important;
+	padding-top: 0 !important;
+	padding-bottom: 0 !important;
+	border-top: 0 !important;
+}
+.lwp-pdp-grid .woocommerce-tabs ul.tabs {
+	margin: 0 0 24px !important;
+	padding: 0 !important;
+	border-bottom: 1px solid var(--line, #1E2A44) !important;
+	list-style: none;
+}
+/* Related / up-sells / reviews-as-block fall below the grid as a
+ * full-width landing. Tighten the top margin so the seam between
+ * the tabs (description body) and the related rail doesn't span
+ * the whole viewport. */
+.lwp-pdp-grid .related,
+.lwp-pdp-grid .upsells,
+.lwp-pdp-grid > .related,
+.lwp-pdp-grid > .upsells {
+	grid-area: related;
+	/* 96px top margin + 32px top padding + hairline border. The
+	 * earlier 144px buffer existed because the thumb strip sat under
+	 * the main image; v1.7.19 moved thumbs to an overlay capsule on
+	 * top of the image, so the gallery is now compact. 96px is the
+	 * operator-tuned sweet spot for a clean section break. */
+	margin-top: 96px !important;
+	padding-top: 32px !important;
+	border-top: 1px solid var(--line, #1E2A44);
+	clear: none;
+}
+.lwp-pdp-grid .related > h2,
+.lwp-pdp-grid .upsells > h2 {
+	margin-top: 0 !important;
+	margin-bottom: 32px !important;
+}
+.lwp-pdp-grid .product_title {
+	font-family: var(--serif, 'Playfair Display', Georgia, serif);
+	font-weight: 500;
+	font-size: clamp(32px, 3.4vw, 48px);
+	line-height: 1.05;
+	letter-spacing: -.02em;
+	margin-bottom: 18px;
+}
+.lwp-pdp-grid .price {
+	font-family: var(--serif, 'Playfair Display', Georgia, serif);
+	font-size: 28px;
+	color: var(--primary, #2563EB);
+	margin-bottom: 24px;
+	display: flex;
+	align-items: baseline;
+	gap: 12px;
+}
+.lwp-pdp-grid .price del {
+	font-size: 18px;
+	color: var(--muted, #93A1BC);
+	font-family: var(--sans, 'Inter', sans-serif);
+}
+.lwp-pdp-grid .woocommerce-product-details__short-description {
+	color: var(--ink-soft, #B6C2DA);
+	line-height: 1.65;
+	margin-bottom: 28px;
+}
+.lwp-pdp-grid .single_add_to_cart_button {
+	background: linear-gradient(135deg, var(--primary, #2563EB), var(--primary-light, #3B82F6)) !important;
+	color: #fff !important;
+	border: 0 !important;
+	border-radius: 8px !important;
+	padding: 16px 28px !important;
+	font-size: 14px !important;
+	font-weight: 600 !important;
+	letter-spacing: .04em !important;
+	text-transform: uppercase !important;
+	font-family: var(--sans, 'Inter', sans-serif) !important;
+	box-shadow: 0 10px 30px -10px rgba(115, 92, 0, .4);
+	transition: box-shadow .2s, transform .2s;
+}
+.lwp-pdp-grid .single_add_to_cart_button:hover {
+	box-shadow: 0 12px 36px -8px rgba(115, 92, 0, .55);
+	transform: translateY(-1px);
+}
+.lwp-pdp-grid .quantity input[type="number"] {
+	border: 1px solid var(--line, #1E2A44);
+	border-radius: 6px;
+	padding: 12px 10px;
+	font-family: var(--sans, 'Inter', sans-serif);
+}
+.lwp-pdp .product_meta {
+	margin-top: 32px;
+	padding-top: 24px;
+	border-top: 1px solid var(--line, #1E2A44);
+	font-family: var(--mono, monospace);
+	font-size: 11px;
+	letter-spacing: .14em;
+	text-transform: uppercase;
+	color: var(--muted, #93A1BC);
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+/* SKU + categories rendered as pill rows. Each `.sku_wrapper` /
+ * `.posted_in` becomes a flex row with the label as a quiet caption
+ * and every value (SKU number or category link) as a pill chip. */
+.lwp-pdp .product_meta .sku_wrapper,
+.lwp-pdp .product_meta .posted_in,
+.lwp-pdp .product_meta .tagged_as {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+	margin: 0;
+}
+.lwp-pdp .product_meta .sku_wrapper::before { content: ''; }
+.lwp-pdp .product_meta .sku,
+.lwp-pdp .product_meta .posted_in a,
+.lwp-pdp .product_meta .tagged_as a {
+	display: inline-flex;
+	align-items: center;
+	padding: 5px 12px;
+	border: 1px solid var(--line, #1E2A44);
+	border-radius: var(--radius-pill, 999px);
+	background: var(--bg, #070B16);
+	color: var(--ink-soft, #B6C2DA);
+	font-family: var(--sans, 'Inter', sans-serif);
+	font-size: 11px;
+	letter-spacing: .04em;
+	text-transform: none;
+	text-decoration: none;
+	line-height: 1;
+	transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
+}
+.lwp-pdp .product_meta .posted_in a:hover,
+.lwp-pdp .product_meta .tagged_as a:hover {
+	border-color: var(--primary, #2563EB);
+	color: var(--primary, #2563EB);
+	background: var(--card);
+}
+.lwp-pdp .product_meta .sku { color: var(--primary, #2563EB); font-weight: 500; }
+/* The "Categories:" / "Tags:" / "SKU:" label that ships as plain text
+ * stays inline as a muted caption; the pills sit after it. WC ships
+ * comma separators inside `.posted_in` text — hide them so each link
+ * stands alone as a pill. */
+.lwp-pdp .product_meta .posted_in,
+.lwp-pdp .product_meta .tagged_as {
+	color: var(--muted, #93A1BC);
+}
+.lwp-pdp .product_meta .posted_in a + a,
+.lwp-pdp .product_meta .tagged_as a + a { margin-left: 0; }
+.lwp-pdp .woocommerce-tabs {
+	margin-top: 32px;
+	padding-top: 24px;
+	border-top: 1px solid var(--line, #1E2A44);
+}
+.lwp-pdp .woocommerce-tabs ul.tabs {
+	display: flex;
+	gap: 32px;
+	list-style: none;
+	padding: 0 !important;
+	margin: 0 0 32px !important;
+	border-bottom: 1px solid var(--line, #1E2A44);
+}
+.lwp-pdp .woocommerce-tabs ul.tabs::before,
+.lwp-pdp .woocommerce-tabs ul.tabs::after { display: none !important; }
+.lwp-pdp .woocommerce-tabs ul.tabs li {
+	background: none !important;
+	border: 0 !important;
+	padding: 0 !important;
+	margin: 0 !important;
+	border-radius: 0 !important;
+}
+.lwp-pdp .woocommerce-tabs ul.tabs li a {
+	display: inline-block;
+	padding: 12px 0 16px !important;
+	font-family: var(--mono, monospace) !important;
+	font-size: 11px;
+	letter-spacing: .14em;
+	text-transform: uppercase;
+	color: var(--ink-soft, #B6C2DA) !important;
+	border-bottom: 2px solid transparent;
+	margin-bottom: -1px;
+	font-weight: 500 !important;
+}
+.lwp-pdp .woocommerce-tabs ul.tabs li.active a {
+	color: var(--primary, #2563EB) !important;
+	border-bottom-color: var(--primary, #2563EB);
+}
+
+@media (max-width: 900px) {
+	.lwp-pdp-grid { grid-template-columns: 1fr; gap: 32px; }
+	.lwp-pdp-grid .woocommerce-product-gallery,
+	.lwp-pdp-grid .summary { grid-column: 1; }
+}
+
+/* Sibling content (related-products, upsells) lives as extra siblings
+ * inside .product. With display:contents on .product they also become
+ * grid items — span them across both columns so they don't squeeze
+ * into one. Tabs are intentionally NOT in this list because the new
+ * layout keeps them in column 2 directly under the summary. */
+.lwp-pdp-grid .related,
+.lwp-pdp-grid .upsells,
+.lwp-pdp-grid > .product > .related,
+.lwp-pdp-grid > .product > .upsells,
+.lwp-pdp-grid .product > .clear,
+.lwp-pdp-grid .product > nav { grid-column: 1 / -1; }
+
+/* On viewports where the 2-col grid collapses to single column, the
+ * sticky gallery + spanned summary need to revert to natural flow:
+ * gallery first (no sticky on mobile, image gets in the way), summary
+ * below it, then tabs, then related. */
+@media (max-width: 900px) {
+	.lwp-pdp-grid > .product {
+		grid-template-columns: 1fr;
+		grid-template-areas:
+			"gallery"
+			"summary"
+			"tabs"
+			"related";
+		gap: 32px;
+	}
+	.lwp-pdp-grid .lwp-pdp-sticky-col {
+		position: static;
+		height: auto;
+	}
+	.lwp-pdp-grid .lwp-gallery,
+	.lwp-pdp-grid .woocommerce-product-gallery {
+		position: static !important;
+		top: auto !important;
+		max-height: none;
+	}
+	/* Vanilla gallery on mobile — main image on TOP (explicit order: 1),
+	 * thumbs strip below it horizontal-scrollable. `.lwp-gallery__main`
+	 * needs explicit width + min-height because its children are
+	 * `position: absolute` and `aspect-ratio` alone is unreliable in
+	 * flex column with `flex: 1 1 auto` (operator-reported regression
+	 * 2026-05-12 — main collapsed to 0 height). */
+	.lwp-gallery {
+		flex-direction: column;
+		align-items: stretch;
+		gap: 12px;
+	}
+	.lwp-gallery__main {
+		order: 1;
+		flex: 0 0 auto;
+		width: 100%;
+		max-width: 100%;
+		aspect-ratio: 1 / 1;
+		max-height: none;
+		height: auto;
+		min-height: 280px;
+	}
+	.lwp-gallery__thumbs {
+		order: 2;
+		flex: 0 0 auto;
+		width: 100%;
+		max-width: 100%;
+		flex-direction: row;
+		overflow-x: auto;
+		overflow-y: hidden;
+		max-height: none;
+		gap: 6px;
+		padding-bottom: 4px;
+		scrollbar-width: none;
+		-ms-overflow-style: none;
+	}
+	/* 1.7.25 — Hide native scrollbar on mobile thumbnails. With 5-6 thumbs
+	 * the strip ends up 1-5px wider than its container (sub-pixel rounding
+	 * + gaps), which used to render a permanent thin scrollbar even though
+	 * scrolling was unnecessary. Keep overflow-x:auto so 8+-thumb products
+	 * still get touch-scroll, but don't draw a scrollbar UI for it. */
+	.lwp-gallery__thumbs::-webkit-scrollbar { display: none; height: 0; }
+	.lwp-gallery__thumb {
+		flex: 1 1 0;
+		min-width: 0;
+		max-width: 72px;
+	}
+	.lwp-gallery__thumb button {
+		width: 100%;
+		height: auto;
+		aspect-ratio: 1 / 1;
+	}
+}
+
+/* Desktop: pin a minimum height on the main viewer too, defensively. */
+@media (min-width: 768px) {
+	.lwp-gallery__main {
+		min-height: 360px;
+	}
+}
+
+/* FAQ accordion inside the WC tab panel (registered as third tab by
+ * `LuwiPress_AI_Content::register_faq_tab`). Re-skinned from the
+ * legacy inline-styled accordion that used to live below the tabs. */
+.lwp-pdp .woocommerce-tabs .luwipress-faq {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin: 0;
+}
+.lwp-pdp .luwipress-faq__item {
+	border: 1px solid var(--line, #1E2A44);
+	border-radius: var(--radius-card, 8px);
+	background: var(--card);
+	padding: 16px 18px;
+	transition: border-color 200ms ease, background 200ms ease;
+}
+.lwp-pdp .luwipress-faq__item[open] {
+	border-color: var(--primary-light, #3B82F6);
+	background: var(--bg, #070B16);
+}
+.lwp-pdp .luwipress-faq__q {
+	cursor: pointer;
+	font-family: var(--serif, 'Playfair Display', Georgia, serif);
+	font-size: 16px;
+	font-weight: 500;
+	color: var(--ink, #E8EDF7);
+	list-style: none;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+}
+.lwp-pdp .luwipress-faq__q::-webkit-details-marker { display: none; }
+.lwp-pdp .luwipress-faq__q::after {
+	content: '+';
+	font-size: 20px;
+	color: var(--primary, #2563EB);
+	transition: transform 200ms ease;
+	flex-shrink: 0;
+}
+.lwp-pdp .luwipress-faq__item[open] .luwipress-faq__q::after {
+	content: '−';
+}
+.lwp-pdp .luwipress-faq__a {
+	margin-top: 12px;
+	color: var(--ink-soft, #B6C2DA);
+	line-height: 1.6;
+}
+
+/* ─────────────────────────────────────────────────────────────────── */
+/* My-account                                                           */
+/* ─────────────────────────────────────────────────────────────────── */
+
+.lwp-acct-grid {
+	display: grid;
+	grid-template-columns: 260px 1fr;
+	gap: 48px;
+	margin-top: 48px;
+	align-items: start;
+}
+.lwp-acct-side {
+	position: sticky;
+	top: 120px;
+	background: var(--card);
+	border: 1px solid var(--line, #1E2A44);
+	border-radius: 8px;
+	padding: 24px;
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+.lwp-acct-who {
+	padding: 8px 0 18px;
+	border-bottom: 1px solid var(--line, #1E2A44);
+	margin-bottom: 12px;
+}
+.lwp-acct-who .nm {
+	font-family: var(--serif, 'Playfair Display', Georgia, serif);
+	font-size: 20px;
+	font-weight: 500;
+	letter-spacing: -.01em;
+	display: block;
+}
+.lwp-acct-who .em {
+	font-size: 12px;
+	color: var(--muted, #93A1BC);
+	font-family: var(--mono, monospace);
+	letter-spacing: .04em;
+	margin-top: 4px;
+	display: block;
+}
+/* Override WC's default my-account nav to match the design */
+.lwp-acct-side ul.woocommerce-MyAccount-navigation,
+.woocommerce-account .woocommerce-MyAccount-navigation ul {
+	list-style: none !important;
+	padding: 0 !important;
+	margin: 0 !important;
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+.woocommerce-MyAccount-navigation li { margin: 0 !important; }
+.woocommerce-MyAccount-navigation li a {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 11px 12px !important;
+	text-decoration: none !important;
+	color: var(--ink-soft, #B6C2DA);
+	font-size: 14px;
+	border-radius: 6px;
+	border-left: 2px solid transparent;
+	transition: background .15s, color .15s;
+}
+.woocommerce-MyAccount-navigation li a:hover {
+	background: var(--bg-alt, #0A1124);
+	color: var(--ink, #E8EDF7);
+}
+.woocommerce-MyAccount-navigation li.is-active a {
+	background: #121C36;
+	color: var(--primary, #2563EB);
+	border-left-color: var(--primary, #2563EB);
+	font-weight: 600;
+}
+.woocommerce-MyAccount-navigation li--customer-logout a { color: var(--sale, #F43F5E) !important; }
+
+.lwp-acct-main h2,
+.woocommerce-MyAccount-content h2,
+.woocommerce-MyAccount-content h3 {
+	font-family: var(--serif, 'Playfair Display', Georgia, serif);
+	font-size: 28px;
+	font-weight: 500;
+	letter-spacing: -.02em;
+	margin-bottom: 18px;
+}
+.lwp-acct-card,
+.woocommerce-MyAccount-content > p:first-of-type {
+	background: var(--card);
+	border: 1px solid var(--line, #1E2A44);
+	border-radius: 8px;
+	padding: 28px;
+	margin-bottom: 24px;
+}
+
+/* Account orders / addresses tables */
+.woocommerce-orders-table,
+.shop_table {
+	width: 100% !important;
+	border-collapse: collapse !important;
+	font-size: 14px;
+}
+.woocommerce-orders-table th,
+.shop_table th {
+	text-align: left;
+	font-family: var(--mono, monospace);
+	font-size: 10.5px;
+	letter-spacing: .16em;
+	text-transform: uppercase;
+	color: var(--muted, #93A1BC);
+	padding: 12px !important;
+	border-bottom: 1px solid var(--line, #1E2A44);
+	font-weight: 500;
+	background: transparent !important;
+}
+.woocommerce-orders-table td,
+.shop_table td {
+	padding: 16px 12px !important;
+	border-bottom: 1px solid var(--line-light, #16203B);
+	color: var(--ink-soft, #B6C2DA);
+	vertical-align: middle;
+	background: transparent !important;
+}
+
+@media (max-width: 900px) {
+	.lwp-acct-grid { grid-template-columns: 1fr; gap: 32px; }
+	.lwp-acct-side { position: static; }
+}
+
+/* 1.7.24 — PDP bottom-of-page whitespace cleanup. .lwp-pdp had
+ * padding-bottom:96px and .lwp-site-footer margin-top:96px which on
+ * mobile stacked into a ~192px empty cream-colored band between the
+ * perks list and the dark footer. Tighten both on mobile so the
+ * footer follows the content naturally. Desktop layout unaffected.
+ *
+ * NOTE: selector must out-specify the legacy Kit CSS layer rule
+ *   body.single-product main { padding-bottom: 96px } @max-width:767px
+ * which was pushed during an earlier sprint to compensate for a sticky
+ * bar that no longer needs it. Using body.single-product main.lwp-pdp
+ * (0,1,2) beats body.single-product main (0,1,1). */
+@media (max-width: 900px) {
+	body.single-product main.lwp-pdp { padding-bottom: 32px; }
+	.lwp-site-footer { margin-top: 32px; }
+}
+
+/* ─── Product Grid (lwp-product-grid) mobile/tablet containment ─────────────
+ * widgets.css carries the full grid rules, but on Elementor pages where the
+ * widget was inserted without registering its style dependency (e.g. added via
+ * the REST/MCP page builder), widgets.css is NOT enqueued — so the list falls
+ * back to a per-instance ~500px single-column layout that overflows the viewport
+ * on phones. tokens.css is always loaded, so these rules guarantee the grid
+ * stays contained + responsive there regardless. Column counts use !important to
+ * beat the per-instance Elementor "Columns" CSS on small screens; desktop is
+ * left untouched (the Columns control still governs it). */
+@media (max-width: 1024px) {
+	html body ul.products.lwp-product-grid__list {
+		display: grid !important;
+		grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+		width: 100% !important;
+		max-width: 100% !important;
+		margin: 0 !important;
+		gap: 20px !important;
+	}
+	html body ul.products.lwp-product-grid__list > li.product {
+		width: auto !important;
+		max-width: 100% !important;
+		margin: 0 !important;
+		min-width: 0 !important;
+		float: none !important;
+	}
+}
+@media (max-width: 680px) {
+	html body ul.products.lwp-product-grid__list {
+		grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+		gap: 14px !important;
+	}
+}
+/* Product-grid card title + price horizontal inset. The product-grid widget
+ * renders the title + price directly inside `.lwp-pcard-link` — it does NOT
+ * use the padded `.lwp-pcard-meta` wrapper that the standalone product-card
+ * widget does, so the text sat flush against the card edge (while the Add-to-cart
+ * button keeps its own 16px margin). Inset them to align with the button. Lives
+ * in tokens.css (always loaded) since widgets.css may not be enqueued here. */
+.lwp-product-grid__list .lwp-pcard-title,
+.lwp-product-grid__list .lwp-pcard-price {
+	padding-left: 16px !important;
+	padding-right: 16px !important;
+}
+
+/* Mobile card-grid side-gutter reclaim. The homepage Elementor sections keep a
+ * 32px desktop side padding at every breakpoint, so on a ~390px phone the card
+ * grids lost 64px (~16%) to side gutters — cards were cramped (the Add-to-cart
+ * label even truncated) and the outer gutters dwarfed the 14px inter-card gap.
+ * Reclaim half the gutter (→16px each side, balanced with the gap) so cards get
+ * meaningfully wider. Bounded at -16px → never exceeds the section's 32px
+ * padding, so no horizontal overflow. Scoped to the boxed card grids only —
+ * NOT the category grid, whose tiles are intentionally full-bleed (0 padding),
+ * where a negative margin WOULD overflow. */
+@media (max-width: 680px) {
+	.lwp-product-grid,
+	.lwp-mgrid,
+	.lwp-editorial-grid {
+		margin-left: -16px !important;
+		margin-right: -16px !important;
+	}
+}

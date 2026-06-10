@@ -106,9 +106,9 @@ if ( ! $elementor_header_active ) :
 	}
 
 	$amber_book_label = get_theme_mod( 'luwipress_amber_header_cta_label', '' );
-	$amber_book_label = $amber_book_label !== '' ? $amber_book_label : __( 'Plan My Trip', 'luwipress-amber' );
+	$amber_book_label = $amber_book_label !== '' ? $amber_book_label : __( 'Browse Tours', 'luwipress-amber' );
 	$amber_book_url   = get_theme_mod( 'luwipress_amber_header_cta_url', '' );
-	$amber_book_url   = $amber_book_url !== '' ? $amber_book_url : home_url( '/contact/' );
+	$amber_book_url   = $amber_book_url !== '' ? $amber_book_url : ( function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/shop/' ) );
 
 	// Topbar contact details. Defaults are the Fly By Deniz concierge line; any
 	// site overrides them via Customizer → LuwiPress Amber → Topbar. Filterable.

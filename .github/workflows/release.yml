@@ -1,0 +1,73 @@
+name: Release
+
+# Tag-and-forget release pipeline for the LuwiPress theme ecosystem.
+#
+# Push a tag like `luwipress-gold-v1.10.22` and this zips the matching theme
+# folder into `{slug}-v{version}.zip` (top-level folder == theme slug == the
+# installed theme directory name, which is what WordPress + the LuwiPress
+# auto-updater key on) and publishes a GitHub Release. The luwi.dev license
+# server's webhook then signs + registers it so licensed sites can auto-update.
+#
+# Tag scheme: <theme-slug>-v<version>, e.g.
+#   luwipress-gold-v1.10.22 · luwipress-emerald-v1.0.0 · luwipress-amber-v1.0.0
+# A -beta / -rc version suffix marks the release as prerelease.
+
+on:
+  push:
+    tags:
+      - 'luwipress-*-v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Resolve slug + version from tag
+        id: meta
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+          if [[ "$TAG" =~ ^(luwipress-[a-z0-9-]+)-v(.+)$ ]]; then
+            SLUG="${BASH_REMATCH[1]}"; VERSION="${BASH_REMATCH[2]}"
+          else
+            echo "::error::Unrecognized tag '$TAG' (expected <slug>-v<version>)"; exit 1
+          fi
+          if [ ! -d "$SLUG" ]; then
+            echo "::error::Theme folder '$SLUG' not found in repo"; exit 1
+          fi
+          PRERELEASE=false
+          case "$VERSION" in *-beta*|*-rc*) PRERELEASE=true;; esac
+          echo "slug=$SLUG"             >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION"       >> "$GITHUB_OUTPUT"
+          echo "prerelease=$PRERELEASE" >> "$GITHUB_OUTPUT"
+          echo "asset=releases/${SLUG}-v${VERSION}.zip" >> "$GITHUB_OUTPUT"
+          echo "Building $SLUG v$VERSION (prerelease=$PRERELEASE)"
+
+      - name: Build theme ZIP
+        run: |
+          mkdir -p releases
+          # WP-friendly: forward slashes, top-level dir == theme slug, strip junk.
+          zip -rq "${{ steps.meta.outputs.asset }}" "${{ steps.meta.outputs.slug }}" \
+            -x '*/.DS_Store' -x '__MACOSX/*' -x '*/.git/*' -x '*/node_modules/*'
+          test -f "${{ steps.meta.outputs.asset }}" \
+            || { echo "::error::ZIP not produced"; exit 1; }
+          echo "sha256: $(sha256sum "${{ steps.meta.outputs.asset }}" | cut -d' ' -f1)"
+          echo "top entry: $(unzip -Z1 "${{ steps.meta.outputs.asset }}" | head -1)"
+
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          FLAGS=""
+          [ "${{ steps.meta.outputs.prerelease }}" = "true" ] && FLAGS="--prerelease"
+          if gh release view "${GITHUB_REF_NAME}" >/dev/null 2>&1; then
+            gh release upload "${GITHUB_REF_NAME}" "${{ steps.meta.outputs.asset }}" --clobber
+          else
+            gh release create "${GITHUB_REF_NAME}" "${{ steps.meta.outputs.asset }}" \
+              -t "${{ steps.meta.outputs.slug }} ${{ steps.meta.outputs.version }}" \
+              --generate-notes $FLAGS
+          fi

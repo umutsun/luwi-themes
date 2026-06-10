@@ -183,6 +183,21 @@ if ( ! $elementor_header_active ) :
 					}
 				}
 			}
+			// Operator-preferred topbar language order (filterable). Codes not in
+			// the list fall to the end keeping their relative order. Default puts
+			// the primary markets first: EN · TR · RU · AR · ZH · DE · FR · ES.
+			$amber_lang_order = apply_filters( 'luwipress_amber_lang_order', array( 'EN', 'TR', 'RU', 'AR', 'ZH', 'DE', 'FR', 'ES' ) );
+			if ( ! empty( $amber_lang_order ) && count( $amber_langs ) > 1 ) {
+				$amber_order_idx = array_flip( array_values( $amber_lang_order ) );
+				usort(
+					$amber_langs,
+					function ( $a, $b ) use ( $amber_order_idx ) {
+						$ia = isset( $amber_order_idx[ $a['code'] ] ) ? $amber_order_idx[ $a['code'] ] : 999;
+						$ib = isset( $amber_order_idx[ $b['code'] ] ) ? $amber_order_idx[ $b['code'] ] : 999;
+						return $ia <=> $ib;
+					}
+				);
+			}
 			if ( count( $amber_langs ) > 1 ) :
 				echo '<span class="lang" role="navigation" aria-label="' . esc_attr__( 'Languages', 'luwipress-amber' ) . '">';
 				$amber_codes = [];

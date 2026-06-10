@@ -23,7 +23,10 @@ if ( ! $elementor_footer_active ) :
 	$legal   = trim( (string) get_theme_mod( 'luwipress_amber_footer_legal', '' ) );
 
 	$f_phone    = trim( (string) get_theme_mod( 'luwipress_amber_topbar_phone', '' ) );
-	$f_email    = trim( (string) get_theme_mod( 'luwipress_amber_topbar_email', get_option( 'admin_email' ) ) );
+	// Default to EMPTY (not admin_email) — the WP admin address is rarely the
+	// public contact address and leaked "designdubai24@gmail.com" into footers.
+	// Operators set a real address via Customizer → footer/topbar email.
+	$f_email    = trim( (string) get_theme_mod( 'luwipress_amber_topbar_email', '' ) );
 	$f_location = trim( (string) get_theme_mod( 'luwipress_amber_topbar_location', '' ) );
 
 	$f_arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';

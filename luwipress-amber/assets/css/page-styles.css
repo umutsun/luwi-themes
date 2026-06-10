@@ -400,21 +400,8 @@
 /* ---- local token aliases so the rest of the block is readable ---------- */
 .lwp-shop-archive,
 body.woocommerce main {
-  --amber: #E5A23D;
-  --amber-soft: #F0C277;
-  --coral: #E8744F;
-  --coral-deep: #C9572F;
-  --bg-1: #211710;
-  --surface: #2A201A;
-  --surface-2: #322519;
-  --ink: #F7F0E6;
-  --muted: #B7A99A;
-  --faint: #8C7E70;
-  --line: rgba(231,200,150,.16);
-  --line-strong: rgba(231,200,150,.26);
-  --grad-cta: linear-gradient(100deg, #E5A23D 0%, #E8744F 100%);
+  --ink: var(--text, #F7F0E6);
   --cta-ink: #2A170B;
-  --maxw: 1280px;
 }
 
 /* ==========================================================================
@@ -1073,6 +1060,9 @@ main.lwp-shop-archive {
 .lwp-shop-archive .lwp-smart-filters .lwp-tag-cloud li { margin: 0 !important; }
 .lwp-shop-archive .lwp-smart-filters .lwp-tag-cloud li a span { color: var(--faint, #8C7E70) !important; font-size: 11px !important; margin: 0 !important; }
 .lwp-shop-archive .lwp-smart-filters .lwp-quick-toggles li { margin: 0 0 7px !important; }
+/* standardized control radius: sort select matches the 13px button family */
+.lwp-shop-archive .woocommerce-ordering select.orderby,
+.woocommerce-ordering select.orderby { border-radius: 13px !important; }
 .lwp-shop-archive .lwp-smart-filters .lwp-tag-cloud li a:hover,
 .lwp-shop-archive .lwp-smart-filters .lwp-quick-toggle:not(.is-active):hover {
   border-color: var(--amber, #E5A23D) !important;
@@ -1105,7 +1095,7 @@ html body.woocommerce.woocommerce-page ul.products li.product.lwp-pcard > a.butt
   background-image: none !important;
   border: 1px solid rgba(232,116,79,.34) !important;
   color: #E8744F !important;
-  border-radius: 99px !important;
+  border-radius: 13px !important;
   text-transform: none !important;
   letter-spacing: .01em !important;
   font-family: 'Inter', sans-serif !important;
@@ -1130,7 +1120,7 @@ html body.woocommerce.woocommerce-page ul.products li.product.lwp-pcard > a.add_
    10. PRODUCT DETAIL PAGE (native theme single-product.php — Elementor off)
    box + 2-col grid + amber add-to-cart + dark qty/tabs/perks
    ========================================================================== */
-body.single-product main.lwp-pdp { background: var(--bg, #211710) !important; color: var(--ink, #F7F0E6) !important; }
+body.single-product main.lwp-pdp { background: var(--bg-1, #211710) !important; color: var(--ink, #F7F0E6) !important; }
 body.single-product .lwp-pdp-container {
   max-width: 1280px !important;
   margin: 0 auto !important;
@@ -1335,3 +1325,43 @@ body.woocommerce-checkout main.lwp-fallback-main {
   border: 0 !important;
   border-radius: 13px !important;
 }
+
+/* ==========================================================================
+   13. UNIFIED MINIMAL BREADCRUMB + minimal archive header (one template for
+   shop / category / product). Redundant archive H1 hidden (sr-only) so the
+   page reads clean while the H1 stays in the DOM for SEO. PDP product title
+   (in .summary) is untouched — that's the real content heading.
+   ========================================================================== */
+.lwp-crumb {
+  font-size: 13px !important;
+  color: var(--muted, #B7A99A) !important;
+  margin: 0 0 16px !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 9px !important;
+  flex-wrap: wrap !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+.lwp-crumb a { color: var(--muted, #B7A99A) !important; text-decoration: none !important; transition: color .15s ease !important; }
+.lwp-crumb a:hover { color: var(--text, #F7F0E6) !important; }
+.lwp-crumb .current { color: var(--primary, #E5A23D) !important; font-weight: 500 !important; }
+.lwp-crumb .sep { font-size: 0 !important; margin: 0 !important; line-height: 0 !important; }
+.lwp-crumb .sep::before { content: "/" !important; font-size: 13px !important; color: var(--faint, #8C7E70) !important; }
+
+/* shop / category archive: drop the eyebrow + hide the redundant page-title
+   (kept sr-only for SEO). Category description/lead stays — it's real content. */
+.lwp-shop-archive .lwp-archive-header { margin: 0 0 6px !important; min-height: 0 !important; }
+.lwp-shop-archive .lwp-archive-header .lwp-eyebrow { display: none !important; }
+.lwp-shop-archive .lwp-archive-header .lwp-page-title {
+  position: absolute !important;
+  width: 1px !important; height: 1px !important;
+  padding: 0 !important; margin: -1px !important;
+  overflow: hidden !important; clip: rect(0,0,0,0) !important;
+  white-space: nowrap !important; border: 0 !important;
+}
+/* when the header has a category image (split layout), keep the media but
+   pull the copy column tidy without the big title gap */
+.lwp-shop-archive .lwp-archive-header--split .lwp-archive-header__copy { justify-content: center !important; }
+.lwp-shop-archive .lwp-page-lead { margin-top: 4px !important; }

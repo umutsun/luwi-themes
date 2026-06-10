@@ -369,3 +369,938 @@
   .result { grid-template-columns: 1fr; }
   .result .r-thumb { aspect-ratio: 16/9; }
 }
+
+
+
+/* ==========================================================================
+   AMBER WOOCOMMERCE ADAPTER (1.1.0)
+   The design system (pages.css / page-styles.css) targets the mockup's
+   semantic classes (.tour-card / .cart-layout / .checkout-grid). The live WC
+   templates emit WC-standard + .lwp-* markup, so the design styles never
+   reached the rendered shop/PDP/cart/checkout. This layer styles the ACTUAL
+   WC output to the Amber dark design: boxed layout, sidebar grid, dark glass
+   cards, amber/coral CTAs, dark filter sidebar, dark cart/checkout panels.
+   Uses the theme design tokens (--surface/--text/--primary/--accent/--line).
+   ========================================================================== */
+/* cart/search/account drawers above sticky header */
+.lwp-cart-drawer, .lwp-search-overlay { z-index: 100000; }
+.lwp-cart-drawer__panel { z-index: 100001; }
+.lwp-account-pop { z-index: 100002; }
+
+/* ==========================================================================
+   LuwiPress Amber — Shop archive dark re-theme (Kit CSS override layer)
+   Goal: boxed 1280px container + 296px sticky filters sidebar + 2-col card grid,
+   repaint white account/search/cart panels dark, amber/coral tokens throughout.
+   Tokens: --primary #E5A23D  --accent #E8744F  --sale #C9572F
+           --bg #211710  --surface #2A201A  --surface-2 #322519
+           --ink #F7F0E6  --muted #B7A99A  --faint #8C7E70
+           --line rgba(231,200,150,.16)  --line-strong rgba(231,200,150,.26)
+           --grad-cta linear-gradient(100deg,#E5A23D 0%,#E8744F 100%)
+           --cta-ink #2A170B
+   ========================================================================== */
+
+/* ---- local token aliases so the rest of the block is readable ---------- */
+.lwp-shop-archive,
+body.woocommerce main {
+  --amber: #E5A23D;
+  --amber-soft: #F0C277;
+  --coral: #E8744F;
+  --coral-deep: #C9572F;
+  --bg-1: #211710;
+  --surface: #2A201A;
+  --surface-2: #322519;
+  --ink: #F7F0E6;
+  --muted: #B7A99A;
+  --faint: #8C7E70;
+  --line: rgba(231,200,150,.16);
+  --line-strong: rgba(231,200,150,.26);
+  --grad-cta: linear-gradient(100deg, #E5A23D 0%, #E8744F 100%);
+  --cta-ink: #2A170B;
+  --maxw: 1280px;
+}
+
+/* ==========================================================================
+   1. BOXED CONTAINER + SIDEBAR/GRID LAYOUT (amber real DOM structure)
+   main > .lwp-page-container > .lwp-shop-grid-wrap > (aside.lwp-shop-sidebar + section.lwp-shop-results > ul.products)
+   ========================================================================== */
+main.lwp-shop-archive {
+  background: var(--bg-1, #211710) !important;
+  color: var(--ink, #F7F0E6) !important;
+}
+.lwp-shop-archive .lwp-page-container {
+  max-width: 1280px !important;
+  margin: 0 auto !important;
+  padding: 46px 32px 104px !important;
+  box-sizing: border-box !important;
+}
+.lwp-shop-archive .lwp-shop-grid-wrap {
+  display: grid !important;
+  grid-template-columns: 296px minmax(0, 1fr) !important;
+  gap: 38px !important;
+  align-items: start !important;
+  margin-top: 30px !important;
+}
+.lwp-shop-archive .lwp-shop-sidebar {
+  grid-column: 1 / 2 !important;
+  position: sticky !important;
+  top: 100px !important;
+  align-self: start !important;
+  width: auto !important;
+  margin: 0 !important;
+  float: none !important;
+}
+.lwp-shop-archive .lwp-shop-results {
+  grid-column: 2 / 3 !important;
+  min-width: 0 !important;
+  width: auto !important;
+  margin: 0 !important;
+  float: none !important;
+}
+.lwp-shop-archive .lwp-smart-filters {
+  width: 100% !important;
+  max-width: 100% !important;
+  position: static !important;
+  background: var(--surface, #2A201A) !important;
+  border: 1px solid var(--line, rgba(231,200,150,.16)) !important;
+  border-radius: 20px !important;
+  padding: 8px 24px 24px !important;
+  color: var(--ink, #F7F0E6) !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  float: none !important;
+}
+.lwp-shop-archive .lwp-shop-toolbar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+  margin: 0 0 4px !important;
+}
+.lwp-shop-archive .lwp-shop-toolbar .woocommerce-result-count {
+  margin: 0 !important;
+  color: var(--muted, #B7A99A) !important;
+  font-size: 14.5px !important;
+}
+.lwp-shop-archive .lwp-shop-toolbar .woocommerce-ordering {
+  margin: 0 !important;
+  float: none !important;
+}
+.lwp-shop-archive .lwp-shop-results ul.products {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 24px !important;
+  margin: 22px 0 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+  width: 100% !important;
+  float: none !important;
+}
+.lwp-shop-archive .lwp-shop-results ul.products::before,
+.lwp-shop-archive .lwp-shop-results ul.products::after { content: none !important; display: none !important; }
+.lwp-shop-archive .lwp-shop-results ul.products li.product {
+  width: 100% !important;
+  margin: 0 !important;
+  float: none !important;
+}
+
+/* ==========================================================================
+   2. FILTER SIDEBAR — blocks, headings, checkboxes, price, quick toggles
+   ========================================================================== */
+.lwp-shop-archive .lwp-filter-block {
+  padding: 20px 0 !important;
+  border-top: 1px solid var(--line) !important;
+}
+.lwp-shop-archive .lwp-filter-block:first-child {
+  border-top: 0 !important;
+}
+.lwp-shop-archive .lwp-filter-block__title {
+  font-size: 11.5px !important;
+  letter-spacing: .16em !important;
+  text-transform: uppercase !important;
+  color: var(--amber) !important;
+  font-weight: 600 !important;
+  margin: 0 0 14px !important;
+}
+
+/* Filter option rows (tags / categories as checkbox/anchor rows). */
+.lwp-shop-archive .lwp-filter-block a,
+.lwp-shop-archive .lwp-filter-block label,
+.lwp-shop-archive .lwp-filter-block li a {
+  color: var(--muted) !important;
+  font-size: 14px !important;
+  text-decoration: none !important;
+  transition: color .15s ease !important;
+}
+.lwp-shop-archive .lwp-filter-block a:hover,
+.lwp-shop-archive .lwp-filter-block label:hover,
+.lwp-shop-archive .lwp-filter-block li a:hover {
+  color: var(--ink) !important;
+}
+.lwp-shop-archive .lwp-filter-block .count {
+  color: var(--faint) !important;
+  font-size: 12px !important;
+  margin-left: auto !important;
+}
+
+/* Popular-tags as pill chips on dark. */
+.lwp-shop-archive .lwp-filter-block.tagcloud a,
+.lwp-shop-archive .tagcloud a,
+.lwp-shop-archive .lwp-filter-block .tag-cloud a {
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 6px 12px !important;
+  margin: 0 6px 6px 0 !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 99px !important;
+  background: transparent !important;
+  color: var(--muted) !important;
+  font-size: 12.5px !important;
+}
+.lwp-shop-archive .tagcloud a:hover,
+.lwp-shop-archive .lwp-filter-block.tagcloud a:hover {
+  border-color: var(--amber) !important;
+  color: var(--ink) !important;
+}
+
+/* Custom checkboxes (On-sale / In-stock toggles, attribute filters). */
+.lwp-shop-archive .lwp-filter-block input[type="checkbox"] {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  width: 18px !important;
+  height: 18px !important;
+  border: 1.5px solid var(--line-strong) !important;
+  border-radius: 6px !important;
+  background: transparent !important;
+  cursor: pointer !important;
+  position: relative !important;
+  vertical-align: middle !important;
+  flex: 0 0 auto !important;
+}
+.lwp-shop-archive .lwp-filter-block input[type="checkbox"]:checked {
+  background: var(--grad-cta) !important;
+  border-color: transparent !important;
+}
+.lwp-shop-archive .lwp-filter-block input[type="checkbox"]:checked::after {
+  content: "✓" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  color: var(--cta-ink) !important;
+}
+
+/* Price range slider thumb/track. */
+.lwp-shop-archive .lwp-filter-block input[type="range"] {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  width: 100% !important;
+  height: 4px !important;
+  border-radius: 99px !important;
+  background: var(--line-strong) !important;
+}
+.lwp-shop-archive .lwp-filter-block input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none !important;
+  width: 20px !important;
+  height: 20px !important;
+  border-radius: 50% !important;
+  background: var(--amber) !important;
+  border: 3px solid var(--surface) !important;
+  cursor: pointer !important;
+}
+.lwp-shop-archive .lwp-filter-block input[type="range"]::-moz-range-thumb {
+  width: 20px !important;
+  height: 20px !important;
+  border-radius: 50% !important;
+  background: var(--amber) !important;
+  border: 3px solid var(--surface) !important;
+  cursor: pointer !important;
+}
+.lwp-shop-archive .price_slider_amount .price_label,
+.lwp-shop-archive .lwp-filter-block .price-vals {
+  color: var(--ink) !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+}
+
+/* Quick-toggle chips (.lwp-quick-toggle). */
+.lwp-shop-archive .lwp-quick-toggle {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 8px 12px !important;
+  border: 1px solid var(--line-strong) !important;
+  border-radius: 99px !important;
+  background: transparent !important;
+  color: var(--muted) !important;
+  font-size: 13px !important;
+  cursor: pointer !important;
+}
+.lwp-shop-archive .lwp-quick-toggle:hover {
+  border-color: var(--amber) !important;
+  color: var(--ink) !important;
+}
+.lwp-shop-archive .lwp-quick-toggle.is-active,
+.lwp-shop-archive .lwp-quick-toggle[aria-pressed="true"] {
+  background: var(--grad-cta) !important;
+  border-color: transparent !important;
+  color: var(--cta-ink) !important;
+  font-weight: 600 !important;
+}
+
+/* ==========================================================================
+   3. SORT CONTROL (pill select)
+   ========================================================================== */
+.lwp-shop-archive .woocommerce-ordering select.orderby,
+.lwp-shop-archive select.orderby,
+.woocommerce-ordering select {
+  background: var(--surface) !important;
+  border: 1px solid var(--line-strong) !important;
+  color: var(--ink) !important;
+  border-radius: 99px !important;
+  padding: 10px 16px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  line-height: 1.2 !important;
+  cursor: pointer !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  outline: none !important;
+}
+.lwp-shop-archive .woocommerce-ordering select.orderby option {
+  background: var(--surface) !important;
+  color: var(--ink) !important;
+}
+.lwp-shop-archive .woocommerce-ordering select.orderby:focus {
+  border-color: var(--amber) !important;
+}
+
+/* ==========================================================================
+   4. PRODUCT CARDS — dark glass tiles
+   ========================================================================== */
+.lwp-shop-archive ul.products li.product,
+.lwp-shop-archive ul.products li.product.lwp-pcard,
+.lwp-shop-archive li.product .lwp-pcard {
+  background: var(--surface) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 20px !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: var(--ink) !important;
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease !important;
+}
+.lwp-shop-archive ul.products li.product:hover,
+.lwp-shop-archive ul.products li.product.lwp-pcard:hover {
+  transform: translateY(-6px) !important;
+  border-color: var(--line-strong) !important;
+  box-shadow: 0 28px 54px -26px rgba(0,0,0,.66) !important;
+}
+
+/* Product image area. */
+.lwp-shop-archive li.product a img,
+.lwp-shop-archive li.product img.attachment-woocommerce_thumbnail,
+.lwp-shop-archive li.product .wp-post-image {
+  width: 100% !important;
+  height: 218px !important;
+  object-fit: cover !important;
+  display: block !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  transition: transform .4s ease !important;
+}
+.lwp-shop-archive li.product:hover img.attachment-woocommerce_thumbnail,
+.lwp-shop-archive li.product:hover .wp-post-image {
+  transform: scale(1.08) !important;
+}
+
+/* Sale flash → coral glass pill over the photo. */
+.lwp-shop-archive li.product .onsale {
+  position: absolute !important;
+  top: 14px !important;
+  left: 14px !important;
+  margin: 0 !important;
+  min-height: 0 !important;
+  min-width: 0 !important;
+  padding: 6px 12px !important;
+  border-radius: 99px !important;
+  background: rgba(16,10,7,.55) !important;
+  border: 1px solid var(--line-strong) !important;
+  -webkit-backdrop-filter: blur(6px) !important;
+  backdrop-filter: blur(6px) !important;
+  color: var(--ink) !important;
+  font-size: 11.5px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+}
+
+/* Card text body. */
+.lwp-shop-archive li.product .woocommerce-loop-product__title,
+.lwp-shop-archive li.product h2,
+.lwp-shop-archive li.product h3 {
+  font-family: 'Fraunces', Georgia, serif !important;
+  font-size: 23px !important;
+  font-weight: 500 !important;
+  color: var(--ink) !important;
+  padding: 18px 22px 0 !important;
+  margin: 0 !important;
+}
+.lwp-shop-archive li.product .lwp-pcard__meta,
+.lwp-shop-archive li.product .woocommerce-product-details__short-description {
+  color: var(--muted) !important;
+  font-size: 14px !important;
+  line-height: 1.55 !important;
+  padding: 8px 22px 0 !important;
+  margin: 0 !important;
+}
+.lwp-shop-archive li.product .price {
+  font-family: 'Fraunces', Georgia, serif !important;
+  color: var(--ink) !important;
+  font-size: 22px !important;
+  font-weight: 500 !important;
+  padding: 14px 22px 0 !important;
+  margin: 0 !important;
+  display: block !important;
+}
+.lwp-shop-archive li.product .price del {
+  color: var(--faint) !important;
+  font-size: 15px !important;
+  opacity: .8 !important;
+}
+.lwp-shop-archive li.product .price ins {
+  color: var(--amber-soft) !important;
+  text-decoration: none !important;
+}
+
+/* ==========================================================================
+   5. ADD-TO-CART / "VIEW" BUTTON — coral glass → gradient fill on hover
+   ========================================================================== */
+.lwp-shop-archive li.product a.add_to_cart_button,
+.lwp-shop-archive li.product a.button.product_type_simple,
+.lwp-shop-archive li.product button.product_type_simple,
+.lwp-shop-archive li.product .button,
+.lwp-shop-archive li.product a.added_to_cart {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  margin: 20px 22px 22px !important;
+  margin-top: auto !important;
+  padding: 12px 20px !important;
+  border-radius: 99px !important;
+  background: rgba(232,116,79,.12) !important;
+  border: 1px solid rgba(232,116,79,.32) !important;
+  color: var(--coral) !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  text-decoration: none !important;
+  text-transform: none !important;
+  transition: background .18s ease, color .18s ease, border-color .18s ease !important;
+}
+.lwp-shop-archive li.product a.add_to_cart_button:hover,
+.lwp-shop-archive li.product a.button.product_type_simple:hover,
+.lwp-shop-archive li.product button.product_type_simple:hover,
+.lwp-shop-archive li.product .button:hover,
+.lwp-shop-archive li.product:hover a.add_to_cart_button {
+  background: var(--grad-cta) !important;
+  border-color: transparent !important;
+  color: var(--cta-ink) !important;
+}
+.lwp-shop-archive li.product a.button.loading::after {
+  color: var(--cta-ink) !important;
+}
+
+/* ==========================================================================
+   6. PAGINATION
+   ========================================================================== */
+.lwp-shop-archive .woocommerce-pagination ul.page-numbers {
+  display: flex !important;
+  gap: 8px !important;
+  justify-content: center !important;
+  border: 0 !important;
+  margin: 48px 0 0 !important;
+  padding: 0 !important;
+}
+.lwp-shop-archive .woocommerce-pagination .page-numbers {
+  min-width: 44px !important;
+  height: 44px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 12px !important;
+  background: transparent !important;
+  color: var(--muted) !important;
+  font-weight: 600 !important;
+  margin: 0 !important;
+}
+.lwp-shop-archive .woocommerce-pagination .page-numbers.current,
+.lwp-shop-archive .woocommerce-pagination a.page-numbers:hover {
+  background: var(--grad-cta) !important;
+  border-color: transparent !important;
+  color: var(--cta-ink) !important;
+}
+
+/* ==========================================================================
+   7. WHITE PANELS → DARK  (account dropdown / search overlay / cart drawer)
+   These render with the theme's LIGHT --ink so text is invisible on white.
+   Repaint surface + text per the dark design.
+   ========================================================================== */
+
+/* ---- 7a. ACCOUNT DROPDOWN (.lwp-account-pop) -------------------------- */
+.lwp-account-pop {
+  background: #2A201A !important;
+  border: 1px solid rgba(231,200,150,.26) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 24px 50px -20px rgba(0,0,0,.7) !important;
+  color: #F7F0E6 !important;
+}
+.lwp-account-pop__head {
+  background: rgba(229,162,61,.08) !important;
+  border-bottom: 1px solid rgba(231,200,150,.16) !important;
+  color: #F7F0E6 !important;
+}
+.lwp-account-pop__hi {
+  color: #F7F0E6 !important;
+}
+.lwp-account-pop__em {
+  color: #F0C277 !important;
+}
+.lwp-account-pop__nav a,
+.lwp-account-pop__nav .lwp-account-pop__label,
+.lwp-account-pop__label {
+  color: #B7A99A !important;
+}
+.lwp-account-pop__nav a:hover {
+  background: rgba(229,162,61,.10) !important;
+  color: #F7F0E6 !important;
+}
+.lwp-account-pop a,
+.lwp-account-pop p,
+.lwp-account-pop span,
+.lwp-account-pop strong { color: inherit !important; }
+.lwp-account-pop svg { color: #E5A23D !important; }
+
+/* ---- 7b. SEARCH OVERLAY (.lwp-search-panel) -------------------------- */
+.lwp-search-panel {
+  background: #2A201A !important;
+  border: 1px solid rgba(231,200,150,.26) !important;
+  color: #F7F0E6 !important;
+  box-shadow: 0 36px 64px -26px rgba(0,0,0,.74) !important;
+}
+.lwp-search-panel .lwp-search-input,
+.lwp-search-panel input[type="search"],
+.lwp-search-panel input[type="text"] {
+  background: rgba(36,27,22,.6) !important;
+  border: 1px solid rgba(231,200,150,.26) !important;
+  border-radius: 99px !important;
+  color: #F7F0E6 !important;
+  caret-color: #E5A23D !important;
+}
+.lwp-search-panel .lwp-search-input::placeholder,
+.lwp-search-panel input::placeholder {
+  color: #8C7E70 !important;
+}
+.lwp-search-panel .lwp-search-input:focus {
+  border-color: #E5A23D !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(229,162,61,.14) !important;
+}
+.lwp-search-panel h2,
+.lwp-search-panel h3,
+.lwp-search-panel .lwp-search-meta b { color: #F7F0E6 !important; }
+.lwp-search-panel p,
+.lwp-search-panel .lwp-search-meta { color: #B7A99A !important; }
+.lwp-search-panel a { color: #E8744F !important; }
+.lwp-search-panel button[type="submit"],
+.lwp-search-panel .lwp-search-submit {
+  background: linear-gradient(100deg, #E5A23D 0%, #E8744F 100%) !important;
+  color: #2A170B !important;
+  border: 0 !important;
+}
+
+/* ---- 7c. CART DRAWER (.lwp-cart-drawer__panel) ----------------------- */
+.lwp-cart-drawer__panel {
+  background: #1A1412 !important;
+  border-left: 1px solid rgba(231,200,150,.26) !important;
+  color: #F7F0E6 !important;
+  box-shadow: 0 36px 64px -26px rgba(0,0,0,.74) !important;
+}
+.lwp-cart-drawer__head {
+  background: #1A1412 !important;
+  border-bottom: 1px solid rgba(231,200,150,.16) !important;
+  color: #F7F0E6 !important;
+}
+.lwp-cart-drawer__panel h2,
+.lwp-cart-drawer__panel h3,
+.lwp-cart-drawer__panel .cart-item-name,
+.lwp-cart-drawer__panel strong { color: #F7F0E6 !important; }
+.lwp-cart-drawer__panel p,
+.lwp-cart-drawer__panel .cart-item-meta,
+.lwp-cart-drawer__panel small { color: #B7A99A !important; }
+.lwp-cart-drawer__panel .price,
+.lwp-cart-drawer__panel .amount,
+.lwp-cart-drawer__panel .cart-total .amount { color: #F0C277 !important; }
+.lwp-cart-drawer__panel a:not(.button) { color: #E8744F !important; }
+.lwp-cart-drawer__panel hr,
+.lwp-cart-drawer__panel .cart-item { border-color: rgba(231,200,150,.16) !important; }
+.lwp-cart-drawer__panel .button,
+.lwp-cart-drawer__panel a.checkout,
+.lwp-cart-drawer__panel button.checkout {
+  background: linear-gradient(100deg, #E5A23D 0%, #E8744F 100%) !important;
+  color: #2A170B !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  box-shadow: 0 10px 30px -10px rgba(229,162,61,.6) !important;
+}
+
+/* Shared scrim for the overlay/drawer backdrops. */
+.lwp-cart-drawer__overlay,
+.lwp-search-overlay,
+.lwp-account-pop__overlay {
+  background: rgba(10,7,6,.62) !important;
+}
+
+/* ==========================================================================
+   8. RESPONSIVE — collapse sidebar under 980px, single column under 768px
+   ========================================================================== */
+@media (max-width: 980px) {
+  main.lwp-shop-archive,
+  .lwp-shop-archive .woocommerce {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  .lwp-shop-archive .lwp-smart-filters {
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    position: relative !important;
+    top: auto !important;
+    margin-bottom: 8px !important;
+  }
+  .lwp-shop-archive .woocommerce-result-count,
+  .lwp-shop-archive .woocommerce-ordering,
+  .lwp-shop-archive ul.products,
+  .lwp-shop-archive .woocommerce-pagination,
+  .lwp-shop-archive nav.woocommerce-pagination {
+    grid-column: 1 / -1 !important;
+  }
+}
+@media (max-width: 768px) {
+  body.woocommerce main.lwp-shop-archive,
+  main.lwp-shop-archive {
+    padding: 36px 20px 72px !important;
+  }
+  .lwp-shop-archive ul.products {
+    grid-template-columns: 1fr !important;
+  }
+  .lwp-shop-archive li.product a img,
+  .lwp-shop-archive li.product .wp-post-image {
+    height: 200px !important;
+  }
+  .lwp-shop-archive li.product .woocommerce-loop-product__title,
+  .lwp-shop-archive li.product h2,
+  .lwp-shop-archive li.product h3 {
+    font-size: 21px !important;
+  }
+}
+
+/* ==========================================================================
+   8b. RESPONSIVE CORRECTION — collapse grid-wrap (real structure)
+   ========================================================================== */
+@media (max-width: 980px) {
+  .lwp-shop-archive .lwp-shop-grid-wrap { grid-template-columns: 1fr !important; gap: 22px !important; }
+  .lwp-shop-archive .lwp-shop-sidebar { position: static !important; top: auto !important; grid-column: 1 / -1 !important; margin-bottom: 6px !important; }
+  .lwp-shop-archive .lwp-shop-results { grid-column: 1 / -1 !important; }
+}
+@media (max-width: 768px) {
+  .lwp-shop-archive .lwp-page-container { padding: 30px 18px 64px !important; }
+  .lwp-shop-archive .lwp-shop-results ul.products { grid-template-columns: 1fr !important; }
+}
+
+
+/* ==========================================================================
+   9. SMART-FILTER + CARD-BUTTON dark override
+   (beats theme inline #lwp-amber-smart-filters white #fff/#f6f3ed/--gold +
+    widgets.css card button background:var(--ink) cream)
+   ========================================================================== */
+.lwp-shop-archive .lwp-smart-filters .lwp-filter-block {
+  background: transparent !important;
+  border: 0 !important;
+  border-top: 1px solid var(--line, rgba(231,200,150,.16)) !important;
+  border-radius: 0 !important;
+  margin: 0 !important;
+  padding: 18px 0 !important;
+}
+.lwp-shop-archive .lwp-smart-filters .lwp-filter-block:first-child { border-top: 0 !important; padding-top: 6px !important; }
+.lwp-shop-archive .lwp-smart-filters .lwp-filter-block__title,
+.lwp-shop-archive .lwp-smart-filters .widget-title {
+  color: var(--amber, #E5A23D) !important;
+}
+.lwp-shop-archive .lwp-smart-filters ul li a,
+.lwp-shop-archive .lwp-smart-filters .woocommerce-widget-layered-nav-list a {
+  color: var(--muted, #B7A99A) !important;
+}
+.lwp-shop-archive .lwp-smart-filters ul li a:hover {
+  color: var(--ink, #F7F0E6) !important;
+  border-bottom-color: var(--amber, #E5A23D) !important;
+}
+.lwp-shop-archive .lwp-smart-filters ul li a span,
+.lwp-shop-archive .lwp-smart-filters .woocommerce-widget-layered-nav-list a .count {
+  color: var(--faint, #8C7E70) !important;
+}
+.lwp-shop-archive .lwp-smart-filters .lwp-tag-cloud li a,
+.lwp-shop-archive .lwp-smart-filters .lwp-quick-toggle {
+  background: rgba(231,200,150,.06) !important;
+  border: 1px solid var(--line, rgba(231,200,150,.16)) !important;
+  color: var(--muted, #B7A99A) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 7px !important;
+  width: auto !important;
+  max-width: 100% !important;
+  padding: 6px 13px !important;
+  border-radius: 999px !important;
+  line-height: 1.2 !important;
+  white-space: nowrap !important;
+}
+.lwp-shop-archive .lwp-smart-filters .lwp-tag-cloud { display: flex !important; flex-wrap: wrap !important; gap: 7px !important; }
+.lwp-shop-archive .lwp-smart-filters .lwp-tag-cloud li { margin: 0 !important; }
+.lwp-shop-archive .lwp-smart-filters .lwp-tag-cloud li a span { color: var(--faint, #8C7E70) !important; font-size: 11px !important; margin: 0 !important; }
+.lwp-shop-archive .lwp-smart-filters .lwp-quick-toggles li { margin: 0 0 7px !important; }
+.lwp-shop-archive .lwp-smart-filters .lwp-tag-cloud li a:hover,
+.lwp-shop-archive .lwp-smart-filters .lwp-quick-toggle:not(.is-active):hover {
+  border-color: var(--amber, #E5A23D) !important;
+  color: var(--ink, #F7F0E6) !important;
+  background: rgba(231,200,150,.10) !important;
+}
+.lwp-shop-archive .lwp-smart-filters .lwp-quick-toggle.is-active {
+  background: linear-gradient(100deg,#E5A23D 0%,#E8744F 100%) !important;
+  border-color: transparent !important;
+  color: #2A170B !important;
+}
+.lwp-shop-archive .lwp-smart-filters .price_slider_amount .price_label { color: var(--muted, #B7A99A) !important; }
+.lwp-shop-archive .lwp-smart-filters .price_slider_amount .button,
+.lwp-shop-archive .lwp-smart-filters .woocommerce-widget-layered-nav-dropdown__submit {
+  background: linear-gradient(100deg,#E5A23D 0%,#E8744F 100%) !important;
+  color: #2A170B !important; border: 0 !important;
+}
+.lwp-shop-archive .lwp-smart-filters .price_slider .ui-slider-range { background: var(--amber, #E5A23D) !important; }
+.lwp-shop-archive .lwp-smart-filters .price_slider .ui-slider-handle { background: var(--amber, #E5A23D) !important; border-color: var(--surface, #2A201A) !important; }
+
+/* card add-to-cart button: beat widgets.css var(--ink) cream bg (specificity html body .lwp-shop-archive ...) */
+html body.woocommerce.woocommerce-page ul.products li.product.lwp-pcard > a.button.add_to_cart_button,
+html body.woocommerce.woocommerce-page ul.products li.product.lwp-pcard > a.button.product_type_simple,
+html body.woocommerce.woocommerce-page ul.products li.product.lwp-pcard > a.button.product_type_variable,
+html body.woocommerce.woocommerce-page ul.products li.product.lwp-pcard > a.button.product_type_grouped,
+html body.woocommerce.woocommerce-page ul.products li.product.lwp-pcard > a.button.product_type_external,
+html body.woocommerce.woocommerce-page ul.products li.product.lwp-pcard > a.button:not(.lwp-pcard-link) {
+  background: rgba(232,116,79,.12) !important;
+  background-color: rgba(232,116,79,.12) !important;
+  background-image: none !important;
+  border: 1px solid rgba(232,116,79,.34) !important;
+  color: #E8744F !important;
+  border-radius: 99px !important;
+  text-transform: none !important;
+  letter-spacing: .01em !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 13px !important;
+  box-shadow: none !important;
+}
+html body.woocommerce.woocommerce-page ul.products li.product.lwp-pcard > a.button.add_to_cart_button:hover,
+html body.woocommerce.woocommerce-page ul.products li.product.lwp-pcard > a.button:not(.lwp-pcard-link):hover,
+html body .lwp-shop-archive ul.products li.product.lwp-pcard:hover > a.button.add_to_cart_button {
+  background: linear-gradient(100deg,#E5A23D 0%,#E8744F 100%) !important;
+  background-color: #E5A23D !important;
+  background-image: linear-gradient(100deg,#E5A23D 0%,#E8744F 100%) !important;
+  border-color: transparent !important;
+  color: #2A170B !important;
+}
+html body.woocommerce.woocommerce-page ul.products li.product.lwp-pcard > a.add_to_cart_button.added {
+  background: linear-gradient(100deg,#E5A23D 0%,#E8744F 100%) !important;
+  color: #2A170B !important;
+}
+
+/* ==========================================================================
+   10. PRODUCT DETAIL PAGE (native theme single-product.php — Elementor off)
+   box + 2-col grid + amber add-to-cart + dark qty/tabs/perks
+   ========================================================================== */
+body.single-product main.lwp-pdp { background: var(--bg, #211710) !important; color: var(--ink, #F7F0E6) !important; }
+body.single-product .lwp-pdp-container {
+  max-width: 1280px !important;
+  margin: 0 auto !important;
+  padding: 40px 32px 84px !important;
+  box-sizing: border-box !important;
+}
+body.single-product .lwp-pdp-grid > div.product {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr) !important;
+  gap: 54px !important;
+  align-items: start !important;
+}
+body.single-product .lwp-pdp-grid > div.product > .lwp-pdp-sticky-col {
+  grid-column: 1 / 2 !important; width: auto !important;
+  position: sticky !important; top: 100px !important; align-self: start !important;
+  margin: 0 !important; float: none !important;
+}
+body.single-product .lwp-pdp-grid > div.product > .summary,
+body.single-product .lwp-pdp-grid > div.product > .entry-summary {
+  grid-column: 2 / 3 !important; width: auto !important; margin: 0 !important; float: none !important;
+}
+body.single-product .lwp-pdp-grid > div.product > .woocommerce-tabs,
+body.single-product .lwp-pdp-grid > div.product > .related,
+body.single-product .lwp-pdp-grid > div.product > .upsells {
+  grid-column: 1 / -1 !important; width: auto !important; float: none !important;
+}
+/* native add-to-cart -> amber gradient (kills WC default purple) */
+body.single-product form.cart .single_add_to_cart_button,
+body.single-product .summary .single_add_to_cart_button,
+body.single-product .single_add_to_cart_button.button.alt,
+body.single-product .single_add_to_cart_button {
+  background: linear-gradient(100deg,#E5A23D 0%,#E8744F 100%) !important;
+  background-color: #E5A23D !important;
+  background-image: linear-gradient(100deg,#E5A23D 0%,#E8744F 100%) !important;
+  color: #2A170B !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  padding: 15px 34px !important;
+  font-weight: 700 !important;
+  text-transform: none !important;
+  letter-spacing: .01em !important;
+  box-shadow: 0 12px 30px -12px rgba(229,162,61,.5) !important;
+}
+body.single-product form.cart .single_add_to_cart_button:hover,
+body.single-product .single_add_to_cart_button:hover { filter: brightness(1.06) !important; }
+/* quantity input -> dark */
+body.single-product .quantity input.qty,
+body.single-product form.cart .quantity input.qty {
+  background: var(--surface-2, #322519) !important;
+  color: var(--ink, #F7F0E6) !important;
+  border: 1px solid var(--line, rgba(231,200,150,.16)) !important;
+  border-radius: 10px !important;
+}
+body.single-product .quantity input.qty::-webkit-inner-spin-button,
+body.single-product .quantity input.qty::-webkit-outer-spin-button { filter: invert(.7) !important; }
+/* price visible */
+body.single-product .summary > .price,
+body.single-product .summary .price,
+body.single-product .summary .price .amount { color: var(--primary, #E5A23D) !important; }
+body.single-product .summary .price del .amount { color: var(--faint, #8C7E70) !important; }
+/* tabs -> dark */
+body.single-product .woocommerce-tabs ul.tabs { background: transparent !important; }
+body.single-product .woocommerce-tabs ul.tabs::before { border-bottom-color: var(--line, rgba(231,200,150,.16)) !important; }
+body.single-product .woocommerce-tabs ul.tabs li {
+  background: transparent !important; border: 1px solid var(--line, rgba(231,200,150,.16)) !important;
+  border-radius: 99px !important;
+}
+body.single-product .woocommerce-tabs ul.tabs li::before,
+body.single-product .woocommerce-tabs ul.tabs li::after { display: none !important; }
+body.single-product .woocommerce-tabs ul.tabs li a { color: var(--muted, #B7A99A) !important; }
+body.single-product .woocommerce-tabs ul.tabs li.active { background: rgba(229,162,61,.10) !important; border-color: rgba(229,162,61,.4) !important; }
+body.single-product .woocommerce-tabs ul.tabs li.active a,
+body.single-product .woocommerce-tabs ul.tabs li a:hover { color: var(--primary, #E5A23D) !important; }
+body.single-product .woocommerce-Tabs-panel,
+body.single-product .woocommerce-Tabs-panel p,
+body.single-product .woocommerce-Tabs-panel li { color: var(--muted, #B7A99A) !important; }
+body.single-product .woocommerce-Tabs-panel h1,
+body.single-product .woocommerce-Tabs-panel h2,
+body.single-product .woocommerce-Tabs-panel h3 { color: var(--ink, #F7F0E6) !important; }
+/* related heading + perks band dark (belt-and-braces over token fix) */
+body.single-product .related > h2, body.single-product .related.products > h2 { color: var(--ink, #F7F0E6) !important; }
+body.single-product .lwp-pdp-perks { background: var(--surface, #2A201A) !important; border-color: var(--line, rgba(231,200,150,.16)) !important; }
+body.single-product .lwp-pdp-perks li { color: var(--muted, #B7A99A) !important; }
+/* description heading + short desc text */
+body.single-product .summary .woocommerce-product-details__short-description,
+body.single-product .summary .woocommerce-product-details__short-description p { color: var(--muted, #B7A99A) !important; }
+body.single-product .summary .product_title { color: var(--ink, #F7F0E6) !important; }
+@media (max-width: 900px) {
+  body.single-product .lwp-pdp-grid > div.product { grid-template-columns: 1fr !important; gap: 28px !important; }
+  body.single-product .lwp-pdp-grid > div.product > .lwp-pdp-sticky-col { position: static !important; top: auto !important; grid-column: 1 / -1 !important; }
+  body.single-product .lwp-pdp-grid > div.product > .summary { grid-column: 1 / -1 !important; }
+  body.single-product .lwp-pdp-container { padding: 28px 18px 60px !important; }
+}
+
+/* ==========================================================================
+   12. CART + CHECKOUT — box (fix L/R margins) + dark panels (classic + blocks)
+   ========================================================================== */
+body.woocommerce-cart .lwp-fallback-main,
+body.woocommerce-checkout .lwp-fallback-main,
+body.woocommerce-account .lwp-fallback-main,
+body.woocommerce-cart main.lwp-fallback-main,
+body.woocommerce-checkout main.lwp-fallback-main {
+  max-width: 1240px !important;
+  margin: 0 auto !important;
+  padding: 38px 32px 84px !important;
+  box-sizing: border-box !important;
+}
+/* classic checkout/cart panels -> dark surface */
+.lwp-co-step, .lwp-co-summary {
+  background: var(--surface, #2A201A) !important;
+  border: 1px solid var(--line, rgba(231,200,150,.16)) !important;
+  color: var(--ink, #F7F0E6) !important;
+  border-radius: 16px !important;
+}
+.lwp-co-step h2, .lwp-co-step h3, .lwp-co-step__title,
+.lwp-co-summary h2, .lwp-co-summary h3, .lwp-co-summary__title { color: var(--ink, #F7F0E6) !important; }
+.lwp-co-step label, .lwp-co-summary label, .woocommerce-checkout label,
+.woocommerce-cart label { color: var(--muted, #B7A99A) !important; }
+.lwp-co-step .input-text,
+.woocommerce-checkout input.input-text, .woocommerce-checkout textarea.input-text,
+.woocommerce-checkout input[type="text"], .woocommerce-checkout input[type="email"],
+.woocommerce-checkout input[type="tel"], .woocommerce-checkout input[type="password"],
+.woocommerce-checkout textarea, .woocommerce-cart input[type="text"] {
+  background: var(--surface-2, #322519) !important;
+  color: var(--ink, #F7F0E6) !important;
+  border: 1px solid var(--line, rgba(231,200,150,.22)) !important;
+  border-radius: 10px !important;
+}
+.woocommerce-checkout input::placeholder, .woocommerce-checkout textarea::placeholder { color: var(--faint, #8C7E70) !important; }
+.woocommerce-checkout input:focus, .woocommerce-checkout textarea:focus { border-color: var(--primary, #E5A23D) !important; outline: none !important; }
+/* select2 dropdowns dark */
+.woocommerce-checkout .select2-selection,
+.select2-container--default .select2-selection--single {
+  background: var(--surface-2, #322519) !important;
+  border: 1px solid var(--line, rgba(231,200,150,.22)) !important;
+  border-radius: 10px !important;
+  height: auto !important;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered { color: var(--ink, #F7F0E6) !important; line-height: 40px !important; }
+.select2-dropdown { background: var(--surface, #2A201A) !important; border-color: var(--line, rgba(231,200,150,.22)) !important; }
+.select2-container--default .select2-results__option { background: var(--surface, #2A201A) !important; color: var(--ink, #F7F0E6) !important; }
+.select2-container--default .select2-results__option--highlighted[aria-selected] { background: rgba(229,162,61,.18) !important; color: var(--ink, #F7F0E6) !important; }
+.select2-search--dropdown .select2-search__field { background: var(--surface-2, #322519) !important; color: var(--ink, #F7F0E6) !important; border-color: var(--line, rgba(231,200,150,.22)) !important; }
+/* order review table */
+.lwp-co-summary table, .woocommerce-checkout-review-order-table,
+.woocommerce-checkout-review-order-table th, .woocommerce-checkout-review-order-table td,
+.shop_table, .shop_table th, .shop_table td { color: var(--ink, #F7F0E6) !important; border-color: var(--line, rgba(231,200,150,.14)) !important; }
+.woocommerce-checkout-review-order-table .amount, .shop_table .amount { color: var(--primary, #E5A23D) !important; }
+/* coupon / info bars */
+.checkout_coupon, .woocommerce-form-coupon-toggle, .woocommerce-info,
+.woocommerce-form-login-toggle, .cart-discount {
+  background: var(--surface, #2A201A) !important; color: var(--muted, #B7A99A) !important;
+  border-color: var(--line, rgba(231,200,150,.16)) !important;
+}
+.woocommerce-info a, .woocommerce-form-coupon-toggle a, .showcoupon { color: var(--primary, #E5A23D) !important; }
+#place_order { border-radius: 999px !important; color: #2A170B !important; }
+/* payment method box */
+#payment, .woocommerce-checkout #payment { background: var(--surface-2, #322519) !important; border-radius: 14px !important; }
+#payment .payment_methods li, #payment label { color: var(--ink, #F7F0E6) !important; }
+#payment .payment_box { background: var(--surface, #2A201A) !important; color: var(--muted, #B7A99A) !important; }
+/* WC Blocks cart/checkout primary buttons -> amber */
+.wc-block-components-button.wp-element-button.contained,
+.wc-block-components-button.wp-element-button:not(.wc-block-components-button--text),
+.wp-block-woocommerce-cart a.wc-block-cart__submit-button,
+.wc-block-cart__submit-button {
+  background: linear-gradient(100deg,#E5A23D 0%,#E8744F 100%) !important;
+  background-color: #E5A23D !important;
+  color: #2A170B !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+}

@@ -46,6 +46,22 @@
   --sans: 'Inter', system-ui, sans-serif;
 }
 
+/* Gold-ported aliases that widgets.css references but the token bridge missed.
+   Dark mode pins them to the dark palette; light mode keeps light values so the
+   parallel light theme stays correct. Without these, widgets.css fell back to
+   Gold's LIGHT defaults (#f6f3f2 alt bands / #4d4635 soft text / #735c00 gold),
+   washing out shop filter chips, PDP perks and cart/checkout panels on dark. */
+:root:not([data-theme="light"]) {
+  --bg-alt: #2A201A;
+  --ink-soft: #B7A99A;
+  --gold: #E5A23D;
+}
+:root[data-theme="light"] {
+  --bg-alt: #F6F3EC;
+  --ink-soft: #4D4635;
+  --gold: #B0641E;
+}
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 html { scroll-behavior: smooth; }

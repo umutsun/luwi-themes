@@ -141,19 +141,23 @@ add_action( 'elementor/init', function () {
 		}
 	} );
 
-	// 3. Widget styling is delivered by the global Amber design system
-	//    (assets/css/amber.css, enqueued at wp_head p9999) — Amber 1.0.0
-	//    drops Gold's standalone widgets.css. We still REGISTER the historic
-	//    `luwipress-amber-widgets` handle (widgets reference it via
-	//    get_style_depends()) but point it at the lightweight tokens sheet so
-	//    the dependency resolves without a 404. The actual look comes from
-	//    amber.css / pages.css / page-styles.css already on the page.
+	// 3. Widget + WooCommerce card styling lives in assets/css/widgets.css
+	//    (Gold-ported, re-tokenised to the Amber palette). The `.lwp-pcard`
+	//    product-card chrome and every native lwp-* Elementor widget reference
+	//    the `luwipress-amber-widgets` handle via get_style_depends(), so it
+	//    MUST resolve to widgets.css — not the tokens bridge. (Pre-1.1.0 this
+	//    pointed at tokens.css, which silently shadowed the real enqueue in
+	//    inc/enqueue.php → widgets.css never loaded → WC cards/buttons rendered
+	//    unstyled. The Amber dark look + layout comes from the WooCommerce
+	//    adapter baked into page-styles.css, which loads after widgets.css.)
 	add_action( 'elementor/frontend/after_register_styles', function () {
-		wp_register_style(
-			'luwipress-amber-widgets',
-			LUWIPRESS_AMBER_URI . '/assets/css/tokens.css',
-			[],
-			LUWIPRESS_AMBER_VERSION
-		);
+		if ( ! wp_style_is( 'luwipress-amber-widgets', 'registered' ) ) {
+			wp_register_style(
+				'luwipress-amber-widgets',
+				LUWIPRESS_AMBER_URI . '/assets/css/widgets.css',
+				[ 'luwipress-amber-design' ],
+				LUWIPRESS_AMBER_VERSION
+			);
+		}
 	} );
 } );

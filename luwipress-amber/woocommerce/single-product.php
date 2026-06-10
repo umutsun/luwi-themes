@@ -65,11 +65,14 @@ get_header( 'shop' );
 			// (hand-tuned, free shipping, 14-day returns, warranty). The
 			// list is filterable so operator can swap items per language
 			// or per product category.
+			// Travel / experiences brand promise. Generic enough for any
+			// Amber store; operators override per language or per product
+			// category via the `luwipress_amber_pdp_perks` filter.
 			$perks = apply_filters( 'luwipress_amber_pdp_perks', [
-				[ 'icon' => '✓', 'text' => __( 'Hand-tuned in our atelier before dispatch', 'luwipress-amber' ) ],
-				[ 'icon' => '✈', 'text' => __( 'DHL Express worldwide · 3–7 working days', 'luwipress-amber' ) ],
-				[ 'icon' => '↺', 'text' => __( '14-day no-questions-asked return policy', 'luwipress-amber' ) ],
-				[ 'icon' => '★', 'text' => __( '2-year free service & tuning warranty', 'luwipress-amber' ) ],
+				[ 'icon' => '✓', 'text' => __( 'Instant confirmation — book with confidence', 'luwipress-amber' ) ],
+				[ 'icon' => '★', 'text' => __( 'Hand-picked experiences, vetted by our team', 'luwipress-amber' ) ],
+				[ 'icon' => '↺', 'text' => __( 'Free cancellation up to 24 hours before', 'luwipress-amber' ) ],
+				[ 'icon' => '☎', 'text' => __( '24/7 concierge support before & during your trip', 'luwipress-amber' ) ],
 			], isset( $product ) ? $product : null );
 
 			if ( ! empty( $perks ) ) : ?>

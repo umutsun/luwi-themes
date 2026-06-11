@@ -307,6 +307,11 @@ h1,h2,h3 { font-family: var(--serif); font-weight: 500; line-height: 1.04; lette
 /* ============================================================
    HEADER / NAV
    ============================================================ */
+/* Anchor offset: the header is sticky 76px tall, so in-page anchors (#about,
+   #services, "About Us" menu jump…) must clear it — without this the target
+   section's top (eyebrow + first heading line) tucks UNDER the header. */
+html { scroll-padding-top: 96px; }
+:where(section, .section, [id])[id] { scroll-margin-top: 96px; }
 .header { position: sticky; top: 0; z-index: 800; background: rgba(26,20,18,.72); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); transition: background .3s; }
 .header .wrap { display: flex; align-items: center; justify-content: space-between; height: 76px; }
 .brand { display: flex; align-items: center; gap: 12px; }

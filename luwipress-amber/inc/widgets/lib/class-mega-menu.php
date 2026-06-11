@@ -182,7 +182,9 @@ class LuwiPress_Amber_Widget_Mega_Menu extends Widget_Base {
 			return;
 		}
 
-		$items = wp_get_nav_menu_items( $menu_id );
+		// Resolve to the current language's menu for the items existence check,
+		// matching what render_navigation_html() will actually render.
+		$items = wp_get_nav_menu_items( self::resolve_menu_id_for_language( $menu_id ) );
 		if ( empty( $items ) ) {
 			$this->placeholder( __( 'This menu has no items yet.', 'luwipress-amber' ) );
 			return;
@@ -208,6 +210,52 @@ class LuwiPress_Amber_Widget_Mega_Menu extends Widget_Base {
 	}
 
 	/**
+	 * Resolve a nav-menu term ID to its counterpart in the CURRENT language.
+	 *
+	 * The widget stores a single (default-language) menu ID in its settings /
+	 * Customizer. Without this, a visitor on /fr/ or /ar/ gets the English
+	 * menu — English labels AND English custom-link URLs, so clicking an item
+	 * jumps back to the default language. WPML pairs nav menus as the
+	 * `nav_menu` element type; Polylang exposes the same via pll_get_term().
+	 * Falls back to the original ID when no translation exists or no
+	 * multilingual plugin is active.
+	 *
+	 * @param int $menu_id Default-language nav menu term ID.
+	 * @return int Menu term ID for the current language.
+	 */
+	public static function resolve_menu_id_for_language( $menu_id ) {
+		$menu_id = (int) $menu_id;
+		if ( $menu_id <= 0 ) {
+			return $menu_id;
+		}
+
+		// WPML — nav menus are translated as the `nav_menu` element type.
+		if ( defined( 'ICL_SITEPRESS_VERSION' ) ) {
+			$current = apply_filters( 'wpml_current_language', null );
+			if ( $current ) {
+				$translated = apply_filters( 'wpml_object_id', $menu_id, 'nav_menu', false, $current );
+				if ( $translated ) {
+					return (int) $translated;
+				}
+			}
+			return $menu_id;
+		}
+
+		// Polylang — pll_get_term() maps a term to the current language.
+		if ( function_exists( 'pll_get_term' ) && function_exists( 'pll_current_language' ) ) {
+			$current = pll_current_language();
+			if ( $current ) {
+				$translated = pll_get_term( $menu_id, $current );
+				if ( $translated ) {
+					return (int) $translated;
+				}
+			}
+		}
+
+		return $menu_id;
+	}
+
+	/**
 	 * Public static facade so the theme header (header.php) can render the
 	 * complete mega menu — including featured-product slot, count badges,
 	 * and dropdown variants — without duplicating logic.
@@ -216,6 +264,9 @@ class LuwiPress_Amber_Widget_Mega_Menu extends Widget_Base {
 	 * @param array $opts    threshold, cols_pref, show_counts.
 	 */
 	public static function render_navigation_html( $menu_id, $opts = [] ) {
+		// Swap to the current language's menu (WPML/Polylang) so labels AND
+		// custom-link URLs render in the visitor's language.
+		$menu_id = self::resolve_menu_id_for_language( $menu_id );
 		$items = wp_get_nav_menu_items( $menu_id );
 		if ( empty( $items ) ) return;
 

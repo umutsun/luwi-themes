@@ -87,6 +87,12 @@ if ( ! $elementor_header_active ) :
 		}
 	}
 
+	// Swap to the current language's menu (WPML/Polylang) so the header nav
+	// renders translated labels + URLs instead of always the default language.
+	if ( $amber_menu_id && class_exists( 'LuwiPress_Amber_Widget_Mega_Menu' ) ) {
+		$amber_menu_id = LuwiPress_Amber_Widget_Mega_Menu::resolve_menu_id_for_language( $amber_menu_id );
+	}
+
 	$amber_tree = [];
 	if ( $amber_menu_id ) {
 		$items = wp_get_nav_menu_items( $amber_menu_id );

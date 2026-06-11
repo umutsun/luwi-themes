@@ -1,4 +1,4 @@
-/* LuwiPress Amber — AI surface (1.3.0)
+/* LuwiPress Amber — AI surface (1.3.1)
  *
  *   1. Search suggestions inside the existing search overlay.
  *
@@ -46,9 +46,15 @@
 	/*  1. Search suggestions                                              */
 	/* ───────────────────────────────────────────────────────────────── */
 
-	var searchPanel = $( '.lwp-search-panel' );
-	var searchInput = $( '#lwp-search-input' );
-	var searchForm  = $( '.lwp-search-form' );
+	// Two search-overlay variants ship with the theme: the hardcoded header.php
+	// overlay (.lwp-search-panel / #lwp-search-input) and the Elementor
+	// search-overlay widget (.lwp-search__panel / [data-lwp-search-input]).
+	// $() is querySelector (returns null when absent), so || falls through to
+	// whichever variant the active header rendered. Without this, sites using an
+	// Elementor theme-builder header got no search suggestions at all.
+	var searchPanel = $( '.lwp-search-panel' ) || $( '.lwp-search__panel' );
+	var searchInput = $( '#lwp-search-input' ) || $( '[data-lwp-search-input]' );
+	var searchForm  = $( '.lwp-search-form' ) || $( '.lwp-search__form' );
 	var suggestNode = null;
 	var lastQ = '';
 	var inFlight = null;
@@ -151,9 +157,11 @@
 			runSuggest( e.target.value || '' );
 		}, 280 ) );
 
-		// Close suggestions when overlay closes (frontend.js triggers this).
+		// Close suggestions when the overlay closes. Match both the header.php
+		// overlay (.lwp-search-close) and the Elementor widget
+		// (.lwp-overlay__close / [data-lwp-overlay-close]) close affordances.
 		document.addEventListener( 'click', function ( e ) {
-			if ( e.target.closest( '.lwp-search-close' ) ) {
+			if ( e.target.closest( '.lwp-search-close, .lwp-overlay__close, [data-lwp-overlay-close]' ) ) {
 				if ( suggestNode ) suggestNode.hidden = true;
 				lastQ = '';
 			}

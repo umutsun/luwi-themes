@@ -200,7 +200,15 @@ function luwipress_amber_mega_featured( $menu_url ) {
 	if ( preg_match( '#/product-category/([^/?#]+)#', (string) $menu_url, $m ) ) {
 		$term_slug = $m[1];
 	}
-	$cache_key = 'lwp_amber_megafeat2_' . ( $term_slug !== '' ? $term_slug : 'all' );
+	// Scope the cache per current language. Without this, the first language to
+	// populate the transient leaks its products into every other language's mega
+	// menu (the menu is built from one primary menu, so $term_slug is identical
+	// across languages and the keys would collide — a translated product title
+	// then surfaces on the English page).
+	$amber_lang = apply_filters( 'wpml_current_language', null );
+	if ( ! $amber_lang && function_exists( 'pll_current_language' ) ) { $amber_lang = pll_current_language(); }
+	if ( ! $amber_lang ) { $amber_lang = substr( get_locale(), 0, 2 ); }
+	$cache_key = 'lwp_amber_megafeat2_' . ( $term_slug !== '' ? $term_slug : 'all' ) . '_' . $amber_lang;
 	$cached    = get_transient( $cache_key );
 	if ( is_array( $cached ) ) {
 		return ! empty( $cached ) ? $cached : null;
@@ -244,7 +252,11 @@ function luwipress_amber_mega_products( $menu_url, $limit = 4 ) {
 	if ( $term_slug === '' ) {
 		return array();
 	}
-	$cache_key = 'lwp_amber_megaprod2_' . $term_slug . '_' . (int) $limit;
+	// Language-scoped cache key — see luwipress_amber_mega_featured() above.
+	$amber_lang = apply_filters( 'wpml_current_language', null );
+	if ( ! $amber_lang && function_exists( 'pll_current_language' ) ) { $amber_lang = pll_current_language(); }
+	if ( ! $amber_lang ) { $amber_lang = substr( get_locale(), 0, 2 ); }
+	$cache_key = 'lwp_amber_megaprod2_' . $term_slug . '_' . (int) $limit . '_' . $amber_lang;
 	$cached    = get_transient( $cache_key );
 	if ( is_array( $cached ) ) {
 		return $cached;

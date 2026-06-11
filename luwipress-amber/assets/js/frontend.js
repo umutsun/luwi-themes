@@ -973,6 +973,14 @@
 	}
 
 	function initMobileDrawer() {
+		// Amber inline chrome (header.php path 2) ships its OWN mobile menu:
+		// a #burger toggle inside the header's right-side .header-actions, plus
+		// the off-canvas #drawer, both wired by chrome.js. When that chrome is on
+		// the page, injecting our own .lwp-mobile-toggle (below) yields a SECOND,
+		// redundant hamburger pinned to the header's LEFT edge — the "two mobile
+		// menus" the operator reported (the left one is meaningless). Defer to the
+		// theme's #burger/#drawer and skip the injection entirely.
+		if ( document.getElementById( 'burger' ) && document.getElementById( 'drawer' ) ) { return; }
 		// Inject hamburger button if it isn't already in the header markup.
 		// Falls back across header rendering paths:
 		//   1. Gold fallback header  → .lwp-site-header-inner

@@ -3195,35 +3195,44 @@ body.lwp-locked { overflow: hidden; }
 	padding: 0 !important;
 	margin: 0 !important;
 }
+/* Mini-cart item: [thumb] [name] on one row, "1 × price" indented beneath,
+   remove (×) pinned top-right. (Was grid 60px/1fr/auto → remove ate a full
+   column, name+img block-stacked, qty stranded — see fbd cart screenshot.) */
 .lwp-cart-drawer__body ul.cart_list li,
 .lwp-cart-drawer__body ul.product_list_widget li {
-	display: grid !important;
-	grid-template-columns: 60px 1fr auto;
-	gap: 14px;
-	align-items: center;
-	padding: 14px 0 !important;
+	position: relative !important;
+	display: block !important;
+	padding: 16px 30px 16px 0 !important;
 	border-bottom: 1px solid var(--line-light, #f0ebe0) !important;
 	margin: 0 !important;
 }
-.lwp-cart-drawer__body ul.cart_list li img,
-.lwp-cart-drawer__body ul.product_list_widget li img {
-	width: 60px !important;
-	height: 60px !important;
-	object-fit: cover;
-	border-radius: 4px;
-	margin: 0 !important;
-	float: none !important;
-}
-.lwp-cart-drawer__body ul.cart_list li a,
-.lwp-cart-drawer__body ul.product_list_widget li a {
+/* product link becomes the [thumb · name] flex row */
+.lwp-cart-drawer__body ul.cart_list li > a:not(.remove_from_cart_button),
+.lwp-cart-drawer__body ul.product_list_widget li > a:not(.remove_from_cart_button) {
+	display: flex !important;
+	align-items: center;
+	gap: 14px;
 	font-family: var(--serif, 'Fraunces', Georgia, serif) !important;
 	font-size: 15px !important;
 	font-weight: 500;
+	line-height: 1.3;
 	color: var(--ink, #1b1c1c) !important;
 	text-decoration: none !important;
-	display: block;
+}
+.lwp-cart-drawer__body ul.cart_list li img,
+.lwp-cart-drawer__body ul.product_list_widget li img {
+	width: 64px !important;
+	height: 64px !important;
+	object-fit: cover;
+	border-radius: 10px;
+	margin: 0 !important;
+	float: none !important;
+	flex: 0 0 64px;
 }
 .lwp-cart-drawer__body .quantity {
+	display: block;
+	padding-left: 78px;
+	margin-top: 6px;
 	font-family: var(--mono, monospace);
 	font-size: 12px;
 	color: var(--muted, #7f7663);
@@ -3284,17 +3293,24 @@ body.lwp-locked { overflow: hidden; }
 	border: 1px solid var(--line, #e8e2d3) !important;
 }
 .lwp-cart-drawer__body .remove_from_cart_button {
+	position: absolute !important;
+	top: 16px;
+	right: 0;
 	background: var(--bg-alt, #f6f3f2);
 	border-radius: 50%;
-	width: 24px;
-	height: 24px;
+	width: 22px;
+	height: 22px;
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
 	color: var(--muted, #7f7663) !important;
-	font-size: 14px;
+	font-size: 13px;
+	line-height: 1;
+	opacity: .7;
+	transition: opacity .18s, background .18s;
 	text-decoration: none !important;
 }
+.lwp-cart-drawer__body li:hover .remove_from_cart_button { opacity: 1; }
 .lwp-cart-drawer__body .remove_from_cart_button:hover {
 	background: var(--sale, #a33b3e);
 	color: #fff !important;
@@ -9605,3 +9621,33 @@ body.lwp-view-list ul.products li.product { display: grid !important; grid-templ
 	.lwp-cta-card { padding: 28px 22px; }
 }
 /* end 1.10.3 Contact CTA Card */
+
+/* ============================================================================
+   lwp page-widget text — ADAPTIVE contrast override
+   ----------------------------------------------------------------------------
+   These widgets were authored with hardcoded LIGHT-bg text (#1A1612 / #3a342c)
+   and broke on the dark-default Amber theme (dark-on-dark). Re-point strong text
+   to var(--ink) (light on dark / dark on light) and bodies to var(--muted) so
+   they adapt to both modes + all dark jewel themes. (section-head uses its own
+   variant:dark; this is for the variant-less widgets.) Last-in-file = wins.
+   ============================================================================ */
+.lwp-ps__title   { color: var(--ink, #F7F0E6); }
+.lwp-ps__body    { color: var(--muted, #B7A99A); }
+.lwp-ps__num     { color: var(--gold, #E5A23D); }
+.lwp-perks__strong { color: var(--ink, #F7F0E6); }
+.lwp-perks__body   { color: var(--muted, #B7A99A); }
+.lwp-story__title   { color: var(--ink, #F7F0E6); }
+.lwp-story__lead    { color: var(--muted, #B7A99A); }
+.lwp-story__eyebrow { color: var(--gold, #E5A23D); }
+.lwp-story__num     { color: var(--gold, #E5A23D); }
+.lwp-faq__q { color: var(--ink, #F7F0E6); }
+.lwp-faq__a { color: var(--muted, #B7A99A); }
+.lwp-tst__quote { color: var(--ink, #F7F0E6); }
+.lwp-tst__name  { color: var(--ink, #F7F0E6); }
+.lwp-tst__who   { color: var(--muted, #B7A99A); }
+.lwp-ctab__title { color: var(--ink, #F7F0E6); }
+.lwp-ctab__lead  { color: var(--muted, #B7A99A); }
+/* belt-and-braces: section-head 'light' default no longer invisible on dark */
+:root:not([data-theme="light"]) .lwp-sh--light .lwp-sh__title   { color: var(--ink, #F7F0E6); }
+:root:not([data-theme="light"]) .lwp-sh--light .lwp-sh__eyebrow { color: var(--gold, #E5A23D); }
+/* end lwp adaptive contrast override */

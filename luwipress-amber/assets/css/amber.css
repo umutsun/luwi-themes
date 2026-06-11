@@ -53,6 +53,7 @@
    washing out shop filter chips, PDP perks and cart/checkout panels on dark. */
 :root:not([data-theme="light"]) {
   --bg-alt: #2A201A;
+  --ink: #F7F0E6;            /* adaptive strong text — light on dark */
   --ink-soft: #B7A99A;
   --gold: #E5A23D;
   --card: #2A201A;            /* widgets.css card surface (was #fff) */
@@ -63,6 +64,7 @@
 }
 :root[data-theme="light"] {
   --bg-alt: #F6F3EC;
+  --ink: #1A1612;            /* adaptive strong text — dark on light */
   --ink-soft: #4D4635;
   --gold: #B0641E;
   --card: #FFFFFF;

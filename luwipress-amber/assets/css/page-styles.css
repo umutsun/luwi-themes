@@ -221,6 +221,38 @@
 .coupon { display: flex; gap: 10px; }
 .coupon input { background: var(--bg-2); border: 1px solid var(--line-strong); border-radius: 10px; padding: 11px 14px; color: var(--text); font-family: inherit; font-size: 14px; }
 .coupon input:focus { outline: none; border-color: var(--amber); }
+/* Refined ghost styling for secondary WC buttons (apply coupon / update cart) —
+   was falling back to the crude default WC light-grey button. */
+.coupon .button,
+.woocommerce .coupon button.button,
+.woocommerce button.button[name="apply_coupon"],
+.woocommerce button.button[name="update_cart"],
+.woocommerce input.button[name="update_cart"] {
+	background: var(--bg-2, #241B16) !important;
+	color: var(--text, #F7F0E6) !important;
+	border: 1px solid var(--line-strong, rgba(231,200,150,.22)) !important;
+	border-radius: 10px !important;
+	padding: 11px 22px !important;
+	font-family: var(--sans, 'Inter', sans-serif) !important;
+	font-size: 13px !important;
+	font-weight: 600 !important;
+	letter-spacing: .03em;
+	line-height: 1.2;
+	text-transform: none;
+	box-shadow: none !important;
+	cursor: pointer;
+	transition: border-color .18s, background .18s, color .18s, transform .18s;
+}
+.coupon .button:hover,
+.woocommerce .coupon button.button:hover,
+.woocommerce button.button[name="apply_coupon"]:hover,
+.woocommerce button.button[name="update_cart"]:hover:not(:disabled) {
+	border-color: var(--amber, #E5A23D) !important;
+	color: var(--amber, #E5A23D) !important;
+	background: rgba(229,162,61,.08) !important;
+	transform: translateY(-1px);
+}
+.woocommerce button.button[name="update_cart"]:disabled { opacity: .5; cursor: default; }
 
 .order-summary { border: 1px solid var(--line-strong); border-radius: var(--radius); padding: 28px; background: var(--surface); position: sticky; top: 96px; }
 .order-summary h3 { font-family: var(--serif); font-weight: 500; font-size: 24px; margin-bottom: 18px; }

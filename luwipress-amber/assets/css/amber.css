@@ -980,3 +980,31 @@ html { scroll-padding-top: 96px; }
   .utility { display: none; }
 }
 
+/* ── 404 editorial layout (404.php fallback) ─────────────────────────────
+   The 404.php sections sit directly under <main class="lwp-page"> with no
+   width container, so the content stretched edge-to-edge (full-width). Give
+   it a centered reading column with comfortable left/right margins, matching
+   the rest of the site. Scoped to .error-404's parent so it never touches
+   the Elementor 404 widget (.lwp-404) which already centers itself. */
+main.lwp-page:has(> .error-404) {
+  max-width: 860px;
+  margin-inline: auto;
+  padding: 64px 32px 80px;
+  width: 100%;
+  box-sizing: border-box;
+}
+/* Fallback for browsers without :has() — target the 404 sections directly so
+   the side margins still apply. */
+.error-404,
+.error-404 ~ .divider,
+.error-404 ~ .lwp-404-popular,
+.error-404 ~ .lwp-404-search {
+  max-width: 860px;
+  margin-inline: auto;
+}
+.error-404 { text-align: center; }
+.error-404 .digit { font-size: clamp(72px, 12vw, 150px); line-height: 1; }
+@media (max-width: 600px) {
+  main.lwp-page:has(> .error-404) { padding: 40px 18px 56px; }
+}
+

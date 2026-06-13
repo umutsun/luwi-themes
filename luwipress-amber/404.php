@@ -20,9 +20,9 @@ $home_url = home_url( '/' );
  * @since 1.5.4
  */
 $default_links = [
-	[ 'label' => __( 'New arrivals', 'luwipress-amber' ), 'url' => $home_url ],
-	[ 'label' => __( 'Master luthiers', 'luwipress-amber' ), 'url' => $home_url ],
-	[ 'label' => __( 'Custom commissions', 'luwipress-amber' ), 'url' => $home_url ],
+	[ 'label' => __( 'Browse experiences', 'luwipress-amber' ), 'url' => $home_url ],
+	[ 'label' => __( 'Tour packages', 'luwipress-amber' ), 'url' => $home_url ],
+	[ 'label' => __( 'Plan your trip', 'luwipress-amber' ), 'url' => $home_url ],
 	[ 'label' => __( 'Journal', 'luwipress-amber' ), 'url' => $home_url ],
 ];
 
@@ -49,11 +49,11 @@ if ( ! empty( $menu_locations['404-popular'] ) ) {
 		<h2><?php
 			/* translators: keep <em> wrapping the closing word for italic accent */
 			echo wp_kses(
-				__( 'The workshop door <em>is closed</em>.', 'luwipress-amber' ),
+				__( 'Looks like you\'ve <em>wandered off the map</em>.', 'luwipress-amber' ),
 				[ 'em' => [] ]
 			);
 		?></h2>
-		<p><?php esc_html_e( 'This page either moved, sold out, or was never here. Try a different door:', 'luwipress-amber' ); ?></p>
+		<p><?php esc_html_e( 'This page may have moved or never existed. Let\'s get you back on the journey:', 'luwipress-amber' ); ?></p>
 		<a class="cta-pill button" href="<?php echo esc_url( $home_url ); ?>">
 			<?php esc_html_e( 'Back to home →', 'luwipress-amber' ); ?>
 		</a>
@@ -82,7 +82,7 @@ if ( ! empty( $menu_locations['404-popular'] ) ) {
 		<form role="search" method="get" action="<?php echo esc_url( $home_url ); ?>" style="display:flex;align-items:center;gap:8px;padding:13px 16px;background:var(--bg);border:1px solid var(--line);border-radius:24px">
 			<span style="font-family:var(--mono);font-size:13px;color:var(--muted)" aria-hidden="true">⌕</span>
 			<label for="lwp-404-s" class="screen-reader-text"><?php esc_html_e( 'Search', 'luwipress-amber' ); ?></label>
-			<input id="lwp-404-s" name="s" type="search" placeholder="<?php esc_attr_e( 'Search instruments, masters…', 'luwipress-amber' ); ?>" style="flex:1;border:0;outline:none;background:transparent;font-size:16px" />
+			<input id="lwp-404-s" name="s" type="search" placeholder="<?php esc_attr_e( 'Search tours, destinations…', 'luwipress-amber' ); ?>" style="flex:1;border:0;outline:none;background:transparent;font-size:16px" />
 		</form>
 	</section>
 </main>

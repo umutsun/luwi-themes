@@ -1,0 +1,118 @@
+<?php
+/**
+ * Hero "Tour Search" — turns the static homepage hero booking bar (.bookbar)
+ * into a real tour finder.
+ *
+ * The visitor picks an Experience (a bookable tour), a date and a guest count,
+ * presses Go, and lands on that tour's product page with the date + guests
+ * already filled in (booking.js reads `?fbd_date` & `?fbd_pax`), so only
+ * checkout remains.
+ *
+ * Progressive enhancement: the static markup stays as a no-JS fallback; the
+ * script upgrades it in place — no Elementor editing required. Self-gates to
+ * the front page and only loads when at least one bookable tour exists.
+ *
+ * @package LuwiPress_Amber
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+/**
+ * Bookable tours for the hero dropdown: [ { label, url, min, max, def } ].
+ *
+ * A tour is any published product flagged `_fbd_is_tour = yes`. Cached for ten
+ * minutes (the homepage hero runs on every visit); busted on product save.
+ *
+ * @return array
+ */
+function lwp_amber_hero_tours() {
+	if ( ! function_exists( 'wc_get_products' ) ) {
+		return array();
+	}
+
+	$cached = get_transient( 'lwp_amber_hero_tours' );
+	if ( is_array( $cached ) ) {
+		return $cached;
+	}
+
+	$products = wc_get_products( array(
+		'status'     => 'publish',
+		'limit'      => 60,
+		'orderby'    => 'title',
+		'order'      => 'ASC',
+		'meta_key'   => '_fbd_is_tour', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+		'meta_value' => 'yes',          // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+		'return'     => 'objects',
+	) );
+
+	$tours = array();
+	foreach ( (array) $products as $p ) {
+		if ( ! is_object( $p ) || ! method_exists( $p, 'get_id' ) ) {
+			continue;
+		}
+		$cfg = function_exists( 'lwp_amber_tour_config' ) ? lwp_amber_tour_config( $p->get_id() ) : array();
+		$tours[] = array(
+			'label' => $p->get_name(),
+			'url'   => get_permalink( $p->get_id() ),
+			'min'   => isset( $cfg['pax_min'] ) ? max( 1, (int) $cfg['pax_min'] ) : 1,
+			'max'   => isset( $cfg['pax_max'] ) ? max( 1, (int) $cfg['pax_max'] ) : 20,
+			'def'   => isset( $cfg['pax_default'] ) ? max( 1, (int) $cfg['pax_default'] ) : 2,
+		);
+	}
+
+	set_transient( 'lwp_amber_hero_tours', $tours, 10 * MINUTE_IN_SECONDS );
+	return $tours;
+}
+
+/**
+ * Bust the cached tour list when a product changes.
+ */
+function lwp_amber_hero_tours_flush() {
+	delete_transient( 'lwp_amber_hero_tours' );
+}
+add_action( 'save_post_product', 'lwp_amber_hero_tours_flush' );
+add_action( 'deleted_post', 'lwp_amber_hero_tours_flush' );
+
+/**
+ * Enqueue the hero search enhancer on the front page only, and only when there
+ * is at least one bookable tour to offer.
+ */
+add_action( 'wp_enqueue_scripts', function () {
+	if ( ! is_front_page() ) {
+		return;
+	}
+
+	$tours = lwp_amber_hero_tours();
+	if ( empty( $tours ) ) {
+		return; // nothing bookable yet — leave the static bar untouched.
+	}
+
+	$rel = '/assets/js/hero-search.js';
+	$abs = get_template_directory() . $rel;
+	$cb  = LUWIPRESS_AMBER_VERSION . '.' . ( file_exists( $abs ) ? filemtime( $abs ) : '0' );
+
+	wp_enqueue_script(
+		'luwipress-amber-hero-search',
+		LUWIPRESS_AMBER_URI . $rel . '?cb=' . $cb,
+		array(),
+		null,
+		true
+	);
+
+	wp_localize_script( 'luwipress-amber-hero-search', 'LWP_HERO', array(
+		'tours' => $tours,
+		'i18n'  => array(
+			'choose' => __( 'Choose a tour', 'luwipress-amber' ),
+		),
+	) );
+
+	// Keep out of LiteSpeed "Delay JS" so the bar is interactive on first paint.
+	add_filter( 'script_loader_tag', function ( $tag, $handle ) {
+		if ( 'luwipress-amber-hero-search' === $handle ) {
+			$tag = str_replace( ' src=', ' data-no-optimize="1" data-no-defer="true" data-cfasync="false" src=', $tag );
+		}
+		return $tag;
+	}, 10, 2 );
+}, 20 );

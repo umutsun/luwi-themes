@@ -98,6 +98,10 @@ if ( class_exists( 'WooCommerce' ) ) {
 	// meta box, print-ready voucher (+ .ics), TouristTrip JSON-LD. Self-
 	// contained, theme-agnostic `_fbd_*` order meta (see inc/booking/).
 	require_once LUWIPRESS_AMBER_DIR . '/inc/booking/bootstrap.php';
+	// Hero "tour search" — upgrades the static homepage .bookbar into a real
+	// tour finder (Experience + Date + Guests → tour page with date/pax
+	// prefilled via ?fbd_date & ?fbd_pax). Progressive enhancement; front page.
+	require_once LUWIPRESS_AMBER_DIR . '/inc/hero-search.php';
 	// Vanilla-JS PDP gallery — replaces WC's Flexslider stack. Immune to
 	// LiteSpeed JS Defer/Delay because our script ships with `data-no-defer`
 	// + `data-no-optimize` and runs at DOMContentLoaded. Gallery is rendered

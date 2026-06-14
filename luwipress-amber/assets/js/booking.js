@@ -55,7 +55,25 @@
 
     /* date picker */
     var dp = $('.datepick', box);
-    if (dp) initDatePicker(dp, recalc);
+    var picker = dp ? initDatePicker(dp, recalc) : null;
+
+    /* Prefill from URL (?fbd_pax= & ?fbd_date=YYYY-MM-DD) — set by the hero
+       "tour search" so a visitor lands on the tour with guests + date already
+       filled and only checkout left. Values are clamped/validated; anything
+       invalid or in the past is ignored. */
+    try {
+      var qs = new URLSearchParams(window.location.search);
+      var paxQ = parseInt(qs.get('fbd_pax'), 10);
+      if (!isNaN(paxQ)) setPax(paxQ);
+      var dateQ = qs.get('fbd_date');
+      if (picker && dateQ && /^\d{4}-\d{2}-\d{2}$/.test(dateQ)) {
+        var dp_ = dateQ.split('-');
+        var dsel = new Date(+dp_[0], +dp_[1] - 1, +dp_[2]);
+        dsel.setHours(0, 0, 0, 0);
+        var t0 = new Date(); t0.setHours(0, 0, 0, 0);
+        if (!isNaN(dsel.getTime()) && dsel >= t0) picker.pick(dsel);
+      }
+    } catch (e) {}
 
     /* date-required guard on reserve / form submit */
     var form = box.closest('form');
@@ -164,6 +182,8 @@
     });
 
     render();
+
+    return { pick: pick };
   }
 
   $$('.book-box').forEach(initBox);

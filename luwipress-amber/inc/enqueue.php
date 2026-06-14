@@ -48,6 +48,17 @@ add_action( 'wp_enqueue_scripts', function () {
 	wp_register_script( 'luwipress-amber-booking', LUWIPRESS_AMBER_URI . '/assets/js/booking.js?cb=' . $cb( '/assets/js/booking.js' ), [], null, true );
 	wp_register_script( 'luwipress-amber-tours', LUWIPRESS_AMBER_URI . '/assets/js/tours.js?cb=' . $cb( '/assets/js/tours.js' ), [], null, true );
 
+	// Native PDP path: the booking box renders via woocommerce_before_add_to_cart_button
+	// for any product flagged as a tour, but the Elementor Tour Booking Box widget is
+	// the only thing that pulls booking.js via get_script_depends(). On a tour PDP that
+	// uses the WC add-to-cart widget (or native PDP) the box would be inert. Enqueue the
+	// script directly so EVERY bookable tour gets an interactive date picker / pax
+	// stepper / live total, with no per-product Elementor work. Non-tours are untouched.
+	if ( function_exists( 'is_product' ) && is_product()
+		&& function_exists( 'lwp_amber_is_tour' ) && lwp_amber_is_tour( get_queried_object_id() ) ) {
+		wp_enqueue_script( 'luwipress-amber-booking' );
+	}
+
 	// Animation layer (Gold-inherited) — page loader, scroll reveal, cart bump.
 	// LiteSpeed "Remove Query Strings" strips `?ver=`, so bake a `?cb=` buster
 	// that LS doesn't strip and pass null as the 4th arg.

@@ -491,8 +491,30 @@ html { scroll-padding-top: 96px; }
 .bookbar .field { flex: 1; padding: 16px 22px; border-right: 1px solid var(--line); }
 .bookbar .field .lbl { font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--amber); font-weight: 600; }
 .bookbar .field .val { font-size: 15px; color: #F7F0E6; margin-top: 5px; display: flex; align-items: center; gap: 8px; }
-.bookbar .go { padding: 0 26px; display: grid; place-items: center; background: var(--grad-cta); color: #2A170B; }
+.bookbar .go { padding: 0 26px; display: grid; place-items: center; background: var(--grad-cta); color: #2A170B; border: 0; cursor: pointer; }
 .bookbar .go svg { width: 22px; height: 22px; }
+
+/* Hero tour-search controls — JS upgrades the static .val text into real
+   inputs (see assets/js/hero-search.js). Styled to read like the static text:
+   transparent, borderless, inheriting the amber bookbar palette. */
+.bookbar .val .hs-exp,
+.bookbar .val .hs-date,
+.bookbar .val .hs-pax {
+  width: 100%; max-width: 100%;
+  background: transparent; border: 0; outline: none; box-shadow: none;
+  color: #F7F0E6; font-size: 15px; font-family: inherit; line-height: 1.2;
+  padding: 0; margin: 0; cursor: pointer;
+  -webkit-appearance: none; -moz-appearance: none; appearance: none;
+}
+.bookbar .val .hs-exp option { color: #2A170B; } /* native list on white bg */
+.bookbar .val .hs-pax { max-width: 70px; -moz-appearance: textfield; appearance: textfield; cursor: text; }
+.bookbar .val .hs-pax::-webkit-inner-spin-button,
+.bookbar .val .hs-pax::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.bookbar .val .hs-date { color-scheme: dark; cursor: pointer; }
+.bookbar .val .hs-date::-webkit-calendar-picker-indicator { filter: invert(.85); opacity: .75; cursor: pointer; }
+.bookbar .val .hs-exp:focus,
+.bookbar .val .hs-date:focus,
+.bookbar .val .hs-pax:focus { color: #fff; }
 
 .scroll-hint { position: absolute; left: 50%; bottom: 26px; transform: translateX(-50%); z-index: 6; color: var(--muted); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; display: flex; flex-direction: column; align-items: center; gap: 8px; }
 .scroll-hint .line { width: 1px; height: 34px; background: linear-gradient(var(--amber), transparent); animation: scrolldrop 2s ease-in-out infinite; }
@@ -1002,8 +1024,101 @@ main.lwp-page:has(> .error-404) {
   max-width: 860px;
   margin-inline: auto;
 }
-.error-404 { text-align: center; }
-.error-404 .digit { font-size: clamp(72px, 12vw, 150px); line-height: 1; }
+.error-404 { text-align: center; position: relative; z-index: 0; }
+.error-404 .eyebrow { justify-content: center; }
+
+/* ── Golden-hour 404 polish ───────────────────────────────────────────
+   Serif display digit with a sunset-gradient "0" + soft radial glow,
+   coral italic headline accent, gradient CTA, tactile popular-link rows,
+   and a hairline divider. CSS-only — no new copy, so the .pot stays
+   closed while the page reads far more finished. */
+.error-404 .digit {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(88px, 14vw, 184px);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  position: relative;
+  margin: 6px 0 2px;
+}
+.error-404 .digit em {                 /* the sunset-gradient zero */
+  font-style: normal;
+  background: var(--grad-cta);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+.error-404 .digit::before {            /* soft golden-hour glow behind the digit */
+  content: "";
+  position: absolute;
+  left: 50%; top: 54%;
+  width: 1.1em; height: 1.1em;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(232,116,79,0.22) 0%, rgba(229,162,61,0.10) 46%, transparent 72%);
+  filter: blur(8px);
+  z-index: -1;
+  pointer-events: none;
+}
+.error-404 h2 { max-width: 20ch; margin-inline: auto; }
+.error-404 h2 em { font-style: italic; color: var(--coral); }
+.error-404 p { color: var(--muted); max-width: 48ch; margin-inline: auto; }
+
+/* CTA pill — golden-hour gradient with a gentle lift */
+.error-404 .cta-pill {
+  background: var(--grad-cta);
+  color: #fff;
+  border: 0;
+  transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
+}
+.error-404 .cta-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px -12px rgba(232,116,79,0.55);
+  filter: saturate(1.04);
+}
+
+/* Hairline divider between the hero and the lists */
+.error-404 ~ .divider {
+  height: 1px; border: 0; margin: 8px auto 4px; max-width: 860px;
+  background: linear-gradient(90deg, transparent, var(--line) 18%, var(--line) 82%, transparent);
+}
+
+/* Popular links — tactile, warm hover */
+.lwp-404-popular .lwp-list-row {
+  display: flex; align-items: center; gap: 12px;
+  text-decoration: none; color: inherit;
+  transition: padding-left .18s ease, color .18s ease;
+}
+.lwp-404-popular .lwp-list-row .ic {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--line-strong, var(--line));
+  flex: 0 0 auto;
+  transition: background .18s ease, transform .18s ease;
+}
+.lwp-404-popular .lwp-list-row .nm { flex: 1; text-align: left; }
+.lwp-404-popular .lwp-list-row .val { color: var(--muted); transition: transform .18s ease, color .18s ease; }
+.lwp-404-popular .lwp-list-row:hover { padding-left: 6px; color: var(--coral); }
+.lwp-404-popular .lwp-list-row:hover .ic { background: var(--amber); transform: scale(1.45); }
+.lwp-404-popular .lwp-list-row:hover .val { transform: translateX(4px); color: var(--coral); }
+
+/* Search — coral focus ring + rounded panel */
+.lwp-404-search { border-radius: 18px; }
+.lwp-404-search form:focus-within {
+  border-color: var(--coral) !important;
+  box-shadow: 0 0 0 3px rgba(232,116,79,0.16);
+}
+
+/* Graceful staggered entrance */
+@media (prefers-reduced-motion: no-preference) {
+  .error-404 > * { animation: lwp404Up .5s cubic-bezier(.22,.61,.36,1) backwards; }
+  .error-404 .eyebrow  { animation-delay: .02s; }
+  .error-404 .digit    { animation-delay: .07s; }
+  .error-404 h2        { animation-delay: .13s; }
+  .error-404 p         { animation-delay: .19s; }
+  .error-404 .cta-pill { animation-delay: .25s; }
+  @keyframes lwp404Up { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+}
 @media (max-width: 600px) {
   main.lwp-page:has(> .error-404) { padding: 40px 18px 56px; }
 }

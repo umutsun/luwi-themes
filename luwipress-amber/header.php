@@ -464,6 +464,10 @@ if ( ! $elementor_header_active ) :
 				<a href="<?php echo esc_url( 'mailto:' . $amber_email ); ?>"><span class="qi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><?php esc_html_e( 'Email', 'luwipress-amber' ); ?></a>
 			<?php endif; ?>
 			<a href="<?php echo esc_url( $amber_book_url ); ?>"><span class="qi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-5.6-7-11a7 7 0 0 1 14 0c0 5.4-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span><?php esc_html_e( 'Visit', 'luwipress-amber' ); ?></a>
+			<?php if ( class_exists( 'WooCommerce' ) ) : ?>
+				<a href="<?php echo esc_url( add_query_arg( array( 's' => '', 'post_type' => 'product' ), home_url( '/' ) ) ); ?>"><span class="qi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></span><?php esc_html_e( 'Search', 'luwipress-amber' ); ?></a>
+				<a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>"><span class="qi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></span><?php esc_html_e( 'Account', 'luwipress-amber' ); ?></a>
+			<?php endif; ?>
 		</div>
 	</div>
 

@@ -49,6 +49,14 @@
   dateVal.innerHTML = '';
   dateVal.appendChild(dateIn);
 
+  // The native calendar indicator is easy to miss on a dark bar, so open the
+  // picker on any click in the Date field. showPicker() is the reliable
+  // cross-browser trigger (Chrome 99+/FF 101+/Safari 16+); wrapped in try/catch
+  // because it throws outside a user gesture, with the native click as fallback.
+  function openDatePicker() { try { if (dateIn.showPicker) dateIn.showPicker(); } catch (e) {} }
+  dateIn.addEventListener('click', openDatePicker);
+  dateVal.addEventListener('click', function (e) { if (e.target !== dateIn) openDatePicker(); });
+
   /* ---- Guests: number input bounded to the selected tour's pax range ---- */
   var paxIn = document.createElement('input');
   paxIn.type = 'number';
@@ -92,4 +100,13 @@
   [sel, dateIn, paxIn].forEach(function (el) {
     el.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); go(); } });
   });
+
+  /* "Plan My Trip" hero button links to #contact, which may not exist on the
+     page (dead click). If there's no real #contact target, route it to the
+     contact page so the button actually does something. A real #contact anchor
+     is left untouched. */
+  var planBtn = document.querySelector('.hero a[href="#contact"], .hero a[href$="#contact"]');
+  if (planBtn && !document.getElementById('contact') && D.contactUrl) {
+    planBtn.setAttribute('href', D.contactUrl);
+  }
 })();

@@ -101,9 +101,29 @@ add_action( 'wp_enqueue_scripts', function () {
 		true
 	);
 
+	// Resolve a contact-page URL so the hero "Plan My Trip" button (which links to
+	// a possibly-missing #contact anchor) has a real destination. Prefer a page
+	// at /contact/, then any page built on the contact template, else home.
+	$contact_url  = '';
+	$contact_page = get_page_by_path( 'contact' );
+	if ( ! $contact_page ) {
+		$tpl_pages = get_pages( array(
+			'meta_key'   => '_wp_page_template', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+			'meta_value' => 'page-contact.php',  // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			'number'     => 1,
+		) );
+		if ( ! empty( $tpl_pages ) ) {
+			$contact_page = $tpl_pages[0];
+		}
+	}
+	if ( $contact_page ) {
+		$contact_url = get_permalink( $contact_page );
+	}
+
 	wp_localize_script( 'luwipress-amber-hero-search', 'LWP_HERO', array(
-		'tours' => $tours,
-		'i18n'  => array(
+		'tours'      => $tours,
+		'contactUrl' => $contact_url,
+		'i18n'       => array(
 			'choose' => __( 'Choose a tour', 'luwipress-amber' ),
 		),
 	) );

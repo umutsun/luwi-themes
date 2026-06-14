@@ -1123,3 +1123,54 @@ main.lwp-page:has(> .error-404) {
   main.lwp-page:has(> .error-404) { padding: 40px 18px 56px; }
 }
 
+/* ============================================================
+   1.2.1 — Mobile header, hero date picker, section rhythm, gutters
+   ============================================================ */
+
+/* Hero date field: keep the native picker usable. The shared hero-control rule
+   strips `appearance`, which hides the calendar indicator on WebKit and leaves
+   nothing to click — restore it (booking JS also calls showPicker() on click). */
+.bookbar .val .hs-date {
+  -webkit-appearance: auto;
+  -moz-appearance: auto;
+  appearance: auto;
+}
+
+/* Soft shadowed section separator (drop-in utility) + breathing room between
+   stacked homepage sections that were running into each other (Tours/Services). */
+.lwp-amber-secline {
+  height: 0; border: 0; width: 100%; max-width: 1180px; margin: 0 auto;
+  border-top: 1px solid var(--line);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, .05), 0 14px 30px -20px rgba(0, 0, 0, .65);
+}
+body.home .elementor-top-section + .elementor-top-section { margin-top: 28px; }
+
+/* Header collapse: below 980px the mega nav + desktop actions give way to the
+   burger + drawer. Search / account / theme / "Browse Tours" move into the
+   drawer; the cart icon + burger stay in the bar. Fixes "mobile menu never
+   appears" (the burger was display:none with no breakpoint to reveal it). */
+@media (max-width: 980px) {
+  .header .nav { display: none; }
+  .burger { display: grid; }
+  .header-actions { gap: 6px; }
+  .header-actions > .btn--amber,
+  .header-actions > .theme-toggle,
+  .header-actions > .lwp-search-btn,
+  .header-actions > .lwp-account-wrap { display: none; }
+}
+
+/* Mobile gutters: align theme sections (header/footer) with Elementor content
+   and let content/cards use ~95% of the viewport (operator request). */
+@media (max-width: 720px) {
+  .wrap { padding: 0 12px; }
+  .elementor-section.elementor-section-boxed > .elementor-container {
+    padding-left: 12px; padding-right: 12px;
+  }
+}
+@media (max-width: 480px) {
+  .wrap { padding: 0 10px; }
+  .elementor-section.elementor-section-boxed > .elementor-container {
+    padding-left: 10px; padding-right: 10px;
+  }
+}
+

@@ -814,7 +814,7 @@ html { scroll-padding-top: 96px; }
   .hero { min-height: 88vh; }
   .scroll-hint { display: none; }
   .hero .wrap { padding-bottom: 44px; padding-top: 100px; }
-  .hero h1 { font-size: clamp(38px, 11vw, 56px); }
+  .hero h1 { font-size: clamp(28px, 8.4vw, 46px); overflow-wrap: break-word; hyphens: none; }
   .hero .sub { font-size: 16px; margin-top: 18px; }
   .hero .cta-row { gap: 10px; margin-top: 28px; flex-wrap: wrap; }
   .hero .cta-row .btn { flex: 1 1 100%; justify-content: center; }

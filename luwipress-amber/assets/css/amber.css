@@ -387,7 +387,7 @@ html { scroll-padding-top: 96px; }
 .drawer .d-theme, .drawer .d-close { width: 40px; height: 40px; border-radius: 11px; border: 1px solid var(--line-strong); display: grid; place-items: center; color: var(--text); background: rgba(42,32,26,.4); transition: .2s; }
 .drawer .d-theme:hover, .drawer .d-close:hover { border-color: var(--amber); color: var(--amber); }
 .drawer .d-close { font-size: 22px; }
-.drawer .d-tagline { position: relative; z-index: 2; color: var(--muted); font-size: 13.5px; line-height: 1.5; margin-top: 14px; max-width: 30ch; }
+.drawer .d-tagline { display: none; } /* minimal drawer — brand mark is enough under the logo */
 
 /* quick-action tiles */
 /* Compact single-row icon buttons (sized like the .d-theme toggle) — the header
@@ -445,10 +445,25 @@ html { scroll-padding-top: 96px; }
 .drawer .d-featured .df-meta { color: var(--amber-soft); font-size: 12.5px; font-weight: 600; margin-top: 4px; }
 
 /* language row */
-.drawer .d-lang { display: flex; gap: 8px; margin-top: 20px; }
-.drawer .d-lang button { flex: 1; padding: 11px 8px; border-radius: 11px; border: 1px solid var(--line); color: var(--muted); font-family: inherit; font-size: 13px; font-weight: 600; letter-spacing: .02em; transition: .2s; }
-.drawer .d-lang button.active { background: var(--grad-cta); color: #2A170B; border-color: transparent; }
-.drawer .d-lang button:not(.active):hover { border-color: var(--line-strong); color: var(--text); }
+.drawer .d-lang { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+/* Markup is <a> (not button) — style the links + an amber→coral "paint" that
+   wipes in from the left on hover (and stays painted for the active language). */
+.drawer .d-lang a {
+  position: relative; z-index: 0; overflow: hidden; flex: 1 1 auto; min-width: 38px; text-align: center;
+  padding: 11px 8px; border-radius: 11px; border: 1px solid var(--line);
+  color: var(--muted); font-family: inherit; font-size: 13px; font-weight: 600; letter-spacing: .02em;
+  transition: color .25s ease, border-color .25s ease;
+}
+.drawer .d-lang a::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: var(--grad-cta);
+  transform: scaleX(0); transform-origin: left center;
+  transition: transform .34s cubic-bezier(.4, 0, .2, 1);
+}
+.drawer .d-lang a:hover,
+.drawer .d-lang a.active { color: #2A170B; border-color: transparent; }
+.drawer .d-lang a:hover::before,
+.drawer .d-lang a.active::before { transform: scaleX(1); }
 
 /* bottom dock */
 .drawer .d-dock { flex: none; padding: 16px 22px 22px; border-top: 1px solid var(--line); display: grid; gap: 14px; background: var(--bg-0); }
@@ -1161,18 +1176,24 @@ body.home .elementor-top-section + .elementor-top-section { margin-top: 28px; }
   .header .header-actions > *:not(.burger) { display: none !important; }
 }
 
-/* Mobile: every section's content sits at ~95% of the viewport — symmetric
-   2.5vw side margins on theme sections (.wrap) AND Elementor containers (old
+/* Mobile: every section's content sits at ~90% of the viewport — symmetric
+   5vw side margins on theme sections (.wrap) AND Elementor containers (old
    section + new flexbox container structures). !important to beat Elementor's
-   per-element padding rules. (operator request: "tüm sectionlar %95"). */
+   per-element padding rules. Plus an anti-overflow guard so nothing pushes a
+   horizontal scrollbar (operator request: "%90 sağdan soldan, taşma yok").
+   overflow-x:clip (not hidden) so the sticky header isn't broken. */
 @media (max-width: 768px) {
-  .wrap { padding-left: 2.5vw; padding-right: 2.5vw; }
+  .wrap { padding-left: 5vw; padding-right: 5vw; }
   .elementor-section > .elementor-container,
   .e-con > .e-con-inner,
   .e-con.e-con-full {
-    padding-left: 2.5vw !important;
-    padding-right: 2.5vw !important;
+    padding-left: 5vw !important;
+    padding-right: 5vw !important;
   }
+  /* Contain any stray-wide widget per section/page (keeps content at 90% with
+     no horizontal scroll); media never exceeds its content box. */
+  .elementor-section, .e-con, main, .section { overflow-x: clip; }
+  img, video, iframe, table, .elementor-widget-container { max-width: 100%; }
 }
 
 /* Drawer featured product card — bottom of the mobile menu (LuwiPress
@@ -1189,3 +1210,26 @@ body.home .elementor-top-section + .elementor-top-section { margin-top: 28px; }
 .drawer .d-feature .df-title { font-family: var(--serif); font-weight: 500; font-size: 18px; color: #F9F2E7; line-height: 1.2; }
 .drawer .d-feature .df-price { color: var(--amber-soft); font-weight: 600; font-size: 13px; }
 
+
+/* ============================================================
+   1.2.6 — WooCommerce My Account mobile cleanup (raw bullets + cramped spacing)
+   ============================================================ */
+.woocommerce-account .woocommerce-MyAccount-navigation ul { list-style: none; margin: 0; padding: 0; }
+.woocommerce-account .woocommerce-MyAccount-navigation li { margin: 0; border-bottom: 1px solid var(--line); }
+.woocommerce-account .woocommerce-MyAccount-navigation li:last-child { border-bottom: 0; }
+.woocommerce-account .woocommerce-MyAccount-navigation li a { display: block; padding: 14px 18px; color: var(--muted); font-weight: 500; font-size: 14.5px; transition: color .2s, background .2s; }
+.woocommerce-account .woocommerce-MyAccount-navigation li a:hover { color: var(--text); background: rgba(229,162,61,.06); }
+.woocommerce-account .woocommerce-MyAccount-navigation li.is-active a { background: rgba(229,162,61,.12); color: var(--text); }
+.woocommerce-account .woocommerce-MyAccount-content { margin-top: 10px; }
+
+@media (max-width: 900px) {
+  /* stack nav above content, full width, with the same 90% side gutters */
+  body.woocommerce-account .lwp-fallback-main,
+  body.woocommerce-account .woocommerce { overflow-x: clip; }
+  body.woocommerce-account .lwp-fallback-main { padding-left: 5vw; padding-right: 5vw; }
+  .woocommerce-account .woocommerce-MyAccount-navigation,
+  .woocommerce-account .woocommerce-MyAccount-content {
+    float: none; width: 100%; margin: 0;
+  }
+  .woocommerce-account .woocommerce-MyAccount-content { margin-top: 22px; }
+}

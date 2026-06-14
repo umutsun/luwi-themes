@@ -221,6 +221,15 @@ function luwipress_amber_mega_featured( $menu_url ) {
 	$out      = array();
 	if ( ! empty( $products ) ) {
 		$p   = $products[0];
+		// Force the card to the CURRENT language even if the query surfaced
+		// another language's product (WPML cross-language leak — e.g. an ES title
+		// showing on /ru/). Resolve the product to $amber_lang before reading it.
+		$pid  = $p->get_id();
+		$tpid = apply_filters( 'wpml_object_id', $pid, 'product', true, $amber_lang );
+		if ( $tpid && (int) $tpid !== (int) $pid && function_exists( 'wc_get_product' ) ) {
+			$tp = wc_get_product( $tpid );
+			if ( $tp ) { $p = $tp; }
+		}
 		$img = wp_get_attachment_image_url( $p->get_image_id(), 'large' );
 		$out = array(
 			'title' => $p->get_name(),

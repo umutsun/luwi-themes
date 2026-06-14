@@ -80,26 +80,22 @@ add_action( 'deleted_post', 'lwp_amber_hero_tours_flush' );
  * is at least one bookable tour to offer.
  */
 add_action( 'wp_enqueue_scripts', function () {
-	if ( ! is_front_page() ) {
-		return;
-	}
-
-	$tours = lwp_amber_hero_tours();
-	if ( empty( $tours ) ) {
-		return; // nothing bookable yet — leave the static bar untouched.
-	}
-
 	$rel = '/assets/js/hero-search.js';
 	$abs = get_template_directory() . $rel;
 	$cb  = LUWIPRESS_AMBER_VERSION . '.' . ( file_exists( $abs ) ? filemtime( $abs ) : '0' );
 
-	wp_enqueue_script(
+	// REGISTER (not just enqueue) so the Tour Hero Elementor widget can pull it on
+	// any page via get_script_depends(); enqueue it directly on the front page so
+	// the legacy HTML hero keeps working without the widget.
+	wp_register_script(
 		'luwipress-amber-hero-search',
 		LUWIPRESS_AMBER_URI . $rel . '?cb=' . $cb,
 		array(),
 		null,
 		true
 	);
+
+	$tours = lwp_amber_hero_tours();
 
 	// Resolve a contact-page URL so the hero "Plan My Trip" button (which links to
 	// a possibly-missing #contact anchor) has a real destination. Prefer a page
@@ -128,11 +124,17 @@ add_action( 'wp_enqueue_scripts', function () {
 		),
 	) );
 
-	// Keep out of LiteSpeed "Delay JS" so the bar is interactive on first paint.
-	add_filter( 'script_loader_tag', function ( $tag, $handle ) {
-		if ( 'luwipress-amber-hero-search' === $handle ) {
-			$tag = str_replace( ' src=', ' data-no-optimize="1" data-no-defer="true" data-cfasync="false" src=', $tag );
-		}
-		return $tag;
-	}, 10, 2 );
+	// Front page: enqueue directly for the legacy hand-built HTML hero. The Tour
+	// Hero widget enqueues it itself via get_script_depends() wherever it renders.
+	if ( is_front_page() && ! empty( $tours ) ) {
+		wp_enqueue_script( 'luwipress-amber-hero-search' );
+	}
 }, 20 );
+
+// Keep the hero-search script out of LiteSpeed "Delay JS" whenever it loads.
+add_filter( 'script_loader_tag', function ( $tag, $handle ) {
+	if ( 'luwipress-amber-hero-search' === $handle ) {
+		$tag = str_replace( ' src=', ' data-no-optimize="1" data-no-defer="true" data-cfasync="false" src=', $tag );
+	}
+	return $tag;
+}, 10, 2 );

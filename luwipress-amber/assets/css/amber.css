@@ -801,8 +801,8 @@ html { scroll-padding-top: 96px; }
   .hero .wrap { padding-bottom: 44px; padding-top: 100px; }
   .hero h1 { font-size: clamp(38px, 11vw, 56px); }
   .hero .sub { font-size: 16px; margin-top: 18px; }
-  .hero .cta-row { gap: 10px; margin-top: 28px; }
-  .hero .cta-row .btn { flex: 1; justify-content: center; }
+  .hero .cta-row { gap: 10px; margin-top: 28px; flex-wrap: wrap; }
+  .hero .cta-row .btn { flex: 1 1 100%; justify-content: center; }
   .bookbar { margin-top: 26px; }
 
   /* trust cards */

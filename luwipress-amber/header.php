@@ -449,9 +449,6 @@ if ( ! $elementor_header_active ) :
 				<?php if ( $amber_show_word ) : ?><span class="word"><?php echo $amber_word; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span><?php endif; ?>
 			</span>
 			<div class="d-top-actions">
-				<button class="d-theme" id="drawerTheme" aria-label="<?php esc_attr_e( 'Toggle theme', 'luwipress-amber' ); ?>">
-					<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"/></svg>
-				</button>
 				<button class="d-close" id="drawerClose" aria-label="<?php esc_attr_e( 'Close', 'luwipress-amber' ); ?>">×</button>
 			</div>
 		</div>
@@ -468,7 +465,7 @@ if ( ! $elementor_header_active ) :
 				<a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>" aria-label="<?php esc_attr_e( 'Account', 'luwipress-amber' ); ?>" title="<?php esc_attr_e( 'Account', 'luwipress-amber' ); ?>"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg><span class="screen-reader-text"><?php esc_html_e( 'Account', 'luwipress-amber' ); ?></span></a>
 				<a href="<?php echo esc_url( wc_get_cart_url() ); ?>" aria-label="<?php esc_attr_e( 'Cart', 'luwipress-amber' ); ?>" title="<?php esc_attr_e( 'Cart', 'luwipress-amber' ); ?>"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M6 7h12l-1.2 11a2 2 0 0 1-2 1.8H9.2a2 2 0 0 1-2-1.8L6 7z"/><path d="M9 7V5a3 3 0 1 1 6 0v2"/></svg><span class="screen-reader-text"><?php esc_html_e( 'Cart', 'luwipress-amber' ); ?></span></a>
 			<?php endif; ?>
-			<a href="<?php echo esc_url( $amber_book_url ); ?>" aria-label="<?php esc_attr_e( 'Visit', 'luwipress-amber' ); ?>" title="<?php esc_attr_e( 'Visit', 'luwipress-amber' ); ?>"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-5.6-7-11a7 7 0 0 1 14 0c0 5.4-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg><span class="screen-reader-text"><?php esc_html_e( 'Visit', 'luwipress-amber' ); ?></span></a>
+			<button class="d-theme" id="drawerTheme" aria-label="<?php esc_attr_e( 'Toggle theme', 'luwipress-amber' ); ?>" title="<?php esc_attr_e( 'Toggle theme', 'luwipress-amber' ); ?>"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"/></svg></button>
 		</div>
 	</div>
 
@@ -509,6 +506,41 @@ if ( ! $elementor_header_active ) :
 					<a href="<?php echo esc_url( $l['url'] ); ?>"<?php echo $l['active'] ? ' class="active"' : ''; ?>><?php echo esc_html( $l['code'] ); ?></a>
 				<?php endforeach; ?>
 			</div>
+		<?php endif; ?>
+
+		<?php
+		// Featured product at the bottom of the menu — uses the LuwiPress "featured"
+		// flag, falling back to the newest product. Same data helpers as the
+		// desktop mega menu, so it stays in sync with no extra config.
+		$amber_d_feat = array();
+		if ( class_exists( 'WooCommerce' ) && function_exists( 'lwp_amber_get_featured_products' ) && function_exists( 'wc_get_product' ) ) {
+			$amber_d_fp = lwp_amber_get_featured_products( array( 'limit' => 1 ) );
+			if ( ! empty( $amber_d_fp ) && isset( $amber_d_fp[0]->ID ) ) {
+				$amber_d_fpp = wc_get_product( $amber_d_fp[0]->ID );
+				if ( $amber_d_fpp ) {
+					$amber_d_img  = wp_get_attachment_image_url( $amber_d_fpp->get_image_id(), 'large' );
+					$amber_d_feat = array(
+						'title' => $amber_d_fpp->get_name(),
+						'url'   => get_permalink( $amber_d_fpp->get_id() ),
+						'img'   => $amber_d_img ? $amber_d_img : '',
+						'price' => $amber_d_fpp->get_price_html(),
+					);
+				}
+			}
+		}
+		if ( empty( $amber_d_feat ) && function_exists( 'luwipress_amber_mega_featured' ) ) {
+			$amber_d_feat = (array) luwipress_amber_mega_featured( '' );
+		}
+		if ( ! empty( $amber_d_feat['url'] ) ) : ?>
+			<a class="d-feature" href="<?php echo esc_url( $amber_d_feat['url'] ); ?>">
+				<?php if ( ! empty( $amber_d_feat['img'] ) ) : ?><img src="<?php echo esc_url( $amber_d_feat['img'] ); ?>" alt="<?php echo esc_attr( $amber_d_feat['title'] ); ?>" loading="lazy"><?php endif; ?>
+				<span class="df-scrim"></span>
+				<span class="df-body">
+					<span class="df-tag">&#9733; <?php esc_html_e( 'Featured', 'luwipress-amber' ); ?></span>
+					<span class="df-title"><?php echo esc_html( $amber_d_feat['title'] ); ?></span>
+					<?php if ( ! empty( $amber_d_feat['price'] ) ) : ?><span class="df-price"><?php echo wp_kses_post( $amber_d_feat['price'] ); ?></span><?php endif; ?>
+				</span>
+			</a>
 		<?php endif; ?>
 	</div>
 

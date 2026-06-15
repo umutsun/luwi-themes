@@ -1255,11 +1255,84 @@ body.single-product .lwp-pdp-perks li { color: var(--muted, #B7A99A) !important;
 body.single-product .summary .woocommerce-product-details__short-description,
 body.single-product .summary .woocommerce-product-details__short-description p { color: var(--muted, #B7A99A) !important; }
 body.single-product .summary .product_title { color: var(--ink, #F7F0E6) !important; }
+/* Booking ("tour") PDP: WC's Add-to-cart button now renders INSIDE the
+   .book-box price card (see inc/booking/cart.php). Lay it out as a full-width
+   action at the bottom of the card and hide WC's redundant quantity stepper —
+   the tour's guest count drives the price. Simple products are untouched and
+   keep the inline qty + button row. */
+body.single-product form.cart:has(.book-box) { display: block !important; }
+/* Compact card: full-column width blew the card (and its date-picker calendar)
+   up to ~595px with giant day cells. Cap it to a sensible booking-card size.
+   display:flow-root gives the card a block formatting context so it actually
+   grows to contain WC's add-to-cart button (otherwise the button poked out
+   ~39px below the card's bottom edge). */
+body.single-product .book-box {
+  max-width: 420px !important;
+  box-sizing: border-box !important;
+  display: flow-root !important;
+}
+body.single-product .book-box .quantity { display: none !important; }
+body.single-product .book-box .single_add_to_cart_button {
+  display: flex !important;
+  width: 100% !important;
+  margin-top: 18px !important;
+}
 @media (max-width: 900px) {
   body.single-product .lwp-pdp-grid > div.product { grid-template-columns: 1fr !important; gap: 28px !important; }
   body.single-product .lwp-pdp-grid > div.product > .lwp-pdp-sticky-col { position: static !important; top: auto !important; grid-column: 1 / -1 !important; }
   body.single-product .lwp-pdp-grid > div.product > .summary { grid-column: 1 / -1 !important; }
   body.single-product .lwp-pdp-container { padding: 28px 18px 60px !important; }
+  /* price card at 95% width, centered, on mobile */
+  body.single-product .book-box {
+    width: 95% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    box-sizing: border-box !important;
+  }
+}
+/* Related/upsells cards: drop the loop "Add to cart" button — the card image
+   and title already link to the product page, where the visitor reviews the
+   tour and books. (Booking products need a date/guests anyway, so a one-click
+   add from the grid doesn't fit.) */
+html body.single-product.woocommerce .related ul.products li.product.lwp-pcard a.button:not(.lwp-pcard-link),
+html body.single-product.woocommerce .related ul.products li.product.lwp-pcard a.add_to_cart_button,
+html body.single-product.woocommerce .related ul.products li.product.lwp-pcard a.added_to_cart,
+html body.single-product.woocommerce .upsells ul.products li.product.lwp-pcard a.button:not(.lwp-pcard-link),
+html body.single-product.woocommerce .upsells ul.products li.product.lwp-pcard a.add_to_cart_button,
+html body.single-product.woocommerce .upsells ul.products li.product.lwp-pcard a.added_to_cart {
+  display: none !important;
+}
+/* mobile related/upsells: the desktop Kit rules are min-width:901px, so on
+   phones the grid falls back to the full-bleed shop layout (heading tight to
+   the cards, cards edge-to-edge). Give the "Related products" heading air and
+   center the cards at 95vw. High specificity beats the global mobile
+   ul.products width rule. */
+@media (max-width: 767px) {
+  html body.single-product .lwp-pdp-grid .related.products > h2,
+  html body.single-product .lwp-pdp-grid .upsells.products > h2 {
+    margin: 0 0 20px !important;
+    padding-left: 0 !important;
+  }
+  /* Keep the related grid INSIDE the content column. The global mobile rule
+     pushes ul.products to width:100vw (+ negative margins) for the shop
+     full-bleed look — on the PDP that 100vw is wider than the viewport (it
+     includes the scrollbar gutter) and pushes the whole page sideways
+     ("taşıyor sağ taraftan"). Container-width + centered cards = no overflow. */
+  html body.single-product .lwp-pdp-grid .related ul.products,
+  html body.single-product .lwp-pdp-grid .upsells ul.products {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  html body.single-product .lwp-pdp-grid .related ul.products li.product,
+  html body.single-product .lwp-pdp-grid .upsells ul.products li.product {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    float: none !important;
+  }
 }
 
 /* ==========================================================================
@@ -1275,6 +1348,9 @@ body.woocommerce-checkout main.lwp-fallback-main {
   padding: 38px 32px 84px !important;
   box-sizing: border-box !important;
 }
+/* breathing room between the big serif "Cart" H1 and the content rows below */
+body.woocommerce-cart .lwp-fallback-page__head { margin-bottom: 34px !important; }
+body.woocommerce-cart .lwp-fallback-page__title { margin-bottom: 0 !important; }
 /* classic checkout/cart panels -> dark surface */
 .lwp-co-step, .lwp-co-summary {
   background: var(--surface, #2A201A) !important;
@@ -1305,12 +1381,107 @@ body.woocommerce-checkout main.lwp-fallback-main {
 .woocommerce-checkout input:focus, .woocommerce-checkout textarea:focus,
 .woocommerce-account input:focus { border-color: var(--primary, #E5A23D) !important; outline: none !important; }
 /* account: nav tabs + panels dark */
-.woocommerce-account .woocommerce-MyAccount-navigation { background: var(--surface, #2A201A) !important; border: 1px solid var(--line, rgba(231,200,150,.16)) !important; border-radius: 16px !important; }
+/* Kill WooCommerce's default float:left + width:30% — inside the flex sidebar
+   that 30% collapses the nav to ~79px and wraps every label (the "tablo" look).
+   The theme owns the 2-col layout via .lwp-acct-grid, so the nav must be a
+   full-width card here. (WC only neutralised this at <900px before.) */
+.woocommerce-account .woocommerce-MyAccount-navigation {
+  background: var(--surface, #2A201A) !important;
+  border: 1px solid var(--line, rgba(231,200,150,.16)) !important;
+  border-radius: 16px !important;
+  float: none !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+}
+.woocommerce-account .lwp-acct-main.woocommerce-MyAccount-content,
+.woocommerce-account .woocommerce-MyAccount-content { float: none !important; width: 100% !important; }
 .woocommerce-account .woocommerce-MyAccount-navigation a { color: var(--muted, #B7A99A) !important; }
 .woocommerce-account .woocommerce-MyAccount-navigation li.is-active a,
 .woocommerce-account .woocommerce-MyAccount-navigation a:hover { color: var(--primary, #E5A23D) !important; }
 .woocommerce-account .woocommerce-MyAccount-content { color: var(--muted, #B7A99A) !important; }
 .woocommerce-account .woocommerce-MyAccount-content a { color: var(--primary, #E5A23D) !important; }
+
+/* ==========================================================================
+   12b. MY ACCOUNT (signed in) — custom chrome (woocommerce/myaccount/my-account.php)
+   Container width + breathing room, a real 2-column grid (sticky nav sidebar +
+   content), and the identity card. Without these the .lwp-acct-* wrappers render
+   unstyled (full-width, zero padding) — the cramped, title-doubled state.
+   ========================================================================== */
+main.lwp-acct-page .lwp-page-container {
+  max-width: 1240px !important;
+  margin: 0 auto !important;
+  padding: 48px 32px 96px !important;
+  box-sizing: border-box !important;
+}
+main.lwp-acct-page .lwp-crumb { margin: 0 0 14px !important; }
+main.lwp-acct-page .lwp-page-title {
+  font-family: var(--font-display, "Fraunces", Georgia, serif) !important;
+  font-size: clamp(30px, 4vw, 46px) !important;
+  line-height: 1.08 !important;
+  font-weight: 600 !important;
+  color: var(--ink, #F7F0E6) !important;
+  margin: 0 0 4px !important;
+}
+main.lwp-acct-page .lwp-page-title em {
+  font-style: italic !important;
+  font-weight: 400 !important;
+  color: var(--muted, #B7A99A) !important;
+}
+main.lwp-acct-page .lwp-acct-grid {
+  display: grid !important;
+  grid-template-columns: 264px minmax(0, 1fr) !important;
+  gap: 32px !important;
+  align-items: start !important;
+  margin-top: 30px !important;
+}
+/* Static (not sticky): the scroll-reveal ancestors carry will-change:transform
+   which makes them the containing block for a sticky child, rendering the nav
+   offset/cascaded. The account is a utility dashboard — flow it normally. */
+main.lwp-acct-page .lwp-acct-side {
+  position: static !important;
+  top: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 14px !important;
+}
+main.lwp-acct-page .lwp-acct-who {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+  padding: 16px 18px !important;
+  background: var(--surface, #2A201A) !important;
+  border: 1px solid var(--line, rgba(231,200,150,.16)) !important;
+  border-radius: 16px !important;
+}
+main.lwp-acct-page .lwp-acct-who .nm { color: var(--ink, #F7F0E6) !important; font-weight: 600 !important; font-size: 15px !important; }
+main.lwp-acct-page .lwp-acct-who .em { color: var(--muted, #B7A99A) !important; font-size: 12.5px !important; word-break: break-all !important; }
+/* content column sits on the page (its own cards provide the surfaces) */
+main.lwp-acct-page .lwp-acct-main { min-width: 0 !important; }
+main.lwp-acct-page .lwp-acct-main > .woocommerce-MyAccount-content,
+main.lwp-acct-page .woocommerce-MyAccount-content { margin-top: 0 !important; }
+@media (max-width: 900px) {
+  main.lwp-acct-page .lwp-page-container { padding: 28px 5vw 72px !important; }
+  main.lwp-acct-page .lwp-acct-grid { grid-template-columns: 1fr !important; gap: 18px !important; margin-top: 22px !important; }
+  main.lwp-acct-page .lwp-acct-side { position: static !important; top: auto !important; }
+}
+/* The auto scroll-reveal (frontend.js) tags `.lwp-page-container > *` — including
+   the `.woocommerce` wrapper — with [data-lwp-reveal] once the account uses the
+   .lwp-page chrome. A transformed ancestor becomes the containing block for the
+   sticky nav sidebar, so during the slide-in the menu flashes offset/cascaded.
+   The account is a utility dashboard, not a marketing page: render it static. */
+main.lwp-acct-page [data-lwp-reveal],
+main.lwp-acct-page [data-lwp-stagger],
+main.lwp-acct-page [data-lwp-stagger] > * {
+  opacity: 1 !important;
+  transform: none !important;
+  will-change: auto !important;
+  transition: none !important;
+}
+/* Dashboard already greets with "Welcome back, <name>" — hide the redundant big
+   page title there only. Other endpoints (Orders/Addresses/…) have no greeting,
+   so they keep the title as their sole heading. */
+main.lwp-acct-page:has(.lwp-account-greeting) .lwp-page-title { display: none !important; }
 .woocommerce-account form.login, .woocommerce-account form.register,
 .woocommerce-account .u-column1, .woocommerce-account .u-column2 {
   background: var(--surface, #2A201A) !important; border: 1px solid var(--line, rgba(231,200,150,.16)) !important;
@@ -1341,6 +1512,33 @@ body.woocommerce-checkout main.lwp-fallback-main {
   border-color: var(--line, rgba(231,200,150,.16)) !important;
 }
 .woocommerce-info a, .woocommerce-form-coupon-toggle a, .showcoupon { color: var(--primary, #E5A23D) !important; }
+/* Store notices ("… added to your cart", errors, info) — WC ships these with a
+   hard white background + default button, which clashed on the dark theme. Use
+   the design-system surface tokens (they flip to cream in light mode) and give
+   the in-notice action button ("View cart") the brand CTA. */
+.woocommerce-message,
+.woocommerce-error,
+.woocommerce-notices-wrapper > .woocommerce-message,
+.woocommerce-notices-wrapper > .woocommerce-error {
+  background: var(--surface, #2A201A) !important;
+  color: var(--ink, #F7F0E6) !important;
+  border: 1px solid var(--line, rgba(231,200,150,.18)) !important;
+  border-radius: 14px !important;
+}
+.woocommerce-message { border-left: 3px solid var(--primary, #E5A23D) !important; }
+.woocommerce-error   { border-left: 3px solid var(--coral, #E8744F) !important; }
+.woocommerce-message a.button, .woocommerce-message a.wc-forward,
+.woocommerce-info a.button, .woocommerce-info a.wc-forward,
+.woocommerce-error a.button {
+  background: var(--grad-cta, linear-gradient(100deg,#E5A23D 0%,#E8744F 100%)) !important;
+  background-color: #E5A23D !important;
+  color: #2A170B !important;
+  border: 0 !important;
+  border-radius: 11px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  box-shadow: none !important;
+}
 #place_order { border-radius: 13px !important; color: #2A170B !important; padding: 14px 32px !important; font-weight: 600 !important; }
 /* payment method box */
 #payment, .woocommerce-checkout #payment { background: var(--surface-2, #322519) !important; border-radius: 14px !important; }
@@ -1356,6 +1554,34 @@ body.woocommerce-checkout main.lwp-fallback-main {
   color: #2A170B !important;
   border: 0 !important;
   border-radius: 13px !important;
+}
+/* empty-cart "New in store" upsell grid: WC block buttons render with the
+   global #32373c grey default — re-skin to the Amber product-card CTA
+   (coral glass at rest, amber gradient fill on hover) so they read on-brand. */
+.wp-block-woocommerce-empty-cart-block .wc-block-grid__product-add-to-cart .wp-block-button__link,
+.wp-block-woocommerce-empty-cart-block .wc-block-grid__product .wp-block-button__link {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  width: auto !important;
+  padding: 12px 22px !important;
+  border-radius: 99px !important;
+  background: rgba(232,116,79,.12) !important;
+  border: 1px solid rgba(232,116,79,.32) !important;
+  color: var(--coral, #E8744F) !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  text-transform: none !important;
+  box-shadow: none !important;
+  transition: background .18s ease, color .18s ease, border-color .18s ease !important;
+}
+.wp-block-woocommerce-empty-cart-block .wc-block-grid__product-add-to-cart .wp-block-button__link:hover,
+.wp-block-woocommerce-empty-cart-block .wc-block-grid__product:hover .wp-block-button__link {
+  background: var(--grad-cta, linear-gradient(100deg,#E5A23D 0%,#E8744F 100%)) !important;
+  border-color: transparent !important;
+  color: var(--cta-ink, #2A170B) !important;
 }
 
 /* ==========================================================================

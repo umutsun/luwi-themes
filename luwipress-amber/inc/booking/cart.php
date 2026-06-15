@@ -166,10 +166,29 @@ function lwp_amber_money_plain( $amount ) {
 add_action( 'woocommerce_before_add_to_cart_button', function () {
 	global $product;
 	if ( ! lwp_amber_is_tour( $product ) ) { return; }
-	// Native fallback: fields ride inside WC's own add-to-cart <form>, and WC's
-	// "Add to cart" button submits them — so no second reserve button here.
-	echo lwp_amber_render_booking_box( $product, [ 'form' => false, 'show_reserve' => false ] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped within renderer.
+	// Native fallback: the booking fields ride inside WC's own add-to-cart
+	// <form>, and WC's "Add to cart" button submits them (no second reserve
+	// button). We OPEN the .book-box card here (strip its closing </div>) so
+	// WC's quantity + "Add to cart" button render INSIDE the price card; the
+	// card is closed again on woocommerce_after_add_to_cart_button below.
+	$html = lwp_amber_render_booking_box( $product, [ 'form' => false, 'show_reserve' => false ] );
+	$cut  = strrpos( $html, '</div>' );
+	if ( false !== $cut ) {
+		echo substr( $html, 0, $cut ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped within renderer.
+		$GLOBALS['lwp_amber_bb_open'] = true;
+	} else {
+		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped within renderer.
+	}
 }, 15 );
+
+/* Close the .book-box card right after WC's add-to-cart button so the button
+   sits inside the price card (pairs with the open above). */
+add_action( 'woocommerce_after_add_to_cart_button', function () {
+	if ( ! empty( $GLOBALS['lwp_amber_bb_open'] ) ) {
+		echo '</div>';
+		$GLOBALS['lwp_amber_bb_open'] = false;
+	}
+}, 5 );
 
 /* ── Tours are sold individually (qty locked to 1; pax drives the price) ─ */
 add_filter( 'woocommerce_is_sold_individually', function ( $individually, $product ) {

@@ -877,9 +877,10 @@ html { scroll-padding-top: 96px; }
   display: grid; place-items: center; padding: 22px 26px;
   transition: transform .3s cubic-bezier(.2,.7,.3,1), box-shadow .3s, border-color .3s;
 }
-.partner-chip img { max-height: 56px; max-width: 100%; object-fit: contain; filter: grayscale(1); opacity: .72; transition: filter .3s, opacity .3s; }
+/* Logos shown in full colour at rest (operator request) — chip still lifts on hover. */
+.partner-chip img { max-height: 56px; max-width: 100%; object-fit: contain; filter: none; opacity: 1; transition: filter .3s, opacity .3s; }
 .partner-chip:hover { transform: translateY(-5px); box-shadow: 0 20px 42px -22px rgba(60,30,10,.55); border-color: var(--line-strong); }
-.partner-chip:hover img { filter: grayscale(0); opacity: 1; }
+.partner-chip:hover img { filter: none; opacity: 1; }
 @media (max-width: 1024px) { .partner-grid { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 720px) { .partner-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; } .partner-chip { height: 92px; padding: 16px; } }
 

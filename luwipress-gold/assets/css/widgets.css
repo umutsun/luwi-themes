@@ -2315,8 +2315,24 @@ body.woocommerce-cart .cart-collaterals .wc-proceed-to-checkout > .button {
 /* WC's billing/shipping fields output `.form-row` with labels — restyle
  * to match form-grid pattern. WC variations (form-row-first, form-row-
  * last) become 50%-width columns in a CSS grid. */
-.lwp-co-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.lwp-co-fields .form-row { margin: 0; }
+/* WC nests the actual inputs two levels down — inside
+ * .woocommerce-billing-fields__field-wrapper (and the shipping equivalent),
+ * NOT as direct children of our .lwp-co-fields wrapper. So the grid must live
+ * on that inner wrapper; otherwise it lays out the single WC block into one
+ * column (half width) and the form-rows fall back to WC's float layout. */
+.lwp-co-fields { display: block; }
+.lwp-co-fields .woocommerce-billing-fields,
+.lwp-co-fields .woocommerce-shipping-fields,
+.lwp-co-fields .shipping_address { width: 100%; max-width: none; }
+.lwp-co-fields .woocommerce-billing-fields__field-wrapper,
+.lwp-co-fields .woocommerce-shipping-fields__field-wrapper {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 16px;
+}
+/* Reset WC's default float/width so the grid owns layout; the block fallback
+ * (single full-width column) stays usable if the grid ever fails to apply. */
+.lwp-co-fields .form-row { margin: 0; float: none; width: auto; }
 .lwp-co-fields .form-row.form-row-wide,
 .lwp-co-fields .form-row.notes,
 .lwp-co-fields .form-row.address-field,
@@ -2324,6 +2340,9 @@ body.woocommerce-cart .cart-collaterals .wc-proceed-to-checkout > .button {
 .lwp-co-fields .form-row[id*="_address_1_field"],
 .lwp-co-fields .form-row[id*="_address_2_field"],
 .lwp-co-fields .form-row[id*="_company_field"] { grid-column: span 2; }
+/* The numbered step already reads "Shipping address" — drop WC's redundant
+ * "Billing details" heading (the shipping toggle h3 keeps its checkbox). */
+.lwp-co-fields .woocommerce-billing-fields > h3 { display: none; }
 .lwp-co-fields .form-row label {
 	font-family: var(--mono, monospace);
 	font-size: 11px;
@@ -2837,7 +2856,8 @@ body.woocommerce-cart .cart-collaterals .wc-proceed-to-checkout > .button {
 	.lwp-co-summary { position: static; }
 }
 @media (max-width: 600px) {
-	.lwp-co-fields { grid-template-columns: 1fr; }
+	.lwp-co-fields .woocommerce-billing-fields__field-wrapper,
+	.lwp-co-fields .woocommerce-shipping-fields__field-wrapper { grid-template-columns: 1fr; }
 	.lwp-co-fields .form-row.form-row-wide,
 	.lwp-co-fields .form-row[id*="_country_field"],
 	.lwp-co-fields .form-row[id*="_address_1_field"] { grid-column: 1; }

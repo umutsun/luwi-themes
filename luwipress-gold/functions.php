@@ -27,7 +27,7 @@ define(
 	'LUWIPRESS_GOLD_VERSION',
 	( $lwp_gold_theme_obj && $lwp_gold_theme_obj->get( 'Version' ) )
 		? (string) $lwp_gold_theme_obj->get( 'Version' )
-		: '1.10.22'
+		: '1.11.0'
 );
 unset( $lwp_gold_theme_obj );
 define( 'LUWIPRESS_GOLD_DIR', get_template_directory() );
@@ -168,6 +168,13 @@ require_once LUWIPRESS_GOLD_DIR . '/inc/widgets/loader.php';
 
 // Customizer panel — Brand / Topbar / Header / Footer / Animation / Performance.
 require_once LUWIPRESS_GOLD_DIR . '/inc/customizer/bootstrap.php';
+
+// Product-page perks editor — adds the "Product Page" Customizer section
+// (LuwiPress Gold panel) for the single-product trust bar, and hooks
+// `luwipress_gold_pdp_perks` to apply per-row overrides. Required AFTER the
+// Customizer bootstrap so the `luwipress_gold` panel exists when the
+// section registers.
+require_once LUWIPRESS_GOLD_DIR . '/inc/pdp-perks.php';
 
 // Mobile card width override — emits a guaranteed-cascade-winner inline
 // `<style>` block at `wp_head` p999 so the products / blog / single body

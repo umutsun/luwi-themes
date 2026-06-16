@@ -66,19 +66,41 @@ while ( have_posts() ) : the_post();
 	// `366331`.
 	$work_query = null;
 	if ( class_exists( 'WooCommerce' ) ) {
-		$vendor_regex = '(\\[|,)[[:space:]]*"?' . preg_quote( (string) $post_id, '/' ) . '"?[[:space:]]*(,|\\])';
-		$work_query = new WP_Query( array(
-			'post_type'      => 'product',
-			'posts_per_page' => 8,
-			'meta_query'     => array(
-				array(
-					'key'     => '_lwp_vendor_ids',
-					'value'   => $vendor_regex,
-					'compare' => 'REGEXP',
+		// Prefer the core resolver: it matches the canonical (source-language)
+		// vendor id, looks up products language-neutrally, then maps each to its
+		// current-language sibling — so IT/FR/ES vendor pages show products too
+		// (Vendor-FR-032). Falls back to the legacy in-context REGEXP query on
+		// older core that lacks the resolver.
+		$work_ids = array();
+		if ( class_exists( 'LuwiPress_Vendors' ) && method_exists( 'LuwiPress_Vendors', 'get_instance' ) ) {
+			$lwp_vendors = LuwiPress_Vendors::get_instance();
+			if ( method_exists( $lwp_vendors, 'get_vendor_display_products' ) ) {
+				$work_ids = $lwp_vendors->get_vendor_display_products( $post_id, 8 );
+			}
+		}
+		if ( ! empty( $work_ids ) ) {
+			$work_query = new WP_Query( array(
+				'post_type'      => 'product',
+				'post__in'       => $work_ids,
+				'orderby'        => 'post__in',
+				'posts_per_page' => 8,
+				'no_found_rows'  => false,
+			) );
+		} elseif ( ! class_exists( 'LuwiPress_Vendors' ) || ! method_exists( 'LuwiPress_Vendors', 'get_instance' ) ) {
+			$vendor_regex = '(\\[|,)[[:space:]]*"?' . preg_quote( (string) $post_id, '/' ) . '"?[[:space:]]*(,|\\])';
+			$work_query = new WP_Query( array(
+				'post_type'      => 'product',
+				'posts_per_page' => 8,
+				'meta_query'     => array(
+					array(
+						'key'     => '_lwp_vendor_ids',
+						'value'   => $vendor_regex,
+						'compare' => 'REGEXP',
+					),
 				),
-			),
-			'no_found_rows' => false,
-		) );
+				'no_found_rows' => false,
+			) );
+		}
 	}
 	?>
 

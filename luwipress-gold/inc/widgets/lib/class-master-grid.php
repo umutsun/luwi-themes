@@ -262,23 +262,36 @@ class LuwiPress_Gold_Widget_Master_Grid extends Widget_Base {
 
 				$count_label = '';
 				if ( $show_count ) {
-					// REGEXP tolerates both quoted (`["123"]`) and unquoted
-					// (`[123]`) JSON formats of the _lwp_vendor_ids meta — see
-					// single-lwp_vendor.php for the same idiom.
-					$vendor_regex = '(\\[|,)[[:space:]]*"?' . preg_quote( (string) $pid, '/' ) . '"?[[:space:]]*(,|\\])';
-					$count_q = get_posts( array(
-						'post_type'      => 'product',
-						'posts_per_page' => -1,
-						'fields'         => 'ids',
-						'meta_query'     => array(
-							array(
-								'key'     => '_lwp_vendor_ids',
-								'value'   => $vendor_regex,
-								'compare' => 'REGEXP',
+					// Prefer the core resolver so the count is correct on translated
+					// vendor pages (matches the canonical source id language-neutrally
+					// — Vendor-FR-032). Legacy in-context REGEXP fallback for old core.
+					$cnt       = 0;
+					$used_core = false;
+					if ( class_exists( 'LuwiPress_Vendors' ) && method_exists( 'LuwiPress_Vendors', 'get_instance' ) ) {
+						$lwp_vendors = LuwiPress_Vendors::get_instance();
+						if ( method_exists( $lwp_vendors, 'get_vendor_display_products' ) ) {
+							$cnt       = count( $lwp_vendors->get_vendor_display_products( $pid, 200 ) );
+							$used_core = true;
+						}
+					}
+					if ( ! $used_core ) {
+						// REGEXP tolerates both quoted (`["123"]`) and unquoted
+						// (`[123]`) JSON formats of the _lwp_vendor_ids meta.
+						$vendor_regex = '(\\[|,)[[:space:]]*"?' . preg_quote( (string) $pid, '/' ) . '"?[[:space:]]*(,|\\])';
+						$count_q = get_posts( array(
+							'post_type'      => 'product',
+							'posts_per_page' => -1,
+							'fields'         => 'ids',
+							'meta_query'     => array(
+								array(
+									'key'     => '_lwp_vendor_ids',
+									'value'   => $vendor_regex,
+									'compare' => 'REGEXP',
+								),
 							),
-						),
-					) );
-					$cnt = count( $count_q );
+						) );
+						$cnt = count( $count_q );
+					}
 					if ( $cnt > 0 ) {
 						$count_label = sprintf(
 							/* translators: %d: product count */

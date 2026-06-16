@@ -1,0 +1,29 @@
+<wpml-config>
+    <!--
+      WPML String Translation registration for theme_mod values that hold
+      operator-facing copy. Registering them as admin-texts makes overrides
+      appear under  WPML → String Translation  (domain: "admin_texts_...") so
+      each language can be translated. Untouched fields fall back to the
+      __() defaults (already translatable as theme strings), so this only
+      matters once an operator overrides a row.
+
+      The option key is theme_mods_<active-theme-slug>. On the live install
+      the theme directory (and thus get_template()) is "luwipress-gold".
+    -->
+    <admin-texts>
+        <key name="theme_mods_luwipress-gold">
+            <key name="luwipress_gold_pdp_perk1_icon" />
+            <key name="luwipress_gold_pdp_perk1_text" />
+            <key name="luwipress_gold_pdp_perk2_icon" />
+            <key name="luwipress_gold_pdp_perk2_text" />
+            <key name="luwipress_gold_pdp_perk3_icon" />
+            <key name="luwipress_gold_pdp_perk3_text" />
+            <key name="luwipress_gold_pdp_perk4_icon" />
+            <key name="luwipress_gold_pdp_perk4_text" />
+            <key name="luwipress_gold_pdp_perk5_icon" />
+            <key name="luwipress_gold_pdp_perk5_text" />
+            <key name="luwipress_gold_pdp_perk6_icon" />
+            <key name="luwipress_gold_pdp_perk6_text" />
+        </key>
+    </admin-texts>
+</wpml-config>

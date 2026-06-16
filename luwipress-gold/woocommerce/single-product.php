@@ -62,15 +62,15 @@ get_header( 'shop' );
 
 			<?php
 			// Perks rail under the buy column — speaks the brand promise
-			// (hand-tuned, free shipping, 14-day returns, warranty). The
-			// list is filterable so operator can swap items per language
-			// or per product category.
-			$perks = apply_filters( 'luwipress_gold_pdp_perks', [
-				[ 'icon' => '✓', 'text' => __( 'Hand-tuned in our atelier before dispatch', 'luwipress-gold' ) ],
-				[ 'icon' => '✈', 'text' => __( 'DHL Express worldwide · 3–7 working days', 'luwipress-gold' ) ],
-				[ 'icon' => '↺', 'text' => __( '14-day no-questions-asked return policy', 'luwipress-gold' ) ],
-				[ 'icon' => '★', 'text' => __( '2-year free service & tuning warranty', 'luwipress-gold' ) ],
-			], isset( $product ) ? $product : null );
+			// (hand-tuned, free shipping, 14-day returns, warranty). Defaults
+			// live in inc/pdp-perks.php (single source of truth) and are
+			// editable, no-code, via Customize → LuwiPress Gold → Product Page.
+			// The same file hooks `luwipress_gold_pdp_perks` to apply overrides.
+			$perks = apply_filters(
+				'luwipress_gold_pdp_perks',
+				function_exists( 'luwipress_gold_pdp_perk_defaults' ) ? luwipress_gold_pdp_perk_defaults() : [],
+				isset( $product ) ? $product : null
+			);
 
 			if ( ! empty( $perks ) ) : ?>
 				<ul class="lwp-pdp-perks">

@@ -47,6 +47,45 @@ function luwipress_gold_pdp_perk_slots() {
 	return (int) apply_filters( 'luwipress_gold_pdp_perk_slots', 6 );
 }
 
+/**
+ * Resolve a perk icon. Accepts a friendly NAME (check, plane, truck, …) which
+ * maps to a glyph/emoji, OR a literal glyph/emoji which is returned as-is — so
+ * non-technical operators can type "plane" while power users paste any symbol.
+ *
+ * @param string $raw Operator input (name or glyph). Empty returns empty.
+ * @return string Resolved glyph/emoji.
+ */
+function luwipress_gold_pdp_perk_icon( $raw ) {
+	$raw = trim( (string) $raw );
+	if ( '' === $raw ) {
+		return '';
+	}
+	$map = apply_filters( 'luwipress_gold_pdp_perk_icon_map', array(
+		'check'     => '✓',  'tick'  => '✓',  'ok'        => '✓',
+		'plane'     => '✈',  'air'   => '✈',  'flight'    => '✈',
+		'ship'      => '🚚', 'shipping' => '🚚', 'truck'  => '🚚', 'delivery' => '🚚',
+		'return'    => '↺',  'returns'  => '↺',  'refresh' => '↺',
+		'star'      => '★',  'warranty' => '★',
+		'shield'    => '🛡', 'secure'   => '🛡', 'guarantee' => '🛡',
+		'lock'      => '🔒', 'safe'     => '🔒',
+		'phone'     => '☎',  'call'  => '☎',
+		'mail'      => '✉',  'email' => '✉',  'envelope'   => '✉',
+		'gift'      => '🎁', 'present'  => '🎁',
+		'tag'       => '🏷', 'price'    => '🏷', 'sale'    => '🏷',
+		'clock'     => '⏱',  'time'  => '⏱',  'fast'       => '⏱',
+		'leaf'      => '🌿', 'eco'   => '🌿', 'natural'    => '🌿',
+		'fire'      => '🔥', 'hot'   => '🔥',
+		'card'      => '💳', 'payment'  => '💳',
+		'globe'     => '🌍', 'world'    => '🌍', 'worldwide' => '🌍',
+		'handshake' => '🤝', 'trust'    => '🤝',
+		'heart'     => '♥',  'love'  => '♥',
+		'medal'     => '🏅', 'award'    => '🏅', 'quality'  => '🏅',
+		'music'     => '♪',  'note'  => '♪',
+	) );
+	$key = strtolower( $raw );
+	return isset( $map[ $key ] ) ? $map[ $key ] : $raw;
+}
+
 /* ──────────────────────────────────────────────────────────────────
  * Customizer — LuwiPress Gold → Product Page
  * The panel itself is registered by inc/customizer/bootstrap.php; this
@@ -74,11 +113,12 @@ add_action( 'customize_register', function ( $wp_customize ) {
 			'transport'         => 'refresh',
 			'sanitize_callback' => 'sanitize_text_field',
 		) );
+		$icon_hint = __( 'Type a name (check, plane, truck, return, star, shield, lock, phone, mail, gift, leaf, card, globe…) or paste any emoji.', 'luwipress-gold' );
 		$wp_customize->add_control( $icon_id, array(
 			'label'       => sprintf( /* translators: %d: row number */ __( 'Row %d — icon', 'luwipress-gold' ), $i ),
 			'description' => $d
-				? sprintf( /* translators: %s: default glyph */ __( 'Default: %s', 'luwipress-gold' ), $d['icon'] )
-				: __( 'Glyph or emoji, e.g. ✓ ✈ ↺ ★', 'luwipress-gold' ),
+				? $icon_hint . ' ' . sprintf( /* translators: %s: default glyph */ __( 'Default: %s', 'luwipress-gold' ), $d['icon'] )
+				: $icon_hint,
 			'section'     => 'luwipress_gold_pdp',
 			'type'        => 'text',
 		) );
@@ -126,13 +166,13 @@ add_filter( 'luwipress_gold_pdp_perks', function ( $perks, $product = null ) {
 
 		if ( $d ) {
 			$final_text = '' !== $text ? $text : ( isset( $d['text'] ) ? $d['text'] : '' );
-			$final_icon = '' !== $icon ? $icon : ( isset( $d['icon'] ) ? $d['icon'] : '' );
+			$final_icon = luwipress_gold_pdp_perk_icon( '' !== $icon ? $icon : ( isset( $d['icon'] ) ? $d['icon'] : '' ) );
 		} else {
 			if ( '' === $text ) {
 				continue; // empty spare slot.
 			}
 			$final_text = $text;
-			$final_icon = '' !== $icon ? $icon : '•';
+			$final_icon = '' !== $icon ? luwipress_gold_pdp_perk_icon( $icon ) : '•';
 		}
 
 		if ( '' !== $final_text ) {

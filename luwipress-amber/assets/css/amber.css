@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
    LuwiPress Amber — core design system (Fly By Deniz "Amber")
    Ported 1:1 from the Claude Design handoff (styles.css).
    Golden Hour, Endless Horizon. Dark default + [data-theme="light"].
@@ -1234,3 +1234,352 @@ body.home .elementor-top-section + .elementor-top-section { margin-top: 28px; }
   }
   .woocommerce-account .woocommerce-MyAccount-content { margin-top: 22px; }
 }
+
+/* ============================================================
+   LWP-HERO-TABS-V3 — Trip.com-style tabbed hero search.
+
+   hero-search.js REPLACES the static .bookbar inner content with a
+   JS-built [ Flights | Hotels | Tours ] tablist + 3 form panels. Each
+   panel submit builds a deep-link query and navigates to the type's
+   results page. This block styles the tabbed shell + the per-tab field
+   row. It REUSES the V2 components — the dark calendar (.datepick / .dp-*
+   owned by pages.css; DO NOT restyle .dp-pop internals here) and the pax
+   stepper (.hs-pax-* — re-scoped below to .bookbar since the UI no longer
+   lives inside .val). Extends, never conflicts with, LWP-HERO-SEARCH-V2.
+   Logical properties throughout → RTL (/ar/) mirrors. Dark + light via tokens.
+   ============================================================ */
+
+/* When JS swaps in the tabbed UI, the bar stops being a horizontal pill of
+   fixed fields: drop the row flex + border dividers and let it be a padded
+   glass card that grows vertically. Keep the dark glass surface + radius. */
+.bookbar.bookbar--tabs {
+  display: block;
+  align-items: stretch;
+  gap: 0;
+  padding: 14px;
+  overflow: visible;
+  max-width: 920px;
+}
+
+.bookbar--tabs .hs-tabs { display: block; width: 100%; }
+
+/* ---- tab bar ---- */
+.bookbar--tabs .hs-tablist {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 0;
+}
+.bookbar--tabs .hs-tab {
+  position: relative;
+  flex: 0 0 auto;
+  background: transparent;
+  border: 0;
+  -webkit-appearance: none; appearance: none;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: .01em;
+  padding: 10px 18px 12px;
+  margin-bottom: -1px; /* sit the underline on the tablist border */
+  cursor: pointer;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  transition: color .16s ease, background-color .16s ease;
+}
+.bookbar--tabs .hs-tab::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background: var(--grad-cta);
+  border-radius: 2px;
+  transform: translateX(-50%);
+  transition: width .2s ease;
+}
+.bookbar--tabs .hs-tab:hover { color: var(--text); background: rgba(229, 162, 61, .07); }
+.bookbar--tabs .hs-tab:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+  color: var(--text);
+}
+.bookbar--tabs .hs-tab[aria-selected="true"],
+.bookbar--tabs .hs-tab.is-active { color: var(--amber-soft); }
+.bookbar--tabs .hs-tab[aria-selected="true"]::after,
+.bookbar--tabs .hs-tab.is-active::after { width: 100%; }
+
+/* ---- panels ---- */
+.bookbar--tabs .hs-panels { display: block; width: 100%; }
+.bookbar--tabs .hs-panel { display: none; }
+.bookbar--tabs .hs-panel.is-active { display: block; }
+.bookbar--tabs .hs-panel:focus { outline: none; }
+.bookbar--tabs .hs-panel[hidden] { display: none; }
+
+/* ---- field row ---- */
+.bookbar--tabs .hs-row {
+  display: flex;
+  align-items: stretch;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.bookbar--tabs .hs-field {
+  flex: 1 1 150px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 14px;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  transition: border-color .16s ease;
+}
+.bookbar--tabs .hs-field:focus-within { border-color: var(--line-strong); }
+.bookbar--tabs .hs-field--date { flex: 1 1 170px; }
+.bookbar--tabs .hs-field--dest { flex: 2 1 220px; }
+.bookbar--tabs .hs-field--pax  { flex: 0 1 140px; }
+.bookbar--tabs .hs-field--cabin { flex: 1 1 160px; }
+.bookbar--tabs .hs-field-lbl {
+  font-size: 10.5px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--amber);
+  font-weight: 600;
+}
+.bookbar--tabs .hs-field-ctl {
+  display: flex;
+  align-items: center;
+  min-height: 24px;
+}
+.bookbar--tabs .hs-field-ctl > * { width: 100%; }
+
+/* ---- text input ---- */
+.bookbar--tabs .hs-input {
+  width: 100%;
+  background: transparent;
+  border: 0; outline: none; box-shadow: none;
+  color: var(--text);
+  font-size: 15px;
+  font-family: inherit;
+  line-height: 1.25;
+  padding: 0; margin: 0;
+}
+.bookbar--tabs .hs-input::placeholder { color: var(--muted); opacity: 1; }
+.bookbar--tabs .hs-input:focus { color: #fff; }
+
+/* ---- cabin <select> — themed, dark, custom CSS caret ---- */
+.bookbar--tabs .hs-select {
+  width: 100%;
+  background: transparent;
+  border: 0; outline: none; box-shadow: none;
+  color: var(--text);
+  font-size: 15px;
+  font-family: inherit;
+  line-height: 1.25;
+  padding: 0;
+  padding-inline-end: 18px;
+  margin: 0;
+  cursor: pointer;
+  -webkit-appearance: none; appearance: none;
+  color-scheme: dark;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--amber) 50%),
+    linear-gradient(135deg, var(--amber) 50%, transparent 50%);
+  background-position:
+    calc(100% - 8px) calc(50% - 1px),
+    calc(100% - 3px) calc(50% - 1px);
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+}
+.bookbar--tabs .hs-select:focus { color: #fff; }
+.bookbar--tabs .hs-select option { background: var(--surface); color: var(--text); }
+
+/* ---- datepicker (.datepick internals owned by pages.css; only the trigger
+   needs to read borderless inside the bar — same treatment as V2) ---- */
+.bookbar--tabs .hs-datepick { width: 100%; }
+.bookbar--tabs .hs-datepick .dp-trigger {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  font-size: 15px;
+  color: var(--text);
+}
+.bookbar--tabs .hs-datepick .dp-trigger:hover { border-color: transparent; }
+.bookbar--tabs .hs-datepick.open .dp-trigger { border-color: transparent; }
+.bookbar--tabs .hs-datepick .dp-trigger .cal-ic { color: var(--amber); }
+.bookbar--tabs .hs-datepick .dp-trigger .dp-val { font-size: 15px; }
+
+/* ---- pax stepper — re-scope the V2 .hs-pax-* component to live directly
+   under .bookbar (the tabbed UI has no .val wrapper). Same look as V2. ---- */
+.bookbar--tabs .hs-pax-stepper {
+  display: flex; align-items: center; gap: 8px;
+  width: 100%;
+}
+.bookbar--tabs .hs-pax {
+  flex: 1 1 auto;
+  width: auto; min-width: 28px;
+  background: transparent; border: 0; outline: none; box-shadow: none;
+  color: var(--text); font-size: 15px; font-family: inherit; line-height: 1.2;
+  padding: 0; margin: 0;
+  text-align: center;
+  -webkit-appearance: none; appearance: none;
+  -moz-appearance: textfield;
+}
+.bookbar--tabs .hs-pax::-webkit-inner-spin-button,
+.bookbar--tabs .hs-pax::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.bookbar--tabs .hs-pax:focus { color: #fff; }
+.bookbar--tabs .hs-pax-btn {
+  position: relative;
+  flex: 0 0 auto;
+  width: 28px; height: 28px;
+  display: grid; place-items: center;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  -webkit-appearance: none; appearance: none;
+  transition: background-color .12s ease, border-color .12s ease, opacity .12s ease;
+}
+.bookbar--tabs .hs-pax-btn:hover { background: rgba(229, 162, 61, .16); border-color: var(--line-strong); }
+.bookbar--tabs .hs-pax-btn:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+.bookbar--tabs .hs-pax-btn::before {
+  content: "";
+  width: 8px; height: 8px;
+  border-right: 2px solid var(--amber);
+  border-bottom: 2px solid var(--amber);
+}
+.bookbar--tabs .hs-pax-btn--inc::before { transform: translateY(2px) rotate(225deg); }
+.bookbar--tabs .hs-pax-btn--dec::before { transform: translateY(-2px) rotate(45deg); }
+.bookbar--tabs .hs-pax-btn:hover::before { border-color: var(--amber-soft); }
+.bookbar--tabs .hs-pax-btn.is-disabled,
+.bookbar--tabs .hs-pax-btn:disabled {
+  opacity: .35; cursor: default;
+  background: var(--surface); border-color: var(--line);
+}
+.bookbar--tabs .hs-pax-btn.is-disabled:hover::before,
+.bookbar--tabs .hs-pax-btn:disabled:hover::before { border-color: var(--amber); }
+
+/* ---- autocomplete ---- */
+.bookbar--tabs .hs-ac { position: relative; width: 100%; }
+.bookbar--tabs .hs-ac-list {
+  position: absolute;
+  inset-inline-start: 0;
+  top: calc(100% + 10px);
+  z-index: 60;
+  min-width: 240px;
+  width: max-content;
+  max-width: min(360px, 86vw);
+  box-sizing: border-box;
+  padding: 6px;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 18px 40px -16px rgba(0, 0, 0, .7), 0 2px 8px rgba(0, 0, 0, .35);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  max-height: 312px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--amber) transparent;
+}
+.bookbar--tabs .hs-ac-list[hidden] { display: none; }
+.bookbar--tabs .hs-ac-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 14.5px;
+  line-height: 1.3;
+  cursor: pointer;
+  transition: background-color .12s ease, color .12s ease;
+}
+.bookbar--tabs .hs-ac-item + .hs-ac-item { margin-top: 2px; }
+.bookbar--tabs .hs-ac-item:hover,
+.bookbar--tabs .hs-ac-item.is-active {
+  background: rgba(229, 162, 61, .14);
+  color: #fff;
+}
+.bookbar--tabs .hs-ac-lbl {
+  flex: 1 1 auto; min-width: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.bookbar--tabs .hs-ac-code {
+  flex: 0 0 auto;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  color: var(--amber);
+}
+
+/* ---- submit button (uses --grad-cta) ---- */
+.bookbar--tabs .hs-submit {
+  margin-top: 12px;
+  width: 100%;
+  display: block;
+  background: var(--grad-cta);
+  color: #2A170B;
+  border: 0;
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .01em;
+  padding: 14px 22px;
+  cursor: pointer;
+  -webkit-appearance: none; appearance: none;
+  transition: filter .16s ease, transform .06s ease, box-shadow .16s ease;
+}
+.bookbar--tabs .hs-submit:hover { filter: brightness(1.06); box-shadow: 0 12px 28px -12px rgba(232, 116, 79, .6); }
+.bookbar--tabs .hs-submit:active { transform: translateY(1px); }
+.bookbar--tabs .hs-submit:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+
+/* ---- inline note / coming-soon / validation hint ---- */
+.bookbar--tabs .hs-note {
+  margin-top: 10px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--coral);
+}
+.bookbar--tabs .hs-note[hidden] { display: none; }
+
+/* ---- light theme — surfaces flip via tokens; only ensure readable inputs ---- */
+[data-theme="light"] .bookbar.bookbar--tabs { background: rgba(255, 255, 255, .82); }
+[data-theme="light"] .bookbar--tabs .hs-input:focus,
+[data-theme="light"] .bookbar--tabs .hs-select:focus,
+[data-theme="light"] .bookbar--tabs .hs-pax:focus,
+[data-theme="light"] .bookbar--tabs .hs-ac-item:hover,
+[data-theme="light"] .bookbar--tabs .hs-ac-item.is-active { color: #2A170B; }
+[data-theme="light"] .bookbar--tabs .hs-select { color-scheme: light; }
+
+/* ---- mobile (<=720px): tabs stay; the field row stacks to a column ---- */
+@media (max-width: 720px) {
+  .bookbar.bookbar--tabs { max-width: 100%; }
+  .bookbar--tabs .hs-tablist { gap: 0; }
+  .bookbar--tabs .hs-tab { flex: 1 1 0; padding-inline: 6px; text-align: center; }
+  .bookbar--tabs .hs-row { flex-direction: column; gap: 8px; }
+  .bookbar--tabs .hs-field,
+  .bookbar--tabs .hs-field--date,
+  .bookbar--tabs .hs-field--dest,
+  .bookbar--tabs .hs-field--pax,
+  .bookbar--tabs .hs-field--cabin { flex: 1 1 auto; width: 100%; }
+  .bookbar--tabs .hs-ac-list { min-width: 0; width: 100%; max-width: 100%; }
+  .bookbar--tabs .hs-pax-btn { width: 32px; height: 32px; }
+}
+
+/* ---- RTL (/ar/) — logical props above mirror layout automatically; flip the
+   <select> caret (it is the one directional, non-logical background paint) ---- */
+[dir="rtl"] .bookbar--tabs .hs-select {
+  padding-inline-end: 18px;
+  background-position:
+    8px calc(50% - 1px),
+    3px calc(50% - 1px);
+}
+/* LWP-HERO-TABS-V3 end */

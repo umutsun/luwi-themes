@@ -237,9 +237,19 @@ add_action( 'wp_enqueue_scripts', function () {
 		$contact_url = get_permalink( $contact_page );
 	}
 
+	// fbd-connect REST base for the From/To airport autocomplete. The flight
+	// plugin only localizes window.fbdConnect on its own widget pages, so the
+	// homepage hero would otherwise have no REST base and the autocomplete would
+	// degrade to a plain text field. Pass the base here so the hero finder works
+	// wherever the bar renders — only when the flight plugin is active (else the
+	// route doesn't exist). No nonce: /places is a public read and a nonce baked
+	// into a cached homepage would go stale and trip WP's "Cookie check failed".
+	$fbd_rest = defined( 'FBD_CONNECT_VERSION' ) ? esc_url_raw( rest_url( 'flybydeniz/v1' ) ) : '';
+
 	wp_localize_script( 'luwipress-amber-hero-search', 'LWP_HERO', array(
 		'tours'      => $tours,
 		'contactUrl' => $contact_url,
+		'rest'       => $fbd_rest,
 
 		// Deep-link bases for each tab's results page, in the current language.
 		// '' when the page does not exist yet → the JS degrades that tab to a

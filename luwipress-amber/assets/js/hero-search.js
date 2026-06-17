@@ -70,10 +70,16 @@
 
   var URLS = (D.urls && typeof D.urls === 'object') ? D.urls : {};
 
-  /* fbd-connect REST base (flight plugin owns it — read, never duplicate). */
-  var REST_BASE = (window.fbdConnect && typeof window.fbdConnect.rest === 'string')
+  /* fbd-connect REST base for the From/To airport autocomplete. The flight
+     plugin only localizes window.fbdConnect on its OWN widget pages (flights /
+     booking / confirmation) — NOT the homepage hero — so without a fallback the
+     hero autocomplete silently degrades to a plain text field. hero-search.php
+     therefore also passes the base (+ a wp_rest nonce) on LWP_HERO so the hero
+     finder works everywhere the bar renders. window.fbdConnect still wins when
+     present (keeps the flight pages on the plugin's own contract). */
+  var REST_BASE = (window.fbdConnect && typeof window.fbdConnect.rest === 'string' && window.fbdConnect.rest)
     ? window.fbdConnect.rest.replace(/\/+$/, '')
-    : '';
+    : ((typeof D.rest === 'string' && D.rest) ? D.rest.replace(/\/+$/, '') : '');
 
   /* ---- date helpers ---- */
   function pad(n) { return (n < 10 ? '0' : '') + n; }
@@ -443,8 +449,13 @@
       if (!enabled) return;
       var seq = ++reqSeq;
       var url = REST_BASE + path + (path.indexOf('?') >= 0 ? '&' : '?') + 'q=' + encodeURIComponent(q);
+      // /places is a PUBLIC read — send NO X-WP-Nonce. A nonce rendered into a
+      // (LiteSpeed-)cached homepage goes stale, and WP's rest_cookie_check_errors
+      // rejects ANY request carrying an invalid wp_rest nonce with a 403 "Cookie
+      // check failed" — even anonymous ones — which would intermittently kill the
+      // autocomplete on cached page views. No nonce = the public route always
+      // answers, cached or not.
       var headers = {};
-      if (window.fbdConnect && window.fbdConnect.nonce) headers['X-WP-Nonce'] = window.fbdConnect.nonce;
       fetch(url, { headers: headers, credentials: 'same-origin' }).then(function (res) {
         if (res.status === 404) { enabled = false; closeList(); return null; }
         if (!res.ok) return null;
@@ -557,6 +568,150 @@
   }
   function clearHint(host) { if (host) { host.hidden = true; host.textContent = ''; } }
 
+  /* =========================================================================
+     CUSTOM SELECT FACTORY — a styled, on-brand dropdown that replaces the
+     native <select> (whose option list is drawn by the OS and can't be
+     themed). Button trigger + popup listbox, same visual language as the
+     autocomplete popups. Full keyboard support (Up/Down/Home/End/Enter/Space/
+     Esc), click-outside close, selected-state checkmark. Returns
+     { root, getValue, setValue }.  opts.options = [ [value, label], ... ].
+     ========================================================================= */
+  function createSelect(opts) {
+    opts = opts || {};
+    var options = opts.options || [];
+    var value = (opts.value != null) ? opts.value : (options[0] ? options[0][0] : '');
+    var label = opts.label || '';
+
+    var wrap = el('div', 'hs-combo');
+    var listId = nextId('hs-combo');
+    var trigger = el('button', 'hs-combo-trigger', {
+      type: 'button',
+      'aria-haspopup': 'listbox',
+      'aria-expanded': 'false',
+      'aria-controls': listId
+    });
+    if (label) trigger.setAttribute('aria-label', label);
+    var valEl = el('span', 'hs-combo-val');
+    var caret = el('span', 'hs-combo-caret', { 'aria-hidden': 'true' });
+    trigger.appendChild(valEl);
+    trigger.appendChild(caret);
+
+    var list = el('div', 'hs-combo-list', { id: listId, role: 'listbox' });
+    list.hidden = true;
+
+    var optEls = [];
+    var activeIdx = -1;
+
+    function labelFor(v) {
+      for (var i = 0; i < options.length; i++) { if (options[i][0] === v) return options[i][1]; }
+      return '';
+    }
+    function indexOfValue(v) {
+      for (var i = 0; i < options.length; i++) { if (options[i][0] === v) return i; }
+      return 0;
+    }
+    function syncVal() { valEl.textContent = labelFor(value); }
+
+    options.forEach(function (o, i) {
+      var row = el('div', 'hs-combo-opt', {
+        role: 'option',
+        id: nextId('hs-combo-opt'),
+        'data-value': o[0],
+        'aria-selected': (o[0] === value) ? 'true' : 'false'
+      });
+      row.textContent = o[1];
+      if (o[0] === value) row.classList.add('is-selected');
+      row.addEventListener('mousedown', function (e) { e.preventDefault(); choose(i); });
+      list.appendChild(row);
+      optEls.push(row);
+    });
+
+    function setActive(i) {
+      if (!optEls.length) return;
+      if (i < 0) i = optEls.length - 1;
+      if (i >= optEls.length) i = 0;
+      activeIdx = i;
+      for (var r = 0; r < optEls.length; r++) {
+        var on = r === i;
+        optEls[r].classList.toggle('is-active', on);
+        if (on) {
+          trigger.setAttribute('aria-activedescendant', optEls[r].id);
+          optEls[r].scrollIntoView({ block: 'nearest' });
+        }
+      }
+    }
+    function open() {
+      list.hidden = false;
+      wrap.classList.add('open');
+      trigger.setAttribute('aria-expanded', 'true');
+      setActive(indexOfValue(value));
+    }
+    function close() {
+      list.hidden = true;
+      wrap.classList.remove('open');
+      trigger.setAttribute('aria-expanded', 'false');
+      trigger.removeAttribute('aria-activedescendant');
+      activeIdx = -1;
+    }
+    function choose(i) {
+      var o = options[i];
+      if (!o) return;
+      value = o[0];
+      for (var r = 0; r < optEls.length; r++) {
+        var on = r === i;
+        optEls[r].classList.toggle('is-selected', on);
+        optEls[r].setAttribute('aria-selected', on ? 'true' : 'false');
+      }
+      syncVal();
+      close();
+      trigger.focus();
+    }
+
+    trigger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (list.hidden) { open(); } else { close(); }
+    });
+    trigger.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowDown' || e.key === 'Down') {
+        e.preventDefault();
+        if (list.hidden) { open(); } else { setActive(activeIdx + 1); }
+      } else if (e.key === 'ArrowUp' || e.key === 'Up') {
+        e.preventDefault();
+        if (list.hidden) { open(); } else { setActive(activeIdx - 1); }
+      } else if (e.key === 'Home') {
+        if (!list.hidden) { e.preventDefault(); setActive(0); }
+      } else if (e.key === 'End') {
+        if (!list.hidden) { e.preventDefault(); setActive(optEls.length - 1); }
+      } else if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+        e.preventDefault();
+        if (list.hidden) { open(); } else if (activeIdx >= 0) { choose(activeIdx); }
+      } else if (e.key === 'Escape' || e.key === 'Esc') {
+        if (!list.hidden) { e.preventDefault(); e.stopPropagation(); close(); trigger.focus(); }
+      }
+    });
+    document.addEventListener('click', function (e) { if (!wrap.contains(e.target)) close(); });
+
+    wrap.appendChild(trigger);
+    wrap.appendChild(list);
+    syncVal();
+
+    return {
+      root: wrap,
+      getValue: function () { return value; },
+      setValue: function (v) {
+        value = v;
+        for (var r = 0; r < options.length; r++) {
+          var on = options[r][0] === v;
+          if (optEls[r]) {
+            optEls[r].classList.toggle('is-selected', on);
+            optEls[r].setAttribute('aria-selected', on ? 'true' : 'false');
+          }
+        }
+        syncVal();
+      }
+    };
+  }
+
   /* ---- FLIGHTS ---- */
   function buildFlightsPanel() {
     var panel = el('div', 'hs-panel hs-panel--flights');
@@ -572,18 +727,23 @@
     });
     var pax = createStepper({ min: 1, max: 9, def: 1, label: T.travellers });
 
-    var cabin = el('select', 'hs-select', { 'aria-label': T.cabin });
-    [['economy', T.cabinEconomy], ['premium_economy', T.cabinPremium], ['business', T.cabinBusiness], ['first', T.cabinFirst]]
-      .forEach(function (o) {
-        var op = el('option'); op.value = o[0]; op.textContent = o[1]; cabin.appendChild(op);
-      });
+    var cabin = createSelect({
+      options: [
+        ['economy', T.cabinEconomy],
+        ['premium_economy', T.cabinPremium],
+        ['business', T.cabinBusiness],
+        ['first', T.cabinFirst]
+      ],
+      value: 'economy',
+      label: T.cabin
+    });
 
     var fFrom = field(T.from, fromAc.root);
     var fTo = field(T.to, toAc.root);
     var fDepart = field(T.depart, departDp.root, 'hs-field--date');
     var fReturn = field(T['return'], returnDp.root, 'hs-field--date');
     var fPax = field(T.travellers, pax.root, 'hs-field--pax');
-    var fCabin = field(T.cabin, cabin, 'hs-field--cabin');
+    var fCabin = field(T.cabin, cabin.root, 'hs-field--cabin');
 
     row.appendChild(fFrom.root);
     row.appendChild(fTo.root);
@@ -616,7 +776,7 @@
         ['depart', departDp.getISO()],
         ['return', returnDp.getISO()],
         ['pax', pax.get()],
-        ['cabin', cabin.value]
+        ['cabin', cabin.getValue()]
       ]);
       navigate(URLS.flights, query, note);
     }

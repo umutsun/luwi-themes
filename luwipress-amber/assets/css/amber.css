@@ -1249,16 +1249,25 @@ body.home .elementor-top-section + .elementor-top-section { margin-top: 28px; }
    Logical properties throughout → RTL (/ar/) mirrors. Dark + light via tokens.
    ============================================================ */
 
+/* ---- hero declutter — the booking form IS the hero's primary call to action,
+   so the secondary button row (Plan My Trip / Explore Experiences) and the
+   animated "Scroll" cue are removed: they competed with the form for attention
+   and, once the form grew, the scroll cue overlapped (shadowed) it. ---- */
+.hero .cta-row { display: none; }
+.hero .scroll-hint { display: none; }
+
 /* When JS swaps in the tabbed UI, the bar stops being a horizontal pill of
    fixed fields: drop the row flex + border dividers and let it be a padded
-   glass card that grows vertically. Keep the dark glass surface + radius. */
+   glass card that grows vertically. Keep the dark glass surface + radius.
+   Wider than the static fallback so the 6-field Flights row sits on ONE line
+   (Cabin no longer wraps to a second row). */
 .bookbar.bookbar--tabs {
   display: block;
   align-items: stretch;
   gap: 0;
-  padding: 14px;
+  padding: 16px;
   overflow: visible;
-  max-width: 920px;
+  max-width: 1120px;
 }
 
 .bookbar--tabs .hs-tabs { display: block; width: 100%; }
@@ -1330,18 +1339,28 @@ body.home .elementor-top-section + .elementor-top-section { margin-top: 28px; }
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  padding: 10px 14px;
+  gap: 7px;
+  padding: 11px 15px;
   background: var(--surface-2);
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
-  transition: border-color .16s ease;
+  cursor: pointer;
+  transition: border-color .16s ease, background-color .16s ease, box-shadow .16s ease;
 }
-.bookbar--tabs .hs-field:focus-within { border-color: var(--line-strong); }
+/* Whole field is the hit target — hover lifts the surface + brightens the
+   border so it reads as one clickable control. */
+.bookbar--tabs .hs-field:hover { background: var(--surface); border-color: var(--line-strong); }
+.bookbar--tabs .hs-field:focus-within {
+  border-color: var(--amber);
+  background: var(--surface);
+  box-shadow: 0 0 0 3px rgba(229, 162, 61, .15);
+}
 .bookbar--tabs .hs-field--date { flex: 1 1 170px; }
 .bookbar--tabs .hs-field--dest { flex: 2 1 220px; }
-.bookbar--tabs .hs-field--pax  { flex: 0 1 140px; }
-.bookbar--tabs .hs-field--cabin { flex: 1 1 160px; }
+/* Travellers + Cabin are compact — they don't grow, so the flexible fields
+   (From / To / dates) absorb the slack and the Flights row stays one line. */
+.bookbar--tabs .hs-field--pax  { flex: 0 1 128px; }
+.bookbar--tabs .hs-field--cabin { flex: 0 1 150px; }
 .bookbar--tabs .hs-field-lbl {
   font-size: 10.5px;
   letter-spacing: .2em;
@@ -1396,6 +1415,60 @@ body.home .elementor-top-section + .elementor-top-section { margin-top: 28px; }
 }
 .bookbar--tabs .hs-select:focus { color: #fff; }
 .bookbar--tabs .hs-select option { background: var(--surface); color: var(--text); }
+
+/* ---- cabin custom dropdown (.hs-combo) — replaces the native <select>, whose
+   OS-drawn option list can't be themed (the blue-highlight popup). A button
+   trigger + popup listbox styled in the same language as the autocomplete
+   popups, so every control in the bar feels consistent and on-brand. ---- */
+.bookbar--tabs .hs-combo { position: relative; width: 100%; }
+.bookbar--tabs .hs-combo-trigger {
+  width: 100%;
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  background: transparent; border: 0; outline: none; box-shadow: none;
+  color: var(--text); font-size: 15px; font-family: inherit; line-height: 1.25;
+  padding: 0; margin: 0; cursor: pointer; text-align: start;
+  -webkit-appearance: none; appearance: none;
+}
+.bookbar--tabs .hs-combo-trigger:focus { color: #fff; }
+.bookbar--tabs .hs-combo-val {
+  flex: 1 1 auto; min-width: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.bookbar--tabs .hs-combo-caret {
+  flex: 0 0 auto; width: 8px; height: 8px; margin-inline-start: 4px;
+  border-right: 2px solid var(--amber); border-bottom: 2px solid var(--amber);
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform .18s ease, border-color .18s ease;
+}
+.bookbar--tabs .hs-combo.open .hs-combo-caret { transform: translateY(1px) rotate(225deg); }
+.bookbar--tabs .hs-combo-trigger:hover .hs-combo-caret { border-color: var(--amber-soft); }
+
+.bookbar--tabs .hs-combo-list {
+  position: absolute; inset-inline-start: 0; top: calc(100% + 12px);
+  z-index: 60; width: 100%; min-width: 180px;
+  box-sizing: border-box; padding: 6px;
+  background: var(--surface); border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 18px 40px -16px rgba(0, 0, 0, .7), 0 2px 8px rgba(0, 0, 0, .35);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+}
+.bookbar--tabs .hs-combo-list[hidden] { display: none; }
+.bookbar--tabs .hs-combo-opt {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px; border-radius: var(--radius-sm);
+  color: var(--text); font-size: 14.5px; line-height: 1.3; cursor: pointer;
+  transition: background-color .12s ease, color .12s ease;
+}
+.bookbar--tabs .hs-combo-opt + .hs-combo-opt { margin-top: 2px; }
+.bookbar--tabs .hs-combo-opt:hover,
+.bookbar--tabs .hs-combo-opt.is-active { background: rgba(229, 162, 61, .14); color: #fff; }
+.bookbar--tabs .hs-combo-opt.is-selected { color: var(--amber-soft); font-weight: 600; }
+.bookbar--tabs .hs-combo-opt.is-selected::after {
+  content: ""; margin-inline-start: auto; flex: 0 0 auto;
+  width: 6px; height: 10px;
+  border-right: 2px solid var(--amber); border-bottom: 2px solid var(--amber);
+  transform: rotate(45deg);
+}
 
 /* ---- datepicker (.datepick internals owned by pages.css; only the trigger
    needs to read borderless inside the bar — same treatment as V2) ---- */
@@ -1555,8 +1628,11 @@ body.home .elementor-top-section + .elementor-top-section { margin-top: 28px; }
 [data-theme="light"] .bookbar--tabs .hs-input:focus,
 [data-theme="light"] .bookbar--tabs .hs-select:focus,
 [data-theme="light"] .bookbar--tabs .hs-pax:focus,
+[data-theme="light"] .bookbar--tabs .hs-combo-trigger:focus,
 [data-theme="light"] .bookbar--tabs .hs-ac-item:hover,
-[data-theme="light"] .bookbar--tabs .hs-ac-item.is-active { color: #2A170B; }
+[data-theme="light"] .bookbar--tabs .hs-ac-item.is-active,
+[data-theme="light"] .bookbar--tabs .hs-combo-opt:hover,
+[data-theme="light"] .bookbar--tabs .hs-combo-opt.is-active { color: #2A170B; }
 [data-theme="light"] .bookbar--tabs .hs-select { color-scheme: light; }
 
 /* ---- mobile (<=720px): tabs stay; the field row stacks to a column ---- */

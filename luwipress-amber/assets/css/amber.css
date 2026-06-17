@@ -1256,6 +1256,16 @@ body.home .elementor-top-section + .elementor-top-section { margin-top: 28px; }
 .hero .cta-row { display: none; }
 .hero .scroll-hint { display: none; }
 
+/* The hero booking bar sits near the section's bottom edge, so its popups
+   (calendar / airport autocomplete / cabin / passengers) open downward and
+   overflow into the FOLLOWING Elementor section. That section is later in the
+   DOM, so without help it paints over the overflow (the calendar's lower rows
+   get clipped). The hero's .wrap is a z-index:6 stacking context, so the popups
+   can't escape on their own — lift the whole hero section above the next one.
+   `:has()` keeps this portable (no Elementor ID hard-coding); the rule is
+   outside any @media so LiteSpeed minify leaves it intact. */
+.elementor-section:has(.hero) { position: relative; z-index: 5; }
+
 /* When JS swaps in the tabbed UI, the bar stops being a horizontal pill of
    fixed fields: drop the row flex + border dividers and let it be a padded
    glass card that grows vertically. Keep the dark glass surface + radius.
@@ -1469,6 +1479,33 @@ body.home .elementor-top-section + .elementor-top-section { margin-top: 28px; }
   border-right: 2px solid var(--amber); border-bottom: 2px solid var(--amber);
   transform: rotate(45deg);
 }
+
+/* ---- passengers picker (.hs-pax-combo) — flight-style Adults/Children panel,
+   built on the .hs-combo chrome. The Travellers field is a touch wider to fit
+   "2 adults, 1 child"; the panel drops down with one stepper row per type. ---- */
+.bookbar--tabs .hs-field--passengers { flex: 0 1 172px; }
+.bookbar--tabs .hs-pax-combo .hs-combo-trigger { gap: 9px; }
+.bookbar--tabs .hs-pax-icon {
+  flex: 0 0 auto; display: inline-flex; align-items: center;
+  color: var(--amber);
+}
+.bookbar--tabs .hs-pax-panel {
+  width: 300px; min-width: 300px;
+  padding: 6px 16px 14px;
+}
+.bookbar--tabs .hs-pax-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  padding: 12px 0;
+}
+.bookbar--tabs .hs-pax-meta { display: flex; flex-direction: column; gap: 2px; }
+.bookbar--tabs .hs-pax-title { font-size: 15px; font-weight: 600; color: var(--text); }
+.bookbar--tabs .hs-pax-age { font-size: 12.5px; color: var(--muted); }
+.bookbar--tabs .hs-pax-sep { height: 1px; background: var(--line); margin: 0 -4px; }
+/* the stepper in the panel is compact + right-aligned (not full-width as in the
+   bar field). Slightly larger touch targets to match the reference. */
+.bookbar--tabs .hs-pax-row .hs-pax-stepper { width: auto; flex: 0 0 auto; gap: 14px; }
+.bookbar--tabs .hs-pax-row .hs-pax { min-width: 20px; flex: 0 0 auto; text-align: center; }
+.bookbar--tabs .hs-pax-row .hs-pax-btn { width: 32px; height: 32px; }
 
 /* ---- datepicker (.datepick internals owned by pages.css; only the trigger
    needs to read borderless inside the bar — same treatment as V2) ---- */

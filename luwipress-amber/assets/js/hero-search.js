@@ -40,6 +40,14 @@
     depart:        t('depart', 'Depart'),
     'return':      t('return', 'Return'),
     travellers:    t('travellers', 'Travellers'),
+    adults:        t('adults', 'Adults'),
+    children:      t('children', 'Children'),
+    adult:         t('adult', 'adult'),
+    adultsWord:    t('adultsWord', 'adults'),
+    child:         t('child', 'child'),
+    childrenWord:  t('childrenWord', 'children'),
+    adultsAge:     t('adultsAge', '12+ years'),
+    childrenAge:   t('childrenAge', '2–11 years'),
     cabin:         t('cabin', 'Cabin'),
     destination:   t('destination', 'Destination'),
     checkin:       t('checkin', 'Check-in'),
@@ -293,6 +301,7 @@
     var max = typeof opts.max === 'number' ? opts.max : 9;
     var def = typeof opts.def === 'number' ? opts.def : min;
     var label = opts.label || '';
+    var onChange = typeof opts.onChange === 'function' ? opts.onChange : null;
 
     var stepper = el('div', 'hs-pax-stepper');
     var decBtn = el('button', 'hs-pax-btn hs-pax-btn--dec', { type: 'button', tabindex: '-1', 'aria-label': T.decrease + (label ? ' ' + label : '') });
@@ -316,6 +325,7 @@
       var cur = val();
       decBtn.disabled = cur <= min; decBtn.classList.toggle('is-disabled', cur <= min);
       incBtn.disabled = cur >= max; incBtn.classList.toggle('is-disabled', cur >= max);
+      if (onChange) onChange(cur);
     }
     function set(n) {
       input.value = Math.max(min, Math.min(max, n));
@@ -337,6 +347,91 @@
     refresh();
 
     return { root: stepper, get: val, input: input };
+  }
+
+  /* =========================================================================
+     PASSENGERS FACTORY — flight-style passenger picker: a combo trigger
+     ("2 adults, 1 child") opening a panel with Adults (12+) and Children
+     (2–11) steppers. Same combo chrome as the cabin dropdown. Returns
+     { root, getAdults, getChildren, getTotal }.
+     ========================================================================= */
+  function createPassengers(opts) {
+    opts = opts || {};
+    var adultsDef = (typeof opts.adults === 'number') ? opts.adults : 1;
+    var childrenDef = (typeof opts.children === 'number') ? opts.children : 0;
+
+    var wrap = el('div', 'hs-combo hs-pax-combo');
+    var panelId = nextId('hs-pax');
+    var trigger = el('button', 'hs-combo-trigger', {
+      type: 'button',
+      'aria-haspopup': 'dialog',
+      'aria-expanded': 'false',
+      'aria-controls': panelId,
+      'aria-label': T.travellers
+    });
+    var icon = el('span', 'hs-pax-icon', { 'aria-hidden': 'true' });
+    icon.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>';
+    var valEl = el('span', 'hs-combo-val');
+    var caret = el('span', 'hs-combo-caret', { 'aria-hidden': 'true' });
+    trigger.appendChild(icon);
+    trigger.appendChild(valEl);
+    trigger.appendChild(caret);
+
+    var panel = el('div', 'hs-combo-list hs-pax-panel', { id: panelId, role: 'dialog', 'aria-label': T.travellers });
+    panel.hidden = true;
+
+    function plural(n, one, many) { return n + ' ' + (n === 1 ? one : many); }
+    function syncLabel() {
+      // createStepper fires onChange during its own init refresh() — before the
+      // `adults`/`children` vars below are assigned — so guard the early call.
+      if (!adults || !children) return;
+      var a = adults.get(), c = children.get();
+      var parts = [ plural(a, T.adult, T.adultsWord) ];
+      if (c > 0) parts.push(plural(c, T.child, T.childrenWord));
+      valEl.textContent = parts.join(', ');
+    }
+
+    var adults = createStepper({ min: 1, max: 9, def: adultsDef, label: T.adults, onChange: syncLabel });
+    var children = createStepper({ min: 0, max: 9, def: childrenDef, label: T.children, onChange: syncLabel });
+
+    function row(title, age, stepperRoot) {
+      var r = el('div', 'hs-pax-row');
+      var meta = el('div', 'hs-pax-meta');
+      var t = el('div', 'hs-pax-title'); t.textContent = title;
+      var a = el('div', 'hs-pax-age'); a.textContent = age;
+      meta.appendChild(t); meta.appendChild(a);
+      r.appendChild(meta);
+      r.appendChild(stepperRoot);
+      return r;
+    }
+    panel.appendChild(row(T.adults, T.adultsAge, adults.root));
+    panel.appendChild(el('div', 'hs-pax-sep'));
+    panel.appendChild(row(T.children, T.childrenAge, children.root));
+
+    function open() { panel.hidden = false; wrap.classList.add('open'); trigger.setAttribute('aria-expanded', 'true'); }
+    function close() { panel.hidden = true; wrap.classList.remove('open'); trigger.setAttribute('aria-expanded', 'false'); }
+    trigger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (panel.hidden) { open(); } else { close(); }
+    });
+    trigger.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' || e.key === 'Esc') { if (!panel.hidden) { e.preventDefault(); e.stopPropagation(); close(); trigger.focus(); } }
+      else if ((e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') && panel.hidden) { e.preventDefault(); open(); }
+    });
+    // clicks inside the panel (steppers) must not close it
+    panel.addEventListener('click', function (e) { e.stopPropagation(); });
+    document.addEventListener('click', function (e) { if (!wrap.contains(e.target)) close(); });
+
+    wrap.appendChild(trigger);
+    wrap.appendChild(panel);
+    syncLabel();
+
+    return {
+      root: wrap,
+      getAdults: adults.get,
+      getChildren: children.get,
+      getTotal: function () { return adults.get() + children.get(); }
+    };
   }
 
   /* =========================================================================
@@ -725,7 +820,7 @@
       placeholder: T.chooseDate,
       onChange: function (val) { returnDp.setMin(val); }
     });
-    var pax = createStepper({ min: 1, max: 9, def: 1, label: T.travellers });
+    var pax = createPassengers({ adults: 1, children: 0 });
 
     var cabin = createSelect({
       options: [
@@ -742,7 +837,7 @@
     var fTo = field(T.to, toAc.root);
     var fDepart = field(T.depart, departDp.root, 'hs-field--date');
     var fReturn = field(T['return'], returnDp.root, 'hs-field--date');
-    var fPax = field(T.travellers, pax.root, 'hs-field--pax');
+    var fPax = field(T.travellers, pax.root, 'hs-field--pax hs-field--passengers');
     var fCabin = field(T.cabin, cabin.root, 'hs-field--cabin');
 
     row.appendChild(fFrom.root);
@@ -775,7 +870,12 @@
         ['to', to],
         ['depart', departDp.getISO()],
         ['return', returnDp.getISO()],
-        ['pax', pax.get()],
+        // `pax` = total head-count keeps the existing flights widget (which reads
+        // only `pax`) working; `adults`/`children` are sent alongside so the
+        // widget can honour child pricing once it reads them.
+        ['pax', pax.getTotal()],
+        ['adults', pax.getAdults()],
+        ['children', pax.getChildren()],
         ['cabin', cabin.getValue()]
       ]);
       navigate(URLS.flights, query, note);

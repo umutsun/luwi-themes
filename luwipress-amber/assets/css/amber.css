@@ -1520,8 +1520,16 @@ body.home .elementor-top-section + .elementor-top-section { margin-top: 28px; }
 }
 .bookbar--tabs .hs-datepick .dp-trigger:hover { border-color: transparent; }
 .bookbar--tabs .hs-datepick.open .dp-trigger { border-color: transparent; }
-.bookbar--tabs .hs-datepick .dp-trigger .cal-ic { color: var(--amber); }
-.bookbar--tabs .hs-datepick .dp-trigger .dp-val { font-size: 15px; }
+.bookbar--tabs .hs-datepick .dp-trigger .cal-ic { color: var(--amber); flex: 0 0 auto; }
+/* A picked date ("Thu, Jun 25, 2026") is long; keep it on ONE line so the date
+   fields don't grow taller than the rest of the row. Smaller font + nowrap fit
+   the full string in common locales; ellipsis is the safety net for longer ones. */
+.bookbar--tabs .hs-datepick .dp-trigger { display: flex; align-items: center; gap: 8px; }
+.bookbar--tabs .hs-datepick .dp-trigger .dp-val {
+  font-size: 13px;
+  flex: 1 1 auto; min-width: 0;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
 /* Calendar popup INSIDE the tabbed bar (only the stacking + width are scoped
    here — .dp-pop's look stays owned by pages.css). pages.css gives it z-index:30,
    which the gradient submit button paints over; lift it to match the

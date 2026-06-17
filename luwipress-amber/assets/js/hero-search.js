@@ -89,6 +89,16 @@
     ? window.fbdConnect.rest.replace(/\/+$/, '')
     : ((typeof D.rest === 'string' && D.rest) ? D.rest.replace(/\/+$/, '') : '');
 
+  /* Brand default destination (e.g. "Dubai" / "DXB") — prefilled into the To /
+     Destination fields so the visitor only picks an origin + date. Filterable
+     server-side (lwp_amber_hero_default_dest[_iata]); empty disables the preset. */
+  var DEF_DEST = (typeof D.defaultDest === 'string') ? D.defaultDest : '';
+  var DEF_IATA = (typeof D.defaultDestIata === 'string') ? D.defaultDestIata : '';
+  function destPreset(withIata) {
+    if (!DEF_DEST) return null;
+    return withIata ? { label: DEF_DEST, value: DEF_IATA } : { label: DEF_DEST };
+  }
+
   /* ---- date helpers ---- */
   function pad(n) { return (n < 10 ? '0' : '') + n; }
   function iso(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
@@ -590,6 +600,17 @@
       setTimeout(closeList, 120);
     });
 
+    // Optional preset (e.g. a brand default destination): prefill the display +
+    // stored code so the field arrives filled but stays fully editable — typing
+    // clears the stored code via the input handler, so it's just a default.
+    if (opts.preset && opts.preset.label) {
+      var presetVal = opts.preset.value || '';
+      var presetDisp = opts.preset.label;
+      if (presetVal && mode === 'iata') presetDisp = presetDisp + ' (' + presetVal + ')';
+      input.value = presetDisp;
+      setStored(presetVal || opts.preset.label);
+    }
+
     return {
       root: wrap,
       input: input,
@@ -813,7 +834,7 @@
     var row = el('div', 'hs-row');
 
     var fromAc = createAutocomplete({ mode: 'iata', path: '/places', label: T.from, placeholder: T.fromCity });
-    var toAc   = createAutocomplete({ mode: 'iata', path: '/places', label: T.to, placeholder: T.toCity });
+    var toAc   = createAutocomplete({ mode: 'iata', path: '/places', label: T.to, placeholder: T.toCity, preset: destPreset(true) });
     var returnDp = createDatePicker({ placeholder: T.chooseDate });
     // Depart drives the Return picker's earliest selectable day (return >= depart).
     var departDp = createDatePicker({
@@ -889,7 +910,7 @@
     var panel = el('div', 'hs-panel hs-panel--hotels');
     var row = el('div', 'hs-row');
 
-    var destAc = createAutocomplete({ mode: 'dest', path: '/hotels/places', label: T.destination, placeholder: T.destination });
+    var destAc = createAutocomplete({ mode: 'dest', path: '/hotels/places', label: T.destination, placeholder: T.destination, preset: destPreset(false) });
     var checkoutDp = createDatePicker({ placeholder: T.chooseDate });
     var checkinDp = createDatePicker({
       placeholder: T.chooseDate,
@@ -934,7 +955,7 @@
     var panel = el('div', 'hs-panel hs-panel--tours');
     var row = el('div', 'hs-row');
 
-    var destAc = createAutocomplete({ mode: 'dest', path: '/tours/places', label: T.destination, placeholder: T.destination });
+    var destAc = createAutocomplete({ mode: 'dest', path: '/tours/places', label: T.destination, placeholder: T.destination, preset: destPreset(false) });
     var dateDp = createDatePicker({ placeholder: T.chooseDate });
     var guests = createStepper({ min: 1, max: 20, def: 2, label: T.guests });
 

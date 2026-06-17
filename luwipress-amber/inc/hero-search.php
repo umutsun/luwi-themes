@@ -246,10 +246,18 @@ add_action( 'wp_enqueue_scripts', function () {
 	// into a cached homepage would go stale and trip WP's "Cookie check failed".
 	$fbd_rest = defined( 'FBD_CONNECT_VERSION' ) ? esc_url_raw( rest_url( 'flybydeniz/v1' ) ) : '';
 
+	// Brand default destination — prefilled into the To / Destination fields so a
+	// visitor only enters an origin + date. Defaults to Dubai (the Amber demo's
+	// home city); any install can override or clear it via these filters.
+	$default_dest      = (string) apply_filters( 'lwp_amber_hero_default_dest', 'Dubai' );
+	$default_dest_iata = (string) apply_filters( 'lwp_amber_hero_default_dest_iata', 'DXB' );
+
 	wp_localize_script( 'luwipress-amber-hero-search', 'LWP_HERO', array(
-		'tours'      => $tours,
-		'contactUrl' => $contact_url,
-		'rest'       => $fbd_rest,
+		'tours'           => $tours,
+		'contactUrl'      => $contact_url,
+		'rest'            => $fbd_rest,
+		'defaultDest'     => $default_dest,
+		'defaultDestIata' => $default_dest_iata,
 
 		// Deep-link bases for each tab's results page, in the current language.
 		// '' when the page does not exist yet → the JS degrades that tab to a

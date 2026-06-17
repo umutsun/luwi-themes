@@ -1691,6 +1691,19 @@ body.home .elementor-top-section + .elementor-top-section { margin-top: 28px; }
 [data-theme="light"] .bookbar--tabs .hs-combo-opt.is-active { color: #2A170B; }
 [data-theme="light"] .bookbar--tabs .hs-select { color-scheme: light; }
 
+/* ---- fbd-connect (flight booking) date inputs — the plugin sets
+   `color-scheme: light dark` on its fields, so the native <input type=date>
+   calendar-picker icon follows the UA's preferred scheme and turns white
+   (invisible) on our light surface. Pin the scheme to the active Amber theme so
+   the icon always contrasts its field. Theme-side on purpose: the plugin CSS is
+   overwritten on every plugin update, so the fix must live in the theme. ---- */
+[data-theme="light"] .fbd-flight-booking input[type="date"],
+[data-theme="light"] .fbd-field input[type="date"],
+[data-theme="light"] input.p-dob { color-scheme: light; }
+[data-theme="dark"] .fbd-flight-booking input[type="date"],
+[data-theme="dark"] .fbd-field input[type="date"],
+[data-theme="dark"] input.p-dob { color-scheme: dark; }
+
 /* ---- mobile (<=720px): tabs stay; the field row stacks to a column ---- */
 @media (max-width: 720px) {
   .bookbar.bookbar--tabs { max-width: 100%; }

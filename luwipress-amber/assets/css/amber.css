@@ -1485,6 +1485,17 @@ body.home .elementor-top-section + .elementor-top-section { margin-top: 28px; }
 .bookbar--tabs .hs-datepick.open .dp-trigger { border-color: transparent; }
 .bookbar--tabs .hs-datepick .dp-trigger .cal-ic { color: var(--amber); }
 .bookbar--tabs .hs-datepick .dp-trigger .dp-val { font-size: 15px; }
+/* Calendar popup INSIDE the tabbed bar (only the stacking + width are scoped
+   here — .dp-pop's look stays owned by pages.css). pages.css gives it z-index:30,
+   which the gradient submit button paints over; lift it to match the
+   autocomplete / cabin popups (z-60). And since the single-row layout makes the
+   Depart/Return fields narrow, pages.css's `left:0;right:0` would squeeze the
+   calendar so "June 2026" + the day grid wrap — give it a comfortable min width
+   so it opens at its natural calendar size regardless of the field width. */
+.bookbar--tabs .hs-datepick .dp-pop {
+  z-index: 70;
+  min-width: 300px;
+}
 
 /* ---- pax stepper — re-scope the V2 .hs-pax-* component to live directly
    under .bookbar (the tabbed UI has no .val wrapper). Same look as V2. ---- */

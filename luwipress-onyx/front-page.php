@@ -101,12 +101,23 @@ $onyx_journal  = onyx_page_url( 'journal' );
 
 			<div class="stats-row">
 				<?php
-				$onyx_ov_stats = array(
-					array( 8800, '', __( 'Square metres', 'luwipress-onyx' ) ),
-					array( 680, '', __( 'Car parkings', 'luwipress-onyx' ) ),
-					array( 366, '', __( 'Apartments', 'luwipress-onyx' ) ),
-					array( 286, '', __( 'Bedrooms', 'luwipress-onyx' ) ),
-				);
+				// Live DLD market scale via arsha-connect (graceful fallback to demo figures).
+				$onyx_ov = function_exists( 'arsha_connect_get' ) ? arsha_connect_get( 'overview' ) : null;
+				if ( is_array( $onyx_ov ) && ! empty( $onyx_ov['projects_total'] ) ) {
+					$onyx_ov_stats = array(
+						array( (int) $onyx_ov['projects_total'],   '',  __( 'Projects tracked', 'luwipress-onyx' ) ),
+						array( (int) $onyx_ov['developers_total'], '',  __( 'Developers', 'luwipress-onyx' ) ),
+						array( (int) $onyx_ov['areas_total'],      '',  __( 'Communities', 'luwipress-onyx' ) ),
+						array( (int) round( (float) ( $onyx_ov['ready_vs_offplan']['offplan_pct'] ?? 0 ) ), '%', __( 'Off-plan share', 'luwipress-onyx' ) ),
+					);
+				} else {
+					$onyx_ov_stats = array(
+						array( 8800, '', __( 'Square metres', 'luwipress-onyx' ) ),
+						array( 680, '', __( 'Car parkings', 'luwipress-onyx' ) ),
+						array( 366, '', __( 'Apartments', 'luwipress-onyx' ) ),
+						array( 286, '', __( 'Bedrooms', 'luwipress-onyx' ) ),
+					);
+				}
 				foreach ( $onyx_ov_stats as $st ) : ?>
 					<div class="stat">
 						<div class="tnum stat-num"><span data-countup="<?php echo (int) $st[0]; ?>"><?php echo esc_html( number_format_i18n( $st[0] ) ); ?></span><span class="stat-suf"><?php echo esc_html( $st[1] ); ?></span></div>
@@ -185,74 +196,142 @@ $onyx_journal  = onyx_page_url( 'journal' );
 			</div>
 			<div class="pgrid reveal">
 				<?php
-				$onyx_props = array(
-					array( 'Penthouse', 'The Onyx Penthouse', 'Downtown', '4 Bed', '412 m²', 'AED 14.8M', 'interior' ),
-					array( 'Duplex', 'Marsa Duplex 41', 'Business Bay', '3 Bed', '268 m²', 'AED 6.9M', 'tower' ),
-					array( 'Studio', 'Atelier Studio', 'DIFC', 'Studio', '54 m²', 'AED 1.2M', 'exterior' ),
-					array( 'Business', 'Bay Office Loft', 'Business Bay', 'Loft', '120 m²', 'AED 3.1M', 'interior' ),
-					array( 'Apartment', 'Skyframe Two-Bed', 'Dubai Marina', '2 Bed', '146 m²', 'AED 2.4M', 'tower' ),
-					array( 'Villa', 'Palm Shore Villa', 'Palm Jumeirah', '5 Bed', '640 m²', 'AED 28M', 'exterior' ),
-				);
-				foreach ( $onyx_props as $p ) : ?>
-					<a class="pcard" href="<?php echo esc_url( $onyx_listings ); ?>">
-						<div class="pcard-media"><span class="pcard-cat"><?php echo esc_html( $p[0] ); ?></span><?php echo onyx_ph( array( 'glyph' => $p[6] ) ); // phpcs:ignore ?></div>
-						<div class="pcard-body">
-							<div class="pcard-loc"><span class="ic"><?php echo onyx_icon( 'pin', 13 ); // phpcs:ignore ?></span><?php echo esc_html( $p[2] ); ?></div>
-							<h3><?php echo esc_html( $p[1] ); ?></h3>
-							<div class="pcard-meta">
-								<span><span class="ic"><?php echo onyx_icon( 'bed', 15 ); // phpcs:ignore ?></span><?php echo esc_html( $p[3] ); ?></span>
-								<span><span class="ic"><?php echo onyx_icon( 'ruler', 15 ); // phpcs:ignore ?></span><?php echo esc_html( $p[4] ); ?></span>
+				// Featured projects — operator-picked arsha_project posts first (via the
+				// featured registry), topped up with the most recent; each links to itself.
+				$onyx_res_ids = function_exists( 'lwp_onyx_get_featured_ids' )
+					? lwp_onyx_get_featured_ids( array( 'post_type' => 'arsha_project', 'number' => 6 ) )
+					: array();
+				if ( count( $onyx_res_ids ) < 6 ) {
+					$onyx_res_fill = get_posts( array(
+						'post_type'        => 'arsha_project',
+						'posts_per_page'   => 6 - count( $onyx_res_ids ),
+						'post_status'      => 'publish',
+						'fields'           => 'ids',
+						'post__not_in'     => $onyx_res_ids ? $onyx_res_ids : array( 0 ),
+						'orderby'          => 'date',
+						'order'            => 'DESC',
+						'no_found_rows'    => true,
+						'suppress_filters' => false,
+					) );
+					$onyx_res_ids = array_merge( $onyx_res_ids, $onyx_res_fill );
+				}
+				$onyx_res = array_filter( array_map( 'get_post', $onyx_res_ids ) );
+				if ( $onyx_res ) :
+					foreach ( $onyx_res as $rp ) :
+						$r_id    = $rp->ID;
+						$r_img   = get_the_post_thumbnail_url( $r_id, 'large' );
+						$r_areas = wp_get_post_terms( $r_id, 'arsha_area', array( 'fields' => 'names' ) );
+						$r_stats = wp_get_post_terms( $r_id, 'arsha_project_status', array( 'fields' => 'names' ) );
+						$r_area  = ( ! empty( $r_areas ) && ! is_wp_error( $r_areas ) ) ? $r_areas[0] : '';
+						$r_stat  = ( ! empty( $r_stats ) && ! is_wp_error( $r_stats ) ) ? $r_stats[0] : '';
+						$r_dev   = (string) get_post_meta( $r_id, '_arsha_developer', true );
+						$r_price = (int) get_post_meta( $r_id, '_arsha_price', true );
+						?>
+						<a class="pcard" href="<?php echo esc_url( get_permalink( $r_id ) ); ?>">
+							<div class="pcard-media"<?php echo $r_img ? ' style="background-image:url(\'' . esc_url( $r_img ) . '\');background-size:cover;background-position:center"' : ''; ?>><span class="pcard-cat"><?php echo esc_html( $r_stat ); ?></span></div>
+							<div class="pcard-body">
+								<div class="pcard-loc"><span class="ic"><?php echo onyx_icon( 'pin', 13 ); // phpcs:ignore ?></span><?php echo esc_html( $r_area ); ?></div>
+								<h3><?php echo esc_html( get_the_title( $r_id ) ); ?></h3>
+								<?php if ( $r_dev ) : ?><div class="pcard-meta"><span><?php echo esc_html( $r_dev ); ?></span></div><?php endif; ?>
+								<div class="pcard-foot">
+									<div class="pcard-price"><small><?php esc_html_e( 'Price from', 'luwipress-onyx' ); ?></small><?php echo $r_price ? esc_html( 'AED ' . number_format_i18n( $r_price ) ) : esc_html( $r_stat ); ?></div>
+									<span class="pcard-arrow"><?php echo onyx_icon( 'arrowUR', 16 ); // phpcs:ignore ?></span>
+								</div>
 							</div>
-							<div class="pcard-foot">
-								<div class="pcard-price"><small><?php esc_html_e( 'Price from', 'luwipress-onyx' ); ?></small><?php echo esc_html( $p[5] ); ?></div>
-								<span class="pcard-arrow"><?php echo onyx_icon( 'arrowUR', 16 ); // phpcs:ignore ?></span>
+						</a>
+					<?php endforeach;
+				else :
+					$onyx_props = array(
+						array( 'Penthouse', 'The Onyx Penthouse', 'Downtown', '4 Bed', '412 m²', 'AED 14.8M', 'interior' ),
+						array( 'Apartment', 'Skyframe Two-Bed', 'Dubai Marina', '2 Bed', '146 m²', 'AED 2.4M', 'tower' ),
+						array( 'Villa', 'Palm Shore Villa', 'Palm Jumeirah', '5 Bed', '640 m²', 'AED 28M', 'exterior' ),
+					);
+					foreach ( $onyx_props as $p ) : ?>
+						<a class="pcard" href="<?php echo esc_url( $onyx_listings ); ?>">
+							<div class="pcard-media"><span class="pcard-cat"><?php echo esc_html( $p[0] ); ?></span><?php echo onyx_ph( array( 'glyph' => $p[6] ) ); // phpcs:ignore ?></div>
+							<div class="pcard-body">
+								<div class="pcard-loc"><span class="ic"><?php echo onyx_icon( 'pin', 13 ); // phpcs:ignore ?></span><?php echo esc_html( $p[2] ); ?></div>
+								<h3><?php echo esc_html( $p[1] ); ?></h3>
+								<div class="pcard-foot"><div class="pcard-price"><small><?php esc_html_e( 'Price from', 'luwipress-onyx' ); ?></small><?php echo esc_html( $p[5] ); ?></div><span class="pcard-arrow"><?php echo onyx_icon( 'arrowUR', 16 ); // phpcs:ignore ?></span></div>
 							</div>
-						</div>
+						</a>
+					<?php endforeach;
+				endif; ?>
+			</div>
+		</div>
+	</section>
+
+	<!-- ===== DEVELOPER PARTNERS (dynamic — lwp_vendor) ===== -->
+	<?php
+	$onyx_devs = get_posts( array(
+		'post_type'        => 'lwp_vendor',
+		'posts_per_page'   => 12,
+		'orderby'          => 'ID',
+		'order'            => 'ASC',
+		'post_status'      => 'publish',
+		'suppress_filters' => false,
+	) );
+	if ( $onyx_devs ) : ?>
+	<section class="section" id="developers" style="background:var(--onyx-850);border-top:1px solid var(--hair-soft);border-bottom:1px solid var(--hair-soft)">
+		<div class="wrap">
+			<div class="sec-head">
+				<div class="sh-title">
+					<span class="reveal" style="display:block"><?php echo onyx_eyebrow( __( 'Developer Partners', 'luwipress-onyx' ) ); // phpcs:ignore ?></span>
+					<h2 class="display-lg reveal"><?php esc_html_e( 'The names that build Dubai', 'luwipress-onyx' ); ?></h2>
+				</div>
+				<a class="sh-link reveal" href="<?php echo esc_url( get_post_type_archive_link( 'lwp_vendor' ) ); ?>"><?php esc_html_e( 'All developers', 'luwipress-onyx' ); ?> <?php echo onyx_icon( 'arrow', 14 ); // phpcs:ignore ?></a>
+			</div>
+			<div class="dev-showcase">
+				<?php foreach ( $onyx_devs as $onyx_dev ) :
+					$onyx_dev_lead = get_the_excerpt( $onyx_dev ); ?>
+					<a class="dev-card reveal" href="<?php echo esc_url( get_permalink( $onyx_dev ) ); ?>">
+						<span class="dev-mono"><?php echo esc_html( mb_strtoupper( mb_substr( get_the_title( $onyx_dev ), 0, 1 ) ) ); ?></span>
+						<span class="dev-name"><?php echo esc_html( get_the_title( $onyx_dev ) ); ?></span>
+						<?php if ( $onyx_dev_lead ) : ?><span class="dev-lead"><?php echo esc_html( $onyx_dev_lead ); ?></span><?php endif; ?>
 					</a>
 				<?php endforeach; ?>
 			</div>
 		</div>
 	</section>
+	<?php endif; ?>
 
 	<!-- ===== NEIGHBORHOODS ===== -->
 	<section class="section" id="areas">
 		<div class="wrap">
 			<div class="sec-head">
 				<div class="sh-title">
-					<span class="reveal" style="display:block"><?php echo onyx_eyebrow( __( 'Nearby Areas', 'luwipress-onyx' ) ); // phpcs:ignore ?></span>
-					<h2 class="display-lg reveal"><?php esc_html_e( 'A neighborhood, fully formed', 'luwipress-onyx' ); ?></h2>
+					<span class="reveal" style="display:block"><?php echo onyx_eyebrow( __( 'Dubai Communities', 'luwipress-onyx' ) ); // phpcs:ignore ?></span>
+					<h2 class="display-lg reveal"><?php esc_html_e( 'Where Dubai lives', 'luwipress-onyx' ); ?></h2>
 				</div>
+				<a class="sh-link reveal" href="<?php echo esc_url( home_url( '/market-insights/' ) ); ?>"><?php esc_html_e( 'Market insights', 'luwipress-onyx' ); ?> <?php echo onyx_icon( 'arrow', 14 ); // phpcs:ignore ?></a>
 			</div>
 			<?php
-			$onyx_areas = array(
-				array( 'Fine Dining', 'Michelin-listed tables and quiet rooftop bars', '3 min', 32, 30 ),
-				array( 'Central Park', 'Twelve hectares of landscaped calm', '5 min', 64, 22 ),
-				array( 'Shopping Center', 'Dubai Mall and the boutique district', '7 min', 76, 56 ),
-				array( 'Hospitals', 'International-standard medical care', '6 min', 24, 64 ),
-				array( 'Playgrounds', 'Schools, parks and family spaces', '4 min', 50, 78 ),
-			);
-			?>
-			<div class="nb-grid">
-				<ul class="nb-list">
-					<?php foreach ( $onyx_areas as $k => $a ) : ?>
-						<li class="nb-item<?php echo 1 === $k ? ' active' : ''; ?>" data-nb-item="<?php echo (int) $k; ?>">
-							<span class="nb-idx"><?php echo esc_html( str_pad( (string) ( $k + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span>
-							<div><div class="nb-name"><?php echo esc_html( $a[0] ); ?></div><div class="nb-desc"><?php echo esc_html( $a[1] ); ?></div></div>
-							<span class="nb-dist"><?php echo esc_html( $a[2] ); ?></span>
-						</li>
-					<?php endforeach; ?>
-				</ul>
-				<div class="nb-map reveal">
-					<div class="map-lines"></div>
-					<div class="map-pin main" style="left:50%;top:48%"><div class="dot"></div><span class="pl" style="color:var(--gold)"><?php esc_html_e( 'Arsha Homes', 'luwipress-onyx' ); ?></span></div>
-					<?php foreach ( $onyx_areas as $k => $a ) : ?>
-						<div class="map-pin<?php echo 1 === $k ? ' on' : ''; ?>" data-nb-pin="<?php echo (int) $k; ?>" style="left:<?php echo (int) $a[3]; ?>%;top:<?php echo (int) $a[4]; ?>%">
-							<div class="dot"></div><span class="pl"><?php echo esc_html( $a[0] ); ?></span>
-						</div>
-					<?php endforeach; ?>
-					<span class="map-tag smallcaps"><?php esc_html_e( 'Business Bay · Dubai', 'luwipress-onyx' ); ?></span>
-				</div>
+			// Live top Dubai communities via arsha-connect (graceful if unavailable).
+			$onyx_aidx      = function_exists( 'arsha_connect_get' ) ? arsha_connect_get( 'area-index' ) : null;
+			$onyx_top_areas = ( is_array( $onyx_aidx ) && ! empty( $onyx_aidx['top_areas'] ) ) ? $onyx_aidx['top_areas'] : array();
+			if ( $onyx_top_areas ) : ?>
+			<div class="area-grid">
+				<?php foreach ( $onyx_top_areas as $k => $ar ) :
+					$ar_name = (string) ( $ar['area'] ?? '' );
+					if ( '' === $ar_name ) { continue; }
+					$ar_proj = (int) ( $ar['project_count'] ?? 0 );
+					$ar_avg  = (float) ( $ar['avg_price_aed'] ?? 0 );
+					$ar_url  = add_query_arg( 'residence_area', sanitize_title( $ar_name ), get_post_type_archive_link( 'lwp_residence' ) );
+					?>
+					<a class="area-card reveal" href="<?php echo esc_url( $ar_url ); ?>">
+						<span class="area-idx"><?php echo esc_html( str_pad( (string) ( $k + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span>
+						<span class="area-name"><?php echo esc_html( $ar_name ); ?></span>
+						<span class="area-meta">
+							<span><?php echo esc_html( sprintf( _n( '%d project', '%d projects', $ar_proj, 'luwipress-onyx' ), $ar_proj ) ); ?></span>
+							<?php if ( $ar_avg > 0 && function_exists( 'arsha_connect_aed' ) ) : ?>
+								<span class="area-avg"><?php echo esc_html( sprintf( __( 'avg %s', 'luwipress-onyx' ), arsha_connect_aed( $ar_avg ) ) ); ?></span>
+							<?php endif; ?>
+						</span>
+						<span class="area-go" aria-hidden="true"><?php echo onyx_icon( 'arrowUR', 14 ); // phpcs:ignore ?></span>
+					</a>
+				<?php endforeach; ?>
 			</div>
+			<?php endif; ?>
 		</div>
 	</section>
 

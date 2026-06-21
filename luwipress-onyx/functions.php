@@ -92,6 +92,8 @@ require_once LUWIPRESS_ONYX_DIR . '/inc/friendly-plugins.php';
 // AI surface — search suggestions, sticky chat widget shell, KG-related
 // rail. Hard-deps on LuwiPress; the bridge file emits the admin notice.
 require_once LUWIPRESS_ONYX_DIR . '/inc/ai-surface.php';
+require_once LUWIPRESS_ONYX_DIR . '/inc/projects-cpt.php';
+require_once LUWIPRESS_ONYX_DIR . '/inc/projects-sync.php';
 
 if ( class_exists( 'WooCommerce' ) ) {
 	require_once LUWIPRESS_ONYX_DIR . '/inc/wc-pdp-hooks.php';

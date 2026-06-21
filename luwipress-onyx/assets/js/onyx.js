@@ -199,7 +199,7 @@
       return '<article class="pcard" style="background:var(--onyx-900)">' +
         '<div class="pcard-media"><span class="pcard-cat">' + esc(p.cat) + '</span>' +
         '<button class="fav' + (fav ? ' on' : '') + '" data-fav="' + esc(p.name) + '" aria-label="Save">' + ICON.heart + '</button>' + phMedia(p.glyph) + '</div>' +
-        '<a href="' + href + '" style="display:block;color:inherit"><div class="pcard-body">' +
+        '<a href="' + (p.url || href) + '" style="display:block;color:inherit"><div class="pcard-body">' +
         '<div class="pcard-loc"><span class="ic">' + ICON.pin + '</span>' + esc(p.loc) + '</div>' +
         '<h3>' + esc(p.name) + '</h3>' +
         '<div class="pcard-meta"><span><span class="ic">' + ICON.bed + '</span>' + esc(beds) + '</span><span><span class="ic">' + ICON.ruler + '</span>' + p.area + ' m²</span></div>' +
@@ -213,7 +213,7 @@
       return '<div class="lcard">' +
         '<div class="lcard-media"><span class="lcard-cat">' + esc(p.cat) + '</span>' +
         '<button class="fav' + (fav ? ' on' : '') + '" data-fav="' + esc(p.name) + '" aria-label="Save">' + ICON.heart + '</button>' + phMedia(p.glyph) + '</div>' +
-        '<a class="lcard-body" href="' + href + '">' +
+        '<a class="lcard-body" href="' + (p.url || href) + '">' +
         '<div class="lcard-loc"><span class="ic">' + ICON.pin + '</span>' + esc(p.loc) + ' · ' + esc(p.status) + '</div>' +
         '<h3>' + esc(p.name) + '</h3><p class="lcard-desc">' + esc(p.desc || '') + '</p>' +
         '<div class="lcard-meta"><span><span class="ic">' + ICON.bed + '</span>' + esc(beds) + '</span><span><span class="ic">' + ICON.ruler + '</span>' + p.area + ' m²</span><span><span class="ic">' + ICON.car + '</span>' + park + ' Parking</span></div>' +
@@ -451,6 +451,227 @@
         pins.forEach(function (p) { p.classList.toggle('on', p.dataset.nbPin === k); });
       });
     });
+  })();
+
+  /* ===========================================================
+     PROJECT DETAIL  ·  tabs + ROI/payment calculators + gallery lightbox
+     =========================================================== */
+  (function () {
+    var root = $('[data-onyx-proj]');
+    if (!root) return;
+    var aed = function (n) { return 'AED ' + Math.round(n).toLocaleString('en-US'); };
+
+    /* ---- tabs ---- */
+    (function () {
+      var nav = $('[data-onyx-tabs]', root);
+      if (!nav) return;
+      var tabs = $$('.pdp-tab', nav);
+      var panels = {};
+      $$('[data-panel]', root).forEach(function (p) { panels[p.dataset.panel] = p; });
+      function activate(key) {
+        tabs.forEach(function (t) { t.classList.toggle('on', t.dataset.tab === key); });
+        Object.keys(panels).forEach(function (k) { panels[k].hidden = (k !== key); });
+      }
+      tabs.forEach(function (t) { t.addEventListener('click', function () { activate(t.dataset.tab); }); });
+    })();
+
+    /* ---- ROI calculator ---- */
+    (function () {
+      var box = $('[data-onyx-roi]', root);
+      if (!box) return;
+      var get = function (k) { return $('[data-roi="' + k + '"]', box); };
+      var price = get('price'), yld = get('yield'), occ = get('occ'), apx = get('apx');
+      var oRent = get('rent'), oNet = get('netyield'), oPay = get('payback'), oT5 = get('total5');
+      function calc() {
+        var P = +price.value || 0, Y = +yld.value || 0, O = (+occ.value || 0) / 100, A = (+apx.value || 0) / 100;
+        var rent = P * (Y / 100) * O;
+        var netY = P > 0 ? (rent / P) * 100 : 0;
+        var pay = rent > 0 ? P / rent : 0;
+        var rent5 = rent * 5;
+        var apx5 = P * (Math.pow(1 + A, 5) - 1);
+        var total5 = rent5 + apx5;
+        if (oRent) oRent.textContent = aed(rent);
+        if (oNet) oNet.textContent = netY.toFixed(1) + '%';
+        if (oPay) oPay.textContent = pay > 0 ? pay.toFixed(1) + ' yrs' : '—';
+        if (oT5) oT5.textContent = aed(total5) + (P > 0 ? '  ·  +' + ((total5 / P) * 100).toFixed(0) + '%' : '');
+      }
+      [price, yld, occ, apx].forEach(function (el) { el && el.addEventListener('input', calc); });
+      calc();
+    })();
+
+    /* ---- off-plan payment plan ---- */
+    (function () {
+      var box = $('[data-onyx-plan]', root);
+      if (!box) return;
+      var get = function (k) { return $('[data-plan="' + k + '"]', box); };
+      var price = get('price'), down = get('down'), during = get('during'), handover = get('handover');
+      var oD = get('downv'), oC = get('duringv'), oH = get('handoverv'), oS = get('sumv'), oSL = get('sumlbl');
+      function calc() {
+        var P = +price.value || 0, d = +down.value || 0, c = +during.value || 0, h = +handover.value || 0;
+        var sum = d + c + h;
+        if (oD) oD.textContent = aed(P * d / 100);
+        if (oC) oC.textContent = aed(P * c / 100);
+        if (oH) oH.textContent = aed(P * h / 100);
+        if (oS) oS.textContent = aed(P * sum / 100);
+        if (oSL) oSL.textContent = (sum === 100 ? 'Total' : 'Total (' + sum + '% — should be 100%)');
+        if (oS) oS.style.color = (sum === 100 ? '' : 'var(--gold)');
+      }
+      [price, down, during, handover].forEach(function (el) { el && el.addEventListener('input', calc); });
+      calc();
+    })();
+
+    /* ---- gallery lightbox ---- */
+    (function () {
+      var items = $$('[data-pg-item]', root);
+      var lb = $('[data-pg-lightbox]');
+      if (!items.length || !lb) return;
+      var img = $('[data-pg-img]', lb);
+      var urls = items.map(function (a) { return a.getAttribute('href'); });
+      var idx = 0;
+      function show(i) { idx = (i + urls.length) % urls.length; if (img) img.src = urls[idx]; }
+      function open(i) { show(i); lb.hidden = false; document.body.style.overflow = 'hidden'; }
+      function close() { lb.hidden = true; document.body.style.overflow = ''; }
+      items.forEach(function (a, i) { a.addEventListener('click', function (e) { e.preventDefault(); open(i); }); });
+      var cl = $('[data-pg-close]', lb), pv = $('[data-pg-prev]', lb), nx = $('[data-pg-next]', lb);
+      cl && cl.addEventListener('click', close);
+      pv && pv.addEventListener('click', function (e) { e.stopPropagation(); show(idx - 1); });
+      nx && nx.addEventListener('click', function (e) { e.stopPropagation(); show(idx + 1); });
+      lb.addEventListener('click', function (e) { if (e.target === lb) close(); });
+      window.addEventListener('keydown', function (e) {
+        if (lb.hidden) return;
+        if (e.key === 'Escape') close();
+        if (e.key === 'ArrowRight') show(idx + 1);
+        if (e.key === 'ArrowLeft') show(idx - 1);
+      });
+    })();
+  })();
+
+  /* ===========================================================
+     PROJECTS CATALOG  ·  live filter + infinite scroll + autocomplete
+     =========================================================== */
+  (function () {
+    var root = $('[data-onyx-catalog]');
+    if (!root) return;
+    function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]; }); }
+
+    var restBase = root.getAttribute('data-rest');
+    var suggestBase = root.getAttribute('data-suggest');
+    var form = $('[data-cf-form]', root);
+    var results = $('[data-cf-results]', root);
+    var countEl = $('[data-cf-count]', root);
+    var sortSel = $('[data-cf-sort]', root);
+    var loader = $('[data-cf-loader]', root);
+    var sentinel = $('[data-cf-sentinel]', root);
+    var page = 1, pages = 1, loading = false;
+    try { var st = JSON.parse($('[data-cf-state]', root).textContent); page = st.page || 1; pages = st.pages || 1; } catch (e) {}
+
+    function params() {
+      var p = new URLSearchParams();
+      var q = $('[data-cf-q]', root); if (q && q.value) p.set('q', q.value);
+      var status = form.querySelector('input[name="status"]:checked'); if (status && status.value) p.set('status', status.value);
+      $$('input[name="type[]"]:checked', form).forEach(function (c) { p.append('type[]', c.value); });
+      $$('input[name="area[]"]:checked', form).forEach(function (c) { p.append('area[]', c.value); });
+      var dev = $('[data-cf-dev]', root); if (dev && dev.value) p.set('dev', dev.value);
+      if (sortSel && sortSel.value && sortSel.value !== 'recent') p.set('sort', sortSel.value);
+      return p;
+    }
+
+    function fetchPage(pg, append) {
+      if (loading) return;
+      loading = true; if (loader) loader.hidden = false;
+      var p = params(); p.set('page', pg);
+      fetch(restBase + '?' + p.toString(), { headers: { Accept: 'application/json' } })
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          var cards = d.cards || '';
+          if (append) { results.insertAdjacentHTML('beforeend', cards); }
+          else { results.innerHTML = cards || '<p class="cat-empty" style="color:var(--muted);padding:40px 0">' + 'No projects match these filters.' + '</p>'; }
+          page = d.page || pg; pages = d.pages || 1;
+          if (countEl) countEl.innerHTML = '<b>' + (d.total || 0) + '</b> projects';
+          loading = false; if (loader) loader.hidden = true;
+          if (!append) { var u = location.pathname; var qs = params().toString(); history.replaceState(null, '', qs ? u + '?' + qs : u); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+        })
+        .catch(function () { loading = false; if (loader) loader.hidden = true; });
+    }
+    function reset() { page = 1; fetchPage(1, false); }
+
+    // filter change → live refetch + toggle .on visuals
+    form.addEventListener('change', function (e) {
+      var t = e.target;
+      if (t.name === 'type[]' || t.name === 'area[]') { var l = t.closest('.chk'); if (l) l.classList.toggle('on', t.checked); }
+      if (t.name === 'status') { $$('.seg-opt', form).forEach(function (s) { var i = s.querySelector('input'); s.classList.toggle('on', i && i.checked); }); }
+      reset();
+    });
+    form.addEventListener('submit', function (e) { e.preventDefault(); reset(); });
+    sortSel && sortSel.addEventListener('change', reset);
+
+    var resetLink = $('[data-cf-reset]', root);
+    resetLink && resetLink.addEventListener('click', function (e) {
+      e.preventDefault();
+      $$('input[name="type[]"],input[name="area[]"]', form).forEach(function (c) { c.checked = false; });
+      $$('.chk.on', form).forEach(function (l) { l.classList.remove('on'); });
+      var any = form.querySelector('input[name="status"][value=""]'); if (any) any.checked = true;
+      $$('.seg-opt', form).forEach(function (s) { var i = s.querySelector('input'); s.classList.toggle('on', i && i.checked); });
+      var q = $('[data-cf-q]', root); if (q) q.value = '';
+      var dev = $('[data-cf-dev]', root); if (dev) dev.value = '';
+      var ds = $('[data-cf-devsearch]', root); if (ds) ds.value = '';
+      if (sortSel) sortSel.value = 'recent';
+      reset();
+    });
+
+    // infinite scroll
+    if ('IntersectionObserver' in window && sentinel) {
+      var io = new IntersectionObserver(function (ents) {
+        ents.forEach(function (en) { if (en.isIntersecting && !loading && page < pages) fetchPage(page + 1, true); });
+      }, { rootMargin: '700px' });
+      io.observe(sentinel);
+    }
+
+    // project-name autocomplete (debounced) + live filter on the same input
+    var qEl = $('[data-cf-q]', root), qMenu = $('[data-cf-q-menu]', root), qDeb, qSug;
+    if (qEl) {
+      qEl.addEventListener('input', function () {
+        clearTimeout(qDeb); qDeb = setTimeout(reset, 320);
+        var v = qEl.value;
+        if (!qMenu) return;
+        if (v.length < 2) { qMenu.hidden = true; qMenu.innerHTML = ''; return; }
+        clearTimeout(qSug); qSug = setTimeout(function () {
+          fetch(suggestBase + '?q=' + encodeURIComponent(v)).then(function (r) { return r.json(); }).then(function (list) {
+            if (!list || !list.length) { qMenu.hidden = true; return; }
+            qMenu.innerHTML = list.map(function (it) { return '<a href="' + it.url + '"><b>' + esc(it.title) + '</b>' + (it.area ? '<span>' + esc(it.area) + '</span>' : '') + '</a>'; }).join('');
+            qMenu.hidden = false;
+          }).catch(function () {});
+        }, 160);
+      });
+      document.addEventListener('click', function (e) { if (qMenu && !qMenu.contains(e.target) && e.target !== qEl) qMenu.hidden = true; });
+    }
+
+    // developer typeahead (client-side over the term island)
+    var devs = []; try { devs = JSON.parse($('[data-cf-devs]', root).textContent) || []; } catch (e) {}
+    var devSearch = $('[data-cf-devsearch]', root), devHidden = $('[data-cf-dev]', root), devMenu = $('[data-cf-dev-menu]', root);
+    function renderDevs(v) {
+      if (!devMenu) return;
+      v = (v || '').toLowerCase().trim();
+      var list = (v ? devs.filter(function (d) { return d.n.toLowerCase().indexOf(v) > -1; }) : devs).slice(0, 24);
+      devMenu.innerHTML = '<a data-dev="" class="cat-ac-all">All developers</a>' + list.map(function (d) { return '<a data-dev="' + d.s + '">' + esc(d.n) + ' <span>(' + d.c + ')</span></a>'; }).join('');
+      devMenu.hidden = false;
+    }
+    if (devSearch && devMenu && devHidden) {
+      devSearch.addEventListener('focus', function () { renderDevs(devSearch.value); });
+      devSearch.addEventListener('input', function () { renderDevs(devSearch.value); });
+      devMenu.addEventListener('click', function (e) {
+        var a = e.target.closest('[data-dev]'); if (!a) return; e.preventDefault();
+        devHidden.value = a.getAttribute('data-dev');
+        devSearch.value = a.getAttribute('data-dev') ? a.textContent.replace(/\s*\(\d+\)\s*$/, '') : '';
+        devMenu.hidden = true; reset();
+      });
+      document.addEventListener('click', function (e) { if (!devMenu.contains(e.target) && e.target !== devSearch) devMenu.hidden = true; });
+    }
+
+    // mobile filter drawer
+    var toggle = $('[data-cf-toggle]', root), side = $('[data-cf-side]', root), scrim = $('[data-cf-scrim]', root);
+    toggle && toggle.addEventListener('click', function () { side && side.classList.add('open'); scrim && scrim.classList.add('open'); });
+    scrim && scrim.addEventListener('click', function () { side.classList.remove('open'); scrim.classList.remove('open'); });
   })();
 
 })();

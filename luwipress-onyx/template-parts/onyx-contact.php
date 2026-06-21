@@ -48,7 +48,18 @@ $onyx_ayhan   = get_template_directory_uri() . '/assets/ayhan.jpg';
 							<div class="field"><label><?php esc_html_e( 'Phone', 'luwipress-onyx' ); ?></label><input type="tel" name="onyx_phone" placeholder="+971 …"></div>
 						</div>
 						<div class="field"><label><?php esc_html_e( 'Email', 'luwipress-onyx' ); ?></label><input type="email" name="onyx_email" required placeholder="you@email.com"></div>
-						<div class="field"><label><?php esc_html_e( 'How can we help?', 'luwipress-onyx' ); ?></label><textarea name="onyx_message" placeholder="<?php esc_attr_e( "Tell us what you're looking for — budget, area, timing.", 'luwipress-onyx' ); ?>"></textarea></div>
+						<?php
+						// Pre-fill the message when arriving from a project "Register interest" CTA.
+						$onyx_prefill = '';
+						if ( ! empty( $_GET['project'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+							$onyx_proj = sanitize_text_field( html_entity_decode( wp_unslash( $_GET['project'] ), ENT_QUOTES, 'UTF-8' ) ); // phpcs:ignore
+							if ( '' !== $onyx_proj ) {
+								/* translators: %s: project name */
+								$onyx_prefill = sprintf( __( "I'm interested in %s. Please send me the price, payment plan and availability.", 'luwipress-onyx' ), $onyx_proj );
+							}
+						}
+						?>
+						<div class="field"><label><?php esc_html_e( 'How can we help?', 'luwipress-onyx' ); ?></label><textarea name="onyx_message" placeholder="<?php esc_attr_e( "Tell us what you're looking for — budget, area, timing.", 'luwipress-onyx' ); ?>"><?php echo esc_textarea( $onyx_prefill ); ?></textarea></div>
 						<button type="submit" class="btn btn-gold"><?php esc_html_e( 'Request a callback', 'luwipress-onyx' ); ?> <span class="arr"><?php echo onyx_icon( 'arrow', 16 ); // phpcs:ignore ?></span></button>
 					</form>
 				<?php endif; ?>

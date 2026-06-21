@@ -45,7 +45,14 @@ $onyx_data = apply_filters( 'luwipress_onyx_listings_data', array(
 ) );
 
 $onyx_types = array( 'Penthouse', 'Duplex', 'Apartment', 'Studio', 'Villa', 'Business' );
-$onyx_locs  = array( 'Downtown', 'Business Bay', 'Dubai Marina', 'Palm Jumeirah', 'DIFC', 'City Walk', 'Dubai Creek', 'Dubai Hills' );
+// Derive the location facet from the actual data so the filter matches real
+// area names (demo data already uses the curated set; real projects use their
+// arsha_area term). Falls back to the curated list when no locations are present.
+$onyx_locs = array_values( array_unique( array_filter( wp_list_pluck( $onyx_data, 'loc' ) ) ) );
+sort( $onyx_locs );
+if ( empty( $onyx_locs ) ) {
+	$onyx_locs = array( 'Downtown', 'Business Bay', 'Dubai Marina', 'Palm Jumeirah', 'DIFC', 'City Walk', 'Dubai Creek', 'Dubai Hills' );
+}
 $onyx_type_counts = array();
 foreach ( $onyx_types as $tt ) {
 	$onyx_type_counts[ $tt ] = count( array_filter( $onyx_data, function ( $p ) use ( $tt ) { return $p['cat'] === $tt; } ) );

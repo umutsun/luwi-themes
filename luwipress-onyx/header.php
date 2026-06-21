@@ -67,10 +67,13 @@ if ( ! $onyx_header_active ) :
 	// Language strip — WPML / Polylang aware, else the static EN·AR·RU display.
 	$onyx_langs = array();
 	if ( has_filter( 'wpml_active_languages' ) ) {
-		$wpml = apply_filters( 'wpml_active_languages', null, 'orderby=code' );
+		// skip_missing=0 → always return every configured language, even on CPT
+		// archives / untranslated singles (otherwise WPML hides them and the
+		// switcher falls back to the static EN·AR·RU strip on subpages).
+		$wpml = apply_filters( 'wpml_active_languages', null, 'skip_missing=0&orderby=custom' );
 		if ( is_array( $wpml ) ) {
 			foreach ( $wpml as $code => $l ) {
-				$onyx_langs[] = array( 'code' => strtoupper( $l['language_code'] ?? $code ), 'url' => $l['url'] ?? '#', 'active' => ! empty( $l['active'] ) );
+				$onyx_langs[] = array( 'code' => strtoupper( explode( '-', (string) ( $l['language_code'] ?? $code ) )[0] ), 'url' => $l['url'] ?? '#', 'active' => ! empty( $l['active'] ) );
 			}
 		}
 	} elseif ( function_exists( 'pll_the_languages' ) ) {
@@ -81,6 +84,11 @@ if ( ! $onyx_header_active ) :
 			}
 		}
 	}
+
+	// Current language code for the dropdown trigger label.
+	$onyx_cur_code = '';
+	foreach ( $onyx_langs as $l ) { if ( ! empty( $l['active'] ) ) { $onyx_cur_code = $l['code']; break; } }
+	if ( '' === $onyx_cur_code && ! empty( $onyx_langs ) ) { $onyx_cur_code = $onyx_langs[0]['code']; }
 
 	$onyx_socials = array(
 		'Instagram' => array( get_theme_mod( 'luwipress_onyx_social_instagram', '' ), 'IG' ),
@@ -106,22 +114,34 @@ if ( ! $onyx_header_active ) :
 					<a class="ubar-call" href="<?php echo esc_url( 'tel:' . preg_replace( '/\s+/', '', $onyx_phone ) ); ?>"><span class="ic"><?php echo onyx_icon( 'phone', 13 ); // phpcs:ignore ?></span><?php esc_html_e( 'Call experts', 'luwipress-onyx' ); ?> <b><?php echo esc_html( $onyx_phone ); ?></b></a>
 				<?php endif; ?>
 				<span class="ubar-div"></span>
-				<div class="lang">
-					<span class="lang-ic"><?php echo onyx_icon( 'globe', 13 ); // phpcs:ignore ?></span>
-					<?php if ( count( $onyx_langs ) > 1 ) :
-						$first = true;
-						foreach ( $onyx_langs as $l ) :
-							if ( ! $first ) { echo '<span class="lang-sep">/</span>'; }
-							$first = false; ?>
-							<a class="lang-b<?php echo $l['active'] ? ' on' : ''; ?>" href="<?php echo esc_url( $l['url'] ); ?>" hreflang="<?php echo esc_attr( strtolower( $l['code'] ) ); ?>"><?php echo esc_html( $l['code'] ); ?></a>
-						<?php endforeach; ?>
-					<?php else :
-						$static = array( 'EN', 'AR', 'RU' );
+				<button class="theme-toggle theme-toggle--ubar" type="button" aria-label="<?php esc_attr_e( 'Toggle light / dark', 'luwipress-onyx' ); ?>">
+					<span class="tt-track">
+						<span class="tt-ic tt-sun"><?php echo onyx_icon( 'sun', 15 ); // phpcs:ignore ?></span>
+						<span class="tt-ic tt-moon"><?php echo onyx_icon( 'moon', 14 ); // phpcs:ignore ?></span>
+						<span class="tt-knob"></span>
+					</span>
+				</button>
+				<span class="ubar-div"></span>
+				<div class="lang lang--dd">
+					<?php if ( count( $onyx_langs ) > 1 ) : ?>
+						<span class="lang-trigger" tabindex="0" role="button" aria-haspopup="true" aria-label="<?php esc_attr_e( 'Language', 'luwipress-onyx' ); ?>">
+							<span class="lang-ic"><?php echo onyx_icon( 'globe', 13 ); // phpcs:ignore ?></span>
+							<span class="lang-cur"><?php echo esc_html( $onyx_cur_code ); ?></span>
+							<span class="lang-caret" aria-hidden="true"></span>
+						</span>
+						<div class="lang-menu" role="menu">
+							<?php foreach ( $onyx_langs as $l ) : ?>
+								<a class="lang-b<?php echo $l['active'] ? ' on' : ''; ?>" href="<?php echo esc_url( $l['url'] ); ?>" hreflang="<?php echo esc_attr( strtolower( $l['code'] ) ); ?>" role="menuitem"><?php echo esc_html( $l['code'] ); ?></a>
+							<?php endforeach; ?>
+						</div>
+					<?php else : ?>
+						<span class="lang-ic"><?php echo onyx_icon( 'globe', 13 ); // phpcs:ignore ?></span>
+						<?php $static = array( 'EN', 'AR', 'RU' );
 						foreach ( $static as $i => $code ) :
 							if ( $i > 0 ) { echo '<span class="lang-sep">/</span>'; } ?>
 							<button class="lang-b<?php echo 0 === $i ? ' on' : ''; ?>" type="button"><?php echo esc_html( $code ); ?></button>
-						<?php endforeach;
-					endif; ?>
+						<?php endforeach; ?>
+					<?php endif; ?>
 				</div>
 				<?php
 				$onyx_has_social = false;
@@ -153,7 +173,7 @@ if ( ! $onyx_header_active ) :
 					<div class="mega" role="menu">
 						<div class="wrap mega-in">
 							<div class="mega-col">
-								<h5><?php esc_html_e( 'By Type', 'luwipress-onyx' ); ?></h5>
+								<h5><?php esc_html_e( 'By Developer', 'luwipress-onyx' ); ?></h5>
 								<div class="mega-links">
 									<?php foreach ( $onyx_mega['types'] as $t ) : ?>
 										<a class="mega-link" href="<?php echo esc_url( $t[1] ); ?>"><?php echo esc_html( $t[0] ); ?><span class="mc"><?php echo esc_html( $t[2] ); ?></span></a>
@@ -172,12 +192,41 @@ if ( ! $onyx_header_active ) :
 								<h5><?php esc_html_e( 'Featured Residences', 'luwipress-onyx' ); ?></h5>
 								<div class="mega-feat">
 									<?php
-									$onyx_feat = array(
-										array( 'Penthouse · Downtown', 'The Onyx Penthouse', 'From AED 14.8M', 'interior' ),
-										array( 'Villa · Palm Jumeirah', 'Palm Shore Villa', 'From AED 28M', 'exterior' ),
-									);
+									// Featured Residences — operator-picked arsha_project posts via the featured
+									// registry; falls back to two showcase cards before any project is featured.
+									$onyx_feat = array();
+									if ( function_exists( 'lwp_onyx_get_featured_products' ) ) {
+										foreach ( lwp_onyx_get_featured_products( array( 'post_type' => 'arsha_project', 'number' => 2 ) ) as $fp ) {
+											$f_dev   = (string) get_post_meta( $fp->ID, '_arsha_developer', true );
+											$f_terms = get_the_terms( $fp->ID, 'arsha_area' );
+											$f_area  = ( is_array( $f_terms ) && $f_terms && ! is_wp_error( $f_terms ) ) ? $f_terms[0]->name : '';
+											$f_price = (int) get_post_meta( $fp->ID, '_arsha_price', true );
+											$f_glyph = (string) get_post_meta( $fp->ID, '_arsha_glyph', true );
+											if ( ! in_array( $f_glyph, array( 'tower', 'interior', 'exterior' ), true ) ) { $f_glyph = 'tower'; }
+											if ( $f_price >= 1000000 ) {
+												$f_plabel = 'From AED ' . rtrim( rtrim( number_format( $f_price / 1000000, 1 ), '0' ), '.' ) . 'M';
+											} elseif ( $f_price > 0 ) {
+												$f_plabel = 'From AED ' . number_format( $f_price );
+											} else {
+												$f_plabel = '';
+											}
+											$onyx_feat[] = array(
+												trim( $f_dev . ( $f_area !== '' ? ' · ' . $f_area : '' ), ' ·' ),
+												get_the_title( $fp->ID ),
+												$f_plabel,
+												$f_glyph,
+												get_permalink( $fp->ID ),
+											);
+										}
+									}
+									if ( empty( $onyx_feat ) ) {
+										$onyx_feat = array(
+											array( 'Penthouse · Downtown', 'The Onyx Penthouse', 'From AED 14.8M', 'interior', $onyx_listings ),
+											array( 'Villa · Palm Jumeirah', 'Palm Shore Villa', 'From AED 28M', 'exterior', $onyx_listings ),
+										);
+									}
 									foreach ( $onyx_feat as $f ) : ?>
-										<a class="mega-card" href="<?php echo esc_url( $onyx_listings ); ?>">
+										<a class="mega-card" href="<?php echo esc_url( ! empty( $f[4] ) ? $f[4] : $onyx_listings ); ?>">
 											<div class="mega-thumb"><?php echo onyx_ph( array( 'glyph' => $f[3] ) ); // phpcs:ignore ?></div>
 											<div>
 												<div class="mt-cat"><?php echo esc_html( $f[0] ); ?></div>
@@ -205,13 +254,6 @@ if ( ! $onyx_header_active ) :
 
 			<div class="hdr-right">
 				<a class="hdr-search" href="<?php echo esc_url( onyx_page_url( 'search' ) ); ?>" aria-label="<?php esc_attr_e( 'Search', 'luwipress-onyx' ); ?>"><?php echo onyx_icon( 'search', 18 ); // phpcs:ignore ?></a>
-				<button class="theme-toggle" type="button" aria-label="<?php esc_attr_e( 'Toggle light / dark', 'luwipress-onyx' ); ?>">
-					<span class="tt-track">
-						<span class="tt-ic tt-sun"><?php echo onyx_icon( 'sun', 15 ); // phpcs:ignore ?></span>
-						<span class="tt-ic tt-moon"><?php echo onyx_icon( 'moon', 14 ); // phpcs:ignore ?></span>
-						<span class="tt-knob"></span>
-					</span>
-				</button>
 				<button class="hdr-burger" type="button" aria-label="<?php esc_attr_e( 'Menu', 'luwipress-onyx' ); ?>"><?php echo onyx_icon( 'menu', 20 ); // phpcs:ignore ?></button>
 			</div>
 		</div>
@@ -223,7 +265,16 @@ if ( ! $onyx_header_active ) :
 	<aside class="drawer" aria-hidden="true">
 		<div class="drawer-top">
 			<a class="logo" href="<?php echo esc_url( home_url( '/' ) ); ?>" data-small="true"><img src="<?php echo esc_url( $onyx_logo ); ?>" alt="<?php echo esc_attr( $onyx_name ); ?>"></a>
-			<button class="drawer-close" type="button" aria-label="<?php esc_attr_e( 'Close', 'luwipress-onyx' ); ?>"><?php echo onyx_icon( 'close', 20 ); // phpcs:ignore ?></button>
+			<div class="drawer-top-actions">
+				<button class="theme-toggle" type="button" aria-label="<?php esc_attr_e( 'Toggle light / dark', 'luwipress-onyx' ); ?>">
+					<span class="tt-track">
+						<span class="tt-ic tt-sun"><?php echo onyx_icon( 'sun', 15 ); // phpcs:ignore ?></span>
+						<span class="tt-ic tt-moon"><?php echo onyx_icon( 'moon', 14 ); // phpcs:ignore ?></span>
+						<span class="tt-knob"></span>
+					</span>
+				</button>
+				<button class="drawer-close" type="button" aria-label="<?php esc_attr_e( 'Close', 'luwipress-onyx' ); ?>"><?php echo onyx_icon( 'close', 20 ); // phpcs:ignore ?></button>
+			</div>
 		</div>
 		<div class="drawer-scroll">
 			<nav class="drawer-nav">
@@ -246,7 +297,7 @@ if ( ! $onyx_header_active ) :
 				endforeach; ?>
 			</nav>
 			<div class="drawer-group">
-				<span class="drawer-sub"><?php esc_html_e( 'By Type', 'luwipress-onyx' ); ?></span>
+				<span class="drawer-sub"><?php esc_html_e( 'By Developer', 'luwipress-onyx' ); ?></span>
 				<div class="drawer-chips">
 					<?php foreach ( $onyx_mega['types'] as $t ) : ?>
 						<a href="<?php echo esc_url( $t[1] ); ?>"><?php echo esc_html( $t[0] ); ?></a>
@@ -261,31 +312,6 @@ if ( ! $onyx_header_active ) :
 			</div>
 		</div>
 		<div class="drawer-foot">
-			<div class="drawer-foot-row">
-				<div class="lang lang--block">
-					<span class="lang-ic"><?php echo onyx_icon( 'globe', 13 ); // phpcs:ignore ?></span>
-					<?php if ( count( $onyx_langs ) > 1 ) :
-						$first = true;
-						foreach ( $onyx_langs as $l ) :
-							if ( ! $first ) { echo '<span class="lang-sep">/</span>'; }
-							$first = false; ?>
-							<a class="lang-b<?php echo $l['active'] ? ' on' : ''; ?>" href="<?php echo esc_url( $l['url'] ); ?>"><?php echo esc_html( $l['code'] ); ?></a>
-						<?php endforeach;
-					else :
-						foreach ( array( 'EN', 'AR', 'RU' ) as $i => $code ) :
-							if ( $i > 0 ) { echo '<span class="lang-sep">/</span>'; } ?>
-							<button class="lang-b<?php echo 0 === $i ? ' on' : ''; ?>" type="button"><?php echo esc_html( $code ); ?></button>
-						<?php endforeach;
-					endif; ?>
-				</div>
-				<button class="theme-toggle" type="button" aria-label="<?php esc_attr_e( 'Toggle light / dark', 'luwipress-onyx' ); ?>">
-					<span class="tt-track">
-						<span class="tt-ic tt-sun"><?php echo onyx_icon( 'sun', 15 ); // phpcs:ignore ?></span>
-						<span class="tt-ic tt-moon"><?php echo onyx_icon( 'moon', 14 ); // phpcs:ignore ?></span>
-						<span class="tt-knob"></span>
-					</span>
-				</button>
-			</div>
 			<?php if ( $onyx_phone !== '' ) : ?>
 				<a class="dcall" href="<?php echo esc_url( 'tel:' . preg_replace( '/\s+/', '', $onyx_phone ) ); ?>"><span class="ic"><?php echo onyx_icon( 'phone', 16 ); // phpcs:ignore ?></span><?php echo esc_html( $onyx_phone ); ?></a>
 			<?php endif; ?>

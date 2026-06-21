@@ -93,7 +93,7 @@ $onyx_contacts = array(
 									<?php endforeach; ?>
 								</select>
 							</div>
-							<div class="field"><label><?php esc_html_e( 'Message', 'luwipress-onyx' ); ?></label><textarea name="onyx_message" placeholder="<?php esc_attr_e( "Tell us what you're looking for — budget, area, timing. The more you share, the better we can help.", 'luwipress-onyx' ); ?>"></textarea></div>
+							<div class="field"><label><?php esc_html_e( 'Message', 'luwipress-onyx' ); ?></label><?php $onyx_prefill = ''; if ( ! empty( $_GET['project'] ) ) { $onyx_proj = sanitize_text_field( html_entity_decode( wp_unslash( $_GET['project'] ), ENT_QUOTES, 'UTF-8' ) ); if ( '' !== $onyx_proj ) { /* translators: %s: project name */ $onyx_prefill = sprintf( __( "I'm interested in %s. Please send me the price, payment plan and availability.", 'luwipress-onyx' ), $onyx_proj ); } } ?><textarea name="onyx_message" placeholder="<?php esc_attr_e( "Tell us what you're looking for — budget, area, timing. The more you share, the better we can help.", 'luwipress-onyx' ); ?>"><?php echo esc_textarea( $onyx_prefill ); ?></textarea></div>
 							<button type="submit" class="btn btn-gold"><?php esc_html_e( 'Send message', 'luwipress-onyx' ); ?> <span class="arr"><?php echo onyx_icon( 'arrow', 16 ); // phpcs:ignore ?></span></button>
 							<p class="cform-note"><?php esc_html_e( 'By sending this, you agree to be contacted by ArshaHomes Real Estate L.L.C. We never share your details. Most enquiries are answered the same day.', 'luwipress-onyx' ); ?></p>
 						</form>

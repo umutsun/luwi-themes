@@ -230,7 +230,29 @@ if ( ! function_exists( 'onyx_page_url' ) ) {
 
 		// 4. Fallbacks.
 		if ( '' === $url ) {
-			$url = ( 'search' === $key ) ? home_url( '/?s=' ) : home_url( '/' . $key . '/' );
+			if ( 'listings' === $key ) {
+				// No Residences/Projects catalog exists yet (no listings
+				// template assigned, no residences/properties slug, no property
+				// CPT). A literal /listings/ URL 404s and the WHOLE mega menu
+				// points here. Until the Projects CPT catalog ships, route to
+				// the Market Insights page (real investor content, exists in
+				// every language) rather than the photo gallery (misread as a
+				// portfolio, not a catalog) or a demo-data listings page.
+				// Filterable so an operator can repoint it.
+				$fallback = '';
+				$mi       = get_page_by_path( 'market-insights' );
+				if ( $mi ) {
+					$fallback = get_permalink( $mi );
+				}
+				if ( '' === $fallback ) {
+					$fallback = home_url( '/' );
+				}
+				$url = apply_filters( 'luwipress_onyx_listings_fallback_url', $fallback );
+			} elseif ( 'search' === $key ) {
+				$url = home_url( '/?s=' );
+			} else {
+				$url = home_url( '/' . $key . '/' );
+			}
 		}
 
 		wp_cache_set( 'onyx_url_' . $key, $url, 'luwipress_onyx', 5 * MINUTE_IN_SECONDS );

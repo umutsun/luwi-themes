@@ -1,8 +1,8 @@
 /* ===== Onyx — sub-page styles (gallery, property, about, journal) ===== */
 
 /* ---------- page header ---------- */
-.phead { position: relative; padding-top: clamp(60px,7vw,96px); padding-bottom: clamp(40px,5vw,64px); border-bottom: 1px solid var(--hair-soft); }
-.crumb { display:flex; align-items:center; gap: 12px; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--faint); margin-bottom: 30px; }
+.phead { position: relative; padding-top: clamp(28px,3.4vw,52px); padding-bottom: clamp(24px,3vw,40px); border-bottom: 1px solid var(--hair-soft); }
+.crumb { display:flex; align-items:center; gap: 12px; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--faint); margin-bottom: 18px; }
 .crumb a { color: var(--muted); transition: color .3s; }
 .crumb a:hover { color: var(--gold); }
 .crumb .sep { color: var(--faint); }

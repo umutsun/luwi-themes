@@ -46,6 +46,12 @@
 	--primary-light: #B8923A;
 	--gold:      var(--primary);
 	--gold-soft: var(--primary-light);
+	/* tokens.css :root pins these base tokens to their DARK values and loads
+	   LAST, which would override onyx.css's light-mode flip — so re-flip them
+	   here too, or every var(--ink) element renders off-white on the light bg. */
+	--ink:    #1A1815;
+	--accent: #9C7A28;
+	--bg:     #F4F1EB;
 }
 
 /* Lock html to the active page base so any area above the utility bar or
@@ -75,6 +81,11 @@ html { background: var(--onyx-900, #0E0E10); }
 .article h4 { font-family: var(--display); font-weight: 400; font-size: 22px; color: var(--ink); margin: 32px 0 14px; }
 .article a { color: var(--gold-soft); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--hair); transition: text-decoration-color .3s; }
 .article a:hover { text-decoration-color: var(--gold); }
+/* Buttons dropped inside prose must keep their own look, not the underlined
+   gold prose-link treatment (else .btn-gold reads gold-on-light = illegible). */
+.article a.btn { text-decoration: none; }
+.article a.btn-gold { color: #18171a; }
+.article a.btn-ghost { color: var(--ink); }
 .article ul, .article ol { color: var(--muted); font-weight: 300; font-size: 17px; line-height: 1.8; margin: 0 0 24px; padding-left: 22px; }
 .article li { margin-bottom: 8px; }
 .article img, .article figure { margin: 32px 0; }

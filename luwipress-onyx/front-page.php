@@ -101,8 +101,9 @@ $onyx_journal  = onyx_page_url( 'journal' );
 
 			<div class="stats-row">
 				<?php
-				// Live DLD market scale via arsha-connect (graceful fallback to demo figures).
-				$onyx_ov = function_exists( 'arsha_connect_get' ) ? arsha_connect_get( 'overview' ) : null;
+				// DLD market scale via arsha-connect — CACHED (transient) so the homepage
+				// never makes a live maps-API call per request (graceful fallback to demo figures).
+				$onyx_ov = function_exists( 'onyx_arsha_cached' ) ? onyx_arsha_cached( 'overview' ) : null;
 				if ( is_array( $onyx_ov ) && ! empty( $onyx_ov['projects_total'] ) ) {
 					$onyx_ov_stats = array(
 						array( (int) $onyx_ov['projects_total'],   '',  __( 'Projects tracked', 'luwipress-onyx' ) ),
@@ -306,8 +307,9 @@ $onyx_journal  = onyx_page_url( 'journal' );
 				<a class="sh-link reveal" href="<?php echo esc_url( home_url( '/market-insights/' ) ); ?>"><?php esc_html_e( 'Market insights', 'luwipress-onyx' ); ?> <?php echo onyx_icon( 'arrow', 14 ); // phpcs:ignore ?></a>
 			</div>
 			<?php
-			// Live top Dubai communities via arsha-connect (graceful if unavailable).
-			$onyx_aidx      = function_exists( 'arsha_connect_get' ) ? arsha_connect_get( 'area-index' ) : null;
+			// Top Dubai communities via arsha-connect — CACHED (transient), no live
+			// maps-API call per request (graceful if unavailable).
+			$onyx_aidx      = function_exists( 'onyx_arsha_cached' ) ? onyx_arsha_cached( 'area-index' ) : null;
 			$onyx_top_areas = ( is_array( $onyx_aidx ) && ! empty( $onyx_aidx['top_areas'] ) ) ? $onyx_aidx['top_areas'] : array();
 			if ( $onyx_top_areas ) : ?>
 			<div class="area-grid">

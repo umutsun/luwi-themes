@@ -151,6 +151,40 @@ if ( ! function_exists( 'onyx_reading_time' ) ) {
 	}
 }
 
+if ( ! function_exists( 'onyx_arsha_cached' ) ) {
+	/**
+	 * Cached wrapper around arsha_connect_get() for data the homepage pulls on
+	 * every pageload (overview stats + area-index). Without caching, each request
+	 * makes a live maps-API call: slow, and worse, it exhausts the PHP-FPM pool
+	 * whenever a bulk DLD sync is busy on the maps API — taking the homepage down
+	 * with a 502 even at low CPU. Successful responses are cached; failures get a
+	 * short circuit-breaker cache so a struggling maps API is never hammered.
+	 *
+	 * @param string $resource arsha-connect resource ('overview', 'area-index'…).
+	 * @param int    $ttl      Success cache lifetime in seconds (default 6h).
+	 * @return mixed Response array, or null if arsha-connect is inactive.
+	 */
+	function onyx_arsha_cached( $resource, $ttl = 21600 ) {
+		if ( ! function_exists( 'arsha_connect_get' ) ) {
+			return null;
+		}
+		$key    = 'onyx_arsha_' . sanitize_key( $resource );
+		$cached = get_transient( $key );
+		if ( false !== $cached ) {
+			return $cached;
+		}
+		$data = arsha_connect_get( $resource );
+		if ( is_array( $data ) && ! empty( $data ) ) {
+			set_transient( $key, $data, max( 300, (int) $ttl ) );
+			return $data;
+		}
+		// Circuit breaker: cache the miss briefly so a slow/down maps API can't be
+		// hammered once per request (which is what 502s the homepage during sync).
+		set_transient( $key, array(), 120 );
+		return is_array( $data ) ? $data : null;
+	}
+}
+
 if ( ! function_exists( 'onyx_page_url' ) ) {
 	/**
 	 * Resolve a logical Onyx destination to a real URL.

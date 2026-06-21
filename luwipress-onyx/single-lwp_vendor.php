@@ -90,6 +90,10 @@ while ( have_posts() ) : the_post();
 					<div class="lwp-person__portrait">
 						<img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $name ); ?>" itemprop="image" />
 					</div>
+				<?php else : ?>
+					<div class="lwp-person__portrait lwp-person__portrait--initials" aria-hidden="true">
+						<span><?php echo esc_html( mb_strtoupper( mb_substr( $name, 0, 1 ) ) ); ?></span>
+					</div>
 				<?php endif; ?>
 
 				<div class="lwp-person__intro">

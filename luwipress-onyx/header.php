@@ -85,6 +85,31 @@ if ( ! $onyx_header_active ) :
 		}
 	}
 
+	// Fallback: on non-translatable contexts (the arsha_project CPT archive /
+	// single project) WPML returns only the current language, so the switcher
+	// collapses to the static strip. Those URLs DO resolve per language
+	// (/ar/projects/ → 200), so synthesize the full switcher from the site's
+	// active languages, converting the current request URL with wpml_permalink.
+	if ( count( $onyx_langs ) < 2 && isset( $GLOBALS['sitepress'] ) && is_object( $GLOBALS['sitepress'] )
+		&& method_exists( $GLOBALS['sitepress'], 'get_active_languages' ) ) {
+		global $wp;
+		$onyx_cur_path = ( isset( $wp->request ) && '' !== $wp->request ) ? '/' . trim( $wp->request, '/' ) . '/' : '/';
+		$onyx_cur_url  = home_url( $onyx_cur_path );
+		$onyx_cur_lang = apply_filters( 'wpml_current_language', null );
+		$onyx_active   = $GLOBALS['sitepress']->get_active_languages();
+		if ( is_array( $onyx_active ) && count( $onyx_active ) > 1 ) {
+			$onyx_langs = array();
+			foreach ( $onyx_active as $onyx_lc => $onyx_li ) {
+				$onyx_lurl    = apply_filters( 'wpml_permalink', $onyx_cur_url, $onyx_lc );
+				$onyx_langs[] = array(
+					'code'   => strtoupper( explode( '-', (string) $onyx_lc )[0] ),
+					'url'    => $onyx_lurl ? $onyx_lurl : $onyx_cur_url,
+					'active' => ( $onyx_lc === $onyx_cur_lang ),
+				);
+			}
+		}
+	}
+
 	// Current language code for the dropdown trigger label.
 	$onyx_cur_code = '';
 	foreach ( $onyx_langs as $l ) { if ( ! empty( $l['active'] ) ) { $onyx_cur_code = $l['code']; break; } }

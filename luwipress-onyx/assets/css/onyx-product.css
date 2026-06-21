@@ -48,6 +48,10 @@
 .lst-ctrls { display:flex; align-items:center; gap: 14px; }
 .sortsel { position: relative; }
 .sortsel select { -webkit-appearance: none; appearance: none; background: transparent; border: 1px solid var(--hair-soft); color: var(--ink); font-family: var(--body); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; padding: 12px 38px 12px 16px; cursor: pointer; }
+/* The closed control inherits --ink (light on dark), but the native option
+   popup renders on an OS-white background — so spell out readable colors for
+   the list items, else they show pale/invisible on white. */
+.sortsel select option { background: #ffffff; color: #15110c; }
 .sortsel::after { content: ""; position: absolute; right: 15px; top: 50%; width: 7px; height: 7px; border-right: 1.5px solid var(--gold); border-bottom: 1.5px solid var(--gold); transform: translateY(-65%) rotate(45deg); pointer-events: none; }
 .viewtoggle { display:flex; border: 1px solid var(--hair-soft); }
 .viewtoggle button { width: 42px; height: 42px; background: transparent; border:0; border-right: 1px solid var(--hair-soft); color: var(--muted); display:flex; align-items:center; justify-content:center; transition: all .3s; }

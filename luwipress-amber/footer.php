@@ -128,7 +128,7 @@ if ( ! $elementor_footer_active ) :
 		</div>
 
 		<div class="foot-bottom">
-			<span>&copy; <?php echo esc_html( date( 'Y' ) ); ?> <?php echo esc_html( $site_name ); ?><?php echo $legal !== '' ? ' · ' . esc_html( $legal ) : ''; ?>. <?php esc_html_e( 'All Rights Reserved.', 'luwipress-amber' ); ?></span>
+			<span>&copy; <?php echo esc_html( date( 'Y' ) ); ?> <?php echo esc_html( $site_name ); ?><?php echo $legal !== '' ? ' · ' . esc_html( $legal ) : ''; ?>. <?php esc_html_e( 'All Rights Reserved.', 'luwipress-amber' ); ?> &middot; <span class="foot-theme-credit" style="color:var(--amber)">LuwiPress Amber</span> <?php esc_html_e( 'Theme', 'luwipress-amber' ); ?></span>
 			<?php if ( has_nav_menu( 'footer-legal' ) ) : ?>
 				<div class="links">
 					<?php

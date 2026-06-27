@@ -163,6 +163,7 @@ if ( ! $elementor_footer_active ) :
 		<span class="lwp-site-footer-bottom__copy">
 			&copy; <?php echo esc_html( date( 'Y' ) ); ?> <?php echo esc_html( $site_name ); ?>
 			<?php if ( $legal ) echo ' · ' . esc_html( $legal ); ?>
+			&middot; <span class="lwp-site-footer-theme-credit" style="color:var(--primary-light)">LuwiPress Gold</span> <?php esc_html_e( 'Theme', 'luwipress-gold' ); ?>
 		</span>
 		<?php
 		// Optional byline (default empty since 1.7.5 — was redundant with

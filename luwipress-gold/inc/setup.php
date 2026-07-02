@@ -117,9 +117,10 @@ add_action( 'after_setup_theme', function () {
 	// templates use these for fallback when the operator hasn't populated
 	// custom Elementor menu widgets yet.
 	register_nav_menus( [
-		'primary' => __( 'Primary navigation (header fallback)', 'luwipress-gold' ),
-		'mobile'  => __( 'Mobile drawer (header fallback)', 'luwipress-gold' ),
-		'footer'  => __( 'Footer fallback', 'luwipress-gold' ),
+		'primary'        => __( 'Primary navigation (header fallback)', 'luwipress-gold' ),
+		'mobile'         => __( 'Mobile drawer (header fallback)', 'luwipress-gold' ),
+		'footer'         => __( 'Footer — Customer care column', 'luwipress-gold' ),
+		'footer-explore' => __( 'Footer — Explore column', 'luwipress-gold' ),
 	] );
 
 	// Image sizes used inside Elementor Kit JSONs.

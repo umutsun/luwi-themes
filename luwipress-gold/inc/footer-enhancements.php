@@ -635,7 +635,7 @@ if ( ! function_exists( 'luwipress_gold_footer_print_styles' ) ) {
 		}
 		?>
 <style id="lwp-gold-footer-enhancements">
-.lwp-site-footer-social{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.lwp-site-footer-social{display:flex;gap:10px;margin-top:16px;margin-bottom:8px;padding-bottom:14px;flex-wrap:wrap}
 .lwp-social-pill{
 	display:inline-flex;align-items:center;justify-content:center;
 	width:36px;height:36px;border-radius:50%;

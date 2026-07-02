@@ -50,6 +50,35 @@ if ( ! function_exists( 'luwipress_gold_footer_customizer' ) ) {
 			] );
 		}
 
+		/* --- Footer column menus (pick a nav menu per link column) --- */
+		// Operators choose which nav menu fills each footer link column right
+		// from this panel, instead of hunting for core Menus → Menu Locations.
+		// 0 = fall back to the registered menu location, then the auto list.
+		$lwp_menu_choices = array( 0 => __( '— Auto (menu location / default) —', 'luwipress-gold' ) );
+		foreach ( wp_get_nav_menus() as $lwp_m ) {
+			$lwp_menu_choices[ (int) $lwp_m->term_id ] = $lwp_m->name;
+		}
+		foreach ( array(
+			'luwipress_gold_footer_menu'         => __( 'Customer care column — menu', 'luwipress-gold' ),
+			'luwipress_gold_footer_explore_menu' => __( 'Explore column — menu', 'luwipress-gold' ),
+		) as $lwp_mid => $lwp_mlabel ) {
+			$wp_customize->add_setting( $lwp_mid, [
+				'type'              => 'theme_mod',
+				'default'           => 0,
+				'capability'        => 'edit_theme_options',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'absint',
+			] );
+			$wp_customize->add_control( $lwp_mid, [
+				'label'       => $lwp_mlabel,
+				'description' => __( 'Choose which menu appears in this footer column. Auto = use the assigned menu location, then a default list.', 'luwipress-gold' ),
+				'section'     => $section_id,
+				'type'        => 'select',
+				'choices'     => $lwp_menu_choices,
+				'priority'    => 5,
+			] );
+		}
+
 		/* --- Social URLs ------------------------------------------- */
 		$socials = luwipress_gold_footer_social_platforms();
 		foreach ( $socials as $key => $cfg ) {

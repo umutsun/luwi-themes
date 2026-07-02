@@ -29,9 +29,13 @@ if ( ! $elementor_footer_active ) :
 	// full SVG icon set + Customizer wiring live. Footer.php just calls
 	// the helper. The helper renders nothing when no social URL is set.
 
-	// Customer care + explore menus from registered nav menus, or auto-build.
-	$has_care    = has_nav_menu( 'footer' );
-	$has_explore = has_nav_menu( 'footer-explore' );
+	// Customer care + explore menus. Priority: (1) menu picked in Customizer →
+	// LuwiPress Gold → Footer, (2) menu assigned to the registered location,
+	// (3) auto-built fallback list.
+	$care_menu_id    = (int) get_theme_mod( 'luwipress_gold_footer_menu', 0 );
+	$explore_menu_id = (int) get_theme_mod( 'luwipress_gold_footer_explore_menu', 0 );
+	$has_care        = $care_menu_id || has_nav_menu( 'footer' );
+	$has_explore     = $explore_menu_id || has_nav_menu( 'footer-explore' );
 ?>
 
 <footer class="lwp-site-footer" role="contentinfo">
@@ -87,12 +91,10 @@ if ( ! $elementor_footer_active ) :
 		<div class="lwp-site-footer-col">
 			<h4><?php esc_html_e( 'Customer care', 'luwipress-gold' ); ?></h4>
 			<?php if ( $has_care ) {
-				wp_nav_menu( [
-					'theme_location' => 'footer',
-					'container'      => false,
-					'depth'          => 1,
-					'items_wrap'     => '<ul>%3$s</ul>',
-				] );
+				wp_nav_menu( array_merge(
+					$care_menu_id ? [ 'menu' => $care_menu_id ] : [ 'theme_location' => 'footer' ],
+					[ 'container' => false, 'depth' => 1, 'items_wrap' => '<ul>%3$s</ul>', 'fallback_cb' => false ]
+				) );
 			} else {
 				echo '<ul>';
 				echo '<li><a href="' . esc_url( home_url( '/contact/' ) ) . '">' . esc_html__( 'Contact us', 'luwipress-gold' ) . '</a></li>';
@@ -110,12 +112,10 @@ if ( ! $elementor_footer_active ) :
 		<div class="lwp-site-footer-col">
 			<h4><?php esc_html_e( 'Explore', 'luwipress-gold' ); ?></h4>
 			<?php if ( $has_explore ) {
-				wp_nav_menu( [
-					'theme_location' => 'footer-explore',
-					'container'      => false,
-					'depth'          => 1,
-					'items_wrap'     => '<ul>%3$s</ul>',
-				] );
+				wp_nav_menu( array_merge(
+					$explore_menu_id ? [ 'menu' => $explore_menu_id ] : [ 'theme_location' => 'footer-explore' ],
+					[ 'container' => false, 'depth' => 1, 'items_wrap' => '<ul>%3$s</ul>', 'fallback_cb' => false ]
+				) );
 			} else {
 				echo '<ul>';
 				if ( class_exists( 'WooCommerce' ) && wc_get_page_permalink( 'shop' ) ) {

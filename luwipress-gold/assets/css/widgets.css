@@ -2483,8 +2483,9 @@ body.woocommerce-cart .cart-collaterals .wc-proceed-to-checkout > .button {
 }
 .lwp-co-item-qty {
 	position: absolute;
-	top: -6px;
-	right: -6px;
+	top: 2px;
+	right: 2px;
+	z-index: 2;
 	width: 22px;
 	height: 22px;
 	border-radius: 50%;

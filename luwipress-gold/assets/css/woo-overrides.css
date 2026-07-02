@@ -3781,3 +3781,107 @@ body.lwp-yt-open {
 	.lwp-yt-modal__panel { width: 96vw; }
 	.lwp-yt-modal__close { top: -36px; right: 0; }
 }
+
+/* ============================================================== */
+/* WooCommerce checkout / cart / drawer consistency — 1.11.3      */
+/* Custom checkout (.lwp-co-*) + classic cart + side drawer polish */
+/* ============================================================== */
+
+/* 1. Checkout was full-width. All checkout content (express pay, coupon toggle,
+      collapsible summary, the lwp-co grid) lives inside .woocommerce, so
+      centering that + gutters + a footer gap fixes the whole page. */
+body.woocommerce-checkout .woocommerce {
+	max-width: var(--content-w, 1372px);
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: var(--gutter, 32px);
+	padding-right: var(--gutter, 32px);
+	padding-bottom: 80px;
+}
+
+/* 2. Coupon — consistent field + button (checkout .checkout_coupon + cart .coupon). */
+.woocommerce form.checkout_coupon,
+.woocommerce .cart .coupon {
+	display: flex;
+	gap: 10px;
+	align-items: stretch;
+	flex-wrap: wrap;
+}
+.woocommerce form.checkout_coupon .input-text,
+.woocommerce .cart .coupon input#coupon_code {
+	flex: 1 1 220px;
+	min-width: 0;
+	height: 48px;
+	box-sizing: border-box;
+	border: 1px solid var(--line, #e8e2d3);
+	border-radius: 8px;
+	padding: 0 14px;
+	font-size: 14px;
+	background: #fff;
+}
+.woocommerce form.checkout_coupon .button,
+.woocommerce .cart .coupon .button {
+	height: 48px;
+	padding: 0 24px;
+	border: 0;
+	border-radius: 8px;
+	cursor: pointer;
+	background: var(--ink, #1b1c1c);
+	color: #fff;
+	font-family: var(--mono, monospace);
+	font-size: 12px;
+	letter-spacing: .08em;
+	text-transform: uppercase;
+	font-weight: 600;
+}
+.woocommerce form.checkout_coupon .button:hover,
+.woocommerce .cart .coupon .button:hover { background: var(--primary, #735c00); }
+
+/* 3. Side cart drawer — WC mini-cart item layout was broken (price fell to a
+      new line, remove × mis-placed/off-centre). Rebuild: [image | name] on
+      row 1, qty × price on row 2 (indented past the image), remove × pinned
+      top-right and centred in its pill. Overrides the earlier !important grid. */
+.lwp-cart-drawer__body ul.cart_list li.mini_cart_item,
+.lwp-cart-drawer__body ul.product_list_widget li.mini_cart_item {
+	position: relative !important;
+	display: block !important;
+	padding: 16px 34px 16px 0 !important;
+}
+.lwp-cart-drawer__body li.mini_cart_item > a:not(.remove) {
+	display: grid !important;
+	grid-template-columns: 56px 1fr;
+	gap: 14px;
+	align-items: center;
+}
+.lwp-cart-drawer__body li.mini_cart_item > a:not(.remove) img {
+	width: 56px !important;
+	height: 56px !important;
+	margin: 0 !important;
+	float: none !important;
+}
+.lwp-cart-drawer__body li.mini_cart_item .quantity {
+	display: block;
+	margin-top: 6px;
+	padding-left: 70px;
+}
+.lwp-cart-drawer__body li.mini_cart_item a.remove {
+	position: absolute !important;
+	top: 16px;
+	right: 0;
+	width: 22px;
+	height: 22px;
+	margin: 0;
+	display: inline-flex !important;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
+	border-radius: 50%;
+	font-size: 15px;
+	text-decoration: none;
+	background: rgba(0, 0, 0, .06);
+	color: var(--muted, #7f7663) !important;
+}
+.lwp-cart-drawer__body li.mini_cart_item a.remove:hover {
+	background: var(--ink, #1b1c1c);
+	color: #fff !important;
+}

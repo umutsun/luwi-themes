@@ -1,0 +1,6177 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: LuwiPress Onyx 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/theme/luwipress-onyx\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-06-20T08:31:57+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: LuwiPress Theme i18n\n"
+"X-Domain: luwipress-onyx\n"
+"Language: zh_CN\n"
+
+#. Theme Name of the theme
+#: style.css inc/footer-enhancements.php:38 inc/template-redirects.php:955
+#: inc/widgets/loader.php:46
+msgid "LuwiPress Onyx"
+msgstr "LuwiPress Onyx"
+
+#. Theme URI of the theme
+#. Author URI of the theme
+#: style.css
+msgid "https://luwi.dev/luwipress"
+msgstr "https://luwi.dev/luwipress"
+
+#. Description of the theme
+#: style.css
+msgid "LuwiPress-powered, Elementor-ready dark-luxury real-estate theme — \"quiet luxury, after dark.\" The midnight-and-champagne member of the LuwiPress jewel-coded theme family (sister to Gold = editorial luxury, Emerald = B2B consulting and Amber = travel). Built for premium property agencies and developers: an editorial split hero, advanced listings (filter sidebar, sort, grid/list, favourites, mobile filter drawer), rich single-property pages (gallery + lightbox, spec bar, amenities, payment-plan timeline, live mortgage calculator, sticky CTA), a filtered gallery, an about/team page, a journal, a live site search and a Contact page with a working form + map. Onyx-black base (#0E0E10) with a muted champagne-gold accent (#C9A24B) and a platinum-gradient primary CTA; full parallel light mode (toggle persisted in localStorage). Headlines + prices on Bodoni Moda, body/UI on Nunito. FAQ + Residence schema for AEO/SEO. Ships with the LuwiPress companion plumbing — AI search, the onboarding wizard, the maintenance suite and the ecosystem dashboard — plus the Onyx chrome: utility bar, sticky header with a Residences mega menu, off-canvas drawer, dark/light toggle, and a customer-chat launcher that defers to LuwiPress core. Colours are fully overrideable from Customizer → LuwiPress Onyx → Brand. Built on the WC / WPML / Elementor backbone shared across the family."
+msgstr "LuwiPress驱动的、Elementor就绪的黑暗奢华房地产主题——“安静的奢华，夜幕降临。”是LuwiPress珠宝编码主题家族中的午夜和香槟成员（与Gold = 编辑奢华，Emerald = B2B咨询和Amber = 旅行为姐妹主题）。为高端房地产代理和开发商打造：一个编辑分割的英雄图，先进的列表（过滤侧边栏，排序，网格/列表，收藏，移动过滤抽屉），丰富的单一物业页面（画廊 + 灯箱，规格条，设施，付款计划时间线，实时抵押贷款计算器，粘性CTA），一个过滤的画廊，一个关于/团队页面，一个期刊，一个实时网站搜索和一个带有工作表单 + 地图的联系页面。深黑色基底（#0E0E10）配以柔和的香槟金色点缀（#C9A24B）和铂金渐变的主要CTA；完全的平行光模式（切换持续保存在localStorage中）。标题 + 价格使用Bodoni Moda，正文/UI使用Nunito。FAQ + 住宅架构用于AEO/SEO。附带LuwiPress伴侣工具——AI搜索，入门向导，维护套件和生态系统仪表板——以及Onyx外观：实用工具栏，带有住宅大菜单的粘性头部，离画布抽屉，黑暗/光明切换，以及一个客户聊天启动器，遵循LuwiPress核心。颜色可以从Customizer → LuwiPress Onyx → 品牌中完全覆盖。基于家族共享的WC / WPML / Elementor骨架构建。"
+
+#. Author of the theme
+#: style.css
+msgid "LuwiPress"
+msgstr "LuwiPress"
+
+#: 404.php:14
+msgid "Error 404"
+msgstr "错误 404"
+
+#: 404.php:16
+msgid "This address is off the market. The page you were looking for has moved, sold, or never existed."
+msgstr "该地址已下架。您要寻找的页面已移动、出售或从未存在过。"
+
+#: 404.php:18 inc/widgets/lib/class-404-hero.php:58
+msgid "Back home"
+msgstr "返回主页"
+
+#: 404.php:19
+msgid "Browse the collection"
+msgstr "浏览集合"
+
+#: 404.php:23 inc/widgets/lib/class-404-hero.php:52
+msgid "Search the site…"
+msgstr "搜索网站…"
+
+#: 404.php:23 404.php:24 header.php:207 inc/widgets/lib/class-404-hero.php:112
+#: inc/widgets/lib/class-header-actions.php:151
+#: inc/widgets/lib/class-search-overlay.php:34
+#: inc/widgets/lib/class-search-overlay.php:178
+#: template-parts/onyx-search-hero.php:15
+#: template-parts/onyx-search-hero.php:16
+#: template-parts/onyx-search-hero.php:20
+#: template-parts/onyx-search-hero.php:21
+msgid "Search"
+msgstr "搜索"
+
+#: archive-lwp-cpt.php:30 inc/widgets/lib/class-faq.php:45
+#: inc/widgets/lib/class-info-bar.php:26
+#: inc/widgets/lib/class-shop-filters.php:93
+#: inc/widgets/lib/class-stat-counter.php:39 single-lwp-cpt.php:35
+msgid "Items"
+msgstr "项目"
+
+#: archive-lwp-cpt.php:90 archive-lwp_vendor.php:104
+msgid "← Previous"
+msgstr "← 上一个"
+
+#: archive-lwp-cpt.php:91 archive-lwp_vendor.php:105
+msgid "Next →"
+msgstr "下一个 →"
+
+#. translators: %s: plural label
+#: archive-lwp-cpt.php:107 archive-lwp_vendor.php:122
+#, php-format
+msgid "No %s yet."
+msgstr "尚无 %s。"
+
+#: archive-lwp_vendor.php:18 single-lwp_vendor.php:25
+msgid "Person"
+msgstr "人"
+
+#: archive-lwp_vendor.php:21 single-lwp_vendor.php:28
+msgid "People"
+msgstr "人们"
+
+#. translators: Eyebrow on the archive — "the hands behind the work"
+#: archive-lwp_vendor.php:30
+msgid "— The hands behind the work"
+msgstr "— 作品背后的双手"
+
+#. translators: %d: number of years active
+#: archive-lwp_vendor.php:87
+#, php-format
+msgid "%d year"
+msgid_plural "%d years"
+msgstr[0] "%d 年"
+
+#: archive.php:17 home.php:22 page-about.php:30 page-contact.php:54 page.php:27
+#: single.php:37 template-gallery.php:46 template-listings.php:59
+#: template-parts/onyx-search-hero.php:15 template-property.php:88
+msgid "Home"
+msgstr "首页"
+
+#: archive.php:18 home.php:14 index.php:17
+msgid "The Journal"
+msgstr "期刊"
+
+#: archive.php:34 footer.php:77 front-page.php:348 home.php:36
+#: inc/widgets/lib/class-editorial-grid.php:80 index.php:31 single.php:28
+#: single.php:37 single.php:97
+msgid "Journal"
+msgstr "期刊"
+
+#: archive.php:42 front-page.php:359 front-page.php:377 home.php:68
+#: index.php:39 single.php:105
+msgid "Read more"
+msgstr "阅读更多"
+
+#: archive.php:52
+msgid "Nothing here yet"
+msgstr "这里还没有内容"
+
+#: archive.php:53
+msgid "No articles in this archive."
+msgstr "此存档中没有文章。"
+
+#. Template Name of the theme
+msgid "Elementor — Header + Footer"
+msgstr "Elementor — 头部 + 底部"
+
+#: footer.php:26
+msgid "A residence, not a listing. Premium properties across the United Arab Emirates, handled quietly."
+msgstr "一个住宅，而不是一个列表。阿拉伯联合酋长国的优质房产，低调处理。"
+
+#: footer.php:51
+msgid "Address"
+msgstr "地址"
+
+#: footer.php:57
+msgid "United Arab Emirates"
+msgstr "阿拉伯联合酋长国"
+
+#: footer.php:62
+msgid "Explore"
+msgstr "探索"
+
+#: footer.php:75 inc/widgets/lib/class-wc-gallery.php:37
+#: template-gallery.php:46
+msgid "Gallery"
+msgstr "画廊"
+
+#: footer.php:76 page-about.php:30
+msgid "About"
+msgstr "关于"
+
+#: footer.php:78 inc/widgets/lib/class-footer-brand.php:81 page-contact.php:54
+msgid "Contact"
+msgstr "联系"
+
+#: footer.php:83
+msgid "The Quiet List"
+msgstr "安静的列表"
+
+#: footer.php:84
+msgid "Off-market residences, before they are listed. No noise."
+msgstr "市场外住宅，在上市之前。没有噪音。"
+
+#: footer.php:86 inc/footer-enhancements.php:365
+msgid "Your email"
+msgstr "您的电子邮件"
+
+#: footer.php:86 inc/widgets/lib/class-footer-brand.php:83 page-contact.php:46
+#: page-contact.php:87 template-parts/onyx-contact.php:50
+msgid "Email"
+msgstr "电子邮件"
+
+#: footer.php:87 inc/footer-enhancements.php:371
+#: inc/widgets/lib/class-newsletter.php:38
+#: inc/widgets/lib/class-youtube-channel.php:98
+#: inc/widgets/lib/class-youtube-channel.php:313
+msgid "Subscribe"
+msgstr "订阅"
+
+#: footer.php:88
+msgid "Thank you."
+msgstr "谢谢。"
+
+#: footer.php:99
+msgid "Theme"
+msgstr "主题"
+
+#: footer.php:120 footer.php:121
+msgid "Chat with us"
+msgstr "与我们聊天"
+
+#: front-page.php:43
+msgid "The Collection · 2026"
+msgstr "收藏 · 2026"
+
+#: front-page.php:44
+msgid "Quiet luxury,"
+msgstr "安静的奢华，"
+
+#: front-page.php:44
+msgid "after dark."
+msgstr "夜幕降临后。"
+
+#: front-page.php:45
+msgid "Premium properties across the UAE, sold the way wealth is kept — privately, patiently, without noise. Begin with a single residence."
+msgstr "阿联酋的优质房产，以财富保持的方式出售——私密、耐心、没有噪音。以单一住宅开始。"
+
+#: front-page.php:47
+msgid "Find Your Home"
+msgstr "找到您的家"
+
+#: front-page.php:48
+msgid "Book a Viewing"
+msgstr "预约看房"
+
+#: front-page.php:51 template-listings.php:79 template-property.php:76
+msgid "From"
+msgstr "从"
+
+#: front-page.php:53
+msgid "Active listings"
+msgstr "活跃的列表"
+
+#: front-page.php:59 home.php:44 inc/widgets/lib/class-featured-product.php:59
+#: inc/widgets/lib/class-hero-split.php:134
+#: inc/widgets/lib/class-mega-menu.php:519
+msgid "Featured"
+msgstr "推荐"
+
+#: front-page.php:60
+msgid "Now showing"
+msgstr "现在展示"
+
+#: front-page.php:60 template-property.php:75 template-property.php:90
+#: template-property.php:95
+msgid "The Onyx Penthouse"
+msgstr "黑玉顶层公寓"
+
+#: front-page.php:70
+msgid "Years of experience"
+msgstr "多年经验"
+
+#: front-page.php:71
+msgid "Est. 2016 · Dubai"
+msgstr "成立于2016 · 迪拜"
+
+#: front-page.php:76
+msgid "Beautiful spaces in the best places."
+msgstr "在最佳地点的美丽空间。"
+
+#: front-page.php:87
+msgid "The Building Overview"
+msgstr "建筑概述"
+
+#: front-page.php:88
+msgid "Modern & premium apartments"
+msgstr "现代与高档公寓"
+
+#: front-page.php:89
+msgid "Every Arsha residence is built around restraint — full-height glass, honest stone, and rooms proportioned for stillness. The result is architecture that recedes so the city, the light and the life inside it can take the lead."
+msgstr "每个 Arsha 居所都围绕着克制构建——全高玻璃、诚实的石材，以及为宁静而设计的房间。结果是建筑退居一旁，让城市、光线和其中的生活可以主导。"
+
+#: front-page.php:91
+msgid "Hand-finished interiors"
+msgstr "手工精细的室内装潢"
+
+#: front-page.php:91
+msgid "— marble, oak and brushed brass, specified to order."
+msgstr "—— 大理石、橡木和拉丝黄铜，按需指定。"
+
+#: front-page.php:92
+msgid "Private amenities"
+msgstr "私人设施"
+
+#: front-page.php:92
+msgid "— infinity pool, spa, residents' lounge and concierge."
+msgstr "—— 无边泳池、水疗中心、住户休息室和礼宾服务。"
+
+#: front-page.php:93
+msgid "Five-minute city"
+msgstr "五分钟城市"
+
+#: front-page.php:93
+msgid "— Business Bay, DIFC and Downtown within reach."
+msgstr "—— 商业湾、迪拜国际金融中心和市中心触手可及。"
+
+#: front-page.php:105
+msgid "Square metres"
+msgstr "平方米"
+
+#: front-page.php:106
+msgid "Car parkings"
+msgstr "停车位"
+
+#: front-page.php:107 front-page.php:315
+msgid "Apartments"
+msgstr "公寓"
+
+#: front-page.php:108 template-listings.php:98
+msgid "Bedrooms"
+msgstr "卧室"
+
+#: front-page.php:135
+msgid "Villa Plans"
+msgstr "别墅规划"
+
+#: front-page.php:136
+msgid "Floor plans, by typology"
+msgstr "按类型划分的平面图"
+
+#: front-page.php:148
+msgid "Total area"
+msgstr "总面积"
+
+#: front-page.php:149
+msgid "Floor no."
+msgstr "楼层号"
+
+#: front-page.php:150
+msgid "Rooms"
+msgstr "房间"
+
+#: front-page.php:151
+msgid "Parking"
+msgstr "停车"
+
+#: front-page.php:164 front-page.php:207 template-gallery.php:73
+#: template-property.php:99 template-property.php:268
+msgid "Price from"
+msgstr "价格从"
+
+#: front-page.php:166
+msgid "Request full plan"
+msgstr "请求完整计划"
+
+#: front-page.php:169
+msgid "floor plan"
+msgstr "楼层平面图"
+
+#: front-page.php:181 template-gallery.php:47
+msgid "Apartments & Complex"
+msgstr "公寓与综合体"
+
+#: front-page.php:182
+msgid "Choose your apartment"
+msgstr "选择您的公寓"
+
+#: front-page.php:184
+msgid "View all residences"
+msgstr "查看所有住宅"
+
+#: front-page.php:222
+msgid "Nearby Areas"
+msgstr "附近地区"
+
+#: front-page.php:223
+msgid "A neighborhood, fully formed"
+msgstr "一个完全形成的社区"
+
+#: front-page.php:247
+msgid "Arsha Homes"
+msgstr "Arsha Homes"
+
+#: front-page.php:253
+msgid "Business Bay · Dubai"
+msgstr "商业湾 · 迪拜"
+
+#: front-page.php:264 page-about.php:31
+msgid "About Company"
+msgstr "关于公司"
+
+#: front-page.php:265
+msgid "What they're saying"
+msgstr "他们怎么说"
+
+#: front-page.php:291
+#, php-format
+msgid "Quote %d"
+msgstr "报价 %d"
+
+#: front-page.php:309
+msgid "Play film"
+msgstr "播放影片"
+
+#: front-page.php:310
+msgid "The Film"
+msgstr "影片"
+
+#: front-page.php:311
+msgid "Modern & luxury living complexes"
+msgstr "现代与奢华的生活综合体"
+
+#: front-page.php:316
+msgid "Features"
+msgstr "特点"
+
+#: front-page.php:317
+msgid "Luxury rooms"
+msgstr "豪华房间"
+
+#: front-page.php:318
+msgid "Success rate"
+msgstr "成功率"
+
+#: front-page.php:335 home.php:23
+msgid "What's Happening"
+msgstr "发生了什么"
+
+#: front-page.php:336
+msgid "Latest from Arsha"
+msgstr "来自Arsha的最新消息"
+
+#: front-page.php:338 single.php:89
+msgid "All articles"
+msgstr "所有文章"
+
+#: front-page.php:413
+msgid "Good to Know"
+msgstr "值得知道的事"
+
+#: front-page.php:414
+msgid "Questions,"
+msgstr "问题，"
+
+#: front-page.php:414
+msgid "answered."
+msgstr "已解答。"
+
+#: front-page.php:415
+msgid "The essentials of buying in Dubai, without the noise. Anything else — ask your advisor directly."
+msgstr "在迪拜购买的基本要素，没有杂音。其他任何问题 — 直接问您的顾问。"
+
+#: front-page.php:431 template-parts/onyx-contact.php:11
+msgid "Free Quote"
+msgstr "免费报价"
+
+#: front-page.php:431 template-parts/onyx-contact.php:12
+msgid "Begin a private conversation"
+msgstr "开始私人对话"
+
+#: header.php:106
+msgid "Call experts"
+msgstr "联系专家"
+
+#: header.php:149 inc/widgets/lib/class-mega-menu.php:264
+msgid "Primary"
+msgstr "主要"
+
+#: header.php:151
+msgid "Residences"
+msgstr "住宅"
+
+#: header.php:156 header.php:249
+msgid "By Type"
+msgstr "按类型"
+
+#: header.php:164 header.php:255
+msgid "By Neighborhood"
+msgstr "按邻里"
+
+#: header.php:172
+msgid "Featured Residences"
+msgstr "精选住宅"
+
+#: header.php:192
+msgid "Most of our finest residences are placed privately, before they are listed."
+msgstr "我们最好的住宅大多在上市前私下进行。"
+
+#: header.php:194
+msgid "Advanced search"
+msgstr "高级搜索"
+
+#: header.php:195
+msgid "The full gallery"
+msgstr "完整图库"
+
+#: header.php:208 header.php:281
+msgid "Toggle light / dark"
+msgstr "切换明暗模式"
+
+#: header.php:215 inc/widgets/lib/class-header-actions.php:175
+#: inc/widgets/lib/class-mega-menu.php:50
+msgid "Menu"
+msgstr "菜单"
+
+#: header.php:226 inc/widgets/lib/class-search-overlay.php:179
+#: inc/widgets/lib/class-search-overlay.php:217 template-property.php:132
+msgid "Close"
+msgstr "关闭"
+
+#: header.php:292 template-property.php:80
+msgid "Book a viewing"
+msgstr "预约看房"
+
+#: home.php:15
+msgid "Notes on Dubai property, design and the quiet business of buying well. Written by our advisors, for people who prefer clarity to hype."
+msgstr "关于迪拜房地产、设计以及如何明智地购买的简要说明。由我们的顾问撰写，适合那些更喜欢清晰而非炒作的人。"
+
+#: home.php:49 inc/widgets/lib/class-byline-card.php:118
+#: inc/widgets/lib/class-featured-post.php:167 single.php:41
+#, php-format
+msgid "%d min read"
+msgid_plural "%d min read"
+msgstr[0] "阅读时间 %d 分钟"
+
+#: home.php:50
+msgid "Read article"
+msgstr "阅读文章"
+
+#: home.php:89
+msgid "No articles yet"
+msgstr "尚无文章"
+
+#: home.php:90
+msgid "The Journal is being written. Check back soon."
+msgstr "期刊正在撰写中。请稍后再回来查看。"
+
+#: inc/archive-parent-enrichment.php:81
+msgid "Curator note"
+msgstr "策展人说明"
+
+#: inc/archive-parent-enrichment.php:82 inc/archive-parent-enrichment.php:225
+#: inc/archive-parent-enrichment.php:248
+msgid "Atelier note"
+msgstr "工作室说明"
+
+#: inc/archive-parent-enrichment.php:175
+msgid "Featured piece"
+msgstr "精选作品"
+
+#: inc/archive-parent-enrichment.php:178
+msgid "Atelier pick"
+msgstr "工作室推荐"
+
+#: inc/archive-parent-enrichment.php:188
+msgid "Open piece →"
+msgstr "打开作品 →"
+
+#: inc/archive-parent-enrichment.php:228
+msgid "Short editorial paragraph rendered above sub-category tiles on parent category archives. HTML allowed (light tags). Leave empty to hide."
+msgstr "在父类档案的子类别瓷砖上方渲染的简短编辑段落。允许 HTML（轻量标签）。留空以隐藏。"
+
+#: inc/archive-parent-enrichment.php:232 inc/archive-parent-enrichment.php:253
+msgid "Featured product (override)"
+msgstr "推荐产品（覆盖）"
+
+#: inc/archive-parent-enrichment.php:235
+msgid "Product ID to feature in the parent-archive band. Leave empty to auto-pick the best-selling product across this category and its descendants."
+msgstr "要在父档案带中推荐的产品 ID。留空以自动选择该类别及其子类别中最畅销的产品。"
+
+#: inc/archive-parent-enrichment.php:250
+msgid "Optional editorial paragraph for parent-category archives."
+msgstr "父类档案的可选编辑段落。"
+
+#: inc/archive-parent-enrichment.php:255
+msgid "Optional product ID. Leave empty for auto-best-seller."
+msgstr "可选产品ID。留空以自动选择畅销产品。"
+
+#: inc/blog-page-fallback.php:244
+msgid "Recent posts"
+msgstr "最近的帖子"
+
+#: inc/blog-page-fallback.php:262
+msgid "Read →"
+msgstr "阅读 →"
+
+#. translators: %s site name
+#: inc/contact-form.php:52
+#, php-format
+msgid "[%s] New enquiry from the website"
+msgstr "[%s] 来自网站的新询问"
+
+#: inc/contact-form.php:56
+msgid "Name:"
+msgstr "姓名："
+
+#: inc/contact-form.php:57
+msgid "Email:"
+msgstr "电子邮件："
+
+#: inc/contact-form.php:58
+msgid "Phone:"
+msgstr "电话："
+
+#: inc/contact-form.php:59
+msgid "Interested in:"
+msgstr "感兴趣的："
+
+#: inc/contact-form.php:61
+msgid "Message:"
+msgstr "信息："
+
+#: inc/elementor-compat.php:34
+msgid "LuwiPress Onyx needs Elementor."
+msgstr "LuwiPress Onyx 需要 Elementor。"
+
+#. translators: %s: install plugin link
+#: inc/elementor-compat.php:38
+#, php-format
+msgid "Install Elementor (free) to use the LuwiPress Onyx templates: %s."
+msgstr "安装 Elementor（免费）以使用 LuwiPress Onyx 模板：%s。"
+
+#: inc/elementor-compat.php:39
+msgid "Install Elementor"
+msgstr "安装 Elementor"
+
+#: inc/elementor-kit-sync.php:38
+msgid "Elementor is not active — kit sync skipped."
+msgstr "Elementor 未激活 — 套件同步被跳过。"
+
+#: inc/elementor-kit-sync.php:52
+msgid "No active Elementor kit found."
+msgstr "未找到活动的 Elementor 套件。"
+
+#: inc/enqueue.php:80 inc/loadmore.php:60 inc/loadmore.php:95
+msgid "Load more"
+msgstr "加载更多"
+
+#: inc/enqueue.php:81 inc/loadmore.php:96
+msgid "Loading…"
+msgstr "加载中…"
+
+#: inc/enqueue.php:82
+msgid "You've reached the end."
+msgstr "您已到达末尾。"
+
+#: inc/enqueue.php:83
+msgid "Couldn't load more — try again."
+msgstr "无法加载更多 — 请再试一次。"
+
+#: inc/featured-products.php:152
+msgid "LuwiPress · Feature this product"
+msgstr "LuwiPress · 推广此产品"
+
+#: inc/featured-products.php:170
+msgid "Feature across the site"
+msgstr "在整个网站上推广"
+
+#: inc/featured-products.php:172
+msgid "Surfaces this product inside the Mega Menu featured panel, the homepage Featured strip, and any other widget that reads the featured registry."
+msgstr "在 Mega Menu 特辑面板、主页特辑条以及任何读取特辑注册的部件中展示此产品。"
+
+#: inc/featured-products.php:179
+msgid "Operator note (optional)"
+msgstr "操作员备注（可选）"
+
+#: inc/featured-products.php:183
+msgid "e.g. Boxing Week pick · New arrival · Just dropped"
+msgstr "例如：拳击周精选 · 新品到货 · 刚刚发布"
+
+#. translators: %s: human-readable timestamp
+#: inc/featured-products.php:191
+#, php-format
+msgid "Last featured: %s ago"
+msgstr "最后一次特辑：%s 前"
+
+#: inc/featured-products.php:227 inc/featured-products.php:249
+msgid "Unfeature this"
+msgstr "取消特色"
+
+#: inc/featured-products.php:227 inc/featured-products.php:250
+msgid "Feature this product"
+msgstr "将此产品设为特色"
+
+#: inc/footer-enhancements.php:47
+msgid "Footer"
+msgstr "页脚"
+
+#. translators: %s: platform name
+#: inc/footer-enhancements.php:65
+#, php-format
+msgid "%s URL"
+msgstr "%s URL"
+
+#: inc/footer-enhancements.php:81
+msgid "Newsletter form action URL"
+msgstr "新闻通讯表单操作 URL"
+
+#: inc/footer-enhancements.php:82
+msgid "POST endpoint that receives the email address — Mailchimp action URL, ConvertKit form URL, or any service that accepts a single \"EMAIL\" or \"email\" field. Leave empty to hide the newsletter strip."
+msgstr "接收电子邮件地址的 POST 端点 — Mailchimp 操作 URL、ConvertKit 表单 URL 或任何接受单个 \"EMAIL\" 或 \"email\" 字段的服务。留空以隐藏新闻通讯条。"
+
+#: inc/footer-enhancements.php:95
+msgid "Newsletter field name"
+msgstr "新闻通讯字段名称"
+
+#: inc/footer-enhancements.php:96
+msgid "Form input \"name\" attribute. Mailchimp uses EMAIL, ConvertKit uses email_address, native WP \"Subscribe\" plugins typically use email."
+msgstr "表单输入的 \"name\" 属性。Mailchimp 使用 EMAIL，ConvertKit 使用 email_address，原生 WP \"订阅\" 插件通常使用 email."
+
+#: inc/footer-enhancements.php:104 inc/footer-enhancements.php:351
+msgid "Letters from the atelier"
+msgstr "来自工作室的信件"
+
+#: inc/footer-enhancements.php:109
+msgid "Newsletter headline"
+msgstr "新闻通讯标题"
+
+#: inc/footer-enhancements.php:117 inc/footer-enhancements.php:354
+msgid "New pieces, master profiles and field notes — once a month, no spam."
+msgstr "新作品、大师档案和实地笔记 — 每月一次，无垃圾邮件."
+
+#: inc/footer-enhancements.php:122
+msgid "Newsletter blurb"
+msgstr "新闻通讯简介"
+
+#. translators: %d: position
+#: inc/footer-enhancements.php:137
+#, php-format
+msgid "Trust signal %d"
+msgstr "信任信号 %d"
+
+#. translators: %d: position
+#: inc/footer-enhancements.php:138
+msgid "Short value-prop lines (e.g. \"Free DHL over €450\", \"Hand-tuned in our atelier\", \"30-day returns\"). Empty = hide."
+msgstr "简短的价值主张行（例如：\"满€450免运费 DHL\", \"在我们的工作室手工调音\", \"30天退货\"）。留空 = 隐藏."
+
+#: inc/footer-enhancements.php:157
+msgid "Show payment-method row"
+msgstr "显示支付方式行"
+
+#: inc/footer-enhancements.php:158
+msgid "Renders the names of every active WooCommerce payment gateway as a discreet row in the footer bottom. Multi-method processors (e.g. WooPayments with Card / Alipay / iDEAL …) are grouped under one brand pill so the row stays readable. Hidden when WC is inactive or no gateway is enabled."
+msgstr "在页脚底部以简洁行呈现每个活动 WooCommerce 支付网关的名称。多种支付处理器（例如 WooPayments 与信用卡 / Alipay / iDEAL …）被分组在一个品牌标签下，以保持行的可读性。当 WC 不活动或没有启用网关时隐藏."
+
+#: inc/footer-enhancements.php:172
+msgid "Show \"Shop\" column"
+msgstr "显示 \"商店\" 列"
+
+#: inc/footer-enhancements.php:173
+msgid "Adds a 5th footer column listing the top WooCommerce product categories by sales count. Hidden when WC is inactive or no categories exist."
+msgstr "添加一个列出按销售数量排名的 WooCommerce 顶级产品类别的第五个页脚列。当 WC 不活动或没有类别存在时隐藏."
+
+#: inc/footer-enhancements.php:185
+msgid "Shop column item count"
+msgstr "商店列项目数量"
+
+#: inc/footer-enhancements.php:186
+msgid "How many top product categories to list. Range 3–12, default 6."
+msgstr "要列出的顶级产品类别数量。范围 3–12，默认 6."
+
+#: inc/footer-enhancements.php:204
+msgid "Contact — address"
+msgstr "联系方式 — 地址"
+
+#: inc/footer-enhancements.php:205
+msgid "Postal address under the footer logo (multi-line OK). Leave the whole contact group empty to hide it."
+msgstr "页脚 logo 下的邮政地址（多行 OK）。将整个联系组留空以隐藏它."
+
+#: inc/footer-enhancements.php:211
+msgid "Contact — phone"
+msgstr "联系方式 — 电话"
+
+#: inc/footer-enhancements.php:212
+msgid "Contact — mobile"
+msgstr "联系方式 — 手机"
+
+#: inc/footer-enhancements.php:213
+msgid "Contact — email"
+msgstr "联系方式 — 电子邮件"
+
+#: inc/footer-enhancements.php:214
+msgid "Contact — working hours"
+msgstr "联系 — 工作时间"
+
+#: inc/footer-enhancements.php:215
+msgid "Contact — VAT / company no."
+msgstr "联系 — 增值税/公司编号"
+
+#. translators: %s: example value
+#: inc/footer-enhancements.php:229
+#, php-format
+msgid "e.g. %s — leave empty to hide this line."
+msgstr "例如 %s — 留空以隐藏此行."
+
+#: inc/footer-enhancements.php:357
+msgid "Newsletter signup"
+msgstr "新闻通讯注册"
+
+#: inc/footer-enhancements.php:369
+msgid "you@example.com"
+msgstr "you@example.com"
+
+#: inc/footer-enhancements.php:395
+msgid "Secure checkout"
+msgstr "安全结账"
+
+#: inc/footer-enhancements.php:396
+msgid "Worldwide shipping"
+msgstr "全球运输"
+
+#: inc/footer-enhancements.php:397
+msgid "30-day returns"
+msgstr "30天退货"
+
+#: inc/footer-enhancements.php:446 inc/widgets/lib/class-footer-column.php:34
+msgid "Shop"
+msgstr "商店"
+
+#: inc/footer-enhancements.php:454
+msgid "View all collections →"
+msgstr "查看所有系列 →"
+
+#. translators: %s: comma-separated payment method list
+#: inc/footer-enhancements.php:530
+#, php-format
+msgid "Includes: %s"
+msgstr "包括: %s"
+
+#: inc/footer-enhancements.php:549
+msgid "Accepted payment methods"
+msgstr "接受的付款方式"
+
+#: inc/luwipress-bridge.php:66
+msgid "Hi! How can I help you today?"
+msgstr "嗨！今天我能帮您什么？"
+
+#: inc/luwipress-bridge.php:101
+msgid "LuwiPress is not active."
+msgstr "LuwiPress 未激活."
+
+#: inc/luwipress-bridge.php:145
+msgid "Please provide a valid email."
+msgstr "请提供有效的电子邮件."
+
+#: inc/luwipress-bridge.php:153
+msgid "Too many attempts. Try again later."
+msgstr "尝试次数过多。请稍后再试."
+
+#: inc/luwipress-bridge.php:205
+msgid "LuwiPress Onyx:"
+msgstr "LuwiPress Onyx:"
+
+#. translators: 1: plugin install URL, 2: plugin search URL on the WP repo
+#: inc/luwipress-bridge.php:209
+#, php-format
+msgid "This theme requires the LuwiPress plugin (AI engine, chat, knowledge graph). %1$sInstall it%2$s to unlock the full storefront experience."
+msgstr "此主题需要 LuwiPress 插件（AI 引擎、聊天、知识图谱）。%1$s安装它%2$s以解锁完整的商店体验."
+
+#: inc/luwipress-bridge.php:288
+msgid "Elementor Shell Cleanup"
+msgstr "Elementor Shell 清理"
+
+#: inc/luwipress-bridge.php:289
+msgid "Find posts whose Elementor data is an empty skeleton hiding real Gutenberg content underneath. Strips the shell so the underlying content renders normally. Backs up every stripped meta value for one-click restore."
+msgstr "查找 Elementor 数据为空的帖子，这些空白外壳隐藏了真正的 Gutenberg 内容。剥离外壳，以便底层内容正常呈现。备份每个剥离的元值以便一键恢复."
+
+#: inc/luwipress-bridge.php:305
+msgid "Slug Conflict Audit"
+msgstr "Slug 冲突审核"
+
+#: inc/luwipress-bridge.php:306
+msgid "Read-only view of the current slug-conflict redirect map. Shows every page slug that auto-redirects to a product category and the discovery pass that found it."
+msgstr "当前 slug 冲突重定向图的只读视图。显示每个自动重定向到产品类别的页面 slug 及其发现路径."
+
+#: inc/luwipress-bridge.php:320
+msgid "WPML Translation Drift"
+msgstr "WPML 翻译漂移"
+
+#: inc/luwipress-bridge.php:321
+msgid "List translated posts whose source has been edited since the last sync. Output is read-only — use the Translation Manager to re-sync."
+msgstr "列出自上次同步以来已编辑源的翻译帖子。输出为只读 — 使用翻译管理器进行重新同步."
+
+#: inc/luwipress-bridge.php:335
+msgid "Legacy Canvas Migration"
+msgstr "遗留画布迁移"
+
+#: inc/luwipress-bridge.php:336
+msgid "Find posts/pages assigned the Hello Elementor canvas / header-footer page templates. The theme already routes post_type=post to single.php at request time via a template_include filter, but execute strips the legacy meta entirely so it stops polluting exports + 3rd-party tooling. Pages are skipped by default (canvas builds use those legitimately) — pass args[allow_page]=true to include them."
+msgstr "查找分配了 Hello Elementor 画布 / 页眉-页脚页面模板的帖子/页面。该主题在请求时通过 template_include 过滤器将 post_type=post 路由到 single.php，但执行会完全删除遗留元数据，因此不会污染导出 + 第三方工具。默认情况下跳过页面（画布构建合法使用这些）— 传递 args[allow_page]=true 以包括它们。"
+
+#: inc/luwipress-bridge.php:352
+msgid "Kit CSS Health"
+msgstr "Kit CSS 健康"
+
+#: inc/luwipress-bridge.php:353
+msgid "Audit Kit CSS size, headroom against the 412 KB silent-truncation threshold, and verify every layer marker has a matching BEGIN/end pair."
+msgstr "审核 Kit CSS 大小，与 412 KB 安静截断阈值的余量，并验证每个层标记都有匹配的 BEGIN/end 对。"
+
+#: inc/luwipress-bridge.php:367
+msgid "Orphan Media Scan"
+msgstr "孤立媒体扫描"
+
+#: inc/luwipress-bridge.php:368
+msgid "Read-only scan for uploaded media not referenced in any post content. Cross-check before deleting from the Media library."
+msgstr "只读扫描未在任何帖子内容中引用的上传媒体。在从媒体库删除之前进行交叉检查。"
+
+#: inc/luwipress-bridge.php:382
+msgid "WPML Structural Sync Audit"
+msgstr "WPML 结构同步审核"
+
+#: inc/luwipress-bridge.php:383
+msgid "Read-only audit of WPML/Polylang drift across menus (item count + depth), nav-menu locations (assigned per language?), and tracked theme_mods (any per-language value differences?). Surfaces gaps so the operator can fix them in the appropriate UI."
+msgstr "只读审核 WPML/Polylang 在菜单中的漂移（项目计数 + 深度）、导航菜单位置（每种语言分配？）和跟踪的 theme_mods（任何每种语言值的差异？）。显示差距以便操作员可以在适当的 UI 中修复它们。"
+
+#: inc/luwipress-bridge.php:397
+msgid "Unwanted Landing Pages"
+msgstr "不想要的着陆页"
+
+#: inc/luwipress-bridge.php:398
+msgid "Find legacy SEO landing pages with long keyword-stuffed slugs and near-empty bodies that aren't reachable from any nav menu. Default execute mode trashes (recoverable); pass mode=delete in args for a hard delete (still backed up). WPML-aware — siblings expanded automatically."
+msgstr "查找具有长关键字填充 slug 和几乎为空的主体的遗留 SEO 着陆页，这些页面无法通过任何导航菜单访问。默认执行模式会删除（可恢复）；在 args 中传递 mode=delete 以进行硬删除（仍然备份）。支持 WPML — 兄弟页面自动展开。"
+
+#: inc/luwipress-bridge.php:414
+msgid "Subcategory Template Parity"
+msgstr "子类别模板一致性"
+
+#: inc/luwipress-bridge.php:415
+msgid "HEAD-check every product_cat archive in every active language. Surfaces 404s and 5xxs — typically a WPML term-translation gap where the menu drawer shows the term but the archive URL itself is broken."
+msgstr "在每种活动语言中检查每个 product_cat 存档的 HEAD。显示 404 和 5xx — 通常是 WPML 术语翻译差距，菜单抽屉显示术语但存档 URL 本身损坏。"
+
+#: inc/luwipress-bridge.php:429
+msgid "Elementor + WC + WPML Triangle Health"
+msgstr "Elementor + WC + WPML 三角健康"
+
+#: inc/luwipress-bridge.php:430
+msgid "Consolidated single-call audit of the three pillars: WooCommerce core pages translated, Elementor Theme Builder templates assigned (PDP + archive), WPML menu/structure drift, subcategory parity, orphan SEO landings. Each finding cites the dedicated tool that resolves it."
+msgstr "对三个支柱进行统一的单次调用审核：翻译的 WooCommerce 核心页面、分配的 Elementor 主题构建器模板（PDP + 存档）、WPML 菜单/结构漂移、子类别一致性、孤立 SEO 着陆页。每个发现都引用了解决它的专用工具。"
+
+#: inc/luwipress-bridge.php:444
+msgid "WPML Term Repair"
+msgstr "WPML 术语修复"
+
+#: inc/luwipress-bridge.php:445
+msgid "Auto-create placeholder translated product_cat terms for every default-language term that has missing translations. Inserts a term in the target language, links it via WPML's trid, and uses parent inheritance so menu pages resolve correctly. Operator can rename the placeholder names afterwards in WPML → Taxonomy Translation."
+msgstr "为每个缺少翻译的默认语言术语自动创建占位符翻译的 product_cat 术语。在目标语言中插入术语，通过 WPML 的 trid 链接，并使用父继承以便菜单页面正确解析。操作员可以在 WPML → 分类翻译中之后重命名占位符名称。"
+
+#: inc/luwipress-bridge.php:461
+msgid "Menu Translation Propagate"
+msgstr "菜单翻译传播"
+
+#: inc/luwipress-bridge.php:462
+msgid "For each source-language menu, append top-level items missing in sibling-language menus. Conservative: depth 0 only. Backed up; restore drops the propagated items."
+msgstr "对于每个源语言菜单，附加在兄弟语言菜单中缺失的顶级项目。保守：仅深度 0。已备份；恢复时删除传播的项目。"
+
+#: inc/luwipress-bridge.php:478
+msgid "Product Translation Completeness"
+msgstr "产品翻译完整性"
+
+#: inc/luwipress-bridge.php:479
+msgid "List every published product missing in one or more languages. Read-only — pass the IDs to LuwiPress's /translation/batch endpoint to queue AI translation."
+msgstr "列出缺失一种或多种语言的每个已发布产品。只读 — 将 ID 传递给 LuwiPress 的 /translation/batch 端点以排队 AI 翻译。"
+
+#: inc/luwipress-bridge.php:493
+msgid "Language Drift Sweep"
+msgstr "语言漂移清扫"
+
+#: inc/luwipress-bridge.php:494
+msgid "Detect translated posts whose body content is still in the source language (the silent failure mode that makes existence-based coverage report 100% even when blogs are broken English). Scans posts + pages by default; execute clears the Elementor \"already-translated\" guard meta and re-fires the AI translation pipeline against the drifted languages. Pre-execution body snapshots are stored so restore can roll back individual posts."
+msgstr "检测其主体内容仍为源语言的已翻译帖子（安静故障模式，使基于存在的覆盖报告为 100%，即使博客是破碎的英语）。默认扫描帖子 + 页面；执行会清除 Elementor 的 \"已翻译\" 保护元数据，并重新触发 AI 翻译管道针对漂移的语言。预执行主体快照被存储，以便恢复可以回滚单个帖子。"
+
+#: inc/luwipress-bridge.php:510
+msgid "Elementor → Default Editor"
+msgstr "Elementor → 默认编辑器"
+
+#: inc/luwipress-bridge.php:511
+msgid "Strip _elementor_edit_mode from posts whose Elementor build hijacks the atelier single-post layout. _elementor_data is preserved (reversible). Equivalent to clicking \"Use Default Editor\" in WP admin, but for many posts at once. Targets post_type=post by default."
+msgstr "从那些 Elementor 构建劫持了工作室单个帖子布局的帖子中删除 _elementor_edit_mode。_elementor_data 被保留（可逆）。相当于在 WP 管理中单击 \"使用默认编辑器\"，但一次适用于多个帖子。默认目标 post_type=post。"
+
+#: inc/luwipress-bridge.php:527
+msgid "WC Template Assignment"
+msgstr "WC 模板分配"
+
+#: inc/luwipress-bridge.php:528
+msgid "Show the active Elementor Pro PDP / archive template binding (forced via theme_mod or deferred to Elementor conditions) plus a list of candidate templates. Apply via the Settings tab — pdp_template_id / archive_template_id."
+msgstr "显示活动的 Elementor Pro PDP / 存档模板绑定（通过 theme_mod 强制或推迟到 Elementor 条件）以及候选模板的列表。通过设置选项卡应用 — pdp_template_id / archive_template_id。"
+
+#: inc/luwipress-bridge.php:542
+msgid "Broken Internal Links"
+msgstr "损坏的内部链接"
+
+#: inc/luwipress-bridge.php:543
+msgid "HEAD-check every internal href appearing in published post content. Skips assets and external domains; capped at 60 URLs per scan to stay within request budget."
+msgstr "检查每个在发布的文章内容中出现的内部 href。跳过资产和外部域；每次扫描限制为 60 个 URL 以保持请求预算内。"
+
+#: inc/luwipress-bridge.php:557
+msgid "Empty Term Archives in Menu"
+msgstr "菜单中的空术语档案"
+
+#: inc/luwipress-bridge.php:558
+msgid "Find product_cat terms with zero published products that nonetheless appear in a navigation menu. Either add products or drop the menu link."
+msgstr "查找没有发布产品的 product_cat 术语，但仍出现在导航菜单中。要么添加产品，要么删除菜单链接。"
+
+#: inc/luwipress-bridge.php:572
+msgid "WPML String Translation Pending"
+msgstr "WPML 字符串翻译待处理"
+
+#: inc/luwipress-bridge.php:573
+msgid "List entries in the WPML String Translation table whose status isn't 10 (translated). Resolve in WPML → String Translation."
+msgstr "列出 WPML 字符串翻译表中状态不是 10（已翻译）的条目。在 WPML → 字符串翻译中解决。"
+
+#: inc/luwipress-bridge.php:587
+msgid "Page Speed Signals"
+msgstr "页面速度信号"
+
+#: inc/luwipress-bridge.php:588
+msgid "Probe wp_options autoload size, expired transient cruft, and object cache health. Catches the silent option-truncation bug + autoload bloat early."
+msgstr "探测 wp_options 自动加载大小、过期的瞬态残留物和对象缓存健康状况。及早捕捉静默的选项截断错误 + 自动加载膨胀。"
+
+#: inc/luwipress-bridge.php:603
+msgid "Canonical URL Audit"
+msgstr "规范 URL 审核"
+
+#: inc/luwipress-bridge.php:604
+msgid "Per-URL rel=canonical health: present, self-pointing, same domain, target resolves 200 without chain. Surfaces SEO-plugin overrides that point off-page."
+msgstr "每个 URL 的 rel=canonical 健康：存在、自指、同一域、目标解析为 200 而没有链。揭示指向页面外的 SEO 插件覆盖。"
+
+#: inc/luwipress-bridge.php:618
+msgid "Hreflang Reciprocity Audit"
+msgstr "Hreflang 互惠审计"
+
+#: inc/luwipress-bridge.php:619
+msgid "Verify every translated page emits the full hreflang set (incl. x-default) AND each alternate reciprocates. Catches WPML/Polylang drift after translations are unlinked."
+msgstr "验证每个翻译页面是否发出完整的 hreflang 集（包括 x-default）并且每个备用页面是否互惠。在翻译取消链接后捕捉到 WPML/Polylang 漂移。"
+
+#: inc/luwipress-bridge.php:633
+msgid "Redirect Chain Detector"
+msgstr "重定向链检测器"
+
+#: inc/luwipress-bridge.php:634
+msgid "Walk every URL in the slug-conflict redirect map plus a sample of internal hrefs; flag 2+ hop chains and any 4xx/5xx final status. Single-hop 200 endings are healthy."
+msgstr "遍历 slug 冲突重定向地图中的每个 URL 以及一组内部 href 的示例；标记 2 次以上跳转的链和任何 4xx/5xx 最终状态。单跳 200 结尾是健康的。"
+
+#: inc/luwipress-bridge.php:648
+msgid "Sitemap Indexation Parity"
+msgstr "网站地图索引化平衡"
+
+#: inc/luwipress-bridge.php:649
+msgid "Discover the active sitemap (Rank Math / Yoast / AIOSEO / WP core), HEAD-check up to 80 entries, flag any URL that's 301/4xx or sits in the slug-conflict redirect map. Resolve at the SEO plugin level."
+msgstr "发现活动网站地图（Rank Math / Yoast / AIOSEO / WP 核心），检查最多 80 个条目，标记任何 301/4xx 的 URL 或位于 slug 冲突重定向地图中的 URL。在 SEO 插件级别解决。"
+
+#: inc/luwipress-bridge.php:663
+msgid "SEO Triangle Health"
+msgstr "SEO 三角形健康"
+
+#: inc/luwipress-bridge.php:664
+msgid "Single-call audit over six SEO pillars (canonical, hreflang, redirect chains, sitemap parity, broken internal links, slug-conflict map). Returns a weighted 0-100 score plus per-pillar drill-downs that link to the dedicated tool."
+msgstr "对六个 SEO 支柱（规范、hreflang、重定向链、网站地图平衡、损坏的内部链接、slug 冲突地图）进行单次调用审核。返回 0-100 的加权分数以及每个支柱的深入分析，链接到专用工具。"
+
+#: inc/luwipress-bridge.php:693
+msgid "Page loader overlay"
+msgstr "页面加载器覆盖层"
+
+#: inc/luwipress-bridge.php:694
+msgid "Server-side loader overlay rendered before content paints; dismissed on window.load."
+msgstr "在内容绘制之前呈现的服务器端加载器覆盖层；在 window.load 时关闭。"
+
+#: inc/luwipress-bridge.php:703
+msgid "Resolve slug conflicts"
+msgstr "解决 slug 冲突"
+
+#: inc/luwipress-bridge.php:704
+msgid "Auto-redirect page slugs that collide with product categories. Includes WPML cross-language and Levenshtein-1 fuzzy match."
+msgstr "自动重定向与产品类别冲突的页面 slug。包括 WPML 跨语言和 Levenshtein-1 模糊匹配。"
+
+#: inc/luwipress-bridge.php:713
+msgid "Footer shop column"
+msgstr "页脚商店栏目"
+
+#: inc/luwipress-bridge.php:714
+msgid "Adds a 5th footer column listing top-level product categories."
+msgstr "添加一个列出顶级产品类别的第 5 列页脚。"
+
+#: inc/luwipress-bridge.php:723
+msgid "Shop column item limit"
+msgstr "商店栏目项目限制"
+
+#: inc/luwipress-bridge.php:734
+msgid "Footer — show social icons in bottom strip"
+msgstr "页脚 — 在底部条中显示社交图标"
+
+#: inc/luwipress-bridge.php:735
+msgid "Default ON since 1.7.5 — social icons render on the right side of the footer bottom strip, balancing the © copy on the left. Turn OFF to hide entirely."
+msgstr "默认开启，自 1.7.5 起 — 社交图标在页脚底部条的右侧渲染，平衡左侧的 © 版权信息。关闭以完全隐藏."
+
+#: inc/luwipress-bridge.php:744
+msgid "Footer — simple Atelier column (email only)"
+msgstr "页脚 — 简单的 Atelier 列（仅限电子邮件）"
+
+#: inc/luwipress-bridge.php:745
+msgid "Hides location and phone in the Atelier column; shows email only. Turn OFF to surface the full address line."
+msgstr "在 Atelier 列中隐藏位置和电话；仅显示电子邮件。关闭以显示完整地址行."
+
+#: inc/luwipress-bridge.php:754
+msgid "Mega menu — menu ID"
+msgstr "大菜单 — 菜单 ID"
+
+#: inc/luwipress-bridge.php:755
+msgid "WordPress nav-menu ID to render in the mega menu. Set 0 to disable."
+msgstr "在大菜单中渲染的 WordPress 导航菜单 ID。设置为 0 以禁用."
+
+#: inc/luwipress-bridge.php:765
+msgid "Mega menu — child count threshold"
+msgstr "大菜单 — 子项计数阈值"
+
+#: inc/luwipress-bridge.php:766
+msgid "Minimum children before a top-level menu item flips to mega-panel rendering."
+msgstr "在顶级菜单项转换为大面板渲染之前的最小子项数量."
+
+#: inc/luwipress-bridge.php:777
+msgid "Mega menu — columns"
+msgstr "大菜单 — 列数"
+
+#: inc/luwipress-bridge.php:781
+msgid "Auto"
+msgstr "自动"
+
+#: inc/luwipress-bridge.php:782 inc/widgets/lib/class-mega-menu.php:77
+msgid "2 columns"
+msgstr "2 列"
+
+#: inc/luwipress-bridge.php:783 inc/widgets/lib/class-mega-menu.php:78
+msgid "3 columns"
+msgstr "3 列"
+
+#: inc/luwipress-bridge.php:784 inc/widgets/lib/class-mega-menu.php:79
+msgid "4 columns"
+msgstr "4 列"
+
+#: inc/luwipress-bridge.php:792
+msgid "Mega menu — show product counts"
+msgstr "大菜单 — 显示产品计数"
+
+#: inc/luwipress-bridge.php:801
+msgid "Mega menu — auto-inject blog categories"
+msgstr "大菜单 — 自动注入博客分类"
+
+#: inc/luwipress-bridge.php:810
+msgid "Block orphan SEO landings on the front-end"
+msgstr "阻止前端孤立 SEO 着陆页"
+
+#: inc/luwipress-bridge.php:811
+msgid "When on, pages flagged by the Unwanted Landing Pages tool return a 410 Gone for visitors and search bots. Lets you defer the actual delete while neutralising the SEO leak."
+msgstr "启用时，使用不想要的着陆页工具标记的页面将向访客和搜索机器人返回 410 消失状态。允许您推迟实际删除，同时中和 SEO 漏洞."
+
+#: inc/luwipress-bridge.php:820
+msgid "WPML — fail loud on missing translated subcategory"
+msgstr "WPML — 缺失翻译子类别时大声失败"
+
+#: inc/luwipress-bridge.php:821
+msgid "When a translated product_cat resolves to 404, render an explicit \"Translation pending\" banner instead of WP's generic 404. Helps catch WPML term-translation gaps in QA."
+msgstr "当翻译的 product_cat 解析为 404 时，渲染一个明确的 \"翻译待处理\" 横幅，而不是 WP 的通用 404。帮助捕捉 WPML 术语翻译的缺口."
+
+#: inc/luwipress-bridge.php:830
+msgid "PDP — forced Elementor template ID"
+msgstr "PDP — 强制 Elementor 模板 ID"
+
+#: inc/luwipress-bridge.php:831
+msgid "Override the Elementor Pro Single Product template selection. Set 0 to defer to Elementor's own conditions. Useful when WPML duplicates a template per language and the wrong one wins."
+msgstr "覆盖 Elementor Pro 单产品模板选择。设置为 0 以遵循 Elementor 自身的条件。当 WPML 每种语言复制一个模板并且错误的模板获胜时非常有用."
+
+#: inc/luwipress-bridge.php:841
+msgid "Archive — forced Elementor template ID"
+msgstr "存档 — 强制 Elementor 模板 ID"
+
+#: inc/luwipress-bridge.php:842
+msgid "Override the Elementor Pro Products Archive template selection. Set 0 to defer to Elementor."
+msgstr "覆盖 Elementor Pro 产品存档模板选择。设置为 0 以遵循 Elementor."
+
+#: inc/luwipress-bridge.php:853
+msgid "Strict canonical = permalink"
+msgstr "严格规范 = 永久链接"
+
+#: inc/luwipress-bridge.php:854
+msgid "Override Rank Math / Yoast / AIOSEO canonical with the page's own permalink. Stops cross-page canonicals that hurt indexation."
+msgstr "用页面自己的永久链接覆盖 Rank Math / Yoast / AIOSEO 规范。阻止损害索引的跨页面规范."
+
+#: inc/luwipress-bridge.php:863
+msgid "Force trailing-slash consistency"
+msgstr "强制保持末尾斜杠的一致性"
+
+#: inc/luwipress-bridge.php:864
+msgid "301-redirect URLs to match the site's permalink_structure (with or without trailing slash). Skips REST, sitemap, and asset paths."
+msgstr "301-重定向URL以匹配站点的永久链接结构（无论是否带有末尾斜杠）。跳过REST、网站地图和资源路径."
+
+#: inc/luwipress-bridge.php:873
+msgid "noindex empty term archives"
+msgstr "不索引空的术语存档"
+
+#: inc/luwipress-bridge.php:874
+msgid "Emit <meta name=\"robots\" content=\"noindex,follow\"> on product_cat archives flagged by the empty_term_archives audit. Cached 6h; busts on tool execute."
+msgstr "在被empty_term_archives审核标记的product_cat存档中发出<meta name=\"robots\" content=\"noindex,follow\">。缓存6小时；在工具执行时失效."
+
+#: inc/luwipress-bridge.php:887
+msgid "Block orphan SEO landings (410 Gone)"
+msgstr "阻止孤立的SEO着陆页（410已删除）"
+
+#: inc/luwipress-bridge.php:888
+msgid "Same toggle as under WPML — duplicated here so operators discover it under SEO. Pages flagged by the unwanted_landing_pages audit return 410 instead of rendering."
+msgstr "与WPML下的切换相同——在此重复，以便操作员在SEO下发现它。被unwanted_landing_pages审核标记的页面返回410而不是呈现."
+
+#: inc/luwipress-bridge.php:898
+msgid "Shop — Load More instead of pagination"
+msgstr "商店——加载更多而不是分页"
+
+#: inc/luwipress-bridge.php:899
+msgid "Replaces the page-numbers pagination on shop / category / tag archives with a Load More flow (theme-side, no Elementor dep). The pagination markup is kept in the DOM (visually hidden) so SEO crawlers still discover paginated URLs."
+msgstr "将商店/类别/标签存档中的页码分页替换为加载更多流（主题侧，无需Elementor依赖）。分页标记保留在DOM中（视觉上隐藏），因此SEO爬虫仍会发现分页的URL."
+
+#: inc/luwipress-bridge.php:908
+msgid "Shop — Load More mode"
+msgstr "商店——加载更多模式"
+
+#: inc/luwipress-bridge.php:909
+msgid "Infinite: auto-fetch when the sentinel scrolls into view (prefers-reduced-motion users always see the button instead). Button: visitor clicks \"Load more\" each time."
+msgstr "无限：当哨兵滚动到视野中时自动获取（偏好减少运动的用户总是看到按钮）。按钮：访客每次点击“加载更多”。"
+
+#: inc/luwipress-bridge.php:913
+msgid "Infinite scroll (default)"
+msgstr "无限滚动（默认）"
+
+#: inc/luwipress-bridge.php:914
+msgid "Button — manual click"
+msgstr "按钮——手动点击"
+
+#: inc/luwipress-bridge.php:926
+msgid "Instagram URL"
+msgstr "Instagram网址"
+
+#: inc/luwipress-bridge.php:927
+msgid "YouTube channel URL"
+msgstr "YouTube频道网址"
+
+#: inc/luwipress-bridge.php:928
+msgid "Facebook URL"
+msgstr "Facebook网址"
+
+#: inc/luwipress-bridge.php:929
+msgid "WhatsApp URL"
+msgstr "WhatsApp网址"
+
+#: inc/luwipress-bridge.php:930
+msgid "TikTok URL"
+msgstr "TikTok网址"
+
+#: inc/luwipress-bridge.php:931
+msgid "Pinterest URL"
+msgstr "Pinterest网址"
+
+#: inc/luwipress-bridge.php:932
+msgid "Twitter / X URL"
+msgstr "Twitter / X网址"
+
+#: inc/luwipress-bridge.php:933
+msgid "LinkedIn URL"
+msgstr "LinkedIn网址"
+
+#. translators: %s: channel name (Instagram / YouTube / …)
+#: inc/luwipress-bridge.php:942
+#, php-format
+msgid "Public %s profile URL. Powers footer icons, the YouTube/Instagram homepage widgets and one-click Subscribe / Follow buttons."
+msgstr "公共 %s 个人资料网址。为页脚图标、YouTube/Instagram主页小部件和一键订阅/关注按钮提供支持."
+
+#: inc/setup.php:48
+msgid "Primary navigation (header + drawer)"
+msgstr "主导航（头部 + 抽屉）"
+
+#: inc/setup.php:49
+msgid "Mobile drawer (header fallback)"
+msgstr "移动抽屉（头部后备）"
+
+#: inc/setup.php:50
+msgid "Footer — Quick Links column"
+msgstr "页脚——快速链接栏目"
+
+#: inc/setup.php:51
+msgid "Footer — Explore column"
+msgstr "页脚——探索栏目"
+
+#: inc/setup.php:52
+msgid "Footer — bottom-bar legal links"
+msgstr "页脚 — 底部法律链接"
+
+#: inc/smart-filters.php:67
+msgid "Filter results"
+msgstr "过滤结果"
+
+#: inc/smart-filters.php:97
+msgid "Active filters"
+msgstr "活动过滤器"
+
+#: inc/smart-filters.php:109 inc/widgets/lib/class-shop-filters.php:60
+#: inc/widgets/lib/class-wc-price.php:28
+#: inc/widgets/lib/class-wc-related.php:53
+msgid "Price"
+msgstr "价格"
+
+#: inc/smart-filters.php:226
+msgid "Popular tags"
+msgstr "热门标签"
+
+#: inc/smart-filters.php:256
+msgid "On sale only"
+msgstr "仅限特价商品"
+
+#: inc/smart-filters.php:260
+msgid "In stock only"
+msgstr "仅限现货商品"
+
+#: inc/smart-filters.php:277
+msgid "Quick filters"
+msgstr "快速过滤器"
+
+#: inc/template-redirects.php:960
+msgid "Performance"
+msgstr "性能"
+
+#. translators: %d: number of slug conflicts auto-detected
+#: inc/template-redirects.php:981
+#, php-format
+msgid "%d page slug currently collides with a product category slug. Enabling this 301-redirects the page URL to the matching /product-category/ archive on every visit. Pages are not deleted — they remain editable in admin."
+msgid_plural "%d page slugs currently collide with product category slugs. Enabling this 301-redirects each page URL to its matching /product-category/ archive on every visit. Pages are not deleted — they remain editable in admin."
+msgstr[0] "%d 页面别名当前与产品类别别名冲突。启用此301重定向将在每次访问时将页面URL重定向到匹配的/product-category/存档。页面不会被删除 — 它们仍然可以在管理员中编辑。"
+
+#: inc/template-redirects.php:989
+msgid "No page/product-category slug conflicts detected. Toggle is harmless to leave on — it only redirects when a conflict actually exists."
+msgstr "未检测到页面/产品类别别名冲突。保持切换是无害的 — 它仅在实际存在冲突时进行重定向。"
+
+#: inc/template-redirects.php:992
+msgid "Resolve page/category slug conflicts"
+msgstr "解决页面/类别别名冲突"
+
+#: inc/wc-pdp-gallery-override.php:84
+#, php-format
+msgid "%s product images"
+msgstr "%s 产品图片"
+
+#: inc/wc-pdp-gallery-override.php:121
+#, php-format
+msgid "View image %d"
+msgstr "查看图片 %d"
+
+#. translators: %s: master / maker name
+#. translators: %s: maker name
+#: inc/wc-pdp-hooks.php:40 inc/widgets/lib/class-product-card.php:224
+#, php-format
+msgid "by %s"
+msgstr "来自 %s"
+
+#. translators: %s: amount saved (formatted price)
+#: inc/wc-pdp-hooks.php:79
+#, php-format
+msgid "Save %s"
+msgstr "保存 %s"
+
+#: inc/widgets/lib/class-404-hero.php:18
+msgid "404 Hero"
+msgstr "404 英雄"
+
+#: inc/widgets/lib/class-404-hero.php:26 inc/widgets/lib/class-ai-search.php:37
+#: inc/widgets/lib/class-contact-cta.php:35
+#: inc/widgets/lib/class-cta-banner.php:27
+#: inc/widgets/lib/class-newsletter.php:31
+#: inc/widgets/lib/class-section-head.php:31
+msgid "Copy"
+msgstr "复制"
+
+#: inc/widgets/lib/class-404-hero.php:28
+msgid "Big number"
+msgstr "大数字"
+
+#: inc/widgets/lib/class-404-hero.php:29
+#: inc/widgets/lib/class-cta-banner.php:29
+#: inc/widgets/lib/class-editorial-grid.php:78
+#: inc/widgets/lib/class-featured-product.php:57
+#: inc/widgets/lib/class-featured-strip.php:64
+#: inc/widgets/lib/class-hero-split.php:43 inc/widgets/lib/class-hero.php:53
+#: inc/widgets/lib/class-instagram-channel.php:47
+#: inc/widgets/lib/class-kg-stats.php:34
+#: inc/widgets/lib/class-kg-trending.php:58
+#: inc/widgets/lib/class-newsletter.php:33
+#: inc/widgets/lib/class-search-overlay.php:34
+#: inc/widgets/lib/class-section-head.php:36
+#: inc/widgets/lib/class-story-split.php:109
+#: inc/widgets/lib/class-timeline.php:31
+#: inc/widgets/lib/class-youtube-channel.php:46
+msgid "Eyebrow"
+msgstr "眉毛"
+
+#: inc/widgets/lib/class-404-hero.php:29
+msgid "Page not found"
+msgstr "页面未找到"
+
+#: inc/widgets/lib/class-404-hero.php:33
+#: inc/widgets/lib/class-contact-cta.php:46
+#: inc/widgets/lib/class-editorial-grid.php:86
+#: inc/widgets/lib/class-featured-strip.php:65
+#: inc/widgets/lib/class-footer-column.php:32
+#: inc/widgets/lib/class-instagram-channel.php:42
+#: inc/widgets/lib/class-instagram-channel.php:55
+#: inc/widgets/lib/class-kg-stats.php:35
+#: inc/widgets/lib/class-kg-trending.php:59
+#: inc/widgets/lib/class-newsletter.php:34
+#: inc/widgets/lib/class-section-head.php:44
+#: inc/widgets/lib/class-story-split.php:117
+#: inc/widgets/lib/class-timeline.php:39
+#: inc/widgets/lib/class-wc-related.php:31
+#: inc/widgets/lib/class-youtube-channel.php:41
+#: inc/widgets/lib/class-youtube-channel.php:54
+msgid "Heading"
+msgstr "标题"
+
+#: inc/widgets/lib/class-404-hero.php:34
+msgid "Use [em]…[/em] for italic-gold accent."
+msgstr "使用 [em]…[/em] 来表示斜体金色强调。"
+
+#: inc/widgets/lib/class-404-hero.php:37
+msgid "This [em]tune[/em] is not in our songbook."
+msgstr "这首 [em]曲调[/em] 不在我们的曲目中。"
+
+#: inc/widgets/lib/class-404-hero.php:43
+#: inc/widgets/lib/class-contact-cta.php:52
+#: inc/widgets/lib/class-cta-banner.php:37
+#: inc/widgets/lib/class-newsletter.php:35
+msgid "Lead"
+msgstr "主导"
+
+#: inc/widgets/lib/class-404-hero.php:46
+msgid "The link you followed may be broken — but the catalogue, the journal and the masters page are all just one click away."
+msgstr "您访问的链接可能已损坏——但目录、期刊和大师页面只需点击一下即可访问。"
+
+#: inc/widgets/lib/class-404-hero.php:49
+msgid "Show search input"
+msgstr "显示搜索输入"
+
+#: inc/widgets/lib/class-404-hero.php:52
+msgid "Search placeholder"
+msgstr "搜索占位符"
+
+#: inc/widgets/lib/class-404-hero.php:56
+msgid "CTA 1 label"
+msgstr "CTA 1 标签"
+
+#: inc/widgets/lib/class-404-hero.php:56
+msgid "Browse the catalogue →"
+msgstr "浏览目录 →"
+
+#: inc/widgets/lib/class-404-hero.php:57
+msgid "CTA 1 URL"
+msgstr "CTA 1 URL"
+
+#: inc/widgets/lib/class-404-hero.php:58
+msgid "CTA 2 label"
+msgstr "CTA 2 标签"
+
+#: inc/widgets/lib/class-404-hero.php:59
+msgid "CTA 2 URL"
+msgstr "CTA 2 URL"
+
+#: inc/widgets/lib/class-404-hero.php:65 inc/widgets/lib/class-ai-search.php:80
+#: inc/widgets/lib/class-byline-card.php:67
+#: inc/widgets/lib/class-contact-cta.php:104
+#: inc/widgets/lib/class-countdown.php:72
+#: inc/widgets/lib/class-featured-post.php:94
+#: inc/widgets/lib/class-featured-product.php:86
+#: inc/widgets/lib/class-footer-bottom.php:96
+#: inc/widgets/lib/class-footer-brand.php:131
+#: inc/widgets/lib/class-footer-column.php:70
+#: inc/widgets/lib/class-header-actions.php:77
+#: inc/widgets/lib/class-hero.php:197 inc/widgets/lib/class-info-bar.php:74
+#: inc/widgets/lib/class-instagram-channel.php:191
+#: inc/widgets/lib/class-load-more.php:78 inc/widgets/lib/class-logo.php:82
+#: inc/widgets/lib/class-master-profile.php:112
+#: inc/widgets/lib/class-mega-menu.php:110 inc/widgets/lib/class-megabar.php:82
+#: inc/widgets/lib/class-newsletter.php:68
+#: inc/widgets/lib/class-perks-list.php:71
+#: inc/widgets/lib/class-post-featured-image.php:72
+#: inc/widgets/lib/class-post-title.php:81
+#: inc/widgets/lib/class-product-card.php:90
+#: inc/widgets/lib/class-product-grid.php:148
+#: inc/widgets/lib/class-pullquote.php:80
+#: inc/widgets/lib/class-reading-progress.php:68
+#: inc/widgets/lib/class-search-overlay.php:120
+#: inc/widgets/lib/class-section-head.php:119
+#: inc/widgets/lib/class-shop-filters.php:125
+#: inc/widgets/lib/class-shop-toolbar.php:52
+#: inc/widgets/lib/class-spec-list.php:77
+#: inc/widgets/lib/class-stat-counter.php:68
+#: inc/widgets/lib/class-timeline.php:92 inc/widgets/lib/class-topbar.php:122
+#: inc/widgets/lib/class-trust-badges.php:67
+#: inc/widgets/lib/class-wc-gallery.php:60 inc/widgets/lib/class-wc-meta.php:62
+#: inc/widgets/lib/class-wc-price.php:43 inc/widgets/lib/class-wc-rating.php:53
+#: inc/widgets/lib/class-wc-related.php:61
+#: inc/widgets/lib/class-wc-short-description.php:37
+#: inc/widgets/lib/class-wc-title.php:57
+#: inc/widgets/lib/class-youtube-channel.php:189
+msgid "Style"
+msgstr "样式"
+
+#: inc/widgets/lib/class-404-hero.php:68
+msgid "Big number color"
+msgstr "大数字颜色"
+
+#: inc/widgets/lib/class-404-hero.php:70
+#: inc/widgets/lib/class-contact-cta.php:114
+#: inc/widgets/lib/class-footer-column.php:76
+#: inc/widgets/lib/class-post-content.php:104
+#: inc/widgets/lib/class-product-grid.php:151
+#: inc/widgets/lib/class-wc-related.php:64
+msgid "Heading color"
+msgstr "标题颜色"
+
+#: inc/widgets/lib/class-404-hero.php:72
+msgid "Italic accent color"
+msgstr "斜体强调颜色"
+
+#: inc/widgets/lib/class-404-hero.php:74
+#: inc/widgets/lib/class-contact-cta.php:121
+msgid "Lead color"
+msgstr "引导颜色"
+
+#: inc/widgets/lib/class-ai-search.php:29
+msgid "AI Search Bar"
+msgstr "AI 搜索栏"
+
+#: inc/widgets/lib/class-ai-search.php:40
+msgid "Placeholder text"
+msgstr "占位符文本"
+
+#: inc/widgets/lib/class-ai-search.php:42
+msgid "Search products, categories, posts…"
+msgstr "搜索产品、类别、帖子…"
+
+#: inc/widgets/lib/class-ai-search.php:46
+msgid "Badge label"
+msgstr "徽章标签"
+
+#: inc/widgets/lib/class-ai-search.php:47
+msgid "Small pill on the right side of the bar. Defaults to \"AI\" — only renders when LuwiPress AI is active."
+msgstr "在栏的右侧的小药丸。默认为 \"AI\" —— 仅在 LuwiPress AI 激活时呈现。"
+
+#: inc/widgets/lib/class-ai-search.php:53
+msgid "Show suggestion chips"
+msgstr "显示建议芯片"
+
+#: inc/widgets/lib/class-ai-search.php:54
+msgid "Quick-tap suggested searches shown under the bar."
+msgstr "在栏下方显示的快速点击推荐搜索。"
+
+#: inc/widgets/lib/class-ai-search.php:61
+msgid "Chip label"
+msgstr "芯片标签"
+
+#: inc/widgets/lib/class-ai-search.php:62
+msgid "Search query"
+msgstr "搜索查询"
+
+#: inc/widgets/lib/class-ai-search.php:65
+msgid "Chips"
+msgstr "芯片"
+
+#: inc/widgets/lib/class-ai-search.php:70
+msgid "Best sellers"
+msgstr "畅销商品"
+
+#: inc/widgets/lib/class-ai-search.php:71
+msgid "New arrivals"
+msgstr "新品到货"
+
+#: inc/widgets/lib/class-ai-search.php:72
+msgid "On sale"
+msgstr "促销中"
+
+#: inc/widgets/lib/class-ai-search.php:73
+msgid "Gift ideas"
+msgstr "礼物创意"
+
+#: inc/widgets/lib/class-ai-search.php:82
+#: inc/widgets/lib/class-countdown.php:74
+#: inc/widgets/lib/class-cpt-grid.php:201
+#: inc/widgets/lib/class-featured-product.php:94
+#: inc/widgets/lib/class-hero.php:36 inc/widgets/lib/class-master-grid.php:143
+#: inc/widgets/lib/class-newsletter.php:70
+#: inc/widgets/lib/class-section-head.php:125
+#: inc/widgets/lib/class-stat-counter.php:70
+msgid "Variant"
+msgstr "变体"
+
+#: inc/widgets/lib/class-ai-search.php:85
+#: inc/widgets/lib/class-countdown.php:77
+#: inc/widgets/lib/class-cta-banner.php:63
+#: inc/widgets/lib/class-featured-product.php:97
+#: inc/widgets/lib/class-newsletter.php:73
+#: inc/widgets/lib/class-section-head.php:130
+#: inc/widgets/lib/class-stat-counter.php:73
+msgid "Light"
+msgstr "浅色"
+
+#: inc/widgets/lib/class-ai-search.php:85
+#: inc/widgets/lib/class-countdown.php:77
+#: inc/widgets/lib/class-featured-product.php:97
+#: inc/widgets/lib/class-newsletter.php:73
+#: inc/widgets/lib/class-section-head.php:131
+#: inc/widgets/lib/class-stat-counter.php:73
+msgid "Dark"
+msgstr "深色"
+
+#: inc/widgets/lib/class-ai-search.php:88
+msgid "Size"
+msgstr "尺寸"
+
+#: inc/widgets/lib/class-ai-search.php:92
+#: inc/widgets/lib/class-cta-banner.php:64
+msgid "Medium"
+msgstr "中号"
+
+#: inc/widgets/lib/class-ai-search.php:93
+msgid "Large (hero-style)"
+msgstr "大号（英雄风格）"
+
+#: inc/widgets/lib/class-byline-card.php:19
+msgid "Byline Card"
+msgstr "副标题卡片"
+
+#: inc/widgets/lib/class-byline-card.php:27
+#: inc/widgets/lib/class-youtube-channel.php:130
+msgid "Byline"
+msgstr "副标题"
+
+#: inc/widgets/lib/class-byline-card.php:32
+#: inc/widgets/lib/class-category-grid.php:31
+#: inc/widgets/lib/class-category-grid.php:36
+#: inc/widgets/lib/class-cpt-grid.php:92
+#: inc/widgets/lib/class-featured-post.php:32
+#: inc/widgets/lib/class-featured-post.php:37
+#: inc/widgets/lib/class-featured-product.php:36
+#: inc/widgets/lib/class-featured-product.php:39
+#: inc/widgets/lib/class-featured-strip.php:30
+#: inc/widgets/lib/class-master-grid.php:35
+#: inc/widgets/lib/class-mega-menu.php:45 inc/widgets/lib/class-megabar.php:26
+#: inc/widgets/lib/class-product-card.php:33
+#: inc/widgets/lib/class-product-grid.php:49
+#: inc/widgets/lib/class-spec-list.php:34
+#: inc/widgets/lib/class-taxonomy-terms.php:62
+msgid "Source"
+msgstr "来源"
+
+#: inc/widgets/lib/class-byline-card.php:36
+msgid "Auto (current post)"
+msgstr "自动（当前帖子）"
+
+#: inc/widgets/lib/class-byline-card.php:37 inc/widgets/lib/class-topbar.php:73
+msgid "Manual"
+msgstr "手动"
+
+#: inc/widgets/lib/class-byline-card.php:43
+msgid "Avatar image"
+msgstr "头像图片"
+
+#: inc/widgets/lib/class-byline-card.php:47
+#: inc/widgets/lib/class-testimonials.php:34
+msgid "Author name"
+msgstr "作者姓名"
+
+#: inc/widgets/lib/class-byline-card.php:51
+msgid "Author role / byline sub"
+msgstr "作者角色 / 副标题"
+
+#: inc/widgets/lib/class-byline-card.php:55
+msgid "Date (free text)"
+msgstr "日期（自由文本）"
+
+#: inc/widgets/lib/class-byline-card.php:60
+msgid "Show read time"
+msgstr "显示阅读时间"
+
+#: inc/widgets/lib/class-byline-card.php:70
+msgid "Name color"
+msgstr "姓名颜色"
+
+#: inc/widgets/lib/class-byline-card.php:72
+msgid "Meta color"
+msgstr "元数据颜色"
+
+#: inc/widgets/lib/class-byline-card.php:74
+msgid "Fallback avatar gradient"
+msgstr "备用头像渐变"
+
+#: inc/widgets/lib/class-byline-card.php:101
+msgid "Author"
+msgstr "作者"
+
+#: inc/widgets/lib/class-category-grid.php:23
+msgid "Category Grid"
+msgstr "分类网格"
+
+#: inc/widgets/lib/class-category-grid.php:40
+#: inc/widgets/lib/class-spec-list.php:38
+msgid "Manual list"
+msgstr "手动列表"
+
+#: inc/widgets/lib/class-category-grid.php:41
+msgid "WooCommerce top-level categories"
+msgstr "WooCommerce 顶级分类"
+
+#: inc/widgets/lib/class-category-grid.php:48
+msgid "Number of tiles (when pulling from WC)"
+msgstr "从 WC 拉取的瓷砖数量"
+
+#: inc/widgets/lib/class-category-grid.php:59
+#: inc/widgets/lib/class-taxonomy-terms.php:154
+msgid "Eyebrow label after the count"
+msgstr "计数后的眉头标签"
+
+#: inc/widgets/lib/class-category-grid.php:60
+msgid "e.g. \"instruments\" → \"62 instruments\". Leave empty to hide the count line."
+msgstr "例如 \"instruments\" → \"62 instruments\"。留空以隐藏计数行。"
+
+#: inc/widgets/lib/class-category-grid.php:62
+msgid "instruments"
+msgstr "乐器"
+
+#: inc/widgets/lib/class-category-grid.php:71
+#: inc/widgets/lib/class-category-grid.php:87
+msgid "Tiles"
+msgstr "瓷砖"
+
+#: inc/widgets/lib/class-category-grid.php:76
+msgid "Eyebrow / count line"
+msgstr "眉头 / 计数行"
+
+#: inc/widgets/lib/class-category-grid.php:77
+#: inc/widgets/lib/class-featured-product.php:71
+#: inc/widgets/lib/class-info-bar.php:40
+#: inc/widgets/lib/class-post-title.php:33
+#: inc/widgets/lib/class-process-steps.php:31
+#: inc/widgets/lib/class-story-split.php:149
+#: inc/widgets/lib/class-timeline.php:57 inc/widgets/lib/class-wc-title.php:28
+#: inc/widgets/lib/class-youtube-channel.php:122
+msgid "Title"
+msgstr "标题"
+
+#: inc/widgets/lib/class-category-grid.php:78
+msgid "Sub line"
+msgstr "子行"
+
+#: inc/widgets/lib/class-category-grid.php:79
+#: inc/widgets/lib/class-footer-bottom.php:41
+#: inc/widgets/lib/class-footer-brand.php:111
+#: inc/widgets/lib/class-footer-column.php:40
+#: inc/widgets/lib/class-section-head.php:90
+#: inc/widgets/lib/class-topbar.php:80 inc/widgets/lib/class-topbar.php:106
+msgid "URL"
+msgstr "网址"
+
+#: inc/widgets/lib/class-category-grid.php:80
+#: inc/widgets/lib/class-cta-banner.php:49
+msgid "Background image (optional)"
+msgstr "背景图片（可选）"
+
+#: inc/widgets/lib/class-category-grid.php:81
+#: inc/widgets/lib/class-hero-split.php:114
+msgid "Gradient start (fallback)"
+msgstr "渐变开始（后备）"
+
+#: inc/widgets/lib/class-category-grid.php:82
+#: inc/widgets/lib/class-hero-split.php:119
+msgid "Gradient end (fallback)"
+msgstr "渐变结束（后备）"
+
+#: inc/widgets/lib/class-category-grid.php:92
+msgid "Category 1"
+msgstr "分类 1"
+
+#: inc/widgets/lib/class-category-grid.php:93
+msgid "Category 2"
+msgstr "分类 2"
+
+#: inc/widgets/lib/class-category-grid.php:94
+msgid "Category 3"
+msgstr "分类 3"
+
+#: inc/widgets/lib/class-category-grid.php:95
+msgid "Category 4"
+msgstr "分类 4"
+
+#: inc/widgets/lib/class-category-grid.php:103
+#: inc/widgets/lib/class-cpt-grid.php:191 inc/widgets/lib/class-info-bar.php:57
+#: inc/widgets/lib/class-master-grid.php:133
+#: inc/widgets/lib/class-product-grid.php:116
+#: inc/widgets/lib/class-spec-list.php:66
+#: inc/widgets/lib/class-taxonomy-terms.php:147
+#: inc/widgets/lib/class-wc-related.php:41
+msgid "Columns"
+msgstr "列数"
+
+#: inc/widgets/lib/class-contact-cta.php:27
+msgid "Contact CTA Card"
+msgstr "联系 CTA 卡片"
+
+#: inc/widgets/lib/class-contact-cta.php:41
+msgid "WhatsApp number + Telegram username come from LuwiPress → Customer Chat. Update once there; this widget and the chat launcher both refresh."
+msgstr "WhatsApp号码 + Telegram用户名来自 LuwiPress → 客户聊天。更新一次；这个小部件和聊天启动器都会刷新。"
+
+#: inc/widgets/lib/class-contact-cta.php:48
+msgid "Send us a note."
+msgstr "给我们发个消息。"
+
+#: inc/widgets/lib/class-contact-cta.php:54
+msgid "We reply within 1 working day · usually faster. Same-day on WhatsApp."
+msgstr "我们在 1 个工作日内回复 · 通常更快。WhatsApp 当天回复。"
+
+#: inc/widgets/lib/class-contact-cta.php:58
+msgid "Email address"
+msgstr "电子邮件地址"
+
+#: inc/widgets/lib/class-contact-cta.php:59
+msgid "Used in the email row. Leave empty to hide."
+msgstr "在电子邮件行中使用。留空以隐藏。"
+
+#: inc/widgets/lib/class-contact-cta.php:66
+msgid "Address footnote (optional)"
+msgstr "地址脚注（可选）"
+
+#: inc/widgets/lib/class-contact-cta.php:73
+msgid "CTA button label"
+msgstr "CTA 按钮标签"
+
+#: inc/widgets/lib/class-contact-cta.php:75
+msgid "Browse the catalog →"
+msgstr "浏览目录 →"
+
+#: inc/widgets/lib/class-contact-cta.php:79
+msgid "CTA button URL"
+msgstr "CTA 按钮 URL"
+
+#: inc/widgets/lib/class-contact-cta.php:85
+msgid "Show WhatsApp"
+msgstr "显示 WhatsApp"
+
+#: inc/widgets/lib/class-contact-cta.php:89
+msgid "Show Telegram"
+msgstr "显示 Telegram"
+
+#: inc/widgets/lib/class-contact-cta.php:93
+msgid "Show Email"
+msgstr "显示电子邮件"
+
+#: inc/widgets/lib/class-contact-cta.php:97
+msgid "Show CTA button"
+msgstr "显示 CTA 按钮"
+
+#: inc/widgets/lib/class-contact-cta.php:107
+#: inc/widgets/lib/class-product-card.php:111
+#: inc/widgets/lib/class-youtube-channel.php:195
+msgid "Card background"
+msgstr "卡片背景"
+
+#: inc/widgets/lib/class-contact-cta.php:128
+msgid "CTA button bg"
+msgstr "CTA 按钮背景"
+
+#: inc/widgets/lib/class-contact-cta.php:135
+msgid "CTA button text"
+msgstr "CTA 按钮文本"
+
+#: inc/widgets/lib/class-contact-cta.php:142
+msgid "Card padding"
+msgstr "卡片内边距"
+
+#: inc/widgets/lib/class-contact-cta.php:149
+#: inc/widgets/lib/class-post-featured-image.php:113
+msgid "Border radius"
+msgstr "边框半径"
+
+#: inc/widgets/lib/class-countdown.php:20
+msgid "Countdown Timer"
+msgstr "倒计时器"
+
+#: inc/widgets/lib/class-countdown.php:28
+msgid "Target"
+msgstr "目标"
+
+#: inc/widgets/lib/class-countdown.php:31
+msgid "Target date & time"
+msgstr "目标日期和时间"
+
+#: inc/widgets/lib/class-countdown.php:32
+msgid "Picked in your site timezone (WP general settings) and rendered live in the visitor's browser."
+msgstr "在您的网站时区（WP 一般设置）中选择，并在访客的浏览器中实时呈现。"
+
+#: inc/widgets/lib/class-countdown.php:38
+msgid "Units to show"
+msgstr "要显示的单位"
+
+#: inc/widgets/lib/class-countdown.php:42
+msgid "Days · Hours · Minutes · Seconds"
+msgstr "天 · 小时 · 分钟 · 秒"
+
+#: inc/widgets/lib/class-countdown.php:43
+msgid "Days · Hours · Minutes"
+msgstr "天 · 小时 · 分钟"
+
+#: inc/widgets/lib/class-countdown.php:44
+msgid "Hours · Minutes · Seconds"
+msgstr "小时 · 分钟 · 秒"
+
+#: inc/widgets/lib/class-countdown.php:48
+msgid "Label — days"
+msgstr "标签 — 天"
+
+#: inc/widgets/lib/class-countdown.php:48
+msgid "Days"
+msgstr "天"
+
+#: inc/widgets/lib/class-countdown.php:49
+msgid "Label — hours"
+msgstr "标签 — 小时"
+
+#: inc/widgets/lib/class-countdown.php:49 page-contact.php:47
+msgid "Hours"
+msgstr "小时"
+
+#: inc/widgets/lib/class-countdown.php:50
+msgid "Label — minutes"
+msgstr "标签 — 分钟"
+
+#: inc/widgets/lib/class-countdown.php:50
+msgid "Minutes"
+msgstr "分钟"
+
+#: inc/widgets/lib/class-countdown.php:51
+msgid "Label — seconds"
+msgstr "标签 — 秒"
+
+#: inc/widgets/lib/class-countdown.php:51
+msgid "Seconds"
+msgstr "秒"
+
+#: inc/widgets/lib/class-countdown.php:54
+msgid "Post-expiry message"
+msgstr "过期后消息"
+
+#: inc/widgets/lib/class-countdown.php:57
+msgid "It's live. Browse the sale →"
+msgstr "它已上线。浏览促销 →"
+
+#: inc/widgets/lib/class-countdown.php:60
+msgid "Post-expiry button URL (optional)"
+msgstr "过期后按钮 URL（可选）"
+
+#: inc/widgets/lib/class-countdown.php:65
+msgid "Post-expiry button label (optional)"
+msgstr "过期后按钮标签（可选）"
+
+#: inc/widgets/lib/class-countdown.php:80
+#: inc/widgets/lib/class-post-featured-image.php:120
+#: inc/widgets/lib/class-post-title.php:65
+#: inc/widgets/lib/class-pullquote.php:66
+#: inc/widgets/lib/class-trust-badges.php:59
+#: inc/widgets/lib/class-wc-price.php:31 inc/widgets/lib/class-wc-rating.php:41
+#: inc/widgets/lib/class-wc-title.php:45
+msgid "Alignment"
+msgstr "对齐方式"
+
+#: inc/widgets/lib/class-countdown.php:83
+#: inc/widgets/lib/class-cta-banner.php:74
+#: inc/widgets/lib/class-featured-product.php:91
+#: inc/widgets/lib/class-post-featured-image.php:123
+#: inc/widgets/lib/class-post-title.php:68
+#: inc/widgets/lib/class-pullquote.php:69
+#: inc/widgets/lib/class-trust-badges.php:62
+msgid "Left"
+msgstr "左"
+
+#: inc/widgets/lib/class-countdown.php:83
+#: inc/widgets/lib/class-cta-banner.php:75
+#: inc/widgets/lib/class-post-featured-image.php:124
+#: inc/widgets/lib/class-post-title.php:69
+#: inc/widgets/lib/class-pullquote.php:70
+#: inc/widgets/lib/class-trust-badges.php:62
+msgid "Center"
+msgstr "居中"
+
+#: inc/widgets/lib/class-countdown.php:83
+#: inc/widgets/lib/class-cta-banner.php:76
+#: inc/widgets/lib/class-featured-product.php:91
+#: inc/widgets/lib/class-post-featured-image.php:125
+#: inc/widgets/lib/class-post-title.php:70
+#: inc/widgets/lib/class-trust-badges.php:62
+msgid "Right"
+msgstr "右"
+
+#: inc/widgets/lib/class-cpt-grid.php:28
+msgid "CPT Grid"
+msgstr "CPT 网格"
+
+#: inc/widgets/lib/class-cpt-grid.php:54
+msgid "Vendor"
+msgstr "供应商"
+
+#: inc/widgets/lib/class-cpt-grid.php:66
+msgid "— No taxonomy filter —"
+msgstr "— 无分类过滤 —"
+
+#: inc/widgets/lib/class-cpt-grid.php:98
+msgid "Pulls live from a LuwiPress CPT Engine type. Add or edit entries under LuwiPress → the matching CPT; this grid updates automatically."
+msgstr "实时拉取来自 LuwiPress CPT 引擎类型。通过 LuwiPress → 匹配的 CPT 添加或编辑条目；此网格会自动更新。"
+
+#: inc/widgets/lib/class-cpt-grid.php:105
+msgid "Content type"
+msgstr "内容类型"
+
+#: inc/widgets/lib/class-cpt-grid.php:115
+msgid "Max entries"
+msgstr "最大条目数"
+
+#: inc/widgets/lib/class-cpt-grid.php:126
+msgid "Filter by taxonomy"
+msgstr "按分类过滤"
+
+#: inc/widgets/lib/class-cpt-grid.php:137
+msgid "Term slug"
+msgstr "术语别名"
+
+#: inc/widgets/lib/class-cpt-grid.php:138
+msgid "Slug of the term in the chosen taxonomy (e.g. luthiers). Leave empty to show all."
+msgstr "所选分类中术语的别名（例如 luthiers）。留空以显示所有内容。"
+
+#: inc/widgets/lib/class-cpt-grid.php:148
+#: inc/widgets/lib/class-master-grid.php:90
+msgid "Curated IDs (optional)"
+msgstr "策划的 ID（可选）"
+
+#: inc/widgets/lib/class-cpt-grid.php:149
+msgid "Comma-separated post IDs to show in this order. Leave empty to auto-query."
+msgstr "以逗号分隔的帖子 ID，按此顺序显示。留空以自动查询。"
+
+#: inc/widgets/lib/class-cpt-grid.php:159
+#: inc/widgets/lib/class-editorial-grid.php:49
+#: inc/widgets/lib/class-master-grid.php:101
+#: inc/widgets/lib/class-product-grid.php:78
+#: inc/widgets/lib/class-taxonomy-terms.php:99
+#: inc/widgets/lib/class-wc-related.php:47
+msgid "Order by"
+msgstr "排序方式"
+
+#: inc/widgets/lib/class-cpt-grid.php:163
+#: inc/widgets/lib/class-master-grid.php:105
+msgid "Manual (menu order)"
+msgstr "手动（菜单顺序）"
+
+#: inc/widgets/lib/class-cpt-grid.php:164
+#: inc/widgets/lib/class-master-grid.php:106
+msgid "Date published"
+msgstr "发布日期"
+
+#: inc/widgets/lib/class-cpt-grid.php:165
+msgid "Title (A→Z)"
+msgstr "标题（A→Z）"
+
+#: inc/widgets/lib/class-cpt-grid.php:166
+#: inc/widgets/lib/class-editorial-grid.php:55
+#: inc/widgets/lib/class-master-grid.php:108
+#: inc/widgets/lib/class-product-grid.php:89
+#: inc/widgets/lib/class-wc-related.php:51
+msgid "Random"
+msgstr "随机"
+
+#: inc/widgets/lib/class-cpt-grid.php:175
+#: inc/widgets/lib/class-master-grid.php:117
+#: inc/widgets/lib/class-taxonomy-terms.php:112
+msgid "Order direction"
+msgstr "订单方向"
+
+#: inc/widgets/lib/class-cpt-grid.php:186
+#: inc/widgets/lib/class-master-grid.php:128
+#: inc/widgets/lib/class-taxonomy-terms.php:144
+msgid "Display"
+msgstr "显示"
+
+#: inc/widgets/lib/class-cpt-grid.php:205
+#: inc/widgets/lib/class-master-grid.php:147
+msgid "Dark (for #1A1612 section bg)"
+msgstr "深色（用于 #1A1612 部分背景）"
+
+#: inc/widgets/lib/class-cpt-grid.php:206
+#: inc/widgets/lib/class-master-grid.php:148
+msgid "Light (for cream section bg)"
+msgstr "浅色（用于奶油色部分背景）"
+
+#: inc/widgets/lib/class-cpt-grid.php:217
+msgid "Available field keys per type:"
+msgstr "每种类型可用字段键："
+
+#: inc/widgets/lib/class-cpt-grid.php:226
+msgid "Sub-line 1 — meta key"
+msgstr "子行 1 — 元数据键"
+
+#: inc/widgets/lib/class-cpt-grid.php:227
+msgid "Meta key shown under the title (e.g. _lwp_vendor_location). Leave empty to hide."
+msgstr "标题下显示的元数据键（例如 _lwp_vendor_location）。留空以隐藏。"
+
+#: inc/widgets/lib/class-cpt-grid.php:236
+msgid "Sub-line 2 — meta key"
+msgstr "子行 2 — 元数据键"
+
+#: inc/widgets/lib/class-cpt-grid.php:237
+msgid "Second meta key (e.g. _lwp_vendor_specialty). Leave empty to hide."
+msgstr "第二个元数据键（例如 _lwp_vendor_specialty）。留空以隐藏。"
+
+#: inc/widgets/lib/class-cpt-grid.php:246
+#: inc/widgets/lib/class-master-grid.php:177
+msgid "Show \"View all\" link"
+msgstr "显示 \"查看全部\" 链接"
+
+#: inc/widgets/lib/class-cpt-grid.php:247
+msgid "Adds a CTA below the grid linking to the type archive. Useful when the grid is capped."
+msgstr "在网格下方添加一个 CTA 链接到类型归档。当网格有限制时非常有用。"
+
+#: inc/widgets/lib/class-cpt-grid.php:257
+#: inc/widgets/lib/class-master-grid.php:188
+msgid "\"View all\" label"
+msgstr "\"查看全部\" 标签"
+
+#: inc/widgets/lib/class-cpt-grid.php:259
+#: inc/widgets/lib/class-cpt-grid.php:260
+#: inc/widgets/lib/class-cpt-grid.php:369
+#: inc/widgets/lib/class-mega-menu.php:465
+msgid "View all →"
+msgstr "查看全部 →"
+
+#: inc/widgets/lib/class-cpt-grid.php:277
+msgid "[CPT Grid] Pick a content type. None is registered — add one in LuwiPress → CPT types."
+msgstr "[CPT 网格] 选择一个内容类型。没有注册 — 在 LuwiPress → CPT 类型中添加一个."
+
+#. translators: %s: post type label
+#: inc/widgets/lib/class-cpt-grid.php:319
+#, php-format
+msgid "[CPT Grid] No %s published yet."
+msgstr "[CPT 网格] 尚未发布 %s."
+
+#: inc/widgets/lib/class-cta-banner.php:19
+msgid "CTA Banner"
+msgstr "CTA 横幅"
+
+#: inc/widgets/lib/class-cta-banner.php:31
+msgid "Headline"
+msgstr "标题"
+
+#: inc/widgets/lib/class-cta-banner.php:32
+#: inc/widgets/lib/class-hero-split.php:49
+msgid "Use Enter for line breaks. Wrap with [em]…[/em] for italic gold accent."
+msgstr "使用 Enter 进行换行。用 [em]…[/em] 包裹以获得斜体金色强调。"
+
+#: inc/widgets/lib/class-cta-banner.php:35
+msgid "Build the instrument you have always wanted."
+msgstr "构建您一直想要的工具。"
+
+#: inc/widgets/lib/class-cta-banner.php:39
+#: inc/widgets/lib/class-hero-split.php:62 inc/widgets/lib/class-hero.php:81
+msgid "Primary CTA — label"
+msgstr "主要 CTA — 标签"
+
+#: inc/widgets/lib/class-cta-banner.php:39
+msgid "Start a custom order →"
+msgstr "开始自定义订单 →"
+
+#: inc/widgets/lib/class-cta-banner.php:40
+#: inc/widgets/lib/class-hero-split.php:67 inc/widgets/lib/class-hero.php:89
+msgid "Primary CTA — URL"
+msgstr "主要 CTA — URL"
+
+#: inc/widgets/lib/class-cta-banner.php:41
+#: inc/widgets/lib/class-hero-split.php:72 inc/widgets/lib/class-hero.php:98
+msgid "Secondary CTA — label"
+msgstr "次要 CTA — 标签"
+
+#: inc/widgets/lib/class-cta-banner.php:42
+#: inc/widgets/lib/class-hero-split.php:77 inc/widgets/lib/class-hero.php:106
+msgid "Secondary CTA — URL"
+msgstr "次要 CTA — URL"
+
+#: inc/widgets/lib/class-cta-banner.php:46 inc/widgets/lib/class-megabar.php:88
+#: inc/widgets/lib/class-timeline.php:98 inc/widgets/lib/class-topbar.php:127
+#: inc/widgets/lib/class-wc-add-to-cart.php:65
+msgid "Background"
+msgstr "背景"
+
+#: inc/widgets/lib/class-cta-banner.php:53
+msgid "Gradient start"
+msgstr "渐变开始"
+
+#: inc/widgets/lib/class-cta-banner.php:54
+msgid "Gradient end"
+msgstr "渐变结束"
+
+#: inc/widgets/lib/class-cta-banner.php:57
+msgid "Image overlay strength"
+msgstr "图像叠加强度"
+
+#: inc/widgets/lib/class-cta-banner.php:58
+msgid "Only applies when a background image is set."
+msgstr "仅在设置背景图像时适用。"
+
+#: inc/widgets/lib/class-cta-banner.php:62 inc/widgets/lib/class-megabar.php:74
+#: inc/widgets/lib/class-post-featured-image.php:48
+#: inc/widgets/lib/class-post-featured-image.php:62
+#: inc/widgets/lib/class-post-featured-image.php:107
+#: inc/widgets/lib/class-post-title.php:56
+msgid "None"
+msgstr "无"
+
+#: inc/widgets/lib/class-cta-banner.php:65
+msgid "Strong"
+msgstr "强"
+
+#: inc/widgets/lib/class-cta-banner.php:70
+msgid "Content alignment"
+msgstr "内容对齐"
+
+#: inc/widgets/lib/class-editorial-grid.php:18
+msgid "Editorial Grid"
+msgstr "编辑网格"
+
+#: inc/widgets/lib/class-editorial-grid.php:25
+#: inc/widgets/lib/class-product-grid.php:39
+msgid "Query"
+msgstr "查询"
+
+#: inc/widgets/lib/class-editorial-grid.php:30
+#: inc/widgets/lib/class-featured-post.php:60
+msgid "Post type"
+msgstr "帖子类型"
+
+#: inc/widgets/lib/class-editorial-grid.php:39
+msgid "Number of posts"
+msgstr "帖子数量"
+
+#: inc/widgets/lib/class-editorial-grid.php:53
+#: inc/widgets/lib/class-product-grid.php:84
+msgid "Newest first"
+msgstr "最新优先"
+
+#: inc/widgets/lib/class-editorial-grid.php:54
+msgid "Recently updated"
+msgstr "最近更新"
+
+#: inc/widgets/lib/class-editorial-grid.php:56
+msgid "Most discussed"
+msgstr "讨论最多"
+
+#: inc/widgets/lib/class-editorial-grid.php:63
+msgid "Filter by category"
+msgstr "按类别过滤"
+
+#: inc/widgets/lib/class-editorial-grid.php:67
+msgid "Leave empty for all."
+msgstr "留空以显示所有。"
+
+#: inc/widgets/lib/class-editorial-grid.php:74
+msgid "Section heading"
+msgstr "部分标题"
+
+#: inc/widgets/lib/class-editorial-grid.php:89
+msgid "Notes from the workshop."
+msgstr "工作坊笔记。"
+
+#: inc/widgets/lib/class-editorial-grid.php:95
+msgid "View all link"
+msgstr "查看所有链接"
+
+#: inc/widgets/lib/class-editorial-grid.php:103
+msgid "View all label"
+msgstr "查看所有标签"
+
+#: inc/widgets/lib/class-editorial-grid.php:105
+msgid "All articles →"
+msgstr "所有文章 →"
+
+#: inc/widgets/lib/class-editorial-grid.php:144
+msgid "No posts found."
+msgstr "未找到帖子。"
+
+#: inc/widgets/lib/class-faq.php:24
+msgid "FAQ Accordion"
+msgstr "常见问题手风琴"
+
+#: inc/widgets/lib/class-faq.php:32
+msgid "Questions"
+msgstr "问题"
+
+#: inc/widgets/lib/class-faq.php:35
+msgid "Question"
+msgstr "问题"
+
+#: inc/widgets/lib/class-faq.php:36
+msgid "Answer"
+msgstr "答案"
+
+#: inc/widgets/lib/class-faq.php:38
+msgid "Open by default"
+msgstr "默认打开"
+
+#: inc/widgets/lib/class-faq.php:50
+msgid "How long does shipping take?"
+msgstr "运输需要多长时间？"
+
+#: inc/widgets/lib/class-faq.php:50
+msgid "Replace this answer with your real shipping timeline + carriers + insurance details."
+msgstr "用你的真实运输时间表 + 承运人 + 保险细节替换此答案。"
+
+#: inc/widgets/lib/class-faq.php:51
+msgid "What is your return policy?"
+msgstr "你的退货政策是什么？"
+
+#: inc/widgets/lib/class-faq.php:51
+msgid "Describe your return / refund policy here — common answers convert best."
+msgstr "在这里描述你的退货/退款政策——常见的答案通常效果最好。"
+
+#: inc/widgets/lib/class-faq.php:52
+msgid "Do you ship worldwide?"
+msgstr "你们是否全球运输？"
+
+#: inc/widgets/lib/class-faq.php:52
+msgid "List the regions you ship to and any restrictions."
+msgstr "列出你们运输到的地区和任何限制。"
+
+#: inc/widgets/lib/class-faq.php:53
+msgid "How can I contact customer support?"
+msgstr "我如何联系客户支持？"
+
+#: inc/widgets/lib/class-faq.php:53
+msgid "Add your support email, hours and average response time here."
+msgstr "在这里添加你的支持电子邮件、工作时间和平均响应时间。"
+
+#: inc/widgets/lib/class-faq.php:58
+msgid "Output FAQPage schema (JSON-LD)"
+msgstr "输出FAQPage架构（JSON-LD）"
+
+#: inc/widgets/lib/class-faq.php:59
+msgid "Required for Google FAQ rich result. Disable if you already have FAQPage schema on the page via Rank Math / Yoast."
+msgstr "Google FAQ丰富结果所需。如果你已经通过Rank Math / Yoast在页面上有FAQPage架构，请禁用。"
+
+#: inc/widgets/lib/class-faq.php:66
+msgid "Allow multiple open at once"
+msgstr "允许同时打开多个"
+
+#: inc/widgets/lib/class-featured-post.php:24
+msgid "Featured Post"
+msgstr "推荐帖子"
+
+#: inc/widgets/lib/class-featured-post.php:41
+msgid "Auto: first sticky post"
+msgstr "自动：第一个置顶帖子"
+
+#: inc/widgets/lib/class-featured-post.php:42
+msgid "Auto: latest post"
+msgstr "自动：最新帖子"
+
+#: inc/widgets/lib/class-featured-post.php:43
+msgid "Manual: pick post by ID"
+msgstr "手动：按ID选择帖子"
+
+#: inc/widgets/lib/class-featured-post.php:50
+msgid "Post ID"
+msgstr "帖子ID"
+
+#: inc/widgets/lib/class-featured-post.php:71
+#: inc/widgets/lib/class-featured-product.php:88
+#: inc/widgets/lib/class-story-split.php:38
+msgid "Image side"
+msgstr "图片侧边"
+
+#: inc/widgets/lib/class-featured-post.php:74
+msgid "Image left"
+msgstr "图片左侧"
+
+#: inc/widgets/lib/class-featured-post.php:74
+msgid "Image right"
+msgstr "图片右侧"
+
+#: inc/widgets/lib/class-featured-post.php:79
+msgid "Show excerpt"
+msgstr "显示摘要"
+
+#: inc/widgets/lib/class-featured-post.php:83
+msgid "Show meta (category · read time)"
+msgstr "显示元信息（类别 · 阅读时间）"
+
+#: inc/widgets/lib/class-featured-post.php:87
+#: inc/widgets/lib/class-featured-product.php:80
+#: inc/widgets/lib/class-instagram-channel.php:66
+#: inc/widgets/lib/class-section-head.php:64
+#: inc/widgets/lib/class-story-split.php:135
+#: inc/widgets/lib/class-youtube-channel.php:65
+msgid "CTA label"
+msgstr "CTA标签"
+
+#: inc/widgets/lib/class-featured-post.php:87
+msgid "Read on →"
+msgstr "继续阅读 →"
+
+#: inc/widgets/lib/class-featured-post.php:97
+#: inc/widgets/lib/class-info-bar.php:99
+#: inc/widgets/lib/class-instagram-channel.php:197
+#: inc/widgets/lib/class-youtube-channel.php:213
+msgid "Title color"
+msgstr "标题颜色"
+
+#: inc/widgets/lib/class-featured-post.php:99
+msgid "Eyebrow color"
+msgstr "眉毛颜色"
+
+#: inc/widgets/lib/class-featured-post.php:101
+msgid "CTA color"
+msgstr "CTA颜色"
+
+#: inc/widgets/lib/class-featured-post.php:145
+msgid "No featured post found."
+msgstr "未找到推荐的帖子。"
+
+#: inc/widgets/lib/class-featured-product.php:28
+msgid "Featured Product"
+msgstr "推荐产品"
+
+#: inc/widgets/lib/class-featured-product.php:43
+msgid "Featured registry (latest flagged product)"
+msgstr "推荐注册（最新标记的产品）"
+
+#: inc/widgets/lib/class-featured-product.php:44
+msgid "Manual pick — specific product"
+msgstr "手动选择 — 特定产品"
+
+#: inc/widgets/lib/class-featured-product.php:45
+msgid "Custom (title + image + CTA only)"
+msgstr "自定义（仅标题 + 图片 + CTA）"
+
+#: inc/widgets/lib/class-featured-product.php:50
+msgid "Pick product"
+msgstr "选择产品"
+
+#: inc/widgets/lib/class-featured-product.php:66
+msgid "Custom content"
+msgstr "自定义内容"
+
+#: inc/widgets/lib/class-featured-product.php:70
+#: inc/widgets/lib/class-hero-split.php:109
+#: inc/widgets/lib/class-post-featured-image.php:31
+#: inc/widgets/lib/class-story-split.php:56
+msgid "Image"
+msgstr "图片"
+
+#: inc/widgets/lib/class-featured-product.php:72
+msgid "Short description"
+msgstr "简短描述"
+
+#: inc/widgets/lib/class-featured-product.php:73
+msgid "Price (display string)"
+msgstr "价格（显示字符串）"
+
+#: inc/widgets/lib/class-featured-product.php:74
+msgid "Product URL"
+msgstr "产品URL"
+
+#: inc/widgets/lib/class-featured-product.php:78
+msgid "CTA"
+msgstr "CTA"
+
+#: inc/widgets/lib/class-featured-product.php:82
+msgid "View product →"
+msgstr "查看产品 →"
+
+#: inc/widgets/lib/class-featured-product.php:103
+msgid "WooCommerce inactive"
+msgstr "WooCommerce未激活"
+
+#: inc/widgets/lib/class-featured-product.php:104
+msgid "— pick a product —"
+msgstr "— 选择一个产品 —"
+
+#: inc/widgets/lib/class-featured-strip.php:22
+msgid "Featured Strip"
+msgstr "推荐条"
+
+#: inc/widgets/lib/class-featured-strip.php:33
+msgid "Max items"
+msgstr "最大项目"
+
+#: inc/widgets/lib/class-featured-strip.php:41
+msgid "Fallback when registry is empty"
+msgstr "注册为空时的后备方案"
+
+#: inc/widgets/lib/class-featured-strip.php:42
+msgid "What to show when no products are flipped to featured. Falls back automatically — the operator does not see the strip disappear during onboarding."
+msgstr "当没有产品被标记为推荐时显示什么。会自动回退 — 操作员在入职期间不会看到推荐条消失。"
+
+#: inc/widgets/lib/class-featured-strip.php:46
+msgid "Best-selling products"
+msgstr "畅销产品"
+
+#: inc/widgets/lib/class-featured-strip.php:47
+msgid "On-sale products"
+msgstr "特价产品"
+
+#: inc/widgets/lib/class-featured-strip.php:48
+msgid "Recently added"
+msgstr "最近添加的"
+
+#: inc/widgets/lib/class-featured-strip.php:49
+msgid "Hide the strip"
+msgstr "隐藏条幅"
+
+#: inc/widgets/lib/class-featured-strip.php:54
+msgid "Show operator note chips"
+msgstr "显示操作员备注标签"
+
+#: inc/widgets/lib/class-featured-strip.php:55
+msgid "Renders the operator note from the meta box (\"Boxing Week pick\", \"New arrival\") as a small chip on each card."
+msgstr "将元框中的操作员备注（\"节日精选\"，\"新到商品\"）渲染为每张卡片上的小标签."
+
+#: inc/widgets/lib/class-featured-strip.php:63
+#: inc/widgets/lib/class-product-grid.php:42
+msgid "Heading (optional)"
+msgstr "标题（可选）"
+
+#: inc/widgets/lib/class-featured-strip.php:64
+msgid "Hand-picked"
+msgstr "精挑细选"
+
+#: inc/widgets/lib/class-featured-strip.php:65
+msgid "Featured products."
+msgstr "特色产品."
+
+#: inc/widgets/lib/class-footer-bottom.php:19
+msgid "Footer Bottom"
+msgstr "底部"
+
+#: inc/widgets/lib/class-footer-bottom.php:27
+msgid "Copyright + Legal"
+msgstr "版权 + 法律"
+
+#: inc/widgets/lib/class-footer-bottom.php:32
+msgid "Copyright line"
+msgstr "版权声明"
+
+#: inc/widgets/lib/class-footer-bottom.php:33
+msgid "Use %YEAR% to insert the current year automatically."
+msgstr "使用 %YEAR% 自动插入当前年份."
+
+#: inc/widgets/lib/class-footer-bottom.php:40
+#: inc/widgets/lib/class-footer-column.php:39
+#: inc/widgets/lib/class-hero-split.php:89 inc/widgets/lib/class-hero.php:144
+#: inc/widgets/lib/class-load-more.php:48
+#: inc/widgets/lib/class-section-head.php:86
+#: inc/widgets/lib/class-shop-filters.php:83
+#: inc/widgets/lib/class-spec-list.php:45
+#: inc/widgets/lib/class-stat-counter.php:34
+#: inc/widgets/lib/class-topbar.php:105
+msgid "Label"
+msgstr "标签"
+
+#: inc/widgets/lib/class-footer-bottom.php:46
+msgid "Legal links"
+msgstr "法律链接"
+
+#: inc/widgets/lib/class-footer-bottom.php:51
+msgid "Privacy"
+msgstr "隐私"
+
+#: inc/widgets/lib/class-footer-bottom.php:52
+msgid "Terms"
+msgstr "条款"
+
+#: inc/widgets/lib/class-footer-bottom.php:53
+msgid "Cookies"
+msgstr "Cookies"
+
+#: inc/widgets/lib/class-footer-bottom.php:61
+msgid "Payment methods"
+msgstr "支付方式"
+
+#: inc/widgets/lib/class-footer-bottom.php:66
+msgid "Payment label"
+msgstr "支付标签"
+
+#: inc/widgets/lib/class-footer-bottom.php:68
+msgid "Secure payments"
+msgstr "安全支付"
+
+#: inc/widgets/lib/class-footer-bottom.php:73
+msgid "Method"
+msgstr "方式"
+
+#: inc/widgets/lib/class-footer-bottom.php:78
+msgid "Methods"
+msgstr "方式"
+
+#: inc/widgets/lib/class-footer-bottom.php:102
+#: inc/widgets/lib/class-footer-brand.php:155
+#: inc/widgets/lib/class-load-more.php:81 inc/widgets/lib/class-logo.php:88
+#: inc/widgets/lib/class-post-content.php:67
+#: inc/widgets/lib/class-shop-toolbar.php:55
+#: inc/widgets/lib/class-topbar.php:132
+#: inc/widgets/lib/class-wc-add-to-cart.php:73
+#: inc/widgets/lib/class-wc-tabs.php:76
+msgid "Text color"
+msgstr "文本颜色"
+
+#: inc/widgets/lib/class-footer-bottom.php:111
+#: inc/widgets/lib/class-footer-column.php:94
+msgid "Link hover color"
+msgstr "链接悬停颜色"
+
+#: inc/widgets/lib/class-footer-bottom.php:120
+msgid "Pay badge bg"
+msgstr "支付徽章背景"
+
+#: inc/widgets/lib/class-footer-bottom.php:129
+msgid "Pay badge border"
+msgstr "支付徽章边框"
+
+#: inc/widgets/lib/class-footer-brand.php:19
+msgid "Footer Brand"
+msgstr "页脚品牌"
+
+#: inc/widgets/lib/class-footer-brand.php:27 inc/widgets/lib/class-logo.php:19
+#: inc/widgets/lib/class-logo.php:27
+msgid "Logo"
+msgstr " logo"
+
+#: inc/widgets/lib/class-footer-brand.php:32
+msgid "Logo image (optional)"
+msgstr "logo 图片（可选）"
+
+#: inc/widgets/lib/class-footer-brand.php:33
+msgid "If set, replaces the text logo."
+msgstr "如果设置，将替换文本logo。"
+
+#: inc/widgets/lib/class-footer-brand.php:41
+msgid "Logo text"
+msgstr "logo 文本"
+
+#: inc/widgets/lib/class-footer-brand.php:49
+msgid "Accent character position (0-indexed)"
+msgstr "强调字符位置（0 索引）"
+
+#: inc/widgets/lib/class-footer-brand.php:50
+msgid "Which character to italicise + accent-tint. -1 = none."
+msgstr "要斜体和强调的字符。-1 = 无。"
+
+#: inc/widgets/lib/class-footer-brand.php:59
+msgid "Logo link"
+msgstr "logo 链接"
+
+#: inc/widgets/lib/class-footer-brand.php:68
+msgid "Tagline"
+msgstr "标语"
+
+#: inc/widgets/lib/class-footer-brand.php:72
+msgid "Tagline / description"
+msgstr "标语 / 描述"
+
+#: inc/widgets/lib/class-footer-brand.php:75
+msgid "A short brand line that explains what your store does and where you ship from."
+msgstr "一个简短的品牌说明，解释你的商店做什么以及从哪里发货。"
+
+#: inc/widgets/lib/class-footer-brand.php:82
+#: inc/widgets/lib/class-perks-list.php:45 page-contact.php:85
+#: template-parts/onyx-contact.php:48
+msgid "Phone"
+msgstr "电话"
+
+#: inc/widgets/lib/class-footer-brand.php:84
+msgid "Address line"
+msgstr "地址行"
+
+#: inc/widgets/lib/class-footer-brand.php:88
+msgid "Social icons"
+msgstr "社交图标"
+
+#: inc/widgets/lib/class-footer-brand.php:94
+msgid "Network"
+msgstr "网络"
+
+#: inc/widgets/lib/class-footer-brand.php:117
+msgid "Social links"
+msgstr "社交链接"
+
+#: inc/widgets/lib/class-footer-brand.php:137
+msgid "Logo color"
+msgstr "logo 颜色"
+
+#: inc/widgets/lib/class-footer-brand.php:146 inc/widgets/lib/class-logo.php:97
+msgid "Accent color"
+msgstr "强调颜色"
+
+#: inc/widgets/lib/class-footer-column.php:19
+msgid "Footer Column"
+msgstr "页脚栏目"
+
+#: inc/widgets/lib/class-footer-column.php:27
+msgid "Column"
+msgstr "栏目"
+
+#: inc/widgets/lib/class-footer-column.php:44
+msgid "Highlight (sale / promo)"
+msgstr "突出显示（促销 / 活动）"
+
+#: inc/widgets/lib/class-footer-column.php:54
+msgid "Links"
+msgstr "链接"
+
+#: inc/widgets/lib/class-footer-column.php:59
+msgid "Link 1"
+msgstr "链接 1"
+
+#: inc/widgets/lib/class-footer-column.php:60
+msgid "Link 2"
+msgstr "链接 2"
+
+#: inc/widgets/lib/class-footer-column.php:61
+msgid "Link 3"
+msgstr "链接 3"
+
+#: inc/widgets/lib/class-footer-column.php:85
+#: inc/widgets/lib/class-megabar.php:97
+#: inc/widgets/lib/class-post-content.php:74
+msgid "Link color"
+msgstr "链接颜色"
+
+#: inc/widgets/lib/class-footer-column.php:103
+msgid "Hot link color"
+msgstr "热点链接颜色"
+
+#: inc/widgets/lib/class-header-actions.php:19
+msgid "Header Actions"
+msgstr "标题操作"
+
+#: inc/widgets/lib/class-header-actions.php:27
+msgid "Actions"
+msgstr "操作"
+
+#: inc/widgets/lib/class-header-actions.php:29
+msgid "Show search"
+msgstr "显示搜索"
+
+#: inc/widgets/lib/class-header-actions.php:31
+msgid "Show account"
+msgstr "显示账户"
+
+#: inc/widgets/lib/class-header-actions.php:35
+msgid "Account URL"
+msgstr "账户 URL"
+
+#: inc/widgets/lib/class-header-actions.php:42
+msgid "Show cart"
+msgstr "显示购物车"
+
+#: inc/widgets/lib/class-header-actions.php:46
+msgid "Cart URL"
+msgstr "购物车 URL"
+
+#: inc/widgets/lib/class-header-actions.php:56
+msgid "CTA label (optional)"
+msgstr "CTA 标签（可选）"
+
+#: inc/widgets/lib/class-header-actions.php:57
+msgid "Empty = no CTA button."
+msgstr "为空 = 没有 CTA 按钮。"
+
+#: inc/widgets/lib/class-header-actions.php:65
+#: inc/widgets/lib/class-instagram-channel.php:74
+#: inc/widgets/lib/class-section-head.php:72
+#: inc/widgets/lib/class-story-split.php:142
+#: inc/widgets/lib/class-youtube-channel.php:73
+msgid "CTA URL"
+msgstr "CTA URL"
+
+#: inc/widgets/lib/class-header-actions.php:71
+msgid "Show mobile burger"
+msgstr "显示手机汉堡菜单"
+
+#: inc/widgets/lib/class-header-actions.php:82
+#: inc/widgets/lib/class-perks-list.php:74
+#: inc/widgets/lib/class-trust-badges.php:69
+msgid "Icon color"
+msgstr "图标颜色"
+
+#: inc/widgets/lib/class-header-actions.php:87
+msgid "Icon border"
+msgstr "图标边框"
+
+#: inc/widgets/lib/class-header-actions.php:92
+msgid "Hover accent"
+msgstr "悬停强调色"
+
+#: inc/widgets/lib/class-header-actions.php:97
+msgid "CTA background"
+msgstr "CTA 背景"
+
+#: inc/widgets/lib/class-header-actions.php:102
+msgid "CTA text color"
+msgstr "CTA 文字颜色"
+
+#: inc/widgets/lib/class-header-actions.php:107
+msgid "Cart badge bg"
+msgstr "购物车徽章背景"
+
+#: inc/widgets/lib/class-header-actions.php:157
+msgid "Account"
+msgstr "账户"
+
+#: inc/widgets/lib/class-header-actions.php:162
+msgid "Cart"
+msgstr "购物车"
+
+#: inc/widgets/lib/class-hero-split.php:31
+msgid "Hero Split"
+msgstr "英雄分割"
+
+#: inc/widgets/lib/class-hero-split.php:40
+msgid "Copy (left column)"
+msgstr "复制（左列）"
+
+#: inc/widgets/lib/class-hero-split.php:45
+msgid "Welcome"
+msgstr "欢迎"
+
+#: inc/widgets/lib/class-hero-split.php:48
+msgid "Heading (H1)"
+msgstr "标题（H1）"
+
+#: inc/widgets/lib/class-hero-split.php:52
+msgid ""
+"Your headline goes here\n"
+"in [em]two lines[/em]."
+msgstr ""
+"您的标题在这里\n"
+"以[em]两行[/em]显示。"
+
+#: inc/widgets/lib/class-hero-split.php:55 inc/widgets/lib/class-hero.php:71
+#: inc/widgets/lib/class-story-split.php:127
+msgid "Lead paragraph"
+msgstr "引导段落"
+
+#: inc/widgets/lib/class-hero-split.php:64
+msgid "Shop now →"
+msgstr "立即购买 →"
+
+#: inc/widgets/lib/class-hero-split.php:74
+msgid "Learn more →"
+msgstr "了解更多 →"
+
+#: inc/widgets/lib/class-hero-split.php:85
+msgid "Stats row"
+msgstr "统计行"
+
+#: inc/widgets/lib/class-hero-split.php:88
+#: inc/widgets/lib/class-stat-counter.php:31
+msgid "Number"
+msgstr "数字"
+
+#: inc/widgets/lib/class-hero-split.php:92 inc/widgets/lib/class-hero.php:125
+#: inc/widgets/lib/class-stat-counter.php:28
+msgid "Stats"
+msgstr "统计数据"
+
+#: inc/widgets/lib/class-hero-split.php:106
+msgid "Image (right column)"
+msgstr "图像（右侧）"
+
+#: inc/widgets/lib/class-hero-split.php:125
+msgid "Live status pill text"
+msgstr "实时状态标签文本"
+
+#: inc/widgets/lib/class-hero-split.php:126
+msgid "Small pulsing-dot pill above the image. Leave empty to hide."
+msgstr "图像上方的小脉动点标签。留空以隐藏。"
+
+#: inc/widgets/lib/class-hero-split.php:132
+msgid "Featured tag — eyebrow"
+msgstr "特色标签 — 眉毛"
+
+#: inc/widgets/lib/class-hero-split.php:137
+msgid "Featured tag — title"
+msgstr "特色标签 — 标题"
+
+#: inc/widgets/lib/class-hero-split.php:145
+msgid "Master quote card"
+msgstr "主引用卡片"
+
+#: inc/widgets/lib/class-hero-split.php:148
+msgid "Avatar image (optional)"
+msgstr "头像图像（可选）"
+
+#: inc/widgets/lib/class-hero-split.php:153
+msgid "Avatar initial (fallback)"
+msgstr "头像首字母（备用）"
+
+#: inc/widgets/lib/class-hero-split.php:158
+#: inc/widgets/lib/class-master-profile.php:48
+msgid "Name"
+msgstr "姓名"
+
+#: inc/widgets/lib/class-hero-split.php:163
+msgid "Role"
+msgstr "角色"
+
+#: inc/widgets/lib/class-hero-split.php:168
+#: inc/widgets/lib/class-pullquote.php:27
+#: inc/widgets/lib/class-testimonials.php:33
+msgid "Quote"
+msgstr "引用"
+
+#: inc/widgets/lib/class-hero.php:25
+msgid "Hero"
+msgstr "英雄"
+
+#: inc/widgets/lib/class-hero.php:32 inc/widgets/lib/class-kg-stats.php:32
+#: inc/widgets/lib/class-kg-trending.php:32
+#: inc/widgets/lib/class-master-profile.php:98
+#: inc/widgets/lib/class-product-grid.php:113
+#: inc/widgets/lib/class-story-split.php:33
+#: inc/widgets/lib/class-testimonials.php:59
+#: inc/widgets/lib/class-wc-tabs.php:32
+msgid "Layout"
+msgstr "布局"
+
+#: inc/widgets/lib/class-hero.php:40
+msgid "Split (text + visual side-by-side)"
+msgstr "分割（文本 + 视觉并排）"
+
+#: inc/widgets/lib/class-hero.php:41
+msgid "Centered (headline above image)"
+msgstr "居中（标题在图像上方）"
+
+#: inc/widgets/lib/class-hero.php:42
+msgid "Full-bleed (image cover + text overlay)"
+msgstr "全幅（图像覆盖 + 文本叠加）"
+
+#: inc/widgets/lib/class-hero.php:49
+#: inc/widgets/lib/class-master-profile.php:27
+#: inc/widgets/lib/class-post-content.php:34
+msgid "Content"
+msgstr "内容"
+
+#: inc/widgets/lib/class-hero.php:55
+msgid "Welcome · Worldwide shipping"
+msgstr "欢迎 · 全球配送"
+
+#: inc/widgets/lib/class-hero.php:61
+msgid "Headline (HTML allowed)"
+msgstr "标题（允许HTML）"
+
+#: inc/widgets/lib/class-hero.php:64
+msgid "Your headline<br>in <em>two lines</em> with a <span class=\"underline\">highlighted phrase</span>."
+msgstr "您的标题<br>在<em>两行</em>中，带有一个<span class=\"underline\">突出短语</span>。"
+
+#: inc/widgets/lib/class-hero.php:65
+msgid "Use <em>…</em> for italic emphasis (gold) and <span class=\"underline\">…</span> for the underline accent."
+msgstr "使用<em>…</em>来进行斜体强调（金色），使用<span class=\"underline\">…</span>来进行下划线强调。"
+
+#: inc/widgets/lib/class-hero.php:74
+msgid "A short paragraph explaining who you are and what you make. Replace this copy from the widget editor."
+msgstr "一段简短的描述，说明您是谁以及您制作的内容。从小部件编辑器替换此内容。"
+
+#: inc/widgets/lib/class-hero.php:83
+msgid "Explore the collection"
+msgstr "探索收藏"
+
+#: inc/widgets/lib/class-hero.php:100
+msgid "Learn more"
+msgstr "了解更多"
+
+#: inc/widgets/lib/class-hero.php:115
+msgid "Visual"
+msgstr "视觉"
+
+#: inc/widgets/lib/class-hero.php:118
+msgid "Used in split + centered + full-bleed variants. Falls back to a gradient."
+msgstr "用于分屏 + 居中 + 全幅变体。回退为渐变。"
+
+#: inc/widgets/lib/class-hero.php:131
+msgid "Show stats row"
+msgstr "显示统计行"
+
+#: inc/widgets/lib/class-hero.php:140 inc/widgets/lib/class-spec-list.php:46
+msgid "Value"
+msgstr "值"
+
+#: inc/widgets/lib/class-hero.php:149
+msgid "Stat cards"
+msgstr "统计卡片"
+
+#: inc/widgets/lib/class-hero.php:154
+msgid "Instruments"
+msgstr "工具"
+
+#: inc/widgets/lib/class-hero.php:155
+msgid "Master makers"
+msgstr "大师制造商"
+
+#: inc/widgets/lib/class-hero.php:156 inc/widgets/lib/class-stat-counter.php:45
+msgid "Countries shipped"
+msgstr "发货国家"
+
+#: inc/widgets/lib/class-hero.php:165
+msgid "Master overlay"
+msgstr "大师叠加"
+
+#: inc/widgets/lib/class-hero.php:171
+msgid "Master avatar"
+msgstr "大师头像"
+
+#: inc/widgets/lib/class-hero.php:174
+msgid "Square portrait — anything from 96×96 up. Empty to disable the overlay."
+msgstr "正方形肖像 — 任何从96×96及以上的尺寸。留空以禁用叠加。"
+
+#: inc/widgets/lib/class-hero.php:180
+msgid "Master name"
+msgstr "大师名字"
+
+#: inc/widgets/lib/class-hero.php:182
+msgid "Yıldırım Palabıyık"
+msgstr "Yıldırım Palabıyık"
+
+#: inc/widgets/lib/class-hero.php:188
+msgid "Master role"
+msgstr "大师角色"
+
+#: inc/widgets/lib/class-hero.php:190
+msgid "Role · Location"
+msgstr "角色 · 地点"
+
+#: inc/widgets/lib/class-hero.php:203
+msgid "Image overlay (full-bleed only)"
+msgstr "图片叠加（仅全幅）"
+
+#: inc/widgets/lib/class-info-bar.php:19
+msgid "Info Bar"
+msgstr "信息栏"
+
+#: inc/widgets/lib/class-info-bar.php:32
+msgid "Icon"
+msgstr "图标"
+
+#: inc/widgets/lib/class-info-bar.php:42 inc/widgets/lib/class-info-bar.php:62
+msgid "Free shipping"
+msgstr "免费送货"
+
+#: inc/widgets/lib/class-info-bar.php:48
+#: inc/widgets/lib/class-wc-short-description.php:28
+msgid "Description"
+msgstr "描述"
+
+#: inc/widgets/lib/class-info-bar.php:50 inc/widgets/lib/class-info-bar.php:62
+msgid "Worldwide · DHL Express"
+msgstr "全球 · DHL快递"
+
+#: inc/widgets/lib/class-info-bar.php:63
+msgid "15-day warranty"
+msgstr "15天保修"
+
+#: inc/widgets/lib/class-info-bar.php:63
+msgid "Easy returns, no questions"
+msgstr "轻松退货，无需问询"
+
+#: inc/widgets/lib/class-info-bar.php:64
+#: inc/widgets/lib/class-perks-list.php:60
+msgid "Hand-tuned"
+msgstr "手动调音"
+
+#: inc/widgets/lib/class-info-bar.php:64
+msgid "Before every shipment"
+msgstr "在每次发货前"
+
+#: inc/widgets/lib/class-info-bar.php:65
+msgid "100% secure"
+msgstr "100%安全"
+
+#: inc/widgets/lib/class-info-bar.php:65
+msgid "Trusted checkout"
+msgstr "可信的结账"
+
+#: inc/widgets/lib/class-info-bar.php:80
+msgid "Bar background"
+msgstr "条形背景"
+
+#: inc/widgets/lib/class-info-bar.php:89
+msgid "Icon circle background"
+msgstr "图标圆形背景"
+
+#: inc/widgets/lib/class-info-bar.php:90
+msgid "Pick a flat color. Leave empty to keep the theme default (gradient gold)."
+msgstr "选择一个平面颜色。留空以保持主题默认（渐变金色）。"
+
+#: inc/widgets/lib/class-info-bar.php:108
+msgid "Description color"
+msgstr "描述颜色"
+
+#: inc/widgets/lib/class-instagram-channel.php:33
+msgid "Instagram Channel"
+msgstr "Instagram频道"
+
+#: inc/widgets/lib/class-instagram-channel.php:49
+msgid "Follow us"
+msgstr "关注我们"
+
+#: inc/widgets/lib/class-instagram-channel.php:56
+msgid "Use Enter for a 2-line title."
+msgstr "使用回车键输入2行标题。"
+
+#: inc/widgets/lib/class-instagram-channel.php:59
+msgid ""
+"Latest posts\n"
+"on Instagram."
+msgstr ""
+"最新帖子\n"
+"在Instagram上。"
+
+#: inc/widgets/lib/class-instagram-channel.php:68
+msgid "Instagram profile →"
+msgstr "Instagram个人资料 →"
+
+#: inc/widgets/lib/class-instagram-channel.php:75
+msgid "Leave empty to pull the profile URL from Customize → LuwiPress Onyx → Footer → Instagram URL (or LuwiPress admin → Theme → Settings → Social)."
+msgstr "留空以从自定义 → LuwiPress Onyx → 页脚 → Instagram URL（或LuwiPress管理 → 主题 → 设置 → 社交）中提取个人资料URL。"
+
+#: inc/widgets/lib/class-instagram-channel.php:85
+msgid "Show Follow button"
+msgstr "显示关注按钮"
+
+#: inc/widgets/lib/class-instagram-channel.php:86
+msgid "Only renders if a profile URL is set (here or in Customize → Footer → Instagram URL)."
+msgstr "仅在设置了个人资料URL（在此或自定义 → 页脚 → Instagram URL）时呈现。"
+
+#: inc/widgets/lib/class-instagram-channel.php:88
+#: inc/widgets/lib/class-section-head.php:97
+#: inc/widgets/lib/class-youtube-channel.php:87
+msgid "Yes"
+msgstr "是"
+
+#: inc/widgets/lib/class-instagram-channel.php:89
+#: inc/widgets/lib/class-section-head.php:98
+#: inc/widgets/lib/class-youtube-channel.php:88
+msgid "No"
+msgstr "否"
+
+#: inc/widgets/lib/class-instagram-channel.php:97
+msgid "Follow label"
+msgstr "关注标签"
+
+#: inc/widgets/lib/class-instagram-channel.php:99
+#: inc/widgets/lib/class-instagram-channel.php:264
+msgid "Follow"
+msgstr "关注"
+
+#: inc/widgets/lib/class-instagram-channel.php:107
+#: inc/widgets/lib/class-instagram-channel.php:164
+msgid "Posts"
+msgstr "帖子"
+
+#: inc/widgets/lib/class-instagram-channel.php:113
+msgid "Thumbnail (square)"
+msgstr "缩略图（正方形）"
+
+#: inc/widgets/lib/class-instagram-channel.php:114
+msgid "Upload a square crop (recommended 600×600 or 1080×1080). Falls back to a solid tile if blank."
+msgstr "上传正方形裁剪（建议 600×600 或 1080×1080）。如果为空，则回退为实心图块。"
+
+#: inc/widgets/lib/class-instagram-channel.php:122
+msgid "Instagram post URL"
+msgstr "Instagram 帖子 URL"
+
+#: inc/widgets/lib/class-instagram-channel.php:123
+msgid "Full post URL, e.g. https://www.instagram.com/p/AbC123XyZ/"
+msgstr "完整帖子 URL，例如 https://www.instagram.com/p/AbC123XyZ/"
+
+#: inc/widgets/lib/class-instagram-channel.php:132
+#: inc/widgets/lib/class-post-featured-image.php:58
+msgid "Caption"
+msgstr "标题"
+
+#: inc/widgets/lib/class-instagram-channel.php:133
+msgid "Short overlay text shown on hover."
+msgstr "在悬停时显示的短叠加文本。"
+
+#: inc/widgets/lib/class-instagram-channel.php:141
+msgid "Meta line"
+msgstr "元行"
+
+#: inc/widgets/lib/class-instagram-channel.php:142
+msgid "Optional small badge (e.g. \"Reel · 12k likes\" or \"📷 Photo\")."
+msgstr "可选的小徽章（例如 \"Reel · 12k likes\" 或 \"📷 Photo\"）。"
+
+#: inc/widgets/lib/class-instagram-channel.php:150
+msgid "Post type icon"
+msgstr "帖子类型图标"
+
+#: inc/widgets/lib/class-instagram-channel.php:154
+#: inc/widgets/lib/class-instagram-channel.php:169
+#: inc/widgets/lib/class-instagram-channel.php:172
+msgid "Photo"
+msgstr "照片"
+
+#: inc/widgets/lib/class-instagram-channel.php:155
+#: inc/widgets/lib/class-instagram-channel.php:170
+msgid "Reel"
+msgstr "短视频"
+
+#: inc/widgets/lib/class-instagram-channel.php:156
+#: inc/widgets/lib/class-instagram-channel.php:171
+msgid "Carousel"
+msgstr "轮播"
+
+#: inc/widgets/lib/class-instagram-channel.php:180
+#: inc/widgets/lib/class-stat-counter.php:52
+#: inc/widgets/lib/class-youtube-channel.php:178
+msgid "Columns (desktop)"
+msgstr "列（桌面）"
+
+#: inc/widgets/lib/class-instagram-channel.php:289
+#, php-format
+msgid "Follow %s on Instagram"
+msgstr "在 Instagram 上关注 %s"
+
+#: inc/widgets/lib/class-instagram-channel.php:317
+msgid "No Instagram posts configured yet."
+msgstr "尚未配置 Instagram 帖子。"
+
+#: inc/widgets/lib/class-instagram-channel.php:318
+msgid "Open this widget and upload a square thumbnail + paste the Instagram post URL for each Posts row. This notice is only visible to logged-in editors."
+msgstr "打开此小部件并上传正方形缩略图 + 粘贴每个帖子行的 Instagram 帖子 URL。此通知仅对已登录的编辑可见。"
+
+#: inc/widgets/lib/class-instagram-channel.php:329
+#, php-format
+msgid "Open Instagram post — %s"
+msgstr "打开 Instagram 帖子 — %s"
+
+#: inc/widgets/lib/class-instagram-channel.php:329
+msgid "Open Instagram post"
+msgstr "打开 Instagram 帖子"
+
+#: inc/widgets/lib/class-kg-stats.php:24
+msgid "Knowledge Graph · Stats"
+msgstr "知识图谱 · 统计"
+
+#: inc/widgets/lib/class-kg-stats.php:34
+msgid "Store at a glance"
+msgstr "商店一览"
+
+#: inc/widgets/lib/class-kg-stats.php:35
+msgid "Live store stats."
+msgstr "实时商店统计。"
+
+#: inc/widgets/lib/class-kg-stats.php:37
+msgid "Show Products counter"
+msgstr "显示产品计数器"
+
+#: inc/widgets/lib/class-kg-stats.php:38
+msgid "Show Categories counter"
+msgstr "显示类别计数器"
+
+#: inc/widgets/lib/class-kg-stats.php:39
+msgid "Show Authors/Team counter"
+msgstr "显示作者/团队计数器"
+
+#: inc/widgets/lib/class-kg-stats.php:40
+msgid "Show Countries-shipped counter"
+msgstr "显示已发货国家计数器"
+
+#: inc/widgets/lib/class-kg-stats.php:42
+msgid "Products label"
+msgstr "产品标签"
+
+#: inc/widgets/lib/class-kg-stats.php:42
+#: inc/widgets/lib/class-stat-counter.php:34
+msgid "Products in catalogue"
+msgstr "目录中的产品"
+
+#: inc/widgets/lib/class-kg-stats.php:43 inc/widgets/lib/class-wc-meta.php:45
+msgid "Categories label"
+msgstr "类别标签"
+
+#: inc/widgets/lib/class-kg-stats.php:43
+#: inc/widgets/lib/class-search-overlay.php:77
+#: inc/widgets/lib/class-wc-meta.php:46 inc/widgets/lib/class-wc-meta.php:101
+msgid "Categories"
+msgstr "类别"
+
+#: inc/widgets/lib/class-kg-stats.php:44
+msgid "Authors label"
+msgstr "作者标签"
+
+#: inc/widgets/lib/class-kg-stats.php:44
+#: inc/widgets/lib/class-stat-counter.php:46
+msgid "Team members"
+msgstr "团队成员"
+
+#: inc/widgets/lib/class-kg-stats.php:45
+msgid "Countries label"
+msgstr "国家标签"
+
+#: inc/widgets/lib/class-kg-stats.php:45
+msgid "Countries shipped to"
+msgstr "发货国家"
+
+#: inc/widgets/lib/class-kg-stats.php:99
+msgid "Install LuwiPress to enable live store stats"
+msgstr "安装 LuwiPress 以启用实时商店统计"
+
+#: inc/widgets/lib/class-kg-stats.php:101
+#: inc/widgets/lib/class-kg-trending.php:154
+msgid "— LuwiPress required"
+msgstr "— 需要 LuwiPress"
+
+#: inc/widgets/lib/class-kg-stats.php:103
+msgid "Unlock live Knowledge Graph data."
+msgstr "解锁实时知识图谱数据。"
+
+#: inc/widgets/lib/class-kg-stats.php:106
+msgid "Install the free LuwiPress plugin to surface live product counts, category coverage, master roster and countries-shipped on this widget — pulled directly from your store data."
+msgstr "安装免费的 LuwiPress 插件，以在此小部件中显示实时产品数量、类别覆盖、主清单和发货国家 — 直接从您的商店数据中提取。"
+
+#: inc/widgets/lib/class-kg-stats.php:109
+#: inc/widgets/lib/class-kg-trending.php:162
+msgid "Install LuwiPress (free) →"
+msgstr "安装 LuwiPress（免费） →"
+
+#: inc/widgets/lib/class-kg-stats.php:144
+msgid "Powered by LuwiPress Knowledge Graph"
+msgstr "由 LuwiPress 知识图谱提供支持"
+
+#: inc/widgets/lib/class-kg-stats.php:145
+#: inc/widgets/lib/class-kg-trending.php:189
+msgid "Live · LuwiPress KG"
+msgstr "实时 · LuwiPress KG"
+
+#: inc/widgets/lib/class-kg-trending.php:24
+msgid "Knowledge Graph · Trending"
+msgstr "知识图谱 · 热门"
+
+#: inc/widgets/lib/class-kg-trending.php:35
+#: inc/widgets/lib/class-search-overlay.php:76
+msgid "Trending"
+msgstr "热门"
+
+#: inc/widgets/lib/class-kg-trending.php:39
+msgid "Product categories"
+msgstr "产品类别"
+
+#: inc/widgets/lib/class-kg-trending.php:40
+#: inc/widgets/lib/class-stat-counter.php:44
+msgid "Products"
+msgstr "产品"
+
+#: inc/widgets/lib/class-kg-trending.php:44
+#: inc/widgets/lib/class-megabar.php:44
+msgid "How many"
+msgstr "多少"
+
+#: inc/widgets/lib/class-kg-trending.php:51
+msgid "Show KG score"
+msgstr "显示 KG 评分"
+
+#: inc/widgets/lib/class-kg-trending.php:52
+msgid "Small pill on each card showing the KG ranking score. Useful in editorial contexts to signal \"data-driven\"."
+msgstr "每张卡片上的小圆点显示 KG 排名分数。在编辑上下文中有用，以表示 \"数据驱动\"。"
+
+#: inc/widgets/lib/class-kg-trending.php:58
+msgid "Picking up momentum"
+msgstr "正在获得动力"
+
+#: inc/widgets/lib/class-kg-trending.php:59
+msgid "Trending right now."
+msgstr "当前热门。"
+
+#: inc/widgets/lib/class-kg-trending.php:156
+msgid "See what is trending — powered by the Knowledge Graph."
+msgstr "查看当前热门内容 — 由知识图谱提供支持。"
+
+#: inc/widgets/lib/class-kg-trending.php:159
+msgid "LuwiPress reads your store + reviews + traffic signals and ranks categories and products on a live KG score. Install the free plugin to surface it on this widget."
+msgstr "LuwiPress 读取您的商店 + 评论 + 流量信号，并根据实时 KG 分数对类别和产品进行排名。安装免费的插件以在此小部件上显示它。"
+
+#: inc/widgets/lib/class-kg-trending.php:208
+#, php-format
+msgid "%d product"
+msgid_plural "%d products"
+msgstr[0] "%d 产品"
+
+#: inc/widgets/lib/class-kg-trending.php:209
+#, php-format
+msgid "%d sale"
+msgid_plural "%d sales"
+msgstr[0] "%d 销售"
+
+#: inc/widgets/lib/class-load-more.php:22
+msgid "Load More"
+msgstr "加载更多"
+
+#: inc/widgets/lib/class-load-more.php:31
+#: inc/widgets/lib/class-wc-add-to-cart.php:62
+msgid "Button"
+msgstr "按钮"
+
+#: inc/widgets/lib/class-load-more.php:36 inc/widgets/lib/class-megabar.php:31
+msgid "Mode"
+msgstr "模式"
+
+#: inc/widgets/lib/class-load-more.php:40
+msgid "Plain link (SEO-friendly)"
+msgstr "普通链接（SEO 友好）"
+
+#: inc/widgets/lib/class-load-more.php:41
+msgid "AJAX (in-place append)"
+msgstr "AJAX（就地添加）"
+
+#: inc/widgets/lib/class-load-more.php:49
+#, php-format
+msgid "Use %d for remaining count placeholder."
+msgstr "使用 %d 作为剩余计数占位符。"
+
+#: inc/widgets/lib/class-load-more.php:51
+#, php-format
+msgid "Load %d more posts"
+msgstr "加载 %d 更多帖子"
+
+#: inc/widgets/lib/class-load-more.php:57
+msgid "Target container (AJAX mode)"
+msgstr "目标容器（AJAX 模式）"
+
+#: inc/widgets/lib/class-load-more.php:58
+msgid "Where to append new posts. Default catches WC / WP loops."
+msgstr "新帖添加的位置。默认捕获 WC / WP 循环。"
+
+#: inc/widgets/lib/class-load-more.php:67
+msgid "Hide when no more pages"
+msgstr "没有更多页面时隐藏"
+
+#: inc/widgets/lib/class-load-more.php:83
+msgid "Hover background"
+msgstr "悬停背景"
+
+#: inc/widgets/lib/class-logo.php:32
+msgid "Image (optional)"
+msgstr "图像（可选）"
+
+#: inc/widgets/lib/class-logo.php:33
+msgid "When set, replaces the text wordmark."
+msgstr "设置后，替换文本商标。"
+
+#: inc/widgets/lib/class-logo.php:41
+msgid "Image max height"
+msgstr "图像最大高度"
+
+#: inc/widgets/lib/class-logo.php:53
+msgid "Text wordmark"
+msgstr "文本商标"
+
+#: inc/widgets/lib/class-logo.php:62
+msgid "Accent character index (0-based, -1 = none)"
+msgstr "强调字符索引（0 基础，-1 = 无）"
+
+#: inc/widgets/lib/class-logo.php:72
+msgid "Link URL"
+msgstr "链接 URL"
+
+#: inc/widgets/lib/class-logo.php:106
+msgid "Accent hover color"
+msgstr "强调悬停颜色"
+
+#: inc/widgets/lib/class-master-grid.php:27
+msgid "Master Grid"
+msgstr "主网格"
+
+#: inc/widgets/lib/class-master-grid.php:41
+msgid "Pulls live from the Vendors CPT (LuwiPress → Vendors). Add or edit profiles there; this grid updates automatically."
+msgstr "实时从供应商 CPT（LuwiPress → 供应商）提取。添加或编辑那里配置文件；此网格会自动更新。"
+
+#: inc/widgets/lib/class-master-grid.php:48
+msgid "Max profiles"
+msgstr "最大配置文件数"
+
+#: inc/widgets/lib/class-master-grid.php:61
+msgid "— All vendors —"
+msgstr "— 所有供应商 —"
+
+#: inc/widgets/lib/class-master-grid.php:78
+msgid "Vendor group"
+msgstr "供应商组"
+
+#: inc/widgets/lib/class-master-grid.php:79
+msgid "Filter to one vendor group (Luthiers, Team, etc.). Manage groups under LuwiPress → Vendors → Vendor Groups."
+msgstr "筛选到一个供应商组（如：乐器制造商、团队等）。在 LuwiPress → 供应商 → 供应商组下管理组。"
+
+#: inc/widgets/lib/class-master-grid.php:91
+msgid "Comma-separated CPT IDs to show in this order. Leave empty to auto-query (menu_order ASC)."
+msgstr "以逗号分隔的 CPT ID，按此顺序显示。留空以自动查询（menu_order ASC）。"
+
+#: inc/widgets/lib/class-master-grid.php:107
+#: inc/widgets/lib/class-taxonomy-terms.php:104
+msgid "Name (A→Z)"
+msgstr "名称（A→Z）"
+
+#: inc/widgets/lib/class-master-grid.php:155
+msgid "Show location"
+msgstr "显示位置"
+
+#: inc/widgets/lib/class-master-grid.php:160
+msgid "Show specialty"
+msgstr "显示专业"
+
+#: inc/widgets/lib/class-master-grid.php:166
+msgid "Show product count"
+msgstr "显示产品数量"
+
+#: inc/widgets/lib/class-master-grid.php:167
+msgid "Counts WC products attributed to this vendor via _lwp_vendor_ids meta."
+msgstr "计算通过 _lwp_vendor_ids 元数据归属于此供应商的 WC 产品数量。"
+
+#: inc/widgets/lib/class-master-grid.php:178
+msgid "Adds a CTA below the grid linking to the full Vendors archive (e.g. /luthiers/). Useful when the grid is capped at 4–8 and visitors need a path to the rest."
+msgstr "在网格下方添加一个 CTA，链接到完整的供应商档案（例如 /luthiers/）。当网格限制在 4-8 时非常有用，访客需要一个通往其余内容的路径。"
+
+#: inc/widgets/lib/class-master-grid.php:190
+#: inc/widgets/lib/class-master-grid.php:191
+#: inc/widgets/lib/class-master-grid.php:330
+msgid "View all vendors →"
+msgstr "查看所有供应商 →"
+
+#: inc/widgets/lib/class-master-grid.php:206
+msgid "[Master Grid] LuwiPress Vendors module is inactive — enable it in LuwiPress → Vendors."
+msgstr "[主网格] LuwiPress 供应商模块未激活 — 在 LuwiPress → 供应商中启用它。"
+
+#: inc/widgets/lib/class-master-grid.php:245
+msgid "[Master Grid] No profiles yet. Add them in LuwiPress → Vendors."
+msgstr "[主网格] 尚无资料。请在 LuwiPress → 供应商中添加。"
+
+#. translators: %d: product count
+#: inc/widgets/lib/class-master-grid.php:285
+#, php-format
+msgid "%d work"
+msgid_plural "%d works"
+msgstr[0] "%d 工作"
+
+#: inc/widgets/lib/class-master-profile.php:20
+msgid "Master Profile"
+msgstr "主资料"
+
+#: inc/widgets/lib/class-master-profile.php:32
+msgid "Portrait"
+msgstr "肖像"
+
+#: inc/widgets/lib/class-master-profile.php:40
+msgid "Fallback initial"
+msgstr "后备初始"
+
+#: inc/widgets/lib/class-master-profile.php:42
+msgid "Shown when no portrait is set. Auto-derived from name if empty."
+msgstr "当没有设置肖像时显示。如果为空，则从名称自动派生。"
+
+#: inc/widgets/lib/class-master-profile.php:50
+msgid "Profile name"
+msgstr "资料名称"
+
+#: inc/widgets/lib/class-master-profile.php:56
+#: inc/widgets/lib/class-testimonials.php:35 template-listings.php:108
+msgid "Location"
+msgstr "位置"
+
+#: inc/widgets/lib/class-master-profile.php:64
+msgid "Specialty"
+msgstr "专业"
+
+#: inc/widgets/lib/class-master-profile.php:72
+#: inc/widgets/lib/class-shop-filters.php:84
+msgid "Count"
+msgstr "计数"
+
+#: inc/widgets/lib/class-master-profile.php:81
+msgid "Show instrument count"
+msgstr "显示乐器数量"
+
+#: inc/widgets/lib/class-master-profile.php:89
+msgid "Profile URL"
+msgstr "资料 URL"
+
+#: inc/widgets/lib/class-master-profile.php:102
+msgid "Compact card (homepage grid)"
+msgstr "紧凑卡片（主页网格）"
+
+#: inc/widgets/lib/class-master-profile.php:103
+msgid "Featured profile (hero portrait + bio)"
+msgstr "特色资料（英雄肖像 + 简介）"
+
+#: inc/widgets/lib/class-master-profile.php:118
+msgid "Fallback gradient — start"
+msgstr "备用渐变 — 开始"
+
+#: inc/widgets/lib/class-master-profile.php:126
+msgid "Fallback gradient — end"
+msgstr "备用渐变 — 结束"
+
+#. translators: %s: location string like 'Istanbul · Turkey'
+#: inc/widgets/lib/class-master-profile.php:176
+#, php-format
+msgid "Master luthier · %s"
+msgstr "大师级乐器制作师 · %s"
+
+#: inc/widgets/lib/class-master-profile.php:185
+msgid "Instruments at the atelier"
+msgstr "工作室中的乐器"
+
+#. translators: %d: instrument count
+#: inc/widgets/lib/class-master-profile.php:210
+#, php-format
+msgid "%d instruments"
+msgstr "%d 件乐器"
+
+#: inc/widgets/lib/class-mega-menu.php:37
+msgid "Mega Menu"
+msgstr "大菜单"
+
+#: inc/widgets/lib/class-mega-menu.php:53
+msgid "Build the menu in Appearance → Menus, then pick it here. The widget auto-detects which top-level items deserve a mega panel."
+msgstr "在外观 → 菜单中构建菜单，然后在这里选择。该小部件会自动检测哪些顶级项需要大面板。"
+
+#: inc/widgets/lib/class-mega-menu.php:60
+msgid "Mega panel threshold"
+msgstr "大面板阈值"
+
+#: inc/widgets/lib/class-mega-menu.php:65
+msgid "A top-level item becomes a mega panel when it has at least this many children, or when any child has its own children."
+msgstr "当顶级项至少有这么多子项时，或者当任何子项有自己的子项时，该项会成为大面板。"
+
+#: inc/widgets/lib/class-mega-menu.php:72
+msgid "Mega panel columns"
+msgstr "大面板列数"
+
+#: inc/widgets/lib/class-mega-menu.php:76
+msgid "Auto (2 or 3 by item count)"
+msgstr "自动（每项 2 或 3）"
+
+#: inc/widgets/lib/class-mega-menu.php:87
+msgid "Show item counts"
+msgstr "显示项目计数"
+
+#: inc/widgets/lib/class-mega-menu.php:90
+msgid "When a menu item points at a product category, show that category's product count next to the link."
+msgstr "当菜单项指向产品类别时，在链接旁边显示该类别的产品计数。"
+
+#: inc/widgets/lib/class-mega-menu.php:97
+msgid "Mobile mode"
+msgstr "移动模式"
+
+#: inc/widgets/lib/class-mega-menu.php:101
+msgid "Off-canvas drawer (hamburger)"
+msgstr "离屏抽屉（汉堡菜单）"
+
+#: inc/widgets/lib/class-mega-menu.php:102
+msgid "In-place accordion"
+msgstr "就地手风琴"
+
+#: inc/widgets/lib/class-mega-menu.php:117
+msgid "Top item color"
+msgstr "顶部项目颜色"
+
+#: inc/widgets/lib/class-mega-menu.php:127
+msgid "Top item hover color"
+msgstr "顶部项目悬停颜色"
+
+#: inc/widgets/lib/class-mega-menu.php:137
+#: inc/widgets/lib/class-search-overlay.php:130
+msgid "Panel background"
+msgstr "面板背景"
+
+#: inc/widgets/lib/class-mega-menu.php:159
+msgid "— Pick a menu —"
+msgstr "— 选择一个菜单 —"
+
+#: inc/widgets/lib/class-mega-menu.php:181
+msgid "Pick a menu in the panel → (or set the global default in Customize → LuwiPress Onyx → Mega menu)"
+msgstr "在面板中选择一个菜单 → （或在自定义 → LuwiPress Onyx → 大菜单中设置全局默认值）"
+
+#: inc/widgets/lib/class-mega-menu.php:187
+msgid "This menu has no items yet."
+msgstr "该菜单尚无项目。"
+
+#. translators: %s: count
+#: inc/widgets/lib/class-mega-menu.php:457
+#, php-format
+msgid "%s item in this collection"
+msgid_plural "%s items in this collection"
+msgstr[0] "该集合中的 %s 项"
+
+#: inc/widgets/lib/class-mega-menu.php:519
+msgid "Read"
+msgstr "阅读"
+
+#: inc/widgets/lib/class-mega-menu.php:527
+msgid "Open →"
+msgstr "打开 →"
+
+#: inc/widgets/lib/class-megabar.php:19
+msgid "Megabar (sub-cat strip)"
+msgstr "Megabar（子类别条）"
+
+#: inc/widgets/lib/class-megabar.php:35
+msgid "Auto (top sub-categories by product count)"
+msgstr "自动（按产品数量排序的子类别）"
+
+#: inc/widgets/lib/class-megabar.php:36
+msgid "Manual (specific slugs)"
+msgstr "手动（特定slug）"
+
+#: inc/widgets/lib/class-megabar.php:56
+msgid "Slugs"
+msgstr "Slug"
+
+#: inc/widgets/lib/class-megabar.php:59
+msgid "One slug per line. Order is preserved."
+msgstr "每行一个slug。顺序保持不变。"
+
+#: inc/widgets/lib/class-megabar.php:67
+msgid "Separator"
+msgstr "分隔符"
+
+#: inc/widgets/lib/class-megabar.php:106
+msgid "Hover color"
+msgstr "悬停颜色"
+
+#: inc/widgets/lib/class-megabar.php:145
+msgid "No sub-categories yet."
+msgstr "尚未有子类别。"
+
+#: inc/widgets/lib/class-newsletter.php:23
+msgid "Newsletter Signup"
+msgstr "新闻通讯注册"
+
+#: inc/widgets/lib/class-newsletter.php:33
+msgid "Stay in the loop"
+msgstr "保持更新"
+
+#: inc/widgets/lib/class-newsletter.php:34
+msgid ""
+"New arrivals + offers,\n"
+"delivered to your inbox."
+msgstr ""
+"新到商品 + 优惠，\n"
+"发送到您的收件箱。"
+
+#: inc/widgets/lib/class-newsletter.php:35
+msgid "A short letter, once a month. No spam, no resellers."
+msgstr "每月发送一次简短信件。无垃圾邮件，无转售商。"
+
+#: inc/widgets/lib/class-newsletter.php:37
+msgid "Email placeholder"
+msgstr "电子邮件占位符"
+
+#: inc/widgets/lib/class-newsletter.php:37
+msgid "your@email.com"
+msgstr "your@email.com"
+
+#: inc/widgets/lib/class-newsletter.php:38
+msgid "Button label"
+msgstr "按钮标签"
+
+#: inc/widgets/lib/class-newsletter.php:41
+msgid "Show GDPR consent checkbox"
+msgstr "显示GDPR同意复选框"
+
+#: inc/widgets/lib/class-newsletter.php:47
+msgid "GDPR consent text"
+msgstr "GDPR同意文本"
+
+#: inc/widgets/lib/class-newsletter.php:50
+msgid "I agree to receive your newsletter. I can unsubscribe at any time."
+msgstr "我同意接收你的新闻通讯。我可以随时退订。"
+
+#: inc/widgets/lib/class-newsletter.php:55
+msgid "Success message"
+msgstr "成功消息"
+
+#: inc/widgets/lib/class-newsletter.php:58
+msgid "Thanks for subscribing. Check your inbox to confirm."
+msgstr "感谢您的订阅。请检查您的收件箱以确认。"
+
+#: inc/widgets/lib/class-newsletter.php:61
+msgid "Error message"
+msgstr "错误消息"
+
+#: inc/widgets/lib/class-newsletter.php:63
+msgid "Couldn't subscribe. Please try again."
+msgstr "无法订阅。请再试一次。"
+
+#: inc/widgets/lib/class-perks-list.php:19
+msgid "Perks List"
+msgstr "权益列表"
+
+#: inc/widgets/lib/class-perks-list.php:27
+#: inc/widgets/lib/class-perks-list.php:55
+msgid "Perks"
+msgstr "权益"
+
+#: inc/widgets/lib/class-perks-list.php:33
+msgid "Icon style"
+msgstr "图标样式"
+
+#: inc/widgets/lib/class-perks-list.php:37
+msgid "Check"
+msgstr "检查"
+
+#: inc/widgets/lib/class-perks-list.php:38
+msgid "Truck"
+msgstr "卡车"
+
+#: inc/widgets/lib/class-perks-list.php:39
+msgid "Shield"
+msgstr "护盾"
+
+#: inc/widgets/lib/class-perks-list.php:40
+msgid "Tool"
+msgstr "工具"
+
+#: inc/widgets/lib/class-perks-list.php:41
+msgid "Star"
+msgstr "星星"
+
+#: inc/widgets/lib/class-perks-list.php:42
+msgid "Heart"
+msgstr "心"
+
+#: inc/widgets/lib/class-perks-list.php:43
+msgid "Leaf"
+msgstr "叶子"
+
+#: inc/widgets/lib/class-perks-list.php:44
+msgid "Gift"
+msgstr "礼物"
+
+#: inc/widgets/lib/class-perks-list.php:49
+msgid "Bold lead"
+msgstr "粗体标题"
+
+#: inc/widgets/lib/class-perks-list.php:50
+#: inc/widgets/lib/class-post-content.php:62
+#: inc/widgets/lib/class-process-steps.php:32
+#: inc/widgets/lib/class-story-split.php:150
+#: inc/widgets/lib/class-timeline.php:65
+msgid "Body"
+msgstr "主体"
+
+#: inc/widgets/lib/class-perks-list.php:60
+msgid "in our atelier before shipping"
+msgstr "在我们工作室检查后发货"
+
+#: inc/widgets/lib/class-perks-list.php:61
+msgid "Free DHL shipping"
+msgstr "免费DHL运输"
+
+#: inc/widgets/lib/class-perks-list.php:61
+msgid "on orders over €450"
+msgstr "订单超过 €450"
+
+#: inc/widgets/lib/class-perks-list.php:62
+msgid "2-year warranty"
+msgstr "2年保修"
+
+#: inc/widgets/lib/class-perks-list.php:62
+msgid "+ lifetime tuning support"
+msgstr "+ 终身调音支持"
+
+#: inc/widgets/lib/class-perks-list.php:76
+msgid "Bold color"
+msgstr "大胆颜色"
+
+#: inc/widgets/lib/class-perks-list.php:78
+msgid "Body color"
+msgstr "主体颜色"
+
+#: inc/widgets/lib/class-post-content.php:26
+msgid "Post Content"
+msgstr "帖子内容"
+
+#: inc/widgets/lib/class-post-content.php:40
+msgid "Renders the current post body (the_content). No content controls here — edit the post itself."
+msgstr "呈现当前帖子主体（the_content）。这里没有内容控制——编辑帖子本身。"
+
+#: inc/widgets/lib/class-post-content.php:47
+#: inc/widgets/lib/class-wc-short-description.php:49
+msgid "Max width"
+msgstr "最大宽度"
+
+#: inc/widgets/lib/class-post-content.php:89
+msgid "Paragraph spacing"
+msgstr "段落间距"
+
+#: inc/widgets/lib/class-post-content.php:99
+msgid "Headings"
+msgstr "标题"
+
+#: inc/widgets/lib/class-post-content.php:128
+msgid "[Post content goes here.]"
+msgstr "[帖子内容在这里。]"
+
+#: inc/widgets/lib/class-post-featured-image.php:23
+msgid "Post Featured Image"
+msgstr "帖子特色图片"
+
+#: inc/widgets/lib/class-post-featured-image.php:44
+#: inc/widgets/lib/class-post-title.php:52
+msgid "Link"
+msgstr "链接"
+
+#: inc/widgets/lib/class-post-featured-image.php:49
+#: inc/widgets/lib/class-post-title.php:57
+msgid "Post URL"
+msgstr "帖子网址"
+
+#: inc/widgets/lib/class-post-featured-image.php:50
+msgid "Image file"
+msgstr "图片文件"
+
+#: inc/widgets/lib/class-post-featured-image.php:63
+msgid "Attachment caption"
+msgstr "附件说明"
+
+#: inc/widgets/lib/class-post-featured-image.php:77
+msgid "Width"
+msgstr "宽度"
+
+#: inc/widgets/lib/class-post-featured-image.php:89
+msgid "Max height"
+msgstr "最大高度"
+
+#: inc/widgets/lib/class-post-featured-image.php:100
+msgid "Object fit"
+msgstr "对象适应方式"
+
+#: inc/widgets/lib/class-post-featured-image.php:104
+msgid "Cover"
+msgstr "覆盖"
+
+#: inc/widgets/lib/class-post-featured-image.php:105
+msgid "Contain"
+msgstr "包含"
+
+#: inc/widgets/lib/class-post-featured-image.php:106
+msgid "Fill"
+msgstr "填充"
+
+#: inc/widgets/lib/class-post-featured-image.php:141
+msgid "[Featured image]"
+msgstr "[特色图片]"
+
+#: inc/widgets/lib/class-post-featured-image.php:147
+msgid "[No featured image]"
+msgstr "[无特色图片]"
+
+#: inc/widgets/lib/class-post-title.php:25
+#: inc/widgets/lib/class-post-title.php:126
+msgid "Post Title"
+msgstr "帖子标题"
+
+#: inc/widgets/lib/class-post-title.php:38
+#: inc/widgets/lib/class-wc-title.php:31
+msgid "HTML tag"
+msgstr "HTML标签"
+
+#: inc/widgets/lib/class-post-title.php:71
+msgid "Justify"
+msgstr "对齐"
+
+#: inc/widgets/lib/class-post-title.php:88
+#: inc/widgets/lib/class-wc-short-description.php:40
+#: inc/widgets/lib/class-wc-title.php:60
+msgid "Color"
+msgstr "颜色"
+
+#: inc/widgets/lib/class-post-title.php:106
+msgid "Margin"
+msgstr "边距"
+
+#: inc/widgets/lib/class-process-steps.php:20
+msgid "Process Steps"
+msgstr "处理步骤"
+
+#: inc/widgets/lib/class-process-steps.php:28
+#: inc/widgets/lib/class-process-steps.php:36
+msgid "Steps"
+msgstr "步骤"
+
+#: inc/widgets/lib/class-process-steps.php:33
+msgid "Icon (optional, overrides number)"
+msgstr "图标（可选，覆盖数字）"
+
+#: inc/widgets/lib/class-process-steps.php:41
+msgid "Step 1"
+msgstr "步骤 1"
+
+#: inc/widgets/lib/class-process-steps.php:41
+msgid "Describe the first step of your customer journey here."
+msgstr "在这里描述客户旅程的第一步。"
+
+#: inc/widgets/lib/class-process-steps.php:42
+msgid "Step 2"
+msgstr "步骤 2"
+
+#: inc/widgets/lib/class-process-steps.php:42
+msgid "Second step — what happens after the customer takes step 1."
+msgstr "第二步——客户采取步骤 1 后发生的事情。"
+
+#: inc/widgets/lib/class-process-steps.php:43
+msgid "Step 3"
+msgstr "步骤 3"
+
+#: inc/widgets/lib/class-process-steps.php:43
+msgid "Third step — the build / fulfillment / processing phase."
+msgstr "第三步——构建/履行/处理阶段。"
+
+#: inc/widgets/lib/class-process-steps.php:44
+msgid "Step 4"
+msgstr "步骤 4"
+
+#: inc/widgets/lib/class-process-steps.php:44
+msgid "Final step — delivery / handoff / after-sale."
+msgstr "最后一步 — 交付 / 移交 / 售后。"
+
+#: inc/widgets/lib/class-process-steps.php:49
+msgid "Show connecting arrows"
+msgstr "显示连接箭头"
+
+#: inc/widgets/lib/class-process-steps.php:55
+msgid "Orientation"
+msgstr "方向"
+
+#: inc/widgets/lib/class-process-steps.php:59
+msgid "Horizontal (cards in a row)"
+msgstr "水平（卡片在一行）"
+
+#: inc/widgets/lib/class-process-steps.php:60
+msgid "Vertical (left-aligned list)"
+msgstr "垂直（左对齐列表）"
+
+#: inc/widgets/lib/class-product-card.php:22
+msgid "Product Card"
+msgstr "产品卡片"
+
+#: inc/widgets/lib/class-product-card.php:39
+msgid "Product"
+msgstr "产品"
+
+#: inc/widgets/lib/class-product-card.php:42
+msgid "Pick the product to render."
+msgstr "选择要渲染的产品。"
+
+#: inc/widgets/lib/class-product-card.php:50
+msgid "Show sale badge"
+msgstr "显示销售徽章"
+
+#: inc/widgets/lib/class-product-card.php:59
+msgid "Show favourite heart"
+msgstr "显示收藏心形图标"
+
+#: inc/widgets/lib/class-product-card.php:68
+msgid "Show quick-add on hover"
+msgstr "悬停时显示快速添加"
+
+#: inc/widgets/lib/class-product-card.php:77
+msgid "Show maker name"
+msgstr "显示制造者名称"
+
+#: inc/widgets/lib/class-product-card.php:80
+msgid "Reads the pa_luthier attribute if available."
+msgstr "如果可用，读取 pa_luthier 属性。"
+
+#: inc/widgets/lib/class-product-card.php:98
+msgid "Card corner radius"
+msgstr "卡片角半径"
+
+#: inc/widgets/lib/class-product-card.php:123
+msgid "Sale badge color"
+msgstr "销售徽章颜色"
+
+#: inc/widgets/lib/class-product-card.php:135
+#: inc/widgets/lib/class-wc-price.php:46
+msgid "Price color"
+msgstr "价格颜色"
+
+#: inc/widgets/lib/class-product-card.php:157
+msgid "Install WooCommerce to pick products"
+msgstr "安装 WooCommerce 以选择产品"
+
+#: inc/widgets/lib/class-product-card.php:166
+msgid "— Select a product —"
+msgstr "— 选择一个产品 —"
+
+#: inc/widgets/lib/class-product-card.php:175
+msgid "WooCommerce required."
+msgstr "需要 WooCommerce。"
+
+#: inc/widgets/lib/class-product-card.php:181
+msgid "Pick a product in the panel →"
+msgstr "在面板中选择一个产品 →"
+
+#: inc/widgets/lib/class-product-card.php:186
+msgid "Product not found."
+msgstr "未找到产品。"
+
+#: inc/widgets/lib/class-product-card.php:200
+#: inc/widgets/lib/class-product-grid.php:264
+#: inc/widgets/lib/class-wc-related.php:130
+msgid "Sale"
+msgstr "销售"
+
+#: inc/widgets/lib/class-product-card.php:209
+msgid "Save"
+msgstr "保存"
+
+#: inc/widgets/lib/class-product-card.php:213
+msgid "Quick add"
+msgstr "快速添加"
+
+#: inc/widgets/lib/class-product-grid.php:30
+msgid "Product Grid"
+msgstr "产品网格"
+
+#: inc/widgets/lib/class-product-grid.php:45
+msgid "e.g. Most popular"
+msgstr "例如：最受欢迎"
+
+#: inc/widgets/lib/class-product-grid.php:53
+msgid "Auto query (by orderby)"
+msgstr "自动查询（按排序）"
+
+#: inc/widgets/lib/class-product-grid.php:54
+msgid "Featured products only"
+msgstr "仅显示精选产品"
+
+#: inc/widgets/lib/class-product-grid.php:55
+msgid "Manual ID list"
+msgstr "手动ID列表"
+
+#: inc/widgets/lib/class-product-grid.php:60
+msgid "Product IDs (comma or space separated)"
+msgstr "产品ID（用逗号或空格分隔）"
+
+#: inc/widgets/lib/class-product-grid.php:65
+msgid "Order in this list is preserved. Limit + Orderby ignored."
+msgstr "此列表中的顺序是保留的。限制 + 排序被忽略."
+
+#: inc/widgets/lib/class-product-grid.php:69
+#: inc/widgets/lib/class-wc-related.php:36
+msgid "Number of products"
+msgstr "产品数量"
+
+#: inc/widgets/lib/class-product-grid.php:82
+msgid "Popularity (sales count)"
+msgstr "人气（销售数量）"
+
+#: inc/widgets/lib/class-product-grid.php:83
+msgid "Average rating"
+msgstr "平均评分"
+
+#: inc/widgets/lib/class-product-grid.php:85
+msgid "Price (low → high)"
+msgstr "价格（低→高）"
+
+#: inc/widgets/lib/class-product-grid.php:86
+msgid "Price (high → low)"
+msgstr "价格（高→低）"
+
+#: inc/widgets/lib/class-product-grid.php:87
+msgid "Title A → Z"
+msgstr "标题 A → Z"
+
+#: inc/widgets/lib/class-product-grid.php:88
+msgid "Menu order"
+msgstr "菜单顺序"
+
+#: inc/widgets/lib/class-product-grid.php:95
+msgid "Limit to category (slug, optional)"
+msgstr "限制到类别（slug，选填）"
+
+#: inc/widgets/lib/class-product-grid.php:100
+msgid "Single product_cat slug. Leave empty for all categories."
+msgstr "单一产品_cat slug。留空以获取所有类别."
+
+#: inc/widgets/lib/class-product-grid.php:104
+msgid "Hide out-of-stock"
+msgstr "隐藏缺货商品"
+
+#: inc/widgets/lib/class-product-grid.php:129
+msgid "Grid gap"
+msgstr "网格间隙"
+
+#: inc/widgets/lib/class-product-grid.php:138
+msgid "Extra wrapper class"
+msgstr "额外的包装类"
+
+#: inc/widgets/lib/class-product-grid.php:142
+msgid "Preserves legacy CSS hooks when migrating from a [products] shortcode (e.g. \"tap-products\"). Optional."
+msgstr "在从 [products] 短代码迁移时保留传统的 CSS 钩子（例如：\"tap-products\"）。可选。"
+
+#: inc/widgets/lib/class-product-grid.php:182
+msgid "[Product Grid] No products match the current query."
+msgstr "[产品网格] 当前查询没有匹配的产品."
+
+#: inc/widgets/lib/class-pullquote.php:19
+msgid "Pullquote"
+msgstr "引用"
+
+#: inc/widgets/lib/class-pullquote.php:32
+msgid "Quote text"
+msgstr "引用文本"
+
+#: inc/widgets/lib/class-pullquote.php:35
+msgid "A short, punchy quote that captures the essence of the piece in a single line."
+msgstr "一个简短、有力的引用，用一句话捕捉文章的本质."
+
+#: inc/widgets/lib/class-pullquote.php:41
+msgid "Attribution (optional)"
+msgstr "归属（可选）"
+
+#: inc/widgets/lib/class-pullquote.php:49
+msgid "Citation URL (optional)"
+msgstr "引用网址（可选）"
+
+#: inc/widgets/lib/class-pullquote.php:57
+msgid "Show decorative quote mark"
+msgstr "显示装饰性引号"
+
+#: inc/widgets/lib/class-pullquote.php:83
+msgid "Quote color"
+msgstr "引用颜色"
+
+#: inc/widgets/lib/class-pullquote.php:85
+msgid "Mark color"
+msgstr "标记颜色"
+
+#: inc/widgets/lib/class-pullquote.php:87
+msgid "Attribution color"
+msgstr "归属颜色"
+
+#: inc/widgets/lib/class-reading-progress.php:20
+msgid "Reading Progress"
+msgstr "阅读进度"
+
+#: inc/widgets/lib/class-reading-progress.php:29
+msgid "Behavior"
+msgstr "行为"
+
+#: inc/widgets/lib/class-reading-progress.php:34
+msgid "Track selector (optional)"
+msgstr "跟踪选择器（可选）"
+
+#: inc/widgets/lib/class-reading-progress.php:35
+msgid "CSS selector of the content area to track. Empty = whole page."
+msgstr "要跟踪的内容区域的CSS选择器。空 = 整个页面。"
+
+#: inc/widgets/lib/class-reading-progress.php:43
+msgid "Position"
+msgstr "位置"
+
+#: inc/widgets/lib/class-reading-progress.php:47
+msgid "Sticky top"
+msgstr "粘性顶部"
+
+#: inc/widgets/lib/class-reading-progress.php:48
+msgid "Sticky bottom"
+msgstr "粘性底部"
+
+#: inc/widgets/lib/class-reading-progress.php:49
+msgid "Inline (no stick)"
+msgstr "行内（无粘性）"
+
+#: inc/widgets/lib/class-reading-progress.php:56
+msgid "Bar height (px)"
+msgstr "条形高度（像素）"
+
+#: inc/widgets/lib/class-reading-progress.php:71
+msgid "Track color"
+msgstr "跟踪颜色"
+
+#: inc/widgets/lib/class-reading-progress.php:73
+msgid "Bar color"
+msgstr "条形颜色"
+
+#: inc/widgets/lib/class-search-overlay.php:22
+msgid "Search Overlay"
+msgstr "搜索覆盖层"
+
+#: inc/widgets/lib/class-search-overlay.php:32
+msgid "Search panel"
+msgstr "搜索面板"
+
+#: inc/widgets/lib/class-search-overlay.php:35
+#: inc/widgets/lib/class-wc-gallery.php:130
+msgid "Placeholder"
+msgstr "占位符"
+
+#: inc/widgets/lib/class-search-overlay.php:35
+msgid "Try a product, master, or category…"
+msgstr "尝试产品、主控或类别…"
+
+#: inc/widgets/lib/class-search-overlay.php:39
+msgid "Form action URL"
+msgstr "表单操作网址"
+
+#: inc/widgets/lib/class-search-overlay.php:40
+msgid "Where the form submits. Default is the site root with ?s=…"
+msgstr "表单提交的位置。默认是站点根目录加上?s=…"
+
+#: inc/widgets/lib/class-search-overlay.php:48
+msgid "Search query param"
+msgstr "搜索查询参数"
+
+#: inc/widgets/lib/class-search-overlay.php:49
+msgid "WP default = \"s\". WooCommerce-specific can use \"post_type=product&s\"."
+msgstr "WP默认 = \"s\"。特定于WooCommerce可以使用\"post_type=product&s\"."
+
+#: inc/widgets/lib/class-search-overlay.php:56
+msgid "Block label"
+msgstr "区块标签"
+
+#: inc/widgets/lib/class-search-overlay.php:60
+msgid "Chips (label|url, one per line)"
+msgstr "标签|网址（每行一个）"
+
+#: inc/widgets/lib/class-search-overlay.php:61
+msgid "Each line: label|url. Example: \"Turkish Oud|/?s=turkish+oud\""
+msgstr "每行：标签|网址。示例：\"土耳其乌德|/?s=turkish+oud\""
+
+#: inc/widgets/lib/class-search-overlay.php:71
+msgid "Suggestion blocks"
+msgstr "建议块"
+
+#: inc/widgets/lib/class-search-overlay.php:85
+msgid "Mobile drawer"
+msgstr "移动抽屉"
+
+#: inc/widgets/lib/class-search-overlay.php:87
+msgid "Show mobile drawer"
+msgstr "显示移动抽屉"
+
+#: inc/widgets/lib/class-search-overlay.php:96
+msgid "— No menus found —"
+msgstr "— 未找到菜单 —"
+
+#: inc/widgets/lib/class-search-overlay.php:100
+msgid "Mobile menu"
+msgstr "移动菜单"
+
+#: inc/widgets/lib/class-search-overlay.php:102
+msgid "— Choose —"
+msgstr "— 选择 —"
+
+#: inc/widgets/lib/class-search-overlay.php:109
+msgid "Drawer header label"
+msgstr "抽屉标题标签"
+
+#: inc/widgets/lib/class-search-overlay.php:125
+msgid "Overlay background"
+msgstr "覆盖背景"
+
+#: inc/widgets/lib/class-search-overlay.php:135
+msgid "Chip background"
+msgstr "芯片背景"
+
+#: inc/widgets/lib/class-search-overlay.php:140
+#: inc/widgets/lib/class-shop-filters.php:134
+msgid "Accent"
+msgstr "强调"
+
+#: inc/widgets/lib/class-search-overlay.php:230
+msgid "Pick a menu in the widget settings."
+msgstr "在小部件设置中选择一个菜单。"
+
+#: inc/widgets/lib/class-section-head.php:23
+msgid "Section Head"
+msgstr "部分标题"
+
+#: inc/widgets/lib/class-section-head.php:45
+msgid "Use Enter for a multi-line title. Wrap a phrase with [em]…[/em] to italicise + gold-tint it."
+msgstr "使用 Enter 键输入多行标题。用 [em]…[/em] 包裹短语以斜体显示并加上金色阴影。"
+
+#: inc/widgets/lib/class-section-head.php:54
+msgid "Heading tag"
+msgstr "标题标签"
+
+#: inc/widgets/lib/class-section-head.php:81
+msgid "Pill tabs (optional)"
+msgstr "药丸选项卡（可选）"
+
+#: inc/widgets/lib/class-section-head.php:95
+msgid "Mark as active"
+msgstr "标记为活动状态"
+
+#: inc/widgets/lib/class-section-head.php:107
+msgid "Pills"
+msgstr "药丸"
+
+#: inc/widgets/lib/class-section-head.php:126
+msgid "Light = dark text on light bg. Dark = light text on dark bg (e.g. for the masters section)."
+msgstr "浅色 = 浅色背景上的深色文本。深色 = 深色背景上的浅色文本（例如，适用于大师部分）。"
+
+#: inc/widgets/lib/class-shop-filters.php:27
+msgid "Shop Filters"
+msgstr "商店过滤器"
+
+#: inc/widgets/lib/class-shop-filters.php:36
+msgid "Auto blocks (WC)"
+msgstr "自动块（WC）"
+
+#: inc/widgets/lib/class-shop-filters.php:39
+msgid "Show category facet"
+msgstr "显示类别面"
+
+#: inc/widgets/lib/class-shop-filters.php:45
+msgid "Category facet label"
+msgstr "类别面标签"
+
+#: inc/widgets/lib/class-shop-filters.php:47
+msgid "Family"
+msgstr "家庭"
+
+#: inc/widgets/lib/class-shop-filters.php:52
+msgid "Show price range"
+msgstr "显示价格范围"
+
+#: inc/widgets/lib/class-shop-filters.php:58
+msgid "Price facet label"
+msgstr "价格面板标签"
+
+#: inc/widgets/lib/class-shop-filters.php:65
+msgid "Show availability"
+msgstr "显示可用性"
+
+#: inc/widgets/lib/class-shop-filters.php:71
+msgid "Availability facet label"
+msgstr "可用性面板标签"
+
+#: inc/widgets/lib/class-shop-filters.php:73
+msgid "Availability"
+msgstr "可用性"
+
+#: inc/widgets/lib/class-shop-filters.php:80
+msgid "Custom blocks"
+msgstr "自定义区块"
+
+#: inc/widgets/lib/class-shop-filters.php:85
+msgid "Value (URL param)"
+msgstr "值（URL 参数）"
+
+#: inc/widgets/lib/class-shop-filters.php:88
+msgid "Block heading"
+msgstr "区块标题"
+
+#: inc/widgets/lib/class-shop-filters.php:89
+msgid "Query parameter"
+msgstr "查询参数"
+
+#: inc/widgets/lib/class-shop-filters.php:104
+msgid "Custom filter blocks"
+msgstr "自定义过滤区块"
+
+#: inc/widgets/lib/class-shop-filters.php:114
+msgid "Apply button label"
+msgstr "应用按钮标签"
+
+#: inc/widgets/lib/class-shop-filters.php:114
+msgid "Apply filters"
+msgstr "应用过滤器"
+
+#: inc/widgets/lib/class-shop-filters.php:118
+msgid "Clear button label"
+msgstr "清除按钮标签"
+
+#: inc/widgets/lib/class-shop-filters.php:118
+msgid "Clear all"
+msgstr "清除全部"
+
+#: inc/widgets/lib/class-shop-filters.php:128
+msgid "Block heading color"
+msgstr "区块标题颜色"
+
+#: inc/widgets/lib/class-shop-filters.php:130
+msgid "Item color"
+msgstr "项目颜色"
+
+#: inc/widgets/lib/class-shop-filters.php:132
+#: inc/widgets/lib/class-wc-rating.php:61
+msgid "Count color"
+msgstr "计数颜色"
+
+#: inc/widgets/lib/class-shop-filters.php:276
+msgid "In stock"
+msgstr "有库存"
+
+#: inc/widgets/lib/class-shop-filters.php:277
+msgid "Pre-order"
+msgstr "预购"
+
+#: inc/widgets/lib/class-shop-filters.php:278
+msgid "Made to order"
+msgstr "按需制作"
+
+#: inc/widgets/lib/class-shop-toolbar.php:22
+msgid "Shop Toolbar"
+msgstr "商店工具栏"
+
+#: inc/widgets/lib/class-shop-toolbar.php:31
+msgid "Toolbar"
+msgstr "工具栏"
+
+#: inc/widgets/lib/class-shop-toolbar.php:33
+msgid "Show result count"
+msgstr "显示结果计数"
+
+#: inc/widgets/lib/class-shop-toolbar.php:37
+msgid "Count template"
+msgstr "计数模板"
+
+#: inc/widgets/lib/class-shop-toolbar.php:38
+#, php-format
+msgid "Use %d for number, %s for filter text."
+msgstr "使用 %d 作为数字，%s 作为过滤文本。"
+
+#: inc/widgets/lib/class-shop-toolbar.php:40
+#, php-format
+msgid "%d results"
+msgstr "%d 个结果"
+
+#: inc/widgets/lib/class-shop-toolbar.php:45
+msgid "Show grid/list toggle"
+msgstr "显示网格/列表切换"
+
+#: inc/widgets/lib/class-shop-toolbar.php:46
+msgid "Show sort dropdown"
+msgstr "显示排序下拉菜单"
+
+#: inc/widgets/lib/class-shop-toolbar.php:57
+msgid "Count strong color"
+msgstr "计数强颜色"
+
+#: inc/widgets/lib/class-shop-toolbar.php:59
+msgid "Toggle active bg"
+msgstr "切换活动背景"
+
+#: inc/widgets/lib/class-shop-toolbar.php:67
+msgid "Default sorting"
+msgstr "默认排序"
+
+#: inc/widgets/lib/class-shop-toolbar.php:68
+msgid "Sort by popularity"
+msgstr "按流行度排序"
+
+#: inc/widgets/lib/class-shop-toolbar.php:69
+msgid "Sort by average rating"
+msgstr "按平均评分排序"
+
+#: inc/widgets/lib/class-shop-toolbar.php:70
+msgid "Sort by latest"
+msgstr "按最新排序"
+
+#: inc/widgets/lib/class-shop-toolbar.php:71
+msgid "Sort by price: low to high"
+msgstr "按价格：从低到高排序"
+
+#: inc/widgets/lib/class-shop-toolbar.php:72
+msgid "Sort by price: high to low"
+msgstr "按价格：从高到低排序"
+
+#: inc/widgets/lib/class-shop-toolbar.php:122
+msgid "View mode"
+msgstr "查看模式"
+
+#: inc/widgets/lib/class-shop-toolbar.php:123 template-listings.php:139
+msgid "Grid view"
+msgstr "网格视图"
+
+#: inc/widgets/lib/class-shop-toolbar.php:126 template-listings.php:140
+msgid "List view"
+msgstr "列表视图"
+
+#: inc/widgets/lib/class-spec-list.php:21
+msgid "Spec List"
+msgstr "规格列表"
+
+#: inc/widgets/lib/class-spec-list.php:29
+msgid "Specs"
+msgstr "规格"
+
+#: inc/widgets/lib/class-spec-list.php:39
+msgid "Auto: current product attributes (WC)"
+msgstr "自动：当前产品属性（WC）"
+
+#: inc/widgets/lib/class-spec-list.php:51 inc/widgets/lib/class-timeline.php:26
+#: inc/widgets/lib/class-wc-meta.php:28
+msgid "Rows"
+msgstr "行"
+
+#: inc/widgets/lib/class-spec-list.php:56
+msgid "Material"
+msgstr "材料"
+
+#: inc/widgets/lib/class-spec-list.php:57
+msgid "Weight"
+msgstr "重量"
+
+#: inc/widgets/lib/class-spec-list.php:69
+msgid "Single column"
+msgstr "单列"
+
+#: inc/widgets/lib/class-spec-list.php:69
+msgid "Two columns"
+msgstr "两列"
+
+#: inc/widgets/lib/class-spec-list.php:80
+#: inc/widgets/lib/class-wc-add-to-cart.php:105
+#: inc/widgets/lib/class-wc-meta.php:65
+msgid "Label color"
+msgstr "标签颜色"
+
+#: inc/widgets/lib/class-spec-list.php:82 inc/widgets/lib/class-wc-meta.php:69
+msgid "Value color"
+msgstr "值颜色"
+
+#: inc/widgets/lib/class-spec-list.php:84
+msgid "Row border"
+msgstr "行边框"
+
+#: inc/widgets/lib/class-stat-counter.php:20
+msgid "Stat Counter"
+msgstr "统计计数器"
+
+#: inc/widgets/lib/class-stat-counter.php:32
+msgid "Prefix (e.g. €)"
+msgstr "前缀（例如：€）"
+
+#: inc/widgets/lib/class-stat-counter.php:33
+msgid "Suffix (e.g. + or k)"
+msgstr "后缀（例如：+或k）"
+
+#: inc/widgets/lib/class-stat-counter.php:35
+msgid "Sub line (optional)"
+msgstr "子行（可选）"
+
+#: inc/widgets/lib/class-stat-counter.php:36
+msgid "Icon (optional)"
+msgstr "图标（可选）"
+
+#: inc/widgets/lib/class-stat-counter.php:47
+msgid "In business"
+msgstr "在营业中"
+
+#: inc/widgets/lib/class-stat-counter.php:59
+msgid "Count-up duration (ms)"
+msgstr "计数时长（毫秒）"
+
+#: inc/widgets/lib/class-stat-counter.php:76
+msgid "Vertical dividers"
+msgstr "垂直分隔符"
+
+#: inc/widgets/lib/class-story-split.php:25
+msgid "Story Split"
+msgstr "故事分割"
+
+#: inc/widgets/lib/class-story-split.php:42
+msgid "Image on left"
+msgstr "左侧图像"
+
+#: inc/widgets/lib/class-story-split.php:43
+msgid "Image on right"
+msgstr "右侧图像"
+
+#: inc/widgets/lib/class-story-split.php:51
+msgid "Image tile"
+msgstr "图像块"
+
+#: inc/widgets/lib/class-story-split.php:64
+msgid "Gradient start (when no image)"
+msgstr "渐变开始（无图像时）"
+
+#: inc/widgets/lib/class-story-split.php:72
+msgid "Gradient end (when no image)"
+msgstr "渐变结束（无图像时）"
+
+#: inc/widgets/lib/class-story-split.php:80
+msgid "Floating card — eyebrow"
+msgstr "浮动卡片 — 眉毛"
+
+#: inc/widgets/lib/class-story-split.php:88
+msgid "Floating card — title"
+msgstr "浮动卡片 — 标题"
+
+#: inc/widgets/lib/class-story-split.php:96
+msgid "Floating card — sub line"
+msgstr "浮动卡片 — 子行"
+
+#: inc/widgets/lib/class-story-split.php:104
+msgid "Story"
+msgstr "故事"
+
+#: inc/widgets/lib/class-story-split.php:118
+msgid "Use Enter for multi-line. Wrap with [em]…[/em] for italic gold accent."
+msgstr "使用回车符进行多行。用[em]…[/em]包裹以获得斜体金色强调。"
+
+#: inc/widgets/lib/class-story-split.php:155
+msgid "Numbered bullets"
+msgstr "编号项目符号"
+
+#: inc/widgets/lib/class-story-split.php:160
+msgid "Quality first."
+msgstr "质量第一。"
+
+#: inc/widgets/lib/class-story-split.php:160
+msgid "A short paragraph that explains your first key value."
+msgstr "简短段落，解释您的第一个关键价值。"
+
+#: inc/widgets/lib/class-story-split.php:161
+msgid "Direct from us to you."
+msgstr "直接从我们到您。"
+
+#: inc/widgets/lib/class-story-split.php:161
+msgid "Second value proposition — replace this copy from the widget editor."
+msgstr "第二个价值主张 — 从小部件编辑器替换此文本。"
+
+#: inc/widgets/lib/class-story-split.php:162
+msgid "Worldwide shipping."
+msgstr "全球配送。"
+
+#: inc/widgets/lib/class-story-split.php:162
+msgid "Third value — what makes your delivery / fulfillment story strong."
+msgstr "第三个价值 - 使您的交付/履行故事强大的因素。"
+
+#: inc/widgets/lib/class-story-split.php:163
+msgid "After-sale support."
+msgstr "售后支持。"
+
+#: inc/widgets/lib/class-story-split.php:163
+msgid "Fourth value — what happens after the customer buys."
+msgstr "第四个价值 - 客户购买后发生的事情。"
+
+#: inc/widgets/lib/class-taxonomy-terms.php:29
+msgid "Taxonomy Terms"
+msgstr "分类术语"
+
+#: inc/widgets/lib/class-taxonomy-terms.php:66
+msgid "Taxonomy"
+msgstr "分类"
+
+#: inc/widgets/lib/class-taxonomy-terms.php:73
+msgid "Which terms"
+msgstr "哪些术语"
+
+#: inc/widgets/lib/class-taxonomy-terms.php:77
+msgid "Top-level only (no children)"
+msgstr "仅顶级（没有子项）"
+
+#: inc/widgets/lib/class-taxonomy-terms.php:78
+msgid "All terms (flat)"
+msgstr "所有术语（平面）"
+
+#: inc/widgets/lib/class-taxonomy-terms.php:79
+msgid "Children of a specific term"
+msgstr "特定术语的子项"
+
+#: inc/widgets/lib/class-taxonomy-terms.php:84
+msgid "Parent term (ID or slug)"
+msgstr "父术语（ID或别名）"
+
+#: inc/widgets/lib/class-taxonomy-terms.php:92
+msgid "Hide empty terms"
+msgstr "隐藏空术语"
+
+#: inc/widgets/lib/class-taxonomy-terms.php:103
+msgid "Product / post count"
+msgstr "产品/帖子数量"
+
+#: inc/widgets/lib/class-taxonomy-terms.php:105
+msgid "Slug"
+msgstr "别名"
+
+#: inc/widgets/lib/class-taxonomy-terms.php:106
+msgid "Manual term order"
+msgstr "手动术语顺序"
+
+#: inc/widgets/lib/class-taxonomy-terms.php:107
+msgid "Menu order (WC)"
+msgstr "菜单顺序（WC）"
+
+#: inc/widgets/lib/class-taxonomy-terms.php:119
+msgid "Max terms"
+msgstr "最大术语"
+
+#: inc/widgets/lib/class-taxonomy-terms.php:127
+msgid "Only these slugs (optional)"
+msgstr "仅这些别名（可选）"
+
+#: inc/widgets/lib/class-taxonomy-terms.php:131
+msgid "Comma-separated. Overrides scope/order — shows exactly these, in this order."
+msgstr "以逗号分隔。覆盖范围/顺序 - 精确显示这些，按此顺序。"
+
+#: inc/widgets/lib/class-taxonomy-terms.php:135
+msgid "Exclude these slugs (optional)"
+msgstr "排除这些别名（可选）"
+
+#: inc/widgets/lib/class-taxonomy-terms.php:156
+msgid "items"
+msgstr "项目"
+
+#: inc/widgets/lib/class-taxonomy-terms.php:157
+msgid "e.g. \"items\" → \"11 items\". Leave empty to hide the count line."
+msgstr "例如 \"items\" → \"11 items\"。留空以隐藏计数行。"
+
+#: inc/widgets/lib/class-taxonomy-terms.php:161
+msgid "Show term image"
+msgstr "显示术语图片"
+
+#: inc/widgets/lib/class-taxonomy-terms.php:162
+msgid "Uses the term thumbnail (WooCommerce category/brand images). Falls back to a gold gradient."
+msgstr "使用术语缩略图（WooCommerce分类/品牌图片）。回退为金色渐变。"
+
+#: inc/widgets/lib/class-taxonomy-terms.php:169
+msgid "Show description sub-line"
+msgstr "显示描述子行"
+
+#: inc/widgets/lib/class-taxonomy-terms.php:256
+msgid "[Taxonomy Terms] No terms match the current settings."
+msgstr "[分类术语] 没有术语与当前设置匹配。"
+
+#: inc/widgets/lib/class-testimonials.php:22
+msgid "Testimonials"
+msgstr "客户评价"
+
+#: inc/widgets/lib/class-testimonials.php:30
+#: inc/widgets/lib/class-testimonials.php:47
+msgid "Reviews"
+msgstr "评论"
+
+#: inc/widgets/lib/class-testimonials.php:36
+msgid "Avatar (optional)"
+msgstr "头像（可选）"
+
+#: inc/widgets/lib/class-testimonials.php:37
+msgid "Product purchased (optional)"
+msgstr "购买的产品（可选）"
+
+#: inc/widgets/lib/class-testimonials.php:39
+msgid "Star rating"
+msgstr "星级评分"
+
+#: inc/widgets/lib/class-testimonials.php:44
+msgid "Review date (YYYY-MM-DD, optional)"
+msgstr "评论日期（YYYY-MM-DD，可选）"
+
+#: inc/widgets/lib/class-testimonials.php:52
+msgid "Replace this with a real customer review — it is the single biggest conversion lever you control."
+msgstr "用真实客户的评价替换这条——这是你控制的最大转化杠杆。"
+
+#: inc/widgets/lib/class-testimonials.php:52
+#: inc/widgets/lib/class-testimonials.php:53
+#: inc/widgets/lib/class-testimonials.php:54
+msgid "Customer name"
+msgstr "客户姓名"
+
+#: inc/widgets/lib/class-testimonials.php:53
+msgid "Add a second testimonial here. Quotes that mention specific products tend to convert best."
+msgstr "在这里添加第二条客户评价。提及特定产品的引用通常转化效果最佳。"
+
+#: inc/widgets/lib/class-testimonials.php:54
+msgid "A third quote rounds out the social-proof block. Photo + first name + city + product gives the most credibility."
+msgstr "第三条引用补充了社交证明模块。照片 + 名字 + 城市 + 产品提供最大的可信度。"
+
+#: inc/widgets/lib/class-testimonials.php:63
+msgid "Carousel (scroll-snap)"
+msgstr "轮播（滚动吸附）"
+
+#: inc/widgets/lib/class-testimonials.php:64
+msgid "Grid (3-up desktop)"
+msgstr "网格（桌面三列）"
+
+#: inc/widgets/lib/class-testimonials.php:69
+msgid "Output Review schema"
+msgstr "输出评论架构"
+
+#: inc/widgets/lib/class-testimonials.php:70
+msgid "Outputs Schema.org Review JSON-LD so Google + Rank Math can show stars in SERP. Disable if your SEO plugin handles it separately."
+msgstr "输出 Schema.org 评论 JSON-LD，以便 Google + Rank Math 可以在搜索结果中显示星级。如果你的 SEO 插件单独处理，请禁用。"
+
+#: inc/widgets/lib/class-testimonials.php:81
+#, php-format
+msgid "%d out of 5 stars"
+msgstr "%d 星中有 5 星"
+
+#: inc/widgets/lib/class-testimonials.php:139
+msgid "Testimonials navigation"
+msgstr "客户评价导航"
+
+#: inc/widgets/lib/class-timeline.php:19
+msgid "Timeline"
+msgstr "时间线"
+
+#: inc/widgets/lib/class-timeline.php:33
+msgid "A short history"
+msgstr "简短历史"
+
+#: inc/widgets/lib/class-timeline.php:41
+msgid "Eleven years, four chapters."
+msgstr "十一年，四个章节。"
+
+#: inc/widgets/lib/class-timeline.php:49
+msgid "Year"
+msgstr "年份"
+
+#: inc/widgets/lib/class-timeline.php:59
+msgid "Milestone title"
+msgstr "里程碑标题"
+
+#: inc/widgets/lib/class-timeline.php:68
+msgid "A short paragraph describing this milestone — replace from the widget editor."
+msgstr "简短段落描述这个里程碑——从小部件编辑器替换。"
+
+#: inc/widgets/lib/class-timeline.php:75
+msgid "Timeline rows"
+msgstr "时间线行"
+
+#: inc/widgets/lib/class-timeline.php:80
+msgid "The beginning"
+msgstr "开始"
+
+#: inc/widgets/lib/class-timeline.php:80
+msgid "Describe how the story started — replace this copy."
+msgstr "描述故事是如何开始的——替换这段文字。"
+
+#: inc/widgets/lib/class-timeline.php:81
+msgid "First milestone"
+msgstr "第一个里程碑"
+
+#: inc/widgets/lib/class-timeline.php:81
+msgid "A second milestone — replace this copy."
+msgstr "第二个里程碑 — 替换此文本。"
+
+#: inc/widgets/lib/class-timeline.php:82
+msgid "Scaling up"
+msgstr "扩大规模"
+
+#: inc/widgets/lib/class-timeline.php:82
+msgid "A third milestone — replace this copy."
+msgstr "第三个里程碑 — 替换此文本。"
+
+#: inc/widgets/lib/class-timeline.php:83
+msgid "Where we are today"
+msgstr "我们今天的位置"
+
+#: inc/widgets/lib/class-timeline.php:83
+msgid "Final milestone — replace this copy."
+msgstr "最后一个里程碑 — 替换此文本。"
+
+#: inc/widgets/lib/class-timeline.php:107
+msgid "Year color"
+msgstr "年份颜色"
+
+#: inc/widgets/lib/class-topbar.php:23
+msgid "Topbar"
+msgstr "顶部栏"
+
+#: inc/widgets/lib/class-topbar.php:32 inc/widgets/lib/class-topbar.php:41
+msgid "Left items"
+msgstr "左侧项目"
+
+#: inc/widgets/lib/class-topbar.php:35
+msgid "Text"
+msgstr "文本"
+
+#: inc/widgets/lib/class-topbar.php:36
+msgid "URL (optional)"
+msgstr "网址（可选）"
+
+#: inc/widgets/lib/class-topbar.php:46
+msgid "— Atelier"
+msgstr "— Atelier"
+
+#: inc/widgets/lib/class-topbar.php:55
+msgid "Language switcher"
+msgstr "语言切换器"
+
+#: inc/widgets/lib/class-topbar.php:60
+msgid "Show language switcher"
+msgstr "显示语言切换器"
+
+#: inc/widgets/lib/class-topbar.php:69
+msgid "Switcher source"
+msgstr "切换源"
+
+#: inc/widgets/lib/class-topbar.php:70
+msgid "Auto = read from WPML/Polylang if active. Manual = use the langs repeater below."
+msgstr "自动 = 如果 WPML/Polylang 激活则从中读取。手动 = 使用下面的语言重复器。"
+
+#: inc/widgets/lib/class-topbar.php:73
+msgid "Auto (WPML/Polylang)"
+msgstr "自动（WPML/Polylang）"
+
+#: inc/widgets/lib/class-topbar.php:79
+msgid "Code"
+msgstr "代码"
+
+#: inc/widgets/lib/class-topbar.php:81
+msgid "Active"
+msgstr "激活"
+
+#: inc/widgets/lib/class-topbar.php:86
+msgid "Manual languages"
+msgstr "手动语言"
+
+#: inc/widgets/lib/class-topbar.php:102
+msgid "Right utility links"
+msgstr "右侧实用链接"
+
+#: inc/widgets/lib/class-topbar.php:111
+msgid "Right links"
+msgstr "右侧链接"
+
+#: inc/widgets/lib/class-topbar.php:115
+msgid "Track order →"
+msgstr "跟踪订单 →"
+
+#: inc/widgets/lib/class-topbar.php:137
+msgid "Accent (active / hover)"
+msgstr "强调（激活/悬停）"
+
+#: inc/widgets/lib/class-trust-badges.php:22
+msgid "Trust Badges"
+msgstr "信任徽章"
+
+#: inc/widgets/lib/class-trust-badges.php:30
+#: inc/widgets/lib/class-trust-badges.php:39
+msgid "Badges"
+msgstr "徽章"
+
+#: inc/widgets/lib/class-trust-badges.php:33
+msgid "Image (preferred)"
+msgstr "图片（首选）"
+
+#: inc/widgets/lib/class-trust-badges.php:34
+msgid "Icon (fallback)"
+msgstr "图标（备用）"
+
+#: inc/widgets/lib/class-trust-badges.php:35
+msgid "Label (optional)"
+msgstr "标签（可选）"
+
+#: inc/widgets/lib/class-trust-badges.php:36
+msgid "Link (optional)"
+msgstr "链接（可选）"
+
+#: inc/widgets/lib/class-trust-badges.php:53
+msgid "Show labels under icons"
+msgstr "在图标下显示标签"
+
+#: inc/widgets/lib/class-trust-badges.php:75
+msgid "Icon size (px)"
+msgstr "图标大小（px）"
+
+#: inc/widgets/lib/class-wc-add-to-cart.php:28
+msgid "WC Add to Cart"
+msgstr "WC 添加到购物车"
+
+#: inc/widgets/lib/class-wc-add-to-cart.php:42
+#: inc/widgets/lib/class-wc-add-to-cart.php:120
+msgid "Add to Cart"
+msgstr "添加到购物车"
+
+#: inc/widgets/lib/class-wc-add-to-cart.php:46
+msgid "Form type is auto-detected from the product (simple / variable / grouped / external). Variation JS + AJAX add inherit from WooCommerce core."
+msgstr "表单类型从产品（简单/可变/分组/外部）自动检测。变体 JS + AJAX 添加继承自 WooCommerce 核心。"
+
+#: inc/widgets/lib/class-wc-add-to-cart.php:50
+msgid "Show quantity label"
+msgstr "显示数量标签"
+
+#: inc/widgets/lib/class-wc-add-to-cart.php:55
+msgid "Quantity label"
+msgstr "数量标签"
+
+#: inc/widgets/lib/class-wc-add-to-cart.php:56
+#: inc/widgets/lib/class-wc-add-to-cart.php:102
+#: inc/widgets/lib/class-wc-add-to-cart.php:128
+msgid "Quantity"
+msgstr "数量"
+
+#: inc/widgets/lib/class-wc-add-to-cart.php:69
+msgid "Background (hover)"
+msgstr "背景（悬停）"
+
+#: inc/widgets/lib/class-wc-add-to-cart.php:82
+msgid "Radius"
+msgstr "半径"
+
+#: inc/widgets/lib/class-wc-add-to-cart.php:88
+#: inc/widgets/lib/class-wc-tabs.php:81
+msgid "Padding"
+msgstr "填充"
+
+#: inc/widgets/lib/class-wc-add-to-cart.php:94
+msgid "Full width"
+msgstr "全宽"
+
+#: inc/widgets/lib/class-wc-add-to-cart.php:109
+msgid "Input border color"
+msgstr "输入边框颜色"
+
+#: inc/widgets/lib/class-wc-gallery.php:22
+msgid "WC Product Gallery"
+msgstr "WC 产品图库"
+
+#: inc/widgets/lib/class-wc-gallery.php:40
+msgid "Enable hover zoom"
+msgstr "启用悬停缩放"
+
+#: inc/widgets/lib/class-wc-gallery.php:44
+msgid "Enable click-to-lightbox"
+msgstr "启用点击弹出灯箱"
+
+#: inc/widgets/lib/class-wc-gallery.php:48
+msgid "Main image size"
+msgstr "主图像大小"
+
+#: inc/widgets/lib/class-wc-gallery.php:52
+msgid "WC Single (default)"
+msgstr "WC 单一（默认）"
+
+#: inc/widgets/lib/class-wc-gallery.php:53
+msgid "Large"
+msgstr "大"
+
+#: inc/widgets/lib/class-wc-gallery.php:54
+msgid "Full"
+msgstr "全屏"
+
+#: inc/widgets/lib/class-wc-gallery.php:63
+msgid "Main image max height"
+msgstr "主图最大高度"
+
+#: inc/widgets/lib/class-wc-gallery.php:71
+msgid "Main image radius"
+msgstr "主图半径"
+
+#: inc/widgets/lib/class-wc-gallery.php:78
+msgid "Thumb size"
+msgstr "缩略图大小"
+
+#: inc/widgets/lib/class-wc-gallery.php:86
+msgid "Thumb radius"
+msgstr "缩略图半径"
+
+#: inc/widgets/lib/class-wc-gallery.php:99
+msgid "[Product gallery]"
+msgstr "[产品画廊]"
+
+#: inc/widgets/lib/class-wc-meta.php:21
+msgid "WC Product Meta"
+msgstr "WC 产品元数据"
+
+#: inc/widgets/lib/class-wc-meta.php:31
+msgid "Show SKU"
+msgstr "显示SKU"
+
+#: inc/widgets/lib/class-wc-meta.php:35
+msgid "SKU label"
+msgstr "SKU 标签"
+
+#: inc/widgets/lib/class-wc-meta.php:36 inc/widgets/lib/class-wc-meta.php:92
+msgid "SKU"
+msgstr "SKU"
+
+#: inc/widgets/lib/class-wc-meta.php:41
+msgid "Show categories"
+msgstr "显示类别"
+
+#: inc/widgets/lib/class-wc-meta.php:51
+msgid "Show tags"
+msgstr "显示标签"
+
+#: inc/widgets/lib/class-wc-meta.php:55
+msgid "Tags label"
+msgstr "标签标签"
+
+#: inc/widgets/lib/class-wc-meta.php:56 inc/widgets/lib/class-wc-meta.php:111
+msgid "Tags"
+msgstr "标签"
+
+#: inc/widgets/lib/class-wc-price.php:21
+msgid "WC Product Price"
+msgstr "WC 产品价格"
+
+#: inc/widgets/lib/class-wc-price.php:51
+msgid "Sale price color"
+msgstr "销售价格颜色"
+
+#: inc/widgets/lib/class-wc-price.php:56
+msgid "Strikethrough color"
+msgstr "删除线颜色"
+
+#: inc/widgets/lib/class-wc-rating.php:21
+msgid "WC Product Rating"
+msgstr "WC 产品评分"
+
+#: inc/widgets/lib/class-wc-rating.php:28
+#: inc/widgets/lib/class-wc-related.php:55
+msgid "Rating"
+msgstr "评分"
+
+#: inc/widgets/lib/class-wc-rating.php:31
+msgid "Show review count"
+msgstr "显示评论数量"
+
+#: inc/widgets/lib/class-wc-rating.php:36
+msgid "Hide when no reviews"
+msgstr "没有评论时隐藏"
+
+#: inc/widgets/lib/class-wc-rating.php:56
+msgid "Star color"
+msgstr "星星颜色"
+
+#: inc/widgets/lib/class-wc-rating.php:66
+msgid "Star size"
+msgstr "星星大小"
+
+#: inc/widgets/lib/class-wc-rating.php:97
+msgid "No reviews yet"
+msgstr "还没有评论"
+
+#: inc/widgets/lib/class-wc-rating.php:98
+#, php-format
+msgid "%d review"
+msgid_plural "%d reviews"
+msgstr[0] "%d 条评论"
+
+#: inc/widgets/lib/class-wc-related.php:21
+msgid "WC Related Products"
+msgstr "WC 相关产品"
+
+#: inc/widgets/lib/class-wc-related.php:28
+msgid "Related"
+msgstr "相关"
+
+#: inc/widgets/lib/class-wc-related.php:32
+msgid "You may also enjoy"
+msgstr "您可能会喜欢"
+
+#: inc/widgets/lib/class-wc-related.php:52
+msgid "Date"
+msgstr "日期"
+
+#: inc/widgets/lib/class-wc-related.php:54
+msgid "Popularity"
+msgstr "人气"
+
+#: inc/widgets/lib/class-wc-related.php:79
+msgid "[Related products will render here on a product page.]"
+msgstr "[相关产品将在产品页面上显示。]"
+
+#: inc/widgets/lib/class-wc-short-description.php:21
+msgid "WC Product Short Description"
+msgstr "WC 产品简短描述"
+
+#: inc/widgets/lib/class-wc-short-description.php:32
+msgid "Renders the product short description (excerpt). Edit on the product page itself."
+msgstr "渲染产品简短描述（摘要）。在产品页面上编辑。"
+
+#: inc/widgets/lib/class-wc-short-description.php:62
+msgid "[Product short description goes here.]"
+msgstr "[产品简短描述在这里。]"
+
+#: inc/widgets/lib/class-wc-tabs.php:22
+msgid "WC Product Tabs"
+msgstr "WC 产品标签"
+
+#: inc/widgets/lib/class-wc-tabs.php:29 inc/widgets/lib/class-wc-tabs.php:56
+msgid "Tabs"
+msgstr "标签"
+
+#: inc/widgets/lib/class-wc-tabs.php:36
+msgid "Horizontal tabs"
+msgstr "横向标签"
+
+#: inc/widgets/lib/class-wc-tabs.php:37
+msgid "Accordion"
+msgstr "手风琴"
+
+#: inc/widgets/lib/class-wc-tabs.php:42
+msgid "Hide Description tab"
+msgstr "隐藏描述标签"
+
+#: inc/widgets/lib/class-wc-tabs.php:46
+msgid "Hide Additional Info tab"
+msgstr "隐藏附加信息标签"
+
+#: inc/widgets/lib/class-wc-tabs.php:50
+msgid "Hide Reviews tab"
+msgstr "隐藏评论标签"
+
+#: inc/widgets/lib/class-wc-tabs.php:59
+msgid "Inactive tab color"
+msgstr "非活动标签颜色"
+
+#: inc/widgets/lib/class-wc-tabs.php:63
+msgid "Active tab color"
+msgstr "活动标签颜色"
+
+#: inc/widgets/lib/class-wc-tabs.php:73
+msgid "Panel"
+msgstr "面板"
+
+#: inc/widgets/lib/class-wc-tabs.php:93
+msgid "[Product tabs]"
+msgstr "[产品标签]"
+
+#: inc/widgets/lib/class-wc-tabs.php:163
+msgid "No content."
+msgstr "没有内容。"
+
+#: inc/widgets/lib/class-wc-title.php:21
+msgid "WC Product Title"
+msgstr "WC 产品标题"
+
+#: inc/widgets/lib/class-wc-title.php:38
+msgid "Link to product page"
+msgstr "链接到产品页面"
+
+#: inc/widgets/lib/class-wc-title.php:79
+msgid "Product Title"
+msgstr "产品标题"
+
+#: inc/widgets/lib/class-youtube-channel.php:32
+msgid "YouTube Channel"
+msgstr "YouTube频道"
+
+#: inc/widgets/lib/class-youtube-channel.php:48
+msgid "From our channel"
+msgstr "来自我们的频道"
+
+#: inc/widgets/lib/class-youtube-channel.php:55
+msgid "Use a line break (Enter) for a 2-line title."
+msgstr "使用换行符（Enter）输入两行标题。"
+
+#: inc/widgets/lib/class-youtube-channel.php:58
+msgid ""
+"Featured videos\n"
+"from our YouTube channel."
+msgstr "来自我们YouTube频道的推荐视频。"
+
+#: inc/widgets/lib/class-youtube-channel.php:67
+msgid "YouTube channel →"
+msgstr "YouTube频道 →"
+
+#: inc/widgets/lib/class-youtube-channel.php:74
+msgid "Leave empty to pull the channel URL from Customize → LuwiPress Onyx → Footer → YouTube URL."
+msgstr "留空以从自定义 → LuwiPress Onyx → 页脚 → YouTube URL 中提取频道URL。"
+
+#: inc/widgets/lib/class-youtube-channel.php:84
+msgid "Show Subscribe button"
+msgstr "显示订阅按钮"
+
+#: inc/widgets/lib/class-youtube-channel.php:85
+msgid "Only renders if a channel URL is set (here or in Customize → Footer → YouTube URL)."
+msgstr "仅在设置了频道URL时渲染（在这里或自定义 → 页脚 → YouTube URL）。"
+
+#: inc/widgets/lib/class-youtube-channel.php:96
+msgid "Subscribe label"
+msgstr "订阅标签"
+
+#: inc/widgets/lib/class-youtube-channel.php:106
+#: inc/widgets/lib/class-youtube-channel.php:162
+msgid "Videos"
+msgstr "视频"
+
+#: inc/widgets/lib/class-youtube-channel.php:112
+msgid "YouTube URL or ID"
+msgstr "YouTube URL 或 ID"
+
+#: inc/widgets/lib/class-youtube-channel.php:113
+msgid "Paste the full URL (youtu.be/… or youtube.com/watch?v=…) or just the 11-char ID."
+msgstr "粘贴完整的URL（youtu.be/… 或 youtube.com/watch?v=…）或仅粘贴11个字符的ID。"
+
+#: inc/widgets/lib/class-youtube-channel.php:131
+msgid "e.g. \"Channel name · 14k views\""
+msgstr "例如：\"频道名称 · 14k 次观看\""
+
+#: inc/widgets/lib/class-youtube-channel.php:139
+msgid "Duration badge"
+msgstr "时长徽章"
+
+#: inc/widgets/lib/class-youtube-channel.php:140
+msgid "Optional. Shown as a small badge on the thumbnail (e.g. \"3:42\"). Leave empty to hide."
+msgstr "可选。显示为缩略图上的小徽章（例如：\"3:42\"）。留空以隐藏。"
+
+#: inc/widgets/lib/class-youtube-channel.php:148
+msgid "Thumbnail quality"
+msgstr "缩略图质量"
+
+#: inc/widgets/lib/class-youtube-channel.php:152
+msgid "HQ (480×360)"
+msgstr "高质量 (480×360)"
+
+#: inc/widgets/lib/class-youtube-channel.php:153
+msgid "Standard (320×180)"
+msgstr "标准 (320×180)"
+
+#: inc/widgets/lib/class-youtube-channel.php:154
+msgid "Maxres (1280×720, may 404 on old videos)"
+msgstr "最高分辨率 (1280×720，旧视频可能404)"
+
+#: inc/widgets/lib/class-youtube-channel.php:167
+msgid "Featured video 1"
+msgstr "推荐视频 1"
+
+#: inc/widgets/lib/class-youtube-channel.php:168
+msgid "Featured video 2"
+msgstr "推荐视频 2"
+
+#: inc/widgets/lib/class-youtube-channel.php:169
+msgid "Featured video 3"
+msgstr "推荐视频 3"
+
+#: inc/widgets/lib/class-youtube-channel.php:170
+msgid "Featured video 4"
+msgstr "推荐视频 4"
+
+#: inc/widgets/lib/class-youtube-channel.php:204
+msgid "Card border"
+msgstr "卡片边框"
+
+#: inc/widgets/lib/class-youtube-channel.php:333
+#, php-format
+msgid "%s on YouTube"
+msgstr "%s 在 YouTube 上"
+
+#: inc/widgets/lib/class-youtube-channel.php:356
+msgid "No YouTube videos configured yet."
+msgstr "尚未配置YouTube视频。"
+
+#: inc/widgets/lib/class-youtube-channel.php:357
+msgid "Open this widget and paste a YouTube URL or video ID into each Videos row. This notice is only visible to logged-in editors."
+msgstr "打开此小部件并在每个视频行中粘贴YouTube URL或视频ID。此通知仅对已登录的编辑者可见。"
+
+#: inc/widgets/lib/class-youtube-channel.php:373
+#, php-format
+msgid "Play video — %s"
+msgstr "播放视频 — %s"
+
+#: inc/widgets/lib/class-youtube-channel.php:373
+msgid "Play video"
+msgstr "播放视频"
+
+#: index.php:49
+msgid "No posts yet"
+msgstr "尚无帖子"
+
+#: index.php:50
+msgid "Check back soon."
+msgstr "请稍后再查看。"
+
+#. Template Name of the theme
+msgid "Onyx — About"
+msgstr "Onyx — 关于"
+
+#: page-about.php:32
+msgid "Quiet by design."
+msgstr "设计宁静。"
+
+#: page-about.php:33
+msgid "Since 2016, ArshaHomes has placed premium residences across the UAE for clients who value privacy as much as the property itself."
+msgstr "自2016年以来，ArshaHomes在阿联酋为重视隐私与物业本身一样重要的客户提供高端住宅。"
+
+#: page-about.php:41
+msgid "We don't sell listings. We place residences — one client, one home, one conversation at a time."
+msgstr "我们不销售房源。我们提供住宅——一个客户，一个家，一次对话。"
+
+#: page-about.php:42
+msgid "Founded in Business Bay, ArshaHomes grew by referral rather than advertising. Our work is to understand how a client wants to live, then to find — or quietly secure — the address that fits. No volume, no theatre, no noise."
+msgstr "ArshaHomes成立于商业湾，通过推荐而非广告增长。我们的工作是理解客户的生活方式，然后找到——或悄然确保——合适的地址。没有数量，没有戏剧，没有噪音。"
+
+#: page-about.php:50
+msgid "AED placed"
+msgstr "已放置AED"
+
+#: page-about.php:51
+msgid "Residences sold"
+msgstr "已售出住宅"
+
+#: page-about.php:52
+msgid "Years in Dubai"
+msgstr "在迪拜的年份"
+
+#: page-about.php:53
+msgid "Client retention"
+msgstr "客户保留率"
+
+#: page-about.php:68
+msgid "What We Hold To"
+msgstr "我们重视的原则"
+
+#: page-about.php:69
+msgid "Three principles"
+msgstr "三个原则"
+
+#: page-about.php:74
+msgid "Discretion"
+msgstr "谨慎"
+
+#: page-about.php:74
+msgid "We sell the way private banks advise — quietly, off the record, and never with pressure. Most of our finest residences are never publicly listed."
+msgstr "我们销售的方式就像私人银行的咨询——安静、非正式，并且从不施加压力。我们大多数最好的住宅从未公开上市。"
+
+#: page-about.php:75
+msgid "Precision"
+msgstr "精准"
+
+#: page-about.php:75
+msgid "Every detail is considered before you ask. Floor plans, fees, handover timelines and paperwork arrive complete, accurate and on time."
+msgstr "在您询问之前，我们会考虑每一个细节。平面图、费用、交接时间表和文件都会完整、准确、按时到达。"
+
+#: page-about.php:76
+msgid "Permanence"
+msgstr "持久性"
+
+#: page-about.php:76
+msgid "We advise on homes meant to be kept, not flipped. Architecture, materials and location chosen to hold their value and their calm."
+msgstr "我们建议选择那些应该保留而不是翻转的住宅。选择能够保持其价值和宁静的建筑、材料和位置。"
+
+#: page-about.php:94
+msgid "The People"
+msgstr "人们"
+
+#: page-about.php:95
+msgid "Your advisors"
+msgstr "您的顾问"
+
+#: page-about.php:97
+msgid "Work with us"
+msgstr "与我们合作"
+
+#: page-about.php:102
+msgid "Founder & Principal"
+msgstr "创始人兼负责人"
+
+#: page-about.php:103
+msgid "Head of Acquisitions"
+msgstr "采购负责人"
+
+#: page-about.php:104
+msgid "Private Client Advisor"
+msgstr "私人客户顾问"
+
+#: page-about.php:105
+msgid "Client Relations"
+msgstr "客户关系"
+
+#: page-about.php:124
+msgid "Begin"
+msgstr "开始"
+
+#: page-about.php:125
+msgid "A residence, not a listing."
+msgstr "一个住宅，而不是一个房源."
+
+#: page-about.php:127
+msgid "Start a private conversation"
+msgstr "开始私人对话"
+
+#. Template Name of the theme
+msgid "Onyx — Contact"
+msgstr "Onyx — 联系"
+
+#: page-contact.php:35
+msgid "A specific residence"
+msgstr "一个具体的住宅"
+
+#: page-contact.php:36
+msgid "Buying — general enquiry"
+msgstr "购买 — 一般咨询"
+
+#: page-contact.php:37
+msgid "Selling my property"
+msgstr "出售我的房产"
+
+#: page-contact.php:38
+msgid "Off-plan investment"
+msgstr "未建成投资"
+
+#: page-contact.php:39
+msgid "Private viewing"
+msgstr "私人观看"
+
+#: page-contact.php:40
+msgid "Something else"
+msgstr "其他事项"
+
+#: page-contact.php:44
+msgid "Visit"
+msgstr "访问"
+
+#: page-contact.php:44
+msgid "Business Bay, Dubai, UAE"
+msgstr "阿联酋，迪拜，商业湾"
+
+#: page-contact.php:45
+msgid "Call"
+msgstr "呼叫"
+
+#: page-contact.php:45
+msgid "Sun–Thu, 9:00 — 19:00 GST"
+msgstr "周日–周四，9:00 — 19:00 GST"
+
+#: page-contact.php:46
+msgid "We reply within one business day"
+msgstr "我们在一个工作日内回复"
+
+#: page-contact.php:47
+msgid "Sunday — Thursday"
+msgstr "星期天 — 星期四"
+
+#: page-contact.php:47
+msgid "9:00 — 19:00 · Fri/Sat by appointment"
+msgstr "9:00 — 19:00 · 周五/周六需预约"
+
+#: page-contact.php:55
+msgid "Let's Talk Quietly"
+msgstr "让我们安静地交谈"
+
+#: page-contact.php:56
+msgid "Get in touch"
+msgstr "联系我"
+
+#: page-contact.php:57
+msgid "One conversation, one advisor, no call-centre. Tell us what you're looking for — or simply that you'd like to look — and we'll take it from there."
+msgstr "一次对话，一位顾问，无呼叫中心。告诉我们您在寻找什么——或者仅仅是您想看看——我们会接手处理。"
+
+#: page-contact.php:68 template-parts/onyx-contact.php:35
+msgid "Thank you — message received."
+msgstr "谢谢 — 消息已收到."
+
+#: page-contact.php:69 template-parts/onyx-contact.php:36
+msgid "A senior advisor will reply within one business day, discreetly and without a sales script."
+msgstr "一位高级顾问将在一个工作日内回复，保持私密且没有销售脚本."
+
+#: page-contact.php:81 template-parts/onyx-contact.php:44
+msgid "Please check your name and a valid email, then try again."
+msgstr "请检查您的姓名和有效的邮箱，然后再试一次。"
+
+#: page-contact.php:84 template-parts/onyx-contact.php:47
+msgid "Full name"
+msgstr "全名"
+
+#: page-contact.php:84 template-parts/onyx-contact.php:47
+msgid "Your name"
+msgstr "您的姓名"
+
+#: page-contact.php:88
+msgid "I'm interested in"
+msgstr "我感兴趣的是"
+
+#: page-contact.php:90
+msgid "Select one…"
+msgstr "选择一个…"
+
+#: page-contact.php:96
+msgid "Message"
+msgstr "消息"
+
+#: page-contact.php:96
+msgid "Tell us what you're looking for — budget, area, timing. The more you share, the better we can help."
+msgstr "告诉我们您在寻找什么——预算、地区、时间。您分享的越多，我们就能提供更好的帮助。"
+
+#: page-contact.php:97
+msgid "Send message"
+msgstr "发送消息"
+
+#: page-contact.php:98
+msgid "By sending this, you agree to be contacted by ArshaHomes Real Estate L.L.C. We never share your details. Most enquiries are answered the same day."
+msgstr "通过发送此信息，您同意被 ArshaHomes 房地产有限公司联系。我们绝不分享您的详细信息。大多数咨询在当天会得到回复。"
+
+#: page-contact.php:119
+msgid "Blue Bay Tower · Business Bay"
+msgstr "蓝湾塔 · 商业湾"
+
+#: page-contact.php:120
+msgid "ArshaHomes location"
+msgstr "ArshaHomes 位置"
+
+#: single-lwp-cpt.php:32
+msgid "Item"
+msgstr "项目"
+
+#. translators: %s: singular label, e.g. "Team member"
+#: single-lwp-cpt.php:152
+#, php-format
+msgid "Related to this %s"
+msgstr "与此 %s 相关"
+
+#: single-lwp_vendor.php:48
+msgid "Website"
+msgstr "网站"
+
+#: single-lwp_vendor.php:122
+msgid "years active"
+msgstr "活跃年数"
+
+#: single-lwp_vendor.php:128
+msgid "specialty"
+msgstr "专业领域"
+
+#: single-lwp_vendor.php:134
+msgid "works"
+msgstr "作品"
+
+#. translators: %s: singular label, e.g. "Luthier"
+#: single-lwp_vendor.php:175
+#, php-format
+msgid "Made by this %s"
+msgstr "由此 %s 制作"
+
+#: single-master.php:31
+msgid "Hicaz"
+msgstr "Hicaz"
+
+#: single-master.php:59
+msgid "Master luthier"
+msgstr "大师级乐器制作师"
+
+#: single-master.php:81
+msgid "Years"
+msgstr "年数"
+
+#: single-master.php:87
+msgid "Pieces"
+msgstr "作品数"
+
+#: single-master.php:93
+msgid "Joined"
+msgstr "加入时间"
+
+#: single-master.php:99
+msgid "Bio"
+msgstr "简介"
+
+#: single-master.php:107
+msgid "Signature instruments"
+msgstr "签名乐器"
+
+#. translators: %d signature piece count
+#: single-master.php:110
+#, php-format
+msgid "%d piece in circulation"
+msgid_plural "%d pieces in circulation"
+msgstr[0] "%d 件在流通中"
+
+#. translators: %s: master display name
+#: single-master.php:135
+#, php-format
+msgid "Browse all from %s →"
+msgstr "浏览来自 %s 的所有内容 →"
+
+#: single-master.php:142
+msgid "Listen"
+msgstr "收听"
+
+#. translators: %s: makam name (e.g. Hicaz)
+#: single-master.php:145
+#, php-format
+msgid "Tuning sample · %s"
+msgstr "调音样本 · %s"
+
+#: single-master.php:148
+msgid "Play audio sample"
+msgstr "播放音频样本"
+
+#. translators: %s: master first name
+#: single-master.php:164
+#, php-format
+msgid "Visit %s's atelier →"
+msgstr "访问 %s 的工作室 →"
+
+#: single.php:41
+#, php-format
+msgid "By %s"
+msgstr "由 %s 提供"
+
+#: single.php:62
+msgid "ArshaHomes Advisor"
+msgstr "ArshaHomes 顾问"
+
+#: single.php:64
+msgid "Speak with an advisor"
+msgstr "与顾问交谈"
+
+#: single.php:86
+msgid "Keep Reading"
+msgstr "继续阅读"
+
+#: single.php:87
+msgid "More from the Journal"
+msgstr "来自期刊的更多内容"
+
+#. Template Name of the theme
+msgid "Onyx — Gallery"
+msgstr "Onyx — 画廊"
+
+#: template-gallery.php:48
+msgid "The Collection"
+msgstr "收藏"
+
+#: template-gallery.php:49
+msgid "A curated portfolio across Dubai's most considered addresses. Filter by typology, or speak with an advisor for the residences we never list."
+msgstr "在迪拜最受重视的地址中精心策划的投资组合。按类型筛选，或与顾问交谈以获取我们从未列出的房产信息。"
+
+#: template-gallery.php:59 template-listings.php:127
+msgid "residences"
+msgstr "住宅"
+
+#. Template Name of the theme
+msgid "Onyx — Listings / Search"
+msgstr "Onyx — 列表 / 搜索"
+
+#: template-listings.php:59 template-property.php:89
+msgid "Listings"
+msgstr "列表"
+
+#: template-listings.php:60
+msgid "Search the Portfolio"
+msgstr "搜索投资组合"
+
+#: template-listings.php:61
+msgid "Find your residence"
+msgstr "找到您的住宅"
+
+#: template-listings.php:62
+msgid "Filter by type, price, bedrooms and address. The most discreet listings are released privately — tell us what you're looking for."
+msgstr "按类型、价格、卧室和地址筛选。最隐秘的列表会私下发布——告诉我们您在寻找什么。"
+
+#: template-listings.php:72
+msgid "Filter"
+msgstr "筛选"
+
+#: template-listings.php:73
+msgid "Reset all"
+msgstr "重置所有"
+
+#: template-listings.php:76
+msgid "Price range"
+msgstr "价格范围"
+
+#: template-listings.php:80
+msgid "To"
+msgstr "至"
+
+#: template-listings.php:84
+msgid "Minimum price"
+msgstr "最低价格"
+
+#: template-listings.php:85
+msgid "Maximum price"
+msgstr "最高价格"
+
+#: template-listings.php:90
+msgid "Property type"
+msgstr "物业类型"
+
+#: template-listings.php:101
+msgid "Any"
+msgstr "任何"
+
+#: template-listings.php:101
+msgid "Studio"
+msgstr "单间"
+
+#: template-listings.php:116
+msgid "Status"
+msgstr "状态"
+
+#: template-listings.php:129
+msgid "Filters"
+msgstr "筛选器"
+
+#: template-listings.php:131
+msgid "Sort"
+msgstr "排序"
+
+#: template-listings.php:132
+msgid "Sort · Featured"
+msgstr "排序 · 精选"
+
+#: template-listings.php:133
+msgid "Price · Low to high"
+msgstr "价格 · 由低到高"
+
+#: template-listings.php:134
+msgid "Price · High to low"
+msgstr "价格 · 由高到低"
+
+#: template-listings.php:135
+msgid "Largest area"
+msgstr "最大面积"
+
+#: template-listings.php:146
+msgid "Enable JavaScript to browse and filter the full portfolio, or contact an advisor for the private list."
+msgstr "启用JavaScript以浏览和筛选完整的投资组合，或联系顾问获取私人列表。"
+
+#. translators: %d: reading time in minutes
+#: template-parts/journal-card.php:41
+#, php-format
+msgid "%d min"
+msgid_plural "%d min"
+msgstr[0] "%d分钟"
+
+#: template-parts/onyx-contact.php:51
+msgid "How can we help?"
+msgstr "我们能帮您什么？"
+
+#: template-parts/onyx-contact.php:51
+msgid "Tell us what you're looking for — budget, area, timing."
+msgstr "告诉我们您在寻找什么——预算、区域、时间。"
+
+#: template-parts/onyx-contact.php:52
+msgid "Request a callback"
+msgstr "请求回电"
+
+#: template-parts/onyx-contact.php:58
+msgid "Your advisor"
+msgstr "您的顾问"
+
+#: template-parts/onyx-search-hero.php:17
+msgid "What are you looking for?"
+msgstr "您在寻找什么？"
+
+#: template-parts/onyx-search-hero.php:20
+msgid "Try “penthouse”, “Business Bay”, “Golden Visa”…"
+msgstr "试试“顶层公寓”、“商业湾”、“黄金签证”…"
+
+#: template-parts/onyx-search-hero.php:24
+msgid "Popular"
+msgstr "热门"
+
+#: template-parts/onyx-search-hero.php:46
+msgid "result"
+msgid_plural "results"
+msgstr[0] "结果"
+
+#: template-parts/onyx-search-hero.php:46
+msgid "for"
+msgstr "为"
+
+#: template-parts/onyx-search-hero.php:48
+msgid "Showing"
+msgstr "显示"
+
+#: template-parts/onyx-search-hero.php:48
+msgid "results · everything on the site"
+msgstr "结果 · 网站上的所有内容"
+
+#: template-parts/onyx-search-hero.php:54
+#, php-format
+msgid "Nothing matched “%s”"
+msgstr "没有与“%s”匹配的结果"
+
+#: template-parts/onyx-search-hero.php:55
+msgid "Try a broader term, or browse the full collection."
+msgstr "尝试更广泛的术语，或浏览完整的收藏。"
+
+#: template-parts/onyx-search-hero.php:56
+msgid "Open the gallery"
+msgstr "打开画廊"
+
+#. Template Name of the theme
+msgid "Onyx — Single Property"
+msgstr "Onyx — 单一物业"
+
+#: template-property.php:79
+msgid "Call advisor"
+msgstr "拨打顾问电话"
+
+#: template-property.php:94
+msgid "Penthouse · Downtown Dubai"
+msgstr "顶层公寓 · 迪拜市中心"
+
+#: template-property.php:96
+msgid "Burj Vista, Downtown Dubai — facing the fountain"
+msgstr "Burj Vista，迪拜市中心 — 面对喷泉"
+
+#: template-property.php:113
+msgid "Expand"
+msgstr "展开"
+
+#: template-property.php:133
+msgid "Previous"
+msgstr "上一个"
+
+#: template-property.php:135
+msgid "Next"
+msgstr "下一个"
+
+#: template-property.php:151
+msgid "The Residence"
+msgstr "住宅"
+
+#: template-property.php:152
+msgid "A whole floor, given to the light."
+msgstr "整个楼层，赋予光线。"
+
+#: template-property.php:153
+msgid "The Onyx Penthouse occupies three connected levels at the summit of Burj Vista. Full-height glass wraps the principal rooms, so the Burj Khalifa and the fountain become part of the interior rather than a view to be framed."
+msgstr "Onyx 顶层公寓位于 Burj Vista 顶部的三个相连的楼层。全高玻璃包裹主要房间，因此哈利法塔和喷泉成为室内的一部分，而不是一个框架视图。"
+
+#: template-property.php:154
+msgid "Interiors are finished in honed travertine, smoked oak and brushed brass — a restrained palette chosen to age quietly. A private lift opens directly into the reception gallery; staff quarters, a wine room and a media lounge sit discreetly behind."
+msgstr "室内装饰采用磨光的石灰石、烟熏橡木和拉丝黄铜 — 一种选择以安静老去的克制调色板。私人电梯直接通往接待画廊；员工住宿、酒窖和媒体休息室则隐蔽地位于后面。"
+
+#: template-property.php:156
+msgid "Amenities"
+msgstr "设施"
+
+#: template-property.php:166
+msgid "Floor plan"
+msgstr "平面图"
+
+#: template-property.php:167
+msgid "Level 58 — principal floor"
+msgstr "58层 — 主要楼层"
+
+#: template-property.php:171
+msgid "At a glance"
+msgstr "一目了然"
+
+#: template-property.php:185
+msgid "Book a private viewing"
+msgstr "预约私人参观"
+
+#: template-property.php:194
+msgid "Payment Plan"
+msgstr "付款计划"
+
+#: template-property.php:195
+msgid "A clear, staged path"
+msgstr "清晰的分阶段路径"
+
+#: template-property.php:209
+msgid "Mortgage Estimate"
+msgstr "按揭估算"
+
+#: template-property.php:210
+msgid "What it could cost monthly"
+msgstr "每月可能的费用"
+
+#: template-property.php:215 template-property.php:216
+msgid "Property price"
+msgstr "物业价格"
+
+#: template-property.php:219 template-property.php:220
+msgid "Down payment"
+msgstr "首付款"
+
+#: template-property.php:223 template-property.php:224
+msgid "Term"
+msgstr "期限"
+
+#: template-property.php:227 template-property.php:228
+msgid "Interest rate"
+msgstr "利率"
+
+#: template-property.php:232
+msgid "Estimated monthly"
+msgstr "预计每月"
+
+#: template-property.php:235
+msgid "Indicative only. Actual terms depend on lender, residency and eligibility. We introduce clients to private mortgage advisors."
+msgstr "仅供参考。实际条款取决于贷方、居住地和资格。我们将客户介绍给私人抵押贷款顾问。"
+
+#: template-property.php:245
+msgid "Also Available"
+msgstr "也可用"
+
+#: template-property.php:246
+msgid "Similar residences"
+msgstr "类似住宅"
+
+#: template-property.php:248
+msgid "View all"
+msgstr "查看所有"
+
+#. Template Name of the theme
+msgid "Onyx — Search"
+msgstr "Onyx — 搜索"
+
+#: theme.json
+msgctxt "Color name"
+msgid "Champagne gold"
+msgstr "香槟金"
+
+#: theme.json
+msgctxt "Color name"
+msgid "Gold soft"
+msgstr "金色柔软"
+
+#: theme.json
+msgctxt "Color name"
+msgid "Gold"
+msgstr "金色"
+
+#: theme.json
+msgctxt "Color name"
+msgid "Text"
+msgstr "文本"
+
+#: theme.json
+msgctxt "Color name"
+msgid "Muted"
+msgstr "柔和"
+
+#: theme.json
+msgctxt "Color name"
+msgid "Faint"
+msgstr "微弱"
+
+#: theme.json
+msgctxt "Color name"
+msgid "Onyx (background)"
+msgstr "Onyx（背景）"
+
+#: theme.json
+msgctxt "Color name"
+msgid "Background lifted"
+msgstr "背景提升"
+
+#: theme.json
+msgctxt "Color name"
+msgid "Surface (card)"
+msgstr "表面（卡片）"
+
+#: theme.json
+msgctxt "Color name"
+msgid "Surface elevated"
+msgstr "表面升高"
+
+#: theme.json
+msgctxt "Color name"
+msgid "Deepest base"
+msgstr "最深的基础"
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Bodoni Moda"
+msgstr "Bodoni Moda"
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Nunito"
+msgstr "Nunito"
+
+msgid "By Developer"
+msgstr "按开发商"
+
+msgid "Featured Projects"
+msgstr "精选项目"
+
+msgid "Projects"
+msgstr "项目"

@@ -48,7 +48,7 @@ $onyx_header_active =
 
 if ( ! $onyx_header_active ) :
 
-	$onyx_phone   = trim( (string) get_theme_mod( 'luwipress_onyx_topbar_phone', '056 776 1946' ) );
+	$onyx_phone   = trim( (string) get_theme_mod( 'luwipress_onyx_topbar_phone', '+971 56 776 1946' ) );
 	$onyx_email   = trim( (string) get_theme_mod( 'luwipress_onyx_topbar_email', 'sales@arshahomes.com' ) );
 	$onyx_address = trim( (string) get_theme_mod( 'luwipress_onyx_topbar_location', 'Blue Bay Tower, Office 608 — Business Bay, Dubai' ) );
 	$onyx_logo    = onyx_logo_url();
@@ -57,7 +57,6 @@ if ( ! $onyx_header_active ) :
 	// Mega lists + the simple nav items (resolved to real pages when present).
 	$onyx_mega = onyx_mega_lists();
 	$onyx_nav  = array(
-		'Gallery' => onyx_page_url( 'gallery' ),
 		'About'   => onyx_page_url( 'about' ),
 		'Journal' => onyx_page_url( 'journal' ),
 		'Contact' => onyx_page_url( 'contact' ),
@@ -193,7 +192,7 @@ if ( ! $onyx_header_active ) :
 
 			<nav class="nav" aria-label="<?php esc_attr_e( 'Primary', 'luwipress-onyx' ); ?>">
 				<span class="nav-item">
-					<a class="nav-trigger" href="<?php echo esc_url( $onyx_listings ); ?>"><?php esc_html_e( 'Residences', 'luwipress-onyx' ); ?><span class="chev"></span></a>
+					<a class="nav-trigger" href="<?php echo esc_url( $onyx_listings ); ?>"><?php esc_html_e( 'Projects', 'luwipress-onyx' ); ?><span class="chev"></span></a>
 					<!-- mega panel -->
 					<div class="mega" role="menu">
 						<div class="wrap mega-in">
@@ -214,10 +213,10 @@ if ( ! $onyx_header_active ) :
 								</div>
 							</div>
 							<div class="mega-col">
-								<h5><?php esc_html_e( 'Featured Residences', 'luwipress-onyx' ); ?></h5>
+								<h5><?php esc_html_e( 'Featured Projects', 'luwipress-onyx' ); ?></h5>
 								<div class="mega-feat">
 									<?php
-									// Featured Residences — operator-picked arsha_project posts via the featured
+									// Featured Projects — operator-picked arsha_project posts via the featured
 									// registry; falls back to two showcase cards before any project is featured.
 									$onyx_feat = array();
 									if ( function_exists( 'lwp_onyx_get_featured_products' ) ) {
@@ -228,10 +227,11 @@ if ( ! $onyx_header_active ) :
 											$f_price = (int) get_post_meta( $fp->ID, '_arsha_price', true );
 											$f_glyph = (string) get_post_meta( $fp->ID, '_arsha_glyph', true );
 											if ( ! in_array( $f_glyph, array( 'tower', 'interior', 'exterior' ), true ) ) { $f_glyph = 'tower'; }
+											$f_from = __( 'From', 'luwipress-onyx' );
 											if ( $f_price >= 1000000 ) {
-												$f_plabel = 'From AED ' . rtrim( rtrim( number_format( $f_price / 1000000, 1 ), '0' ), '.' ) . 'M';
+												$f_plabel = $f_from . ' AED ' . rtrim( rtrim( number_format( $f_price / 1000000, 1 ), '0' ), '.' ) . 'M';
 											} elseif ( $f_price > 0 ) {
-												$f_plabel = 'From AED ' . number_format( $f_price );
+												$f_plabel = $f_from . ' AED ' . number_format( $f_price );
 											} else {
 												$f_plabel = '';
 											}
@@ -266,14 +266,13 @@ if ( ! $onyx_header_active ) :
 								<span class="mf-note"><?php esc_html_e( 'Most of our finest residences are placed privately, before they are listed.', 'luwipress-onyx' ); ?></span>
 								<div class="mf-links">
 									<a class="btn btn-ghost" href="<?php echo esc_url( $onyx_listings ); ?>"><?php esc_html_e( 'Advanced search', 'luwipress-onyx' ); ?> <span class="arr"><?php echo onyx_icon( 'arrow', 15 ); // phpcs:ignore ?></span></a>
-									<a class="btn btn-gold" href="<?php echo esc_url( onyx_page_url( 'gallery' ) ); ?>"><?php esc_html_e( 'The full gallery', 'luwipress-onyx' ); ?></a>
 								</div>
 							</div>
 						</div>
 					</div>
 				</span>
 				<?php foreach ( $onyx_nav as $label => $url ) : ?>
-					<a href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $label ); ?></a>
+					<a href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( __( $label, 'luwipress-onyx' ) ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText ?></a>
 				<?php endforeach; ?>
 			</nav>
 
@@ -305,7 +304,7 @@ if ( ! $onyx_header_active ) :
 			<nav class="drawer-nav">
 				<?php
 				$onyx_drawer_items = array_merge(
-					array( 'Residences' => $onyx_listings ),
+					array( 'Projects' => $onyx_listings ),
 					$onyx_nav,
 					array( 'Search' => onyx_page_url( 'search' ) )
 				);
@@ -315,7 +314,7 @@ if ( ! $onyx_header_active ) :
 					?>
 					<a href="<?php echo esc_url( $url ); ?>" style="--di:<?php echo (int) $di; ?>">
 						<span class="dn-i"><?php echo esc_html( str_pad( (string) ( $di + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span>
-						<span class="dn-l"><?php echo esc_html( $label ); ?></span>
+						<span class="dn-l"><?php echo esc_html( __( $label, 'luwipress-onyx' ) ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText ?></span>
 						<span class="ic"><?php echo onyx_icon( $ic, 17 ); // phpcs:ignore ?></span>
 					</a>
 					<?php $di++;

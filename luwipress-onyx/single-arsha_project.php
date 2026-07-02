@@ -75,7 +75,11 @@ while ( have_posts() ) :
 		if ( $u ) { $imgs[] = array( 'url' => $u, 'thumb' => (string) ( $it['thumbnail'] ?? $u ) ); }
 	}
 	if ( ! $imgs && $hero ) { $imgs[] = array( 'url' => $hero, 'thumb' => $hero ); }
-	$hero_bg = $imgs ? $imgs[0]['url'] : ( get_the_post_thumbnail_url( $pid, 'full' ) ?: '' );
+	// Featured Image (operator-set in the editor) wins for the hero, so the
+	// standard Featured Image box controls it. Falls back to the first DLD
+	// gallery image, then the DLD hero, when no featured image is set.
+	$hero_bg = get_the_post_thumbnail_url( $pid, 'full' );
+	if ( ! $hero_bg ) { $hero_bg = $imgs ? $imgs[0]['url'] : ''; }
 
 	$aed = function ( $n ) { return 'AED ' . number_format_i18n( (float) $n ); };
 	$name_q      = html_entity_decode( wp_strip_all_tags( $name ), ENT_QUOTES, 'UTF-8' );
@@ -86,7 +90,7 @@ while ( have_posts() ) :
 	<main class="pdp" data-onyx-proj data-price="<?php echo esc_attr( $calc_price ); ?>" data-yield="<?php echo esc_attr( $yield ?: 6 ); ?>">
 
 		<!-- ============ CINEMATIC HERO ============ -->
-		<section class="pdp-hero<?php echo $hero_bg ? ' has-img' : ''; ?>"<?php echo $hero_bg ? ' style="background-image:url(\'' . esc_url( $hero_bg ) . '\')"' : ''; ?>>
+		<section class="pdp-hero<?php echo $hero_bg ? ' has-img' : ''; ?>"<?php echo $hero_bg ? ' style="--pdp-hero-img:url(\'' . esc_url( $hero_bg ) . '\')"' : ''; ?>>
 			<div class="pdp-hero-scrim"></div>
 			<div class="wrap pdp-hero-in">
 				<div class="crumb pdp-crumb">

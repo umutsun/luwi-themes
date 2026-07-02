@@ -33,6 +33,68 @@ $onyx_listings = onyx_page_url( 'listings' );
 $onyx_gallery  = onyx_page_url( 'gallery' );
 $onyx_contact  = onyx_page_url( 'contact' );
 $onyx_journal  = onyx_page_url( 'journal' );
+
+// Projects archive is the real catalog — Gallery is retired, so the hero CTA
+// and "view all" links point here.
+$onyx_projects = get_post_type_archive_link( 'arsha_project' );
+if ( ! $onyx_projects ) { $onyx_projects = $onyx_listings; }
+
+// Hero rotator. Priority: operator-curated imagery (onyx_hero_slides option =
+// array of media attachment IDs) renders as a pure showcase — rotating photos
+// with NO per-slide caption/link (project featured images were inconsistent in
+// quality). When the option is empty, fall back to real project thumbnails
+// (original behaviour), so other installs / a cleared option keep the
+// "now showing <project>" hero. Edit the option to swap or reorder images.
+$onyx_hero_slides  = array();
+$onyx_hero_curated = get_option( 'onyx_hero_slides' );
+if ( is_array( $onyx_hero_curated ) && ! empty( $onyx_hero_curated ) ) {
+	foreach ( $onyx_hero_curated as $onyx_att_id ) {
+		$onyx_c_img = wp_get_attachment_image_url( (int) $onyx_att_id, 'full' );
+		if ( ! $onyx_c_img ) { continue; }
+		$onyx_hero_slides[] = array(
+			'name' => '', // curated mode: no caption
+			'url'  => '', // curated mode: no per-slide link
+			'img'  => $onyx_c_img,
+		);
+	}
+}
+if ( empty( $onyx_hero_slides ) ) {
+	// ── Project-driven fallback: SEVERAL real projects (operator-featured
+	// first, then a random fill), shuffled client-side per visit and rotated. ──
+	$onyx_hero_pool = array();
+	if ( function_exists( 'lwp_onyx_get_featured_ids' ) ) {
+		$onyx_hero_pool = (array) lwp_onyx_get_featured_ids( array( 'post_type' => 'arsha_project', 'number' => 12 ) );
+	}
+	$onyx_hero_fill = get_posts( array(
+		'post_type'        => 'arsha_project',
+		'post_status'      => 'publish',
+		'posts_per_page'   => 18,
+		'fields'           => 'ids',
+		'orderby'          => 'rand',
+		'meta_query'       => array( array( 'key' => '_thumbnail_id', 'compare' => 'EXISTS' ) ), // phpcs:ignore WordPress.DB.SlowDBQuery
+		'post__not_in'     => $onyx_hero_pool ? $onyx_hero_pool : array( 0 ),
+		'no_found_rows'    => true,
+		'suppress_filters' => false,
+	) );
+	$onyx_hero_pool = array_merge( $onyx_hero_pool, (array) $onyx_hero_fill );
+	$onyx_hero_seen = array();
+	foreach ( $onyx_hero_pool as $onyx_hid ) {
+		$onyx_hid = (int) $onyx_hid;
+		if ( isset( $onyx_hero_seen[ $onyx_hid ] ) ) { continue; }
+		$onyx_h_img = get_the_post_thumbnail_url( $onyx_hid, 'large' );
+		if ( ! $onyx_h_img ) { continue; }
+		$onyx_hero_seen[ $onyx_hid ] = 1;
+		$onyx_hero_slides[] = array(
+			'name' => html_entity_decode( get_the_title( $onyx_hid ), ENT_QUOTES, 'UTF-8' ),
+			'url'  => get_permalink( $onyx_hid ),
+			'img'  => $onyx_h_img,
+		);
+		if ( count( $onyx_hero_slides ) >= 12 ) { break; }
+	}
+}
+$onyx_hero_ov     = function_exists( 'onyx_arsha_cached' ) ? onyx_arsha_cached( 'overview' ) : null;
+$onyx_hero_proj_n = ( is_array( $onyx_hero_ov ) && ! empty( $onyx_hero_ov['projects_total'] ) ) ? (int) $onyx_hero_ov['projects_total'] : 0;
+$onyx_hero_area_n = ( is_array( $onyx_hero_ov ) && ! empty( $onyx_hero_ov['areas_total'] ) ) ? (int) $onyx_hero_ov['areas_total'] : 0;
 ?>
 
 <main>
@@ -44,20 +106,40 @@ $onyx_journal  = onyx_page_url( 'journal' );
 			<h1 class="display-lg"><?php esc_html_e( 'Quiet luxury,', 'luwipress-onyx' ); ?><br><?php esc_html_e( 'after dark.', 'luwipress-onyx' ); ?></h1>
 			<p class="lede hero-sub"><?php esc_html_e( 'Premium properties across the UAE, sold the way wealth is kept — privately, patiently, without noise. Begin with a single residence.', 'luwipress-onyx' ); ?></p>
 			<div class="hero-cta">
-				<a class="btn btn-gold" href="<?php echo esc_url( $onyx_gallery ); ?>"><?php esc_html_e( 'Find Your Home', 'luwipress-onyx' ); ?> <span class="arr"><?php echo onyx_icon( 'arrow', 16 ); // phpcs:ignore ?></span></a>
+				<a class="btn btn-gold" href="<?php echo esc_url( $onyx_projects ); ?>"><?php esc_html_e( 'Find Your Home', 'luwipress-onyx' ); ?> <span class="arr"><?php echo onyx_icon( 'arrow', 16 ); // phpcs:ignore ?></span></a>
 				<a class="btn btn-ghost" href="#contact"><?php esc_html_e( 'Book a Viewing', 'luwipress-onyx' ); ?></a>
 			</div>
+			<?php if ( $onyx_hero_proj_n || $onyx_hero_area_n ) : ?>
 			<div class="hero-meta" style="margin-top:56px">
-				<div><div class="smallcaps"><?php esc_html_e( 'From', 'luwipress-onyx' ); ?></div><div class="tnum" style="font-family:var(--display);font-size:30px;color:var(--gold)">AED 2.4M</div></div>
+				<?php if ( $onyx_hero_proj_n ) : ?>
+				<div><div class="smallcaps"><?php esc_html_e( 'Projects', 'luwipress-onyx' ); ?></div><div class="tnum" style="font-family:var(--display);font-size:30px;color:var(--gold)"><?php echo esc_html( number_format_i18n( $onyx_hero_proj_n ) ); ?></div></div>
+				<?php endif; ?>
+				<?php if ( $onyx_hero_proj_n && $onyx_hero_area_n ) : ?>
 				<div class="hair-gold" style="width:1px;height:44px"></div>
-				<div><div class="smallcaps"><?php esc_html_e( 'Active listings', 'luwipress-onyx' ); ?></div><div class="tnum" style="font-family:var(--display);font-size:30px;color:var(--ink)">366</div></div>
+				<?php endif; ?>
+				<?php if ( $onyx_hero_area_n ) : ?>
+				<div><div class="smallcaps"><?php esc_html_e( 'Communities', 'luwipress-onyx' ); ?></div><div class="tnum" style="font-family:var(--display);font-size:30px;color:var(--ink)"><?php echo esc_html( number_format_i18n( $onyx_hero_area_n ) ); ?></div></div>
+				<?php endif; ?>
 			</div>
+			<?php endif; ?>
 		</div>
-		<div class="hb-photo">
-			<?php echo onyx_ph( array( 'glyph' => 'tower', 'style' => 'position:absolute;inset:0' ) ); // phpcs:ignore ?>
+		<div class="hb-photo" data-hero-rotator>
+			<?php
+			$onyx_hero_first = ! empty( $onyx_hero_slides ) ? $onyx_hero_slides[0] : null;
+			$onyx_hero_img   = $onyx_hero_first ? $onyx_hero_first['img'] : get_theme_file_uri( 'assets/images/hero.jpg' );
+			echo onyx_ph( array( 'glyph' => 'tower', 'img' => $onyx_hero_img, 'style' => 'position:absolute;inset:0' ) ); // phpcs:ignore
+			?>
 			<div class="grain"></div>
-			<div class="hb-num"><span class="smallcaps" style="color:var(--gold-soft)"><?php esc_html_e( 'Featured', 'luwipress-onyx' ); ?></span><div class="tnum">01</div></div>
-			<div class="hb-cap"><span class="smallcaps"><?php esc_html_e( 'Now showing', 'luwipress-onyx' ); ?></span><div style="font-family:var(--display);font-size:26px;margin-top:4px"><?php esc_html_e( 'The Onyx Penthouse', 'luwipress-onyx' ); ?></div></div>
+			<div class="hb-num"><span class="smallcaps" style="color:var(--gold-soft)"><?php esc_html_e( 'Featured', 'luwipress-onyx' ); ?></span><div class="tnum" data-hero-idx>01</div></div>
+			<?php if ( $onyx_hero_first && ! empty( $onyx_hero_first['name'] ) ) : // caption only in project-driven mode; curated imagery has no per-slide caption ?>
+			<a class="hb-cap" href="<?php echo esc_url( $onyx_hero_first['url'] ); ?>" data-hero-cap style="text-decoration:none;color:inherit">
+				<span class="smallcaps"><?php esc_html_e( 'Now showing', 'luwipress-onyx' ); ?></span>
+				<div class="hb-cap-name" style="font-family:var(--display);font-size:26px;margin-top:4px"><?php echo esc_html( $onyx_hero_first['name'] ); ?></div>
+			</a>
+			<?php endif; ?>
+			<?php if ( count( $onyx_hero_slides ) > 1 ) : ?>
+			<script type="application/json" data-hero-slides><?php echo wp_json_encode( $onyx_hero_slides ); ?></script>
+			<?php endif; ?>
 		</div>
 	</section>
 
@@ -70,8 +152,8 @@ $onyx_journal  = onyx_page_url( 'journal' );
 					<span class="t-lbl"><?php esc_html_e( 'Years of experience', 'luwipress-onyx' ); ?></span>
 					<span class="smallcaps"><?php esc_html_e( 'Est. 2016 · Dubai', 'luwipress-onyx' ); ?></span>
 				</div>
-				<?php echo onyx_ph( array( 'glyph' => 'interior', 'class' => 'trust-img reveal' ) ); // phpcs:ignore ?>
-				<?php echo onyx_ph( array( 'glyph' => 'tower', 'tag' => 'Penthouse — Downtown', 'class' => 'trust-img reveal' ) ); // phpcs:ignore ?>
+				<?php echo onyx_ph( array( 'glyph' => 'interior', 'img' => get_theme_file_uri( 'assets/images/tower-3.jpg' ), 'class' => 'trust-img reveal' ) ); // phpcs:ignore ?>
+				<?php echo onyx_ph( array( 'glyph' => 'tower', 'tag' => 'Penthouse — Downtown', 'img' => get_theme_file_uri( 'assets/images/tower-1.jpg' ), 'class' => 'trust-img reveal' ) ); // phpcs:ignore ?>
 				<div class="trust-tag reveal">
 					<p class="display-md"><?php esc_html_e( 'Beautiful spaces in the best places.', 'luwipress-onyx' ); ?></p>
 				</div>
@@ -94,8 +176,8 @@ $onyx_journal  = onyx_page_url( 'journal' );
 					</ul>
 				</div>
 				<div class="ov-media reveal">
-					<?php echo onyx_ph( array( 'glyph' => 'tower', 'tag' => 'Tower elevation', 'style' => 'height:100%' ) ); // phpcs:ignore ?>
-					<?php echo onyx_ph( array( 'glyph' => 'interior', 'class' => 'ov-float' ) ); // phpcs:ignore ?>
+					<?php echo onyx_ph( array( 'glyph' => 'tower', 'tag' => 'Tower elevation', 'img' => get_theme_file_uri( 'assets/images/tower-2.jpg' ), 'style' => 'height:100%' ) ); // phpcs:ignore ?>
+					<?php echo onyx_ph( array( 'glyph' => 'interior', 'img' => get_theme_file_uri( 'assets/images/aerial.jpg' ), 'class' => 'ov-float' ) ); // phpcs:ignore ?>
 				</div>
 			</div>
 
@@ -107,7 +189,7 @@ $onyx_journal  = onyx_page_url( 'journal' );
 				if ( is_array( $onyx_ov ) && ! empty( $onyx_ov['projects_total'] ) ) {
 					$onyx_ov_stats = array(
 						array( (int) $onyx_ov['projects_total'],   '',  __( 'Projects tracked', 'luwipress-onyx' ) ),
-						array( (int) $onyx_ov['developers_total'], '',  __( 'Developers', 'luwipress-onyx' ) ),
+						array( (int) ( new WP_Query( array( 'post_type' => 'lwp_vendor', 'post_status' => 'publish', 'posts_per_page' => 1, 'fields' => 'ids' ) ) )->found_posts, '', __( 'Developers', 'luwipress-onyx' ) ),
 						array( (int) $onyx_ov['areas_total'],      '',  __( 'Communities', 'luwipress-onyx' ) ),
 						array( (int) round( (float) ( $onyx_ov['ready_vs_offplan']['offplan_pct'] ?? 0 ) ), '%', __( 'Off-plan share', 'luwipress-onyx' ) ),
 					);
@@ -129,62 +211,6 @@ $onyx_journal  = onyx_page_url( 'journal' );
 		</div>
 	</section>
 
-	<!-- ===== APARTMENT PLANS (tabbed) ===== -->
-	<section class="section" style="background:var(--onyx-850);border-top:1px solid var(--hair-soft);border-bottom:1px solid var(--hair-soft)">
-		<div class="wrap">
-			<?php
-			$onyx_plans = array(
-				'Penthouse'     => array( 'area' => '412 m²', 'floor' => '58—60', 'rooms' => '4 + Maid', 'parking' => '3', 'price' => 'AED 14.8M' ),
-				'Studio'        => array( 'area' => '54 m²',  'floor' => '12—28', 'rooms' => 'Open plan', 'parking' => '1', 'price' => 'AED 1.2M' ),
-				'Duplex'        => array( 'area' => '268 m²', 'floor' => '40—41', 'rooms' => '3 + Study', 'parking' => '2', 'price' => 'AED 6.9M' ),
-				'Apartment'     => array( 'area' => '146 m²', 'floor' => '18—36', 'rooms' => '2 Bed', 'parking' => '1', 'price' => 'AED 2.4M' ),
-				'Double Height' => array( 'area' => '224 m²', 'floor' => '44—45', 'rooms' => '3 Bed', 'parking' => '2', 'price' => 'AED 5.6M' ),
-			);
-			$onyx_plan_keys = array_keys( $onyx_plans );
-			?>
-			<div class="plans-head">
-				<div>
-					<span class="reveal" style="display:block"><?php echo onyx_eyebrow( __( 'Villa Plans', 'luwipress-onyx' ) ); // phpcs:ignore ?></span>
-					<h2 class="display-lg reveal" style="margin-top:18px"><?php esc_html_e( 'Floor plans, by typology', 'luwipress-onyx' ); ?></h2>
-				</div>
-				<div class="plans-tabs reveal">
-					<?php foreach ( $onyx_plan_keys as $i => $key ) : ?>
-						<button type="button" class="<?php echo 0 === $i ? 'on' : ''; ?>" data-plan="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $key ); ?></button>
-					<?php endforeach; ?>
-				</div>
-			</div>
-
-			<?php foreach ( $onyx_plan_keys as $i => $key ) :
-				$p = $onyx_plans[ $key ];
-				$specs = array(
-					array( 'ruler', __( 'Total area', 'luwipress-onyx' ), $p['area'] ),
-					array( 'floor', __( 'Floor no.', 'luwipress-onyx' ), $p['floor'] ),
-					array( 'bed', __( 'Rooms', 'luwipress-onyx' ), $p['rooms'] ),
-					array( 'car', __( 'Parking', 'luwipress-onyx' ), $p['parking'] ),
-				); ?>
-				<div class="plans-body plans-panel" data-plan="<?php echo esc_attr( $key ); ?>"<?php echo 0 === $i ? '' : ' hidden'; ?>>
-					<div>
-						<div class="plans-specs">
-							<?php foreach ( $specs as $s ) : ?>
-								<div class="spec">
-									<span class="smallcaps"><span class="ic"><?php echo onyx_icon( $s[0], 15 ); // phpcs:ignore ?></span><?php echo esc_html( $s[1] ); ?></span>
-									<div class="spec-v"><?php echo esc_html( $s[2] ); ?></div>
-								</div>
-							<?php endforeach; ?>
-						</div>
-						<div class="plans-price">
-							<div><span class="smallcaps"><?php esc_html_e( 'Price from', 'luwipress-onyx' ); ?></span><div class="pv"><?php echo esc_html( $p['price'] ); ?></div></div>
-						</div>
-						<a class="btn btn-ghost" href="#contact" style="margin-top:34px"><?php esc_html_e( 'Request full plan', 'luwipress-onyx' ); ?> <span class="arr"><?php echo onyx_icon( 'arrow', 16 ); // phpcs:ignore ?></span></a>
-					</div>
-					<div class="plans-floor">
-						<?php echo onyx_ph( array( 'glyph' => 'plan', 'tag' => $key . ' — ' . __( 'floor plan', 'luwipress-onyx' ) ) ); // phpcs:ignore ?>
-					</div>
-				</div>
-			<?php endforeach; ?>
-		</div>
-	</section>
-
 	<!-- ===== PROPERTY GRID ===== -->
 	<section class="section" id="gallery">
 		<div class="wrap">
@@ -193,7 +219,7 @@ $onyx_journal  = onyx_page_url( 'journal' );
 					<span class="reveal" style="display:block"><?php echo onyx_eyebrow( __( 'Apartments & Complex', 'luwipress-onyx' ) ); // phpcs:ignore ?></span>
 					<h2 class="display-lg reveal"><?php esc_html_e( 'Choose your apartment', 'luwipress-onyx' ); ?></h2>
 				</div>
-				<a class="sh-link reveal" href="<?php echo esc_url( $onyx_gallery ); ?>"><?php esc_html_e( 'View all residences', 'luwipress-onyx' ); ?> <?php echo onyx_icon( 'arrow', 15 ); // phpcs:ignore ?></a>
+				<a class="sh-link reveal" href="<?php echo esc_url( $onyx_projects ); ?>"><?php esc_html_e( 'View all residences', 'luwipress-onyx' ); ?> <?php echo onyx_icon( 'arrow', 15 ); // phpcs:ignore ?></a>
 			</div>
 			<div class="pgrid reveal">
 				<?php
@@ -229,7 +255,13 @@ $onyx_journal  = onyx_page_url( 'journal' );
 						$r_price = (int) get_post_meta( $r_id, '_arsha_price', true );
 						?>
 						<a class="pcard" href="<?php echo esc_url( get_permalink( $r_id ) ); ?>">
-							<div class="pcard-media"<?php echo $r_img ? ' style="background-image:url(\'' . esc_url( $r_img ) . '\');background-size:cover;background-position:center"' : ''; ?>><span class="pcard-cat"><?php echo esc_html( $r_stat ); ?></span></div>
+							<div class="pcard-media"><span class="pcard-cat"><?php echo esc_html( $r_stat ); ?></span><?php
+								if ( $r_img ) {
+									echo '<div class="pcard-media--photo" style="--pcard-img:url(\'' . esc_url( $r_img ) . '\')"></div>';
+								} else {
+									echo onyx_ph( array( 'glyph' => 'tower' ) ); // phpcs:ignore
+								}
+							?></div>
 							<div class="pcard-body">
 								<div class="pcard-loc"><span class="ic"><?php echo onyx_icon( 'pin', 13 ); // phpcs:ignore ?></span><?php echo esc_html( $r_area ); ?></div>
 								<h3><?php echo esc_html( get_the_title( $r_id ) ); ?></h3>
@@ -318,7 +350,8 @@ $onyx_journal  = onyx_page_url( 'journal' );
 					if ( '' === $ar_name ) { continue; }
 					$ar_proj = (int) ( $ar['project_count'] ?? 0 );
 					$ar_avg  = (float) ( $ar['avg_price_aed'] ?? 0 );
-					$ar_url  = add_query_arg( 'residence_area', sanitize_title( $ar_name ), get_post_type_archive_link( 'lwp_residence' ) );
+					$ar_term = get_term_by( 'name', $ar_name, 'arsha_area' );
+					$ar_url  = ( $ar_term && ! is_wp_error( $ar_term ) ) ? add_query_arg( 'area', array( $ar_term->slug ), $onyx_projects ) : $onyx_projects;
 					?>
 					<a class="area-card reveal" href="<?php echo esc_url( $ar_url ); ?>">
 						<span class="area-idx"><?php echo esc_html( str_pad( (string) ( $k + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span>
@@ -383,29 +416,26 @@ $onyx_journal  = onyx_page_url( 'journal' );
 
 	<!-- ===== LIFESTYLE / FILM CTA ===== -->
 	<section class="life">
-		<div class="life-bg"><?php echo onyx_ph( array( 'glyph' => 'tower', 'style' => 'width:100%;height:100%' ) ); // phpcs:ignore ?></div>
+		<div class="life-bg"><?php echo onyx_ph( array( 'glyph' => 'tower', 'img' => get_theme_file_uri( 'assets/images/dusk.jpg' ), 'style' => 'width:100%;height:100%' ) ); // phpcs:ignore ?></div>
 		<div class="life-veil"></div>
 		<div class="grain"></div>
 		<div class="wrap">
 			<span class="reveal" style="display:inline-block"><button class="life-play" type="button" aria-label="<?php esc_attr_e( 'Play film', 'luwipress-onyx' ); ?>"><?php echo onyx_icon( 'play', 26 ); // phpcs:ignore ?></button></span>
-			<div class="reveal" style="display:flex;justify-content:center;margin-bottom:22px"><?php echo onyx_eyebrow( __( 'The Film', 'luwipress-onyx' ), true ); // phpcs:ignore ?></div>
 			<h2 class="display-lg reveal"><?php esc_html_e( 'Modern & luxury living complexes', 'luwipress-onyx' ); ?></h2>
-			<div class="life-stats">
-				<?php
-				$onyx_life_stats = array(
-					array( 360, '+', __( 'Apartments', 'luwipress-onyx' ) ),
-					array( 680, '+', __( 'Features', 'luwipress-onyx' ) ),
-					array( 12, 'k', __( 'Luxury rooms', 'luwipress-onyx' ) ),
-					array( 98, '%', __( 'Success rate', 'luwipress-onyx' ) ),
-				);
-				foreach ( $onyx_life_stats as $st ) : ?>
-					<div class="stat">
-						<div class="tnum stat-num"><span data-countup="<?php echo (int) $st[0]; ?>"><?php echo (int) $st[0]; ?></span><span class="stat-suf"><?php echo esc_html( $st[1] ); ?></span></div>
-						<div class="smallcaps stat-lbl"><?php echo esc_html( $st[2] ); ?></div>
-					</div>
-				<?php endforeach; ?>
+		</div>
+		<?php
+		// Homepage film — operator uploads it + sets the URL in Customizer
+		// (theme_mod `onyx_film_url`). Clicking the play button opens it in a modal.
+		$onyx_film_url = (string) get_theme_mod( 'onyx_film_url', '' );
+		if ( '' !== $onyx_film_url ) :
+		?>
+		<div class="film-modal" id="onyx-film-modal" hidden>
+			<button class="film-modal-close" type="button" aria-label="<?php esc_attr_e( 'Close', 'luwipress-onyx' ); ?>">&times;</button>
+			<div class="film-modal-inner">
+				<video id="onyx-film-video" controls playsinline preload="none" src="<?php echo esc_url( $onyx_film_url ); ?>"></video>
 			</div>
 		</div>
+		<?php endif; ?>
 	</section>
 
 	<!-- ===== JOURNAL TEASERS ===== -->
@@ -494,7 +524,7 @@ $onyx_journal  = onyx_page_url( 'journal' );
 					<?php echo onyx_eyebrow( __( 'Good to Know', 'luwipress-onyx' ) ); // phpcs:ignore ?>
 					<h2 class="display-lg"><?php esc_html_e( 'Questions,', 'luwipress-onyx' ); ?><br><?php esc_html_e( 'answered.', 'luwipress-onyx' ); ?></h2>
 					<p><?php esc_html_e( 'The essentials of buying in Dubai, without the noise. Anything else — ask your advisor directly.', 'luwipress-onyx' ); ?></p>
-					<a class="faq-call" href="tel:0567761946"><span class="ic"><?php echo onyx_icon( 'phone', 16 ); // phpcs:ignore ?></span>056 776 1946</a>
+					<a class="faq-call" href="tel:+971567761946"><span class="ic"><?php echo onyx_icon( 'phone', 16 ); // phpcs:ignore ?></span>+971 56 776 1946</a>
 				</div>
 				<div class="faq-list reveal">
 					<?php foreach ( $onyx_faqs as $k => $f ) : ?>

@@ -675,3 +675,74 @@
   })();
 
 })();
+
+/* ── Hero featured-project rotator ──────────────────────────────────────────
+   Shuffles the real-project slides per visit (so a cached page still varies)
+   and cross-fades through them, updating the photo, caption name/link + index. */
+(function () {
+  function initHeroRotator() {
+    var root = document.querySelector('[data-hero-rotator]');
+    if (!root) return;
+    var dataEl = root.querySelector('[data-hero-slides]');
+    if (!dataEl) return;
+    var slides;
+    try { slides = JSON.parse(dataEl.textContent || '[]'); } catch (e) { return; }
+    if (!Array.isArray(slides) || slides.length < 2) return;
+    for (var i = slides.length - 1; i > 0; i--) {            // Fisher–Yates shuffle
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = slides[i]; slides[i] = slides[j]; slides[j] = t;
+    }
+    var img  = root.querySelector('.photo img');
+    var cap  = root.querySelector('[data-hero-cap]');
+    var name = root.querySelector('.hb-cap-name');
+    var idx  = root.querySelector('[data-hero-idx]');
+    if (!img) return;
+    slides.forEach(function (s) { var p = new Image(); p.src = s.img; }); // preload
+    img.style.transition = 'opacity .6s ease';
+    var cur = 0;
+    function show(n) {
+      var s = slides[n];
+      img.style.opacity = '0';
+      setTimeout(function () {
+        img.src = s.img; img.alt = s.name || '';
+        if (cap && s.url) cap.setAttribute('href', s.url);
+        if (name) name.textContent = s.name || '';
+        if (idx) idx.textContent = ('0' + (n + 1)).slice(-2);
+        img.style.opacity = '1';
+      }, 600);
+    }
+    show(0);                                                  // jump to shuffled-first
+    setInterval(function () { cur = (cur + 1) % slides.length; show(cur); }, 5500);
+  }
+  if (document.readyState !== 'loading') initHeroRotator();
+  else document.addEventListener('DOMContentLoaded', initHeroRotator);
+})();
+
+/* ── Homepage film modal — play button opens the operator's video. ───────── */
+(function () {
+  function initFilm() {
+    var btn = document.querySelector('.life-play');
+    var modal = document.getElementById('onyx-film-modal');
+    if (!btn || !modal) return;
+    var video = document.getElementById('onyx-film-video');
+    var closeBtn = modal.querySelector('.film-modal-close');
+    function open() {
+      modal.hidden = false;
+      requestAnimationFrame(function () { modal.classList.add('open'); });
+      document.body.style.overflow = 'hidden';
+      if (video) { var p = video.play(); if (p && p.catch) p.catch(function () {}); }
+    }
+    function close() {
+      modal.classList.remove('open');
+      if (video) { try { video.pause(); } catch (e) {} }
+      document.body.style.overflow = '';
+      setTimeout(function () { modal.hidden = true; }, 300);
+    }
+    btn.addEventListener('click', open);
+    if (closeBtn) closeBtn.addEventListener('click', close);
+    modal.addEventListener('click', function (e) { if (e.target === modal) close(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !modal.hidden) close(); });
+  }
+  if (document.readyState !== 'loading') initFilm();
+  else document.addEventListener('DOMContentLoaded', initFilm);
+})();

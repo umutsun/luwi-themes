@@ -349,9 +349,20 @@ function lwp_onyx_render_project_card( $pid, $i = 0 ) {
 	ob_start();
 	?>
 	<a class="pcard" href="<?php echo esc_url( get_permalink( $pid ) ); ?>">
-		<div class="pcard-media"<?php echo $img ? ' style="background-image:url(\'' . esc_url( $img ) . '\');background-size:cover;background-position:center"' : ''; ?>>
+		<div class="pcard-media">
 			<?php if ( $stat ) : ?><span class="pcard-cat"><?php echo esc_html( $stat ); ?></span><?php endif; ?>
-			<?php if ( ! $img ) { echo onyx_ph( array( 'glyph' => $glyph ) ); } // phpcs:ignore ?>
+			<?php
+			// DLD source photos are low-res inspection shots (construction, parking…)
+			// that no CSS treatment makes look premium — so the catalog uses the clean
+			// glyph placeholder for a cohesive, luxury grid. Images stay in the media
+			// library (and on the project detail page); flip $use_card_photo to re-enable.
+			$use_card_photo = true;
+			if ( $use_card_photo && $img ) {
+				echo '<div class="pcard-media--photo" style="--pcard-img:url(\'' . esc_url( $img ) . '\')"></div>';
+			} else {
+				echo onyx_ph( array( 'glyph' => $glyph ) ); // phpcs:ignore
+			}
+			?>
 		</div>
 		<div class="pcard-body">
 			<?php if ( $area ) : ?><div class="pcard-loc"><span class="ic"><?php echo onyx_icon( 'pin', 13 ); // phpcs:ignore ?></span><?php echo esc_html( $area ); ?></div><?php endif; ?>
@@ -407,8 +418,15 @@ function lwp_onyx_projects_query_args( $params, $paged = 1, $per_page = 12 ) {
 			$args['orderby'] = array( 'mk' => 'DESC', 'date' => 'DESC' );
 			break;
 		default:
-			$args['orderby'] = 'date';
-			$args['order']   = 'DESC';
+			// Imaged projects first (DLD has no photo for the recent off-plan set),
+			// then newest — so the catalog opens image-rich instead of glyph-heavy.
+			$args['meta_query'] = array(
+				'relation'  => 'OR',
+				'lwp_thumb' => array( 'key' => '_thumbnail_id', 'compare' => 'EXISTS' ),
+				array( 'key' => '_thumbnail_id', 'compare' => 'NOT EXISTS' ),
+			);
+			$args['orderby'] = array( 'lwp_thumb' => 'DESC', 'date' => 'DESC' );
+			break;
 	}
 	return $args;
 }
@@ -486,21 +504,25 @@ add_action( 'rest_api_init', function () {
 
 /* ────────────────────────────────────────────────────────────────────
  *  Retire the legacy duplicate `lwp_residence` system — 301 to /projects/
- *  (operator decision 2026-06-21: arsha_project is canonical).
+ *  (operator decision: arsha_project is canonical). URI-based so it keeps
+ *  working AFTER the CPT is unregistered (is_singular / is_post_type_archive
+ *  no longer resolve once the post type is gone), and language-prefix aware.
  * ──────────────────────────────────────────────────────────────────── */
 add_action( 'template_redirect', function () {
-	if ( ! post_type_exists( 'lwp_residence' ) ) {
+	if ( is_admin() ) {
 		return;
 	}
-	$is_res = is_singular( 'lwp_residence' )
-		|| is_post_type_archive( 'lwp_residence' )
-		|| is_tax( 'residence_area' )
-		|| is_tax( 'residence_status' );
-	if ( $is_res ) {
+	$uri  = isset( $_SERVER['REQUEST_URI'] ) ? (string) wp_unslash( $_SERVER['REQUEST_URI'] ) : ''; // phpcs:ignore
+	$path = (string) wp_parse_url( $uri, PHP_URL_PATH );
+	if ( '' === $path ) {
+		return;
+	}
+	// A `/residences` path segment (also under a /<lang>/ prefix) or the old
+	// residence taxonomy URLs — but NOT a project slug ending in "-residences".
+	if ( preg_match( '#(^|/)(residences|residence_area|residence_status)(/|$)#i', $path ) ) {
 		$target = get_post_type_archive_link( LWP_ONYX_PROJECT_PT );
-		if ( $target ) {
-			wp_safe_redirect( $target, 301 );
-			exit;
-		}
+		if ( ! $target ) { $target = home_url( '/projects/' ); }
+		wp_safe_redirect( $target, 301 );
+		exit;
 	}
 }, 1 );

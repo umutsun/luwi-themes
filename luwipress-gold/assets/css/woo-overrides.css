@@ -3885,3 +3885,69 @@ body.woocommerce-checkout .woocommerce {
 	background: var(--ink, #1b1c1c);
 	color: #fff !important;
 }
+
+/* ============================================================== */
+/* 1.11.4 — desktop sync of the live cart/checkout hotfixes        */
+/* Theme's WC field + totals CSS was 767px-only; restore desktop.  */
+/* ============================================================== */
+@media (min-width: 768px) {
+	.woocommerce-checkout p.form-row input.input-text,
+	.woocommerce-checkout p.form-row textarea,
+	.woocommerce-checkout p.form-row select {
+		width: 100% !important;
+		padding: 13px 14px !important;
+		min-height: 46px !important;
+		border: 1px solid var(--line, #e6e0d6) !important;
+		border-radius: 10px !important;
+		background: var(--bg-alt, #f6f3f2) !important;
+		font-family: var(--sans, 'Inter', sans-serif) !important;
+		font-size: 14px !important;
+		color: var(--ink, #1b1c1c) !important;
+		box-shadow: none !important;
+	}
+	.woocommerce-checkout .select2-container--default .select2-selection--single {
+		min-height: 46px !important;
+		border: 1px solid var(--line, #e6e0d6) !important;
+		border-radius: 10px !important;
+		background: var(--bg-alt, #f6f3f2) !important;
+		display: flex !important;
+		align-items: center !important;
+	}
+}
+.woocommerce-checkout .woocommerce-form-coupon-toggle,
+.woocommerce-checkout form.checkout_coupon { margin-top: 22px !important; }
+/* Cart totals: wrapper + inner table full width (WC default was 48% float:right),
+   no padding overflow (border-box), and no gray borders. */
+.lwp-cart-grid .cart-collaterals,
+.lwp-cart-summary .cart-collaterals,
+.woocommerce-cart .cart-collaterals {
+	width: 100% !important;
+	max-width: 100% !important;
+	float: none !important;
+	box-sizing: border-box !important;
+}
+.lwp-cart-summary .cart-collaterals *,
+.lwp-cart-grid .cart-collaterals * { box-sizing: border-box; }
+.cart-collaterals .cart_totals,
+.lwp-cart-summary .cart_totals,
+.lwp-cart-grid .cart_totals {
+	width: 100% !important;
+	max-width: 100% !important;
+	float: none !important;
+	border: 0 !important;
+}
+.cart-collaterals .shop_table,
+.cart-collaterals .shop_table tr,
+.cart-collaterals .shop_table td,
+.cart-collaterals .shop_table th,
+.cart-collaterals .shop_table tbody,
+.cart-collaterals .shop_table thead { border: 0 !important; }
+.cart-collaterals .checkout-button,
+.cart-collaterals .wc-proceed-to-checkout > .button {
+	box-sizing: border-box !important;
+	max-width: 100% !important;
+}
+/* Coupon row: input + Apply + Update cart aligned to one height. */
+.lwp-cart-actions { align-items: center !important; }
+.lwp-cart-coupon input#coupon_code { min-height: 44px !important; box-sizing: border-box !important; }
+.lwp-cart-actions .lwp-btn-secondary { min-height: 44px !important; box-sizing: border-box !important; }

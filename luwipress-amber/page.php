@@ -22,9 +22,26 @@ $post_id        = get_queried_object_id();
 $is_el_built    = $post_id && (bool) get_post_meta( $post_id, '_elementor_edit_mode', true );
 $has_el_data    = $post_id && (bool) get_post_meta( $post_id, '_elementor_data', true );
 $elementor_page = $is_el_built && $has_el_data;
+
+// The signed-in My Account page renders its own full-width chrome (sticky nav
+// sidebar + content) via woocommerce/myaccount/my-account.php, which supplies its
+// own <main>, breadcrumb and title. Wrapping it in the editorial fallback would
+// duplicate the page title and squeeze it into a reading-width column, so emit the
+// account content bare. The logged-out login/register form keeps the fallback
+// chrome (it relies on the centered title + width).
+$wc_account = function_exists( 'is_account_page' ) && is_account_page() && is_user_logged_in();
 ?>
 
-<?php if ( $elementor_page ) : ?>
+<?php if ( $wc_account ) : ?>
+
+	<?php
+	while ( have_posts() ) :
+		the_post();
+		the_content();
+	endwhile;
+	?>
+
+<?php elseif ( $elementor_page ) : ?>
 
 	<main class="lwp-elementor-page" id="primary">
 		<?php while ( have_posts() ) : the_post(); ?>

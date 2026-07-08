@@ -9651,3 +9651,64 @@ body.lwp-view-list ul.products li.product { display: grid !important; grid-templ
 :root:not([data-theme="light"]) .lwp-sh--light .lwp-sh__title   { color: var(--ink, #F7F0E6); }
 :root:not([data-theme="light"]) .lwp-sh--light .lwp-sh__eyebrow { color: var(--gold, #E5A23D); }
 /* end lwp adaptive contrast override */
+
+/* ── FBD cart-drawer item: compact single-line meta (2026-07-08) ───────────
+   Date / Guests / Time slot / Add-ons were default <dl> block-stacked (5-6
+   rows per item). Inline each label+value under the product name, "·"-joined,
+   and trim the thumb, so an item reads:
+     [thumb]  5-Day Dubai Discovery                     (×)
+              Date: 19.06.2026 · Guests: 4
+              1 × $5,292.00                                                 */
+.lwp-cart-drawer__body ul.cart_list li img,
+.lwp-cart-drawer__body ul.product_list_widget li img {
+	width: 54px !important;
+	height: 54px !important;
+	flex: 0 0 54px !important;
+}
+.lwp-cart-drawer__body ul.cart_list li,
+.lwp-cart-drawer__body ul.product_list_widget li {
+	padding-top: 14px !important;
+	padding-bottom: 14px !important;
+}
+.lwp-cart-drawer__body .variation {
+	margin: 4px 0 0 !important;
+	padding-left: 68px;
+	font-family: var(--sans, "Inter", sans-serif) !important;
+	font-size: 12px !important;
+	line-height: 1.5 !important;
+	color: var(--muted, #7f7663) !important;
+}
+.lwp-cart-drawer__body .variation dt,
+.lwp-cart-drawer__body .variation dd,
+.lwp-cart-drawer__body .variation dd > p {
+	display: inline !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	float: none !important;
+	font-weight: 400 !important;
+	font-size: 12px !important;
+	line-height: 1.5 !important;
+	color: inherit !important;
+}
+.lwp-cart-drawer__body .variation dt { opacity: .7; }
+.lwp-cart-drawer__body .variation dt::after { content: "\00a0"; }
+.lwp-cart-drawer__body .variation dd::after { content: " \00b7 "; opacity: .55; }
+.lwp-cart-drawer__body .variation dd:last-of-type::after { content: ""; }
+.lwp-cart-drawer__body .quantity {
+	padding-left: 68px !important;
+	margin-top: 4px !important;
+}
+
+/* ── FBD homepage hero: pin the plugin Hero Search into the hero bottom (2026-07-08)
+   Replaces the theme .bookbar. Reserve room below the CTAs, absolutely place the
+   plugin bar over the video where the bookbar used to sit. */
+body.home .hero .wrap { padding-bottom: 150px; }
+body.home .elementor-element-fbd00001 { position: relative; }
+body.home .elementor-element-fbdhs001 {
+	position: absolute;
+	left: 0; right: 0; bottom: 44px;
+	margin: 0 auto;
+	max-width: 1280px;
+	padding: 0 32px;
+	z-index: 30;
+}

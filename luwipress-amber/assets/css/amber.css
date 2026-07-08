@@ -512,27 +512,315 @@ html { scroll-padding-top: 96px; }
 .bookbar .go { padding: 0 26px; display: grid; place-items: center; background: var(--grad-cta); color: #2A170B; border: 0; cursor: pointer; }
 .bookbar .go svg { width: 22px; height: 22px; }
 
-/* Hero tour-search controls — JS upgrades the static .val text into real
-   inputs (see assets/js/hero-search.js). Styled to read like the static text:
-   transparent, borderless, inheriting the amber bookbar palette. */
-.bookbar .val .hs-exp,
-.bookbar .val .hs-date,
-.bookbar .val .hs-pax {
+/* ============================================================
+   Hero tour-search controls — JS upgrades the static .val text into a
+   custom dark-theme dropdown (Experience) + a stepper (Guests).
+   See assets/js/hero-search.js. Styled to live inside the amber bookbar:
+   surface/line/text/amber tokens, generous spacing, full RTL + light support.
+   ============================================================ */
+
+/* Let the dropdown panel escape its clipping ancestors without losing the
+   rounded look. TWO ancestors clip:
+   1) .bookbar had overflow:hidden — switch to visible, then re-apply corner
+      radii to the end fields so the pill shape is preserved (markup is fixed:
+      field[0] = inline-start corners, .go = inline-end corners).
+   2) .hero has overflow:hidden, which would still clip the panel below the bar.
+      Its kenburns/scrim animation lives entirely inside the .scene child (which
+      has its OWN overflow:hidden), so relaxing .hero's clip is safe — the panel
+      can now overflow the hero's bottom edge. */
+.hero { overflow: visible; }
+.bookbar { overflow: visible; }
+.bookbar .field:first-child {
+  border-start-start-radius: 16px;
+  border-end-start-radius: 16px;
+}
+.bookbar .go {
+  border-start-end-radius: 16px;
+  border-end-end-radius: 16px;
+}
+
+/* Shared base for the date input (Experience/Guests now use their own DOM).
+   Reads like the static .val text: transparent, borderless, amber palette. */
+.bookbar .val .hs-date {
   width: 100%; max-width: 100%;
   background: transparent; border: 0; outline: none; box-shadow: none;
-  color: #F7F0E6; font-size: 15px; font-family: inherit; line-height: 1.2;
+  color: var(--text); font-size: 15px; font-family: inherit; line-height: 1.2;
   padding: 0; margin: 0; cursor: pointer;
-  -webkit-appearance: none; -moz-appearance: none; appearance: none;
+  color-scheme: dark;
 }
-.bookbar .val .hs-exp option { color: #2A170B; } /* native list on white bg */
-.bookbar .val .hs-pax { max-width: 70px; -moz-appearance: textfield; appearance: textfield; cursor: text; }
+.bookbar .val .hs-date::-webkit-calendar-picker-indicator { filter: invert(.85); opacity: .75; cursor: pointer; }
+.bookbar .val .hs-date:focus { color: #fff; }
+
+/* ---------------------------------------------------------------
+   EXPERIENCE — custom dark dropdown
+   --------------------------------------------------------------- */
+
+/* positioning context for the floating panel */
+.bookbar .val .hs-exp-wrap { position: relative; width: 100%; }
+
+/* native <select> kept as the form source of truth — visually hidden,
+   NOT display:none (must stay queryable / submittable) */
+.bookbar .val .hs-exp {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; border: 0;
+  overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* trigger / combobox button — reads like the static .val text */
+.bookbar .val .hs-exp-toggle {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  width: 100%; max-width: 100%;
+  background: transparent; border: 0; outline: none; box-shadow: none;
+  color: var(--text); font-size: 15px; font-family: inherit; line-height: 1.2;
+  padding: 0; margin: 0; cursor: pointer; text-align: start;
+  -webkit-appearance: none; appearance: none;
+}
+.bookbar .val .hs-exp-toggle:hover { color: var(--amber-soft); }
+.bookbar .val .hs-exp-toggle:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 3px;
+  border-radius: 6px;
+  color: #fff;
+}
+.bookbar .val .hs-exp-toggle-label {
+  flex: 1 1 auto; min-width: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* CSS-drawn chevron (no glyph) — rotates on open */
+.bookbar .val .hs-exp-toggle-caret {
+  flex: 0 0 auto;
+  width: 8px; height: 8px;
+  border-right: 2px solid var(--amber);
+  border-bottom: 2px solid var(--amber);
+  transform: rotate(45deg);
+  transform-origin: center;
+  transition: transform .2s ease, border-color .2s ease;
+  margin-top: -3px; /* optical centre of the rotated square */
+}
+.bookbar .val .hs-exp-toggle:hover .hs-exp-toggle-caret { border-color: var(--amber-soft); }
+.bookbar .val .hs-exp-wrap[data-open="true"] .hs-exp-toggle-caret { transform: rotate(225deg); margin-top: 2px; }
+
+/* floating panel (listbox) */
+.bookbar .val .hs-exp-panel {
+  position: absolute;
+  inset-inline-start: 0;
+  top: calc(100% + 12px);
+  z-index: 60;
+  min-width: 100%;
+  width: max-content;
+  max-width: min(360px, 86vw);
+  box-sizing: border-box;
+  padding: 6px;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 18px 40px -16px rgba(0, 0, 0, .7), 0 2px 8px rgba(0, 0, 0, .35);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  /* closed state */
+  opacity: 0; visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity .16s ease, transform .16s ease, visibility 0s linear .16s;
+}
+.bookbar .val .hs-exp-wrap[data-open="true"] .hs-exp-panel {
+  opacity: 1; visibility: visible;
+  transform: translateY(0);
+  transition: opacity .16s ease, transform .16s ease, visibility 0s;
+}
+
+/* scrollable region. position:relative makes it the offsetParent of the option
+   rows, so hero-search.js's scrollActiveIntoView() reads option.offsetTop relative
+   to THIS scroll container (not the padded .hs-exp-panel) and the keyboard-active
+   option scrolls into view pixel-accurately. */
+.bookbar .val .hs-exp-list {
+  position: relative;
+  overflow-y: auto;
+  max-height: 232px; /* ~5 roomy rows */
+  scrollbar-width: thin;
+  scrollbar-color: var(--amber) transparent;
+  overscroll-behavior: contain;
+}
+.bookbar .val .hs-exp-list::-webkit-scrollbar { width: 8px; }
+.bookbar .val .hs-exp-list::-webkit-scrollbar-track { background: transparent; }
+.bookbar .val .hs-exp-list::-webkit-scrollbar-thumb {
+  background: rgba(229, 162, 61, .55);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+.bookbar .val .hs-exp-list::-webkit-scrollbar-thumb:hover { background: var(--amber); background-clip: padding-box; }
+
+/* option rows */
+.bookbar .val .hs-exp-option {
+  position: relative;
+  padding-block: 12px;
+  padding-inline: 16px 38px; /* room for the selected check on the inline-end */
+  border-radius: var(--radius-sm);
+  color: var(--text); font-size: 15px; line-height: 1.3;
+  cursor: pointer;
+  text-align: start;
+  transition: background-color .12s ease, color .12s ease;
+  white-space: normal;
+}
+.bookbar .val .hs-exp-option + .hs-exp-option { margin-top: 2px; }
+.bookbar .val .hs-exp-option:hover,
+.bookbar .val .hs-exp-option.is-active {
+  background: rgba(229, 162, 61, .14);
+  color: #fff;
+}
+.bookbar .val .hs-exp-option[aria-selected="true"] {
+  color: var(--amber-soft);
+  font-weight: 600;
+}
+/* selected check — CSS drawn, flips inline-end automatically */
+.bookbar .val .hs-exp-option[aria-selected="true"]::after {
+  content: "";
+  position: absolute;
+  inset-inline-end: 16px;
+  top: 50%;
+  width: 6px; height: 11px;
+  margin-top: -7px;
+  border-right: 2px solid var(--amber);
+  border-bottom: 2px solid var(--amber);
+  transform: rotate(45deg);
+}
+
+/* scroll up/down arrow affordances — pinned, fade backdrop, hidden by default */
+.bookbar .val .hs-exp-arrow {
+  display: none;
+  position: absolute;
+  inset-inline: 6px;
+  height: 26px;
+  z-index: 2;
+  border: 0;
+  cursor: pointer;
+  -webkit-appearance: none; appearance: none;
+  background: transparent;
+}
+.bookbar .val .hs-exp-arrow.is-visible { display: block; }
+.bookbar .val .hs-exp-arrow--up   { top: 6px; }
+.bookbar .val .hs-exp-arrow--down { bottom: 6px; }
+.bookbar .val .hs-exp-arrow--up {
+  background: linear-gradient(to bottom, var(--surface) 35%, transparent);
+  border-start-start-radius: var(--radius-sm);
+  border-start-end-radius: var(--radius-sm);
+}
+.bookbar .val .hs-exp-arrow--down {
+  background: linear-gradient(to top, var(--surface) 35%, transparent);
+  border-end-start-radius: var(--radius-sm);
+  border-end-end-radius: var(--radius-sm);
+}
+/* CSS-drawn chevron glyph centred in the arrow button */
+.bookbar .val .hs-exp-arrow::before {
+  content: "";
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 8px; height: 8px;
+  border-right: 2px solid var(--amber);
+  border-bottom: 2px solid var(--amber);
+}
+.bookbar .val .hs-exp-arrow--up::before    { transform: translate(-50%, -30%) rotate(225deg); }
+.bookbar .val .hs-exp-arrow--down::before  { transform: translate(-50%, -70%) rotate(45deg); }
+.bookbar .val .hs-exp-arrow:hover::before  { border-color: var(--amber-soft); }
+
+/* ---------------------------------------------------------------
+   GUESTS — stepper
+   --------------------------------------------------------------- */
+
+.bookbar .val .hs-pax-stepper {
+  display: flex; align-items: center; gap: 8px;
+  width: 100%;
+}
+
+/* number input — keep transparent amber look + hidden native spinners */
+.bookbar .val .hs-pax {
+  flex: 0 1 auto;
+  width: 44px; min-width: 32px; max-width: 56px;
+  background: transparent; border: 0; outline: none; box-shadow: none;
+  color: var(--text); font-size: 15px; font-family: inherit; line-height: 1.2;
+  padding: 0; margin: 0;
+  text-align: center;
+  -webkit-appearance: none; appearance: none;
+  -moz-appearance: textfield;
+}
 .bookbar .val .hs-pax::-webkit-inner-spin-button,
 .bookbar .val .hs-pax::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
-.bookbar .val .hs-date { color-scheme: dark; cursor: pointer; }
-.bookbar .val .hs-date::-webkit-calendar-picker-indicator { filter: invert(.85); opacity: .75; cursor: pointer; }
-.bookbar .val .hs-exp:focus,
-.bookbar .val .hs-date:focus,
 .bookbar .val .hs-pax:focus { color: #fff; }
+
+/* +/- buttons — small themed squares, CSS-drawn ▲ / ▼ glyphs */
+.bookbar .val .hs-pax-btn {
+  position: relative;
+  flex: 0 0 auto;
+  width: 30px; height: 30px;
+  display: grid; place-items: center;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  -webkit-appearance: none; appearance: none;
+  transition: background-color .12s ease, border-color .12s ease, opacity .12s ease;
+}
+.bookbar .val .hs-pax-btn:hover {
+  background: rgba(229, 162, 61, .16);
+  border-color: var(--line-strong);
+}
+.bookbar .val .hs-pax-btn:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
+/* glyph: --inc draws an up chevron (increase), --dec a down chevron (decrease) */
+.bookbar .val .hs-pax-btn::before {
+  content: "";
+  width: 8px; height: 8px;
+  border-right: 2px solid var(--amber);
+  border-bottom: 2px solid var(--amber);
+}
+.bookbar .val .hs-pax-btn--inc::before { transform: translateY(2px) rotate(225deg); }
+.bookbar .val .hs-pax-btn--dec::before { transform: translateY(-2px) rotate(45deg); }
+.bookbar .val .hs-pax-btn:hover::before { border-color: var(--amber-soft); }
+.bookbar .val .hs-pax-btn.is-disabled,
+.bookbar .val .hs-pax-btn:disabled {
+  opacity: .35;
+  cursor: default;
+  background: var(--surface-2);
+  border-color: var(--line);
+}
+.bookbar .val .hs-pax-btn.is-disabled:hover::before,
+.bookbar .val .hs-pax-btn:disabled:hover::before { border-color: var(--amber); }
+
+/* ---------------------------------------------------------------
+   RTL (/ar/ renders <html dir="rtl">) — logical props above handle most;
+   the CSS-drawn chevrons are vertical/symmetric so need no flip. Panel
+   inline-start inset + option padding + selected check inline-end all flip
+   automatically via logical properties.
+   --------------------------------------------------------------- */
+
+/* ---------------------------------------------------------------
+   MOBILE — the bookbar stacks to a single column at <=720px (see the
+   @media (max-width:720px) block elsewhere in this file). Re-state the
+   corner radii for the now-vertical pill (first field = top corners,
+   .go = bottom corners) and make the panel full-width + shorter.
+   --------------------------------------------------------------- */
+@media (max-width: 720px) {
+  .bookbar .field:first-child {
+    border-start-start-radius: 16px;
+    border-start-end-radius: 16px;
+    border-end-start-radius: 0;
+  }
+  .bookbar .go {
+    border-end-start-radius: 16px;
+    border-end-end-radius: 16px;
+    border-start-end-radius: 0;
+  }
+  .bookbar .val .hs-exp-panel {
+    width: 100%;
+    max-width: 100%;
+    max-height: 200px;
+  }
+  .bookbar .val .hs-pax-btn { width: 32px; height: 32px; }
+}
 
 .scroll-hint { position: absolute; left: 50%; bottom: 26px; transform: translateX(-50%); z-index: 6; color: var(--muted); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; display: flex; flex-direction: column; align-items: center; gap: 8px; }
 .scroll-hint .line { width: 1px; height: 34px; background: linear-gradient(var(--amber), transparent); animation: scrolldrop 2s ease-in-out infinite; }
@@ -630,7 +918,7 @@ html { scroll-padding-top: 96px; }
 .about-media { position: relative; }
 .about-media .scene { border-radius: 22px; height: 540px; }
 .about-media .float-card {
-  position: absolute; right: -24px; bottom: 40px; background: var(--surface); border: 1px solid var(--line-strong);
+  position: absolute; right: -24px; bottom: 130px; background: var(--surface); border: 1px solid var(--line-strong);
   border-radius: 16px; padding: 22px 24px; width: 220px; box-shadow: 0 26px 50px -22px rgba(0,0,0,.8);
 }
 .about-media .float-card .num { font-family: var(--serif); font-size: 42px; color: var(--amber-soft); line-height: 1; }
@@ -1255,6 +1543,29 @@ body.home .elementor-top-section + .elementor-top-section { margin-top: 28px; }
    and, once the form grew, the scroll cue overlapped (shadowed) it. ---- */
 .hero .cta-row { display: none; }
 .hero .scroll-hint { display: none; }
+
+/* ---- hero: form-first layout ----
+   The booking form IS the hero's primary action, so it now LEADS the stack and
+   the eyebrow / headline / sub-text follow beneath it (swapped from the original
+   text-first order). The content is top-anchored with a slimmer top pad so the
+   form is the first thing a visitor sees on load — no scrolling to reach it. */
+.hero { align-items: flex-start; }
+.hero .wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-top: 88px;
+}
+.hero .wrap > .bookbar,
+.hero .wrap > .bookbar.bookbar--tabs {
+  order: -1;
+  margin: 0 0 40px;
+  /* The flex column's flex-start cross-alignment would shrink the form to its
+     content width (~850px), squeezing the 5-field Hotels row onto two lines.
+     Stretch it back so it honours its own 1120px max-width and every tab's
+     row stays on ONE line. */
+  align-self: stretch;
+}
 
 /* The hero booking bar sits near the section's bottom edge, so its popups
    (calendar / airport autocomplete / cabin / passengers) open downward and

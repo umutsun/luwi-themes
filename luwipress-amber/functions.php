@@ -120,6 +120,13 @@ if ( class_exists( 'WooCommerce' ) ) {
 	require_once LUWIPRESS_AMBER_DIR . '/inc/wc-page-fallback.php';
 }
 
+// Fly by Deniz flight-results i18n bridge — translates the fbd-connect search
+// widget's JS-rendered labels (Non-stop, Cabin bag, Book this flight, the value
+// panel, status lines) in place from the gettext catalog under
+// wp-content/languages/plugins/, so plugin updates never wipe the translation.
+// Self-gates on the fbd-connect plugin being active; inert otherwise.
+require_once LUWIPRESS_AMBER_DIR . '/inc/fbd-i18n.php';
+
 // Blog page auto-fallback — promotes a "Blog/Journal/News" page to WP
 // "Posts page" when none is set, and injects a recent-posts grid into
 // any empty blog-style page so an unconfigured BLOG menu link never

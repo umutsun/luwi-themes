@@ -1351,6 +1351,20 @@ body.woocommerce-checkout main.lwp-fallback-main {
 /* breathing room between the big serif "Cart" H1 and the content rows below */
 body.woocommerce-cart .lwp-fallback-page__head { margin-bottom: 34px !important; }
 body.woocommerce-cart .lwp-fallback-page__title { margin-bottom: 0 !important; }
+/* Flight Booking (flybydeniz-connect): the booking form (.fbd-flight-booking) is
+   a max-width:1100px centered card, but the theme's fallback page chrome is
+   full-bleed — so the "Flight Booking" H1 sat hard against the viewport edge,
+   out of line with the form. Constrain the fallback main to the same 1100px
+   column so the title lines up with the form card's left edge. */
+body:has(.fbd-flight-booking) main.lwp-fallback-main,
+body:has(.fbd-flight-confirmation) main.lwp-fallback-main {
+  max-width: 1100px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  /* The fallback chrome has no default vertical padding, so the "Flight Booking"
+     H1 sat hard against the header. Match the account/checkout breathing room. */
+  padding: 48px 24px 80px !important;
+}
 /* classic checkout/cart panels -> dark surface */
 .lwp-co-step, .lwp-co-summary {
   background: var(--surface, #2A201A) !important;

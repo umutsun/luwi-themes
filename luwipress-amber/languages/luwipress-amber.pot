@@ -1,0 +1,7715 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: LuwiPress Amber\n"
+"Report-Msgid-Bugs-To: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: luwipress-amber\n"
+"X-Generator: luwipress-amber-i18n\n"
+
+#: 404.php:58
+#: search.php:165
+msgid "Back to home →"
+msgstr ""
+
+#: 404.php:25
+msgid "Custom commissions"
+msgstr ""
+
+#: 404.php:26
+#: home.php:21
+#: inc/widgets/lib/class-editorial-grid.php:80
+#: inc/wizard/lib/class-content-compiler.php:329
+#: inc/wizard/lib/class-mapper.php:362
+msgid "Journal"
+msgstr ""
+
+#: 404.php:24
+#: inc/wizard/views/wizard.php:116
+msgid "Master luthiers"
+msgstr ""
+
+#: 404.php:66
+msgid "Most asked-about"
+msgstr ""
+
+#: 404.php:23
+#: inc/widgets/lib/class-ai-search.php:71
+msgid "New arrivals"
+msgstr ""
+
+#: 404.php:81
+msgid "Or search"
+msgstr ""
+
+#: 404.php:47
+#: inc/widgets/lib/class-404-hero.php:29
+msgid "Page not found"
+msgstr ""
+
+#: 404.php:84
+#: header.php:352
+#: header.php:407
+#: inc/widgets/lib/class-404-hero.php:112
+#: inc/widgets/lib/class-header-actions.php:151
+msgid "Search"
+msgstr ""
+
+#: 404.php:85
+#: search.php:71
+msgid "Search instruments, masters…"
+msgstr ""
+
+#: 404.php:52
+msgid "The workshop door <em>is closed</em>."
+msgstr ""
+
+#: 404.php:56
+msgid "This page either moved, sold out, or was never here. Try a different door:"
+msgstr ""
+
+#: archive-lwp-cpt.php:30
+#: inc/widgets/lib/class-faq.php:45
+#: inc/widgets/lib/class-info-bar.php:26
+#: inc/widgets/lib/class-shop-filters.php:93
+#: inc/widgets/lib/class-stat-counter.php:39
+msgid "Items"
+msgstr ""
+
+#: archive-lwp-cpt.php:91
+#: archive-lwp_vendor.php:105
+#: index.php:54
+#: single.php:116
+#: woocommerce/myaccount/orders.php:106
+msgid "Next →"
+msgstr ""
+
+#: archive-lwp-cpt.php:107
+#: archive-lwp_vendor.php:122
+msgid "No %s yet."
+msgstr ""
+
+#: archive-lwp-cpt.php:90
+#: archive-lwp_vendor.php:104
+#: index.php:53
+#: single.php:110
+#: woocommerce/myaccount/orders.php:103
+msgid "← Previous"
+msgstr ""
+
+#: archive-lwp_vendor.php:21
+#: single-lwp_vendor.php:28
+msgid "People"
+msgstr ""
+
+#: archive-lwp_vendor.php:18
+#: single-lwp_vendor.php:25
+msgid "Person"
+msgstr ""
+
+#: archive-lwp_vendor.php:30
+msgid "— The hands behind the work"
+msgstr ""
+
+#: archive.php:91
+msgid "All · %d"
+msgstr ""
+
+#: archive.php:48
+msgid "Archive"
+msgstr ""
+
+#: archive.php:46
+#: inc/widgets/lib/class-byline-card.php:101
+msgid "Author"
+msgstr ""
+
+#: archive.php:23
+#: home.php:32
+#: single.php:46
+#: woocommerce/archive-product.php:65
+#: woocommerce/myaccount/my-account.php:19
+msgid "Breadcrumb"
+msgstr ""
+
+#: archive.php:42
+#: inc/widgets/lib/class-tour-filters.php:33
+msgid "Category"
+msgstr ""
+
+#: archive.php:88
+#: inc/widgets/lib/class-editorial-grid.php:63
+msgid "Filter by category"
+msgstr ""
+
+#: archive.php:50
+msgid "From the atelier"
+msgstr ""
+
+#: archive.php:24
+#: footer.php:80
+#: home.php:33
+#: inc/wizard/lib/class-mapper.php:109
+#: inc/wizard/lib/class-mapper.php:118
+msgid "Home"
+msgstr ""
+
+#: archive.php:118
+#: home.php:73
+msgid "Newer"
+msgstr ""
+
+#: archive.php:147
+msgid "Nothing here yet — try another category or come back soon."
+msgstr ""
+
+#: archive.php:119
+#: home.php:74
+msgid "Older"
+msgstr ""
+
+#: archive.php:129
+#: home.php:84
+msgid "Page %1$d of %2$d"
+msgstr ""
+
+#: archive.php:121
+#: home.php:76
+msgid "Posts pagination"
+msgstr ""
+
+#: archive.php:44
+#: inc/widgets/lib/class-activity-cards.php:48
+msgid "Tag"
+msgstr ""
+
+#: footer.php:81
+msgid "About Us"
+msgstr ""
+
+#: footer.php:131
+msgid "All Rights Reserved."
+msgstr ""
+
+#: footer.php:162
+msgid "Chat on WhatsApp"
+msgstr ""
+
+#: footer.php:83
+#: inc/booking/voucher.php:74
+#: inc/widgets/lib/class-footer-brand.php:81
+#: inc/wizard/lib/class-mapper.php:363
+#: woocommerce/checkout/form-checkout.php:54
+msgid "Contact"
+msgstr ""
+
+#: footer.php:93
+msgid "Explore"
+msgstr ""
+
+#: footer.php:66
+msgid "Quick Links"
+msgstr ""
+
+#: footer.php:116
+msgid "Seasonal experiences and quiet-season deals, a few times a year."
+msgstr ""
+
+#: footer.php:115
+#: inc/widgets/lib/class-newsletter.php:33
+msgid "Stay in the loop"
+msgstr ""
+
+#: footer.php:119
+#: inc/footer-enhancements.php:371
+#: inc/widgets/lib/class-newsletter.php:38
+#: inc/widgets/lib/class-youtube-channel.php:313
+#: inc/widgets/lib/class-youtube-channel.php:98
+msgid "Subscribe"
+msgstr ""
+
+#: footer.php:120
+msgid "Thanks — you're on the list."
+msgstr ""
+
+#: footer.php:82
+#: inc/widgets/lib/class-tour-grid.php:30
+msgid "Tours"
+msgstr ""
+
+#: footer.php:118
+#: inc/footer-enhancements.php:365
+msgid "Your email"
+msgstr ""
+
+#: header.php:356
+#: inc/widgets/lib/class-header-actions.php:157
+#: woocommerce/myaccount/dashboard.php:76
+msgid "Account"
+msgstr ""
+
+#: header.php:369
+#: woocommerce/myaccount/form-edit-account.php:22
+msgid "Account details"
+msgstr ""
+
+#: header.php:365
+msgid "Account quick links"
+msgstr ""
+
+#: header.php:368
+#: woocommerce/myaccount/view-order.php:142
+msgid "Addresses"
+msgstr ""
+
+#: header.php:109
+msgid "Browse Tours"
+msgstr ""
+
+#: header.php:455
+msgid "Call"
+msgstr ""
+
+#: header.php:391
+#: header.php:423
+#: inc/widgets/lib/class-header-actions.php:162
+msgid "Cart"
+msgstr ""
+
+#: header.php:449
+#: inc/widgets/lib/class-search-overlay.php:179
+#: inc/widgets/lib/class-search-overlay.php:217
+msgid "Close"
+msgstr ""
+
+#: header.php:427
+msgid "Close cart"
+msgstr ""
+
+#: header.php:409
+msgid "Close search"
+msgstr ""
+
+#: header.php:385
+#: woocommerce/myaccount/form-login.php:89
+msgid "Create account"
+msgstr ""
+
+#: header.php:366
+msgid "Dashboard"
+msgstr ""
+
+#: header.php:458
+#: inc/widgets/lib/class-footer-brand.php:83
+#: woocommerce/myaccount/form-login.php:74
+msgid "Email"
+msgstr ""
+
+#: header.php:378
+#: woocommerce/myaccount/form-login.php:29
+msgid "Email or username"
+msgstr ""
+
+#: header.php:321
+#: inc/widgets/lib/class-featured-product.php:59
+#: inc/widgets/lib/class-hero-split.php:134
+#: inc/widgets/lib/class-mega-menu.php:519
+#: woocommerce/myaccount/form-login.php:136
+msgid "Featured"
+msgstr ""
+
+#: header.php:384
+msgid "Forgot password?"
+msgstr ""
+
+#: header.php:362
+msgid "Hi, %s."
+msgstr ""
+
+#: header.php:202
+#: inc/wizard/views/wizard.php:98
+msgid "Languages"
+msgstr ""
+
+#: header.php:400
+#: inc/mega-menu-customizer.php:65
+#: inc/widgets/lib/class-header-actions.php:175
+#: inc/widgets/lib/class-mega-menu.php:50
+msgid "Menu"
+msgstr ""
+
+#: header.php:301
+msgid "More"
+msgstr ""
+
+#: header.php:367
+msgid "My bookings"
+msgstr ""
+
+#: header.php:379
+#: woocommerce/myaccount/form-login.php:34
+#: woocommerce/myaccount/form-login.php:80
+msgid "Password"
+msgstr ""
+
+#: header.php:291
+msgid "Popular"
+msgstr ""
+
+#: header.php:417
+msgid "Press Enter to search · Esc to close"
+msgstr ""
+
+#: header.php:258
+#: inc/widgets/lib/class-mega-menu.php:264
+msgid "Primary"
+msgstr ""
+
+#: header.php:411
+msgid "Search tours & experiences"
+msgstr ""
+
+#: header.php:381
+#: woocommerce/checkout/form-checkout.php:60
+msgid "Sign in"
+msgstr ""
+
+#: header.php:375
+msgid "Sign in to view bookings, vouchers and trip details."
+msgstr ""
+
+#: header.php:371
+msgid "Sign out &rarr;"
+msgstr ""
+
+#: header.php:396
+#: header.php:446
+msgid "Toggle theme"
+msgstr ""
+
+#: header.php:414
+msgid "Try “desert safari”, “helicopter”, “Burj Khalifa”…"
+msgstr ""
+
+#: header.php:288
+#: header.php:307
+msgid "View all"
+msgstr ""
+
+#: header.php:460
+msgid "Visit"
+msgstr ""
+
+#: header.php:374
+#: inc/widgets/lib/class-hero-split.php:45
+msgid "Welcome"
+msgstr ""
+
+#: header.php:426
+msgid "Your cart"
+msgstr ""
+
+#: home.php:25
+msgid "Field notes, workshop visits and long reads from the atelier."
+msgstr ""
+
+#: home.php:39
+msgid "Long reads from the atelier"
+msgstr ""
+
+#: home.php:94
+msgid "No posts yet — the atelier is still drafting."
+msgstr ""
+
+#: inc/ai-surface.php:273
+msgid "AI suggestions"
+msgstr ""
+
+#: inc/ai-surface.php:352
+msgid "Browse the family"
+msgstr ""
+
+#: inc/ai-surface.php:342
+msgid "More from %s"
+msgstr ""
+
+#: inc/ai-surface.php:275
+#: inc/ai-surface.php:615
+msgid "No products match yet — try a broader term."
+msgstr ""
+
+#: inc/ai-surface.php:348
+msgid "Pieces with the same hand"
+msgstr ""
+
+#: inc/ai-surface.php:616
+msgid "Searching…"
+msgstr ""
+
+#: inc/ai-surface.php:54
+msgid "Too many requests. Please wait a moment."
+msgstr ""
+
+#: inc/ai-surface.php:617
+msgid "Try these"
+msgstr ""
+
+#: inc/archive-parent-enrichment.php:225
+#: inc/archive-parent-enrichment.php:248
+#: inc/archive-parent-enrichment.php:82
+msgid "Atelier note"
+msgstr ""
+
+#: inc/archive-parent-enrichment.php:178
+msgid "Atelier pick"
+msgstr ""
+
+#: inc/archive-parent-enrichment.php:81
+msgid "Curator note"
+msgstr ""
+
+#: inc/archive-parent-enrichment.php:175
+msgid "Featured piece"
+msgstr ""
+
+#: inc/archive-parent-enrichment.php:232
+#: inc/archive-parent-enrichment.php:253
+msgid "Featured product (override)"
+msgstr ""
+
+#: inc/archive-parent-enrichment.php:188
+msgid "Open piece →"
+msgstr ""
+
+#: inc/archive-parent-enrichment.php:250
+msgid "Optional editorial paragraph for parent-category archives."
+msgstr ""
+
+#: inc/archive-parent-enrichment.php:255
+msgid "Optional product ID. Leave empty for auto-best-seller."
+msgstr ""
+
+#: inc/archive-parent-enrichment.php:235
+msgid "Product ID to feature in the parent-archive band. Leave empty to auto-pick the best-selling product across this category and its descendants."
+msgstr ""
+
+#: inc/archive-parent-enrichment.php:228
+msgid "Short editorial paragraph rendered above sub-category tiles on parent category archives. HTML allowed (light tags). Leave empty to hide."
+msgstr ""
+
+#: inc/blog-page-fallback.php:262
+msgid "Read →"
+msgstr ""
+
+#: inc/blog-page-fallback.php:244
+msgid "Recent posts"
+msgstr ""
+
+#: inc/booking/cart.php:40
+msgid "/ person"
+msgstr ""
+
+#: inc/booking/cart.php:291
+msgid "Add-on"
+msgstr ""
+
+#: inc/booking/cart.php:114
+#: inc/booking/cart.php:272
+#: inc/booking/class-tour-product.php:125
+msgid "Add-ons"
+msgstr ""
+
+#: inc/booking/cart.php:138
+msgid "Ask on WhatsApp"
+msgstr ""
+
+#: inc/booking/cart.php:84
+msgid "Clear"
+msgstr ""
+
+#: inc/booking/cart.php:265
+#: inc/booking/cart.php:68
+#: inc/booking/voucher.php:67
+#: inc/widgets/lib/class-wc-related.php:52
+#: woocommerce/checkout/thankyou.php:67
+msgid "Date"
+msgstr ""
+
+#: inc/booking/cart.php:94
+msgid "Fewer guests"
+msgstr ""
+
+#: inc/booking/cart.php:39
+#: inc/booking/voucher.php:71
+#: inc/widgets/lib/class-tour-grid.php:185
+msgid "From"
+msgstr ""
+
+#: inc/booking/cart.php:266
+#: inc/booking/cart.php:92
+msgid "Guests"
+msgstr ""
+
+#: inc/booking/cart.php:96
+msgid "More guests"
+msgstr ""
+
+#: inc/booking/cart.php:78
+msgid "Next month"
+msgstr ""
+
+#: inc/booking/cart.php:186
+msgid "Please choose a tour date before reserving."
+msgstr ""
+
+#: inc/booking/cart.php:76
+msgid "Previous month"
+msgstr ""
+
+#: inc/booking/cart.php:36
+#: inc/widgets/lib/class-tour-booking-box.php:101
+#: inc/widgets/lib/class-tour-booking-box.php:43
+msgid "Reserve Your Spot"
+msgstr ""
+
+#: inc/booking/cart.php:71
+msgid "Select a date"
+msgstr ""
+
+#: inc/booking/cart.php:103
+#: inc/booking/cart.php:268
+msgid "Time slot"
+msgstr ""
+
+#: inc/booking/cart.php:83
+msgid "Today"
+msgstr ""
+
+#: inc/booking/cart.php:127
+#: woocommerce/checkout/form-checkout.php:153
+#: woocommerce/myaccount/dashboard.php:130
+msgid "Total"
+msgstr ""
+
+#: inc/booking/checkout.php:57
+msgid "Drop-off (if different)"
+msgstr ""
+
+#: inc/booking/checkout.php:50
+msgid "Flight number (arrival day only)"
+msgstr ""
+
+#: inc/booking/checkout.php:63
+msgid "Notes (child seats, accessibility, occasions…)"
+msgstr ""
+
+#: inc/booking/checkout.php:37
+msgid "Pick-up from (hotel / address)"
+msgstr ""
+
+#: inc/booking/checkout.php:73
+msgid "Please tell us where to pick you up."
+msgstr ""
+
+#: inc/booking/checkout.php:44
+msgid "Preferred pick-up time"
+msgstr ""
+
+#: inc/booking/checkout.php:31
+msgid "Trip & pickup details"
+msgstr ""
+
+#: inc/booking/checkout.php:51
+msgid "e.g. EK124"
+msgstr ""
+
+#: inc/booking/checkout.php:38
+msgid "e.g. Rixos Premium, JBR"
+msgstr ""
+
+#: inc/booking/class-dispatch-metabox.php:27
+msgid "Dispatch / Voucher"
+msgstr ""
+
+#: inc/booking/class-dispatch-metabox.php:56
+msgid "Driver mobile"
+msgstr ""
+
+#: inc/booking/class-dispatch-metabox.php:55
+msgid "Driver name"
+msgstr ""
+
+#: inc/booking/class-dispatch-metabox.php:48
+msgid "No tour line item on this order."
+msgstr ""
+
+#: inc/booking/class-dispatch-metabox.php:58
+#: inc/booking/voucher.php:83
+msgid "Plate number"
+msgstr ""
+
+#: inc/booking/class-dispatch-metabox.php:57
+#: inc/booking/voucher.php:82
+msgid "Vehicle"
+msgstr ""
+
+#: inc/booking/class-dispatch-metabox.php:72
+msgid "Voucher confirmed (show \"Confirmed\" badge + driver block)"
+msgstr ""
+
+#: inc/booking/class-tour-product.php:114
+msgid "0 = pay in full. Deposit checkout option is a Phase 2 feature."
+msgstr ""
+
+#: inc/booking/class-tour-product.php:50
+msgid "Bookable tour"
+msgstr ""
+
+#: inc/booking/class-tour-product.php:105
+msgid "Cancellation note"
+msgstr ""
+
+#: inc/booking/class-tour-product.php:91
+msgid "Default guests"
+msgstr ""
+
+#: inc/booking/class-tour-product.php:110
+msgid "Deposit %"
+msgstr ""
+
+#: inc/booking/class-tour-product.php:59
+msgid "Duration (label)"
+msgstr ""
+
+#: inc/booking/class-tour-product.php:66
+msgid "Duration bucket"
+msgstr ""
+
+#: inc/booking/class-tour-product.php:51
+msgid "Enable the date + guests booking box and trip/voucher fields for this product."
+msgstr ""
+
+#: inc/booking/class-tour-product.php:127
+msgid "Format: Label | Price — one per line. Price is per person, in the store currency."
+msgstr ""
+
+#: inc/booking/class-tour-product.php:106
+msgid "Free cancellation up to 24h before"
+msgstr ""
+
+#: inc/booking/class-tour-product.php:71
+#: inc/widgets/lib/class-tour-filters.php:82
+msgid "Full day"
+msgstr ""
+
+#: inc/booking/class-tour-product.php:70
+#: inc/widgets/lib/class-tour-filters.php:81
+msgid "Half day (3–6h)"
+msgstr ""
+
+#: inc/booking/class-tour-product.php:101
+msgid "Hotel pickup included"
+msgstr ""
+
+#: inc/booking/class-tour-product.php:85
+msgid "Maximum guests"
+msgstr ""
+
+#: inc/booking/class-tour-product.php:79
+msgid "Minimum guests"
+msgstr ""
+
+#: inc/booking/class-tour-product.php:72
+#: inc/widgets/lib/class-tour-filters.php:83
+msgid "Multi-day"
+msgstr ""
+
+#: inc/booking/class-tour-product.php:121
+msgid "One per line, e.g. Morning · Sunset · Evening"
+msgstr ""
+
+#: inc/booking/class-tour-product.php:126
+msgid "One per line: Label | Price  (e.g. Quad bike | 120)"
+msgstr ""
+
+#: inc/booking/class-tour-product.php:122
+msgid "One slot per line. Leave empty for no time selection."
+msgstr ""
+
+#: inc/booking/class-tour-product.php:62
+msgid "Shown on the tour card and Quick Facts."
+msgstr ""
+
+#: inc/booking/class-tour-product.php:120
+msgid "Time slots"
+msgstr ""
+
+#: inc/booking/class-tour-product.php:20
+msgid "Tour / Booking"
+msgstr ""
+
+#: inc/booking/class-tour-product.php:69
+#: inc/widgets/lib/class-tour-filters.php:80
+msgid "Up to 3 hours"
+msgstr ""
+
+#: inc/booking/class-tour-product.php:75
+msgid "Used by the Tour Packages duration filter."
+msgstr ""
+
+#: inc/booking/class-tour-product.php:60
+msgid "e.g. 6 hours"
+msgstr ""
+
+#: inc/booking/class-tour-product.php:68
+msgid "— (auto)"
+msgstr ""
+
+#: inc/booking/ics.php:81
+msgid "%d guests"
+msgstr ""
+
+#: inc/booking/ics.php:83
+msgid "Driver: %s"
+msgstr ""
+
+#: inc/booking/ics.php:62
+msgid "Invalid tour date."
+msgstr ""
+
+#: inc/booking/ics.php:54
+msgid "No tour on this voucher."
+msgstr ""
+
+#: inc/booking/ics.php:42
+#: inc/booking/voucher.php:163
+msgid "Voucher not found."
+msgstr ""
+
+#: inc/booking/schema-trip.php:27
+msgid "TouristTrip schema for bookable tour products."
+msgstr ""
+
+#: inc/booking/voucher.php:93
+msgid "Add to calendar (.ics)"
+msgstr ""
+
+#: inc/booking/voucher.php:63
+#: woocommerce/checkout/thankyou.php:87
+#: woocommerce/myaccount/view-order.php:28
+msgid "Confirmed"
+msgstr ""
+
+#: inc/booking/voucher.php:89
+msgid "Contact concierge"
+msgstr ""
+
+#: inc/booking/voucher.php:73
+msgid "Customer"
+msgstr ""
+
+#: inc/booking/voucher.php:80
+msgid "Driver"
+msgstr ""
+
+#: inc/booking/voucher.php:69
+msgid "Flight"
+msgstr ""
+
+#: inc/booking/voucher.php:81
+msgid "Mobile"
+msgstr ""
+
+#: inc/booking/voucher.php:70
+msgid "Pax"
+msgstr ""
+
+#: inc/booking/voucher.php:68
+msgid "Pick-up time"
+msgstr ""
+
+#: inc/booking/voucher.php:94
+msgid "Print voucher"
+msgstr ""
+
+#: inc/booking/voucher.php:88
+msgid "Show this voucher to your driver · 24/7 concierge on WhatsApp"
+msgstr ""
+
+#: inc/booking/voucher.php:72
+msgid "To"
+msgstr ""
+
+#: inc/booking/voucher.php:169
+msgid "Tour voucher"
+msgstr ""
+
+#: inc/booking/voucher.php:78
+msgid "Your driver & vehicle"
+msgstr ""
+
+#: inc/booking/voucher.php:154
+msgid "Your tour voucher"
+msgstr ""
+
+#: inc/booking/voucher.php:142
+msgid "Your voucher"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:238
+msgid "A premier travel and tourism company — curated experiences, seamless travel and customized packages, handled end to end."
+msgstr ""
+
+#: inc/customizer/bootstrap.php:46
+msgid "Accent (sunset coral)"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:299
+msgid "Animation"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:38
+#: inc/wizard/views/wizard.php:30
+msgid "Brand"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:243
+msgid "Brand blurb (footer left column)"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:361
+msgid "Browser-native (recommended)"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:357
+msgid "Browser-native is the default. \"Eager hero\" loads the first hero image immediately to improve LCP."
+msgstr ""
+
+#: inc/customizer/bootstrap.php:333
+msgid "Cart bump animation"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:334
+msgid "Cart icon scales when a product is added."
+msgstr ""
+
+#: inc/customizer/bootstrap.php:48
+msgid "Coral (energy)"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:47
+msgid "Coral deep (hover / urgent)"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:385
+msgid "DNS prefetch for fonts.googleapis.com"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:51
+msgid "Deepest base (utility / footer)"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:130
+msgid "Defaults to your admin email. Override if you publish a different inbox."
+msgstr ""
+
+#: inc/customizer/bootstrap.php:373
+msgid "Disable WP emoji script"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:362
+msgid "Eager hero (faster LCP)"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:311
+msgid "Fades in on page load, hides on window.load (or 4 s hard cap). Disable if you serve heavy media."
+msgstr ""
+
+#: inc/customizer/bootstrap.php:232
+#: inc/footer-enhancements.php:47
+msgid "Footer"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:266
+msgid "Footer byline (bottom-right)"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:255
+msgid "Free-form text — VAT number, company registration, etc. Year and site name are added automatically."
+msgstr ""
+
+#: inc/customizer/bootstrap.php:177
+msgid "Header"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:211
+msgid "Header CTA — URL"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:199
+msgid "Header CTA — label"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:356
+msgid "Image lazy-load strategy"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:254
+msgid "Legal line (footer bottom-left)"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:157
+msgid "Link to a tracking page (e.g. a page with the [woocommerce_order_tracking] shortcode). Leave empty to hide the link."
+msgstr ""
+
+#: inc/customizer/bootstrap.php:29
+#: inc/ecosystem-dashboard.php:25
+#: inc/ecosystem-dashboard.php:26
+#: inc/footer-enhancements.php:38
+#: inc/mega-menu-customizer.php:40
+msgid "LuwiPress Amber"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:374
+msgid "Modern browsers render emoji natively — saves a request."
+msgstr ""
+
+#: inc/customizer/bootstrap.php:363
+msgid "Off"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:200
+msgid "Optional gold gradient button on the right (e.g. \"Birthday sale →\"). Leave empty to hide."
+msgstr ""
+
+#: inc/customizer/bootstrap.php:50
+msgid "Page background (warm dusk)"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:310
+msgid "Page loader (gold \"T\" mark)"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:343
+#: inc/page-loader.php:206
+#: inc/template-redirects.php:960
+msgid "Performance"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:44
+msgid "Primary (amber)"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:322
+msgid "Scroll reveal animations"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:45
+msgid "Secondary (soft amber)"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:222
+msgid "Show subcategory strip (megabar)"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:95
+msgid "Show topbar"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:107
+msgid "Shown left, with a 📍 prefix. Leave empty to hide."
+msgstr ""
+
+#: inc/customizer/bootstrap.php:142
+msgid "Shown right, after the language switcher."
+msgstr ""
+
+#: inc/customizer/bootstrap.php:188
+msgid "Sticky header (shrinks on scroll)"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:49
+msgid "Text (warm off-white)"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:84
+msgid "The thin black strip above the header — runs across every page."
+msgstr ""
+
+#: inc/customizer/bootstrap.php:223
+msgid "The thin row of links under the header — auto-fills from your top WooCommerce sub-categories."
+msgstr ""
+
+#: inc/customizer/bootstrap.php:30
+msgid "Theme-wide brand, topbar, header and footer settings. Anything you set here applies site-wide; per-page tweaks live in Elementor."
+msgstr ""
+
+#: inc/customizer/bootstrap.php:83
+#: inc/widgets/lib/class-topbar.php:23
+msgid "Topbar"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:129
+msgid "Topbar — contact email"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:106
+msgid "Topbar — location text"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:118
+msgid "Topbar — phone number"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:141
+msgid "Topbar — promo line"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:156
+msgid "Topbar — track-order URL"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:168
+msgid "Topbar — track-order label"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:163
+msgid "Track order"
+msgstr ""
+
+#: inc/customizer/bootstrap.php:74
+msgid "When no custom logo is set, this letter is rendered in italic gold inside the site name (e.g. \"tap<em>a</em>dum\"). Single character, optional."
+msgstr ""
+
+#: inc/customizer/bootstrap.php:73
+msgid "Wordmark accent letter"
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:147
+msgid "AI search"
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:131
+msgid "AI search, customer chat, and Knowledge-Graph-curated related products will stay dark until you activate it."
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:140
+msgid "AI surfaces"
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:270
+msgid "CRM"
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:260
+msgid "Cache"
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:204
+msgid "Capability"
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:160
+#: inc/ecosystem-dashboard.php:322
+msgid "Customer chat"
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:198
+msgid "Detected and amplified"
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:171
+msgid "Disabled — turn on Customer Chat in the LuwiPress plugin to surface the bubble."
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:108
+msgid "Elementor"
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:333
+msgid "Elementor settings"
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:174
+msgid "Enable chat →"
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:282
+msgid "Footer newsletter slot is ready to render the operator-picked shortcode."
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:197
+msgid "Friendly plugins"
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:153
+msgid "Idle — activate LuwiPress to bring this online."
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:188
+msgid "Idle — needs WooCommerce active."
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:133
+msgid "Install LuwiPress"
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:182
+msgid "KG-related rail"
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:325
+msgid "Knowledge graph"
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:103
+msgid "LuwiPress"
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:90
+msgid "LuwiPress Amber %s"
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:272
+msgid "LuwiPress avoids duplicating contact lists. Theme account popover stays single-source."
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:319
+msgid "LuwiPress dashboard"
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:85
+msgid "LuwiPress ecosystem"
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:130
+msgid "LuwiPress plugin is not active."
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:280
+msgid "Newsletter form"
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:289
+msgid "No friendly plugins detected yet."
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:187
+msgid "On every single-product page: 4 sibling instruments curated by master / luthier with category fallback. Cached 1 hour per product."
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:250
+msgid "Page builder"
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:205
+#: inc/wizard/views/wizard.php:100
+msgid "Plugin"
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:309
+msgid "Quick links"
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:216
+#: inc/ecosystem-dashboard.php:223
+msgid "SEO"
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:152
+msgid "Search overlay shows product matches plus AI-suggested next searches as the visitor types. Cached 30 minutes per query."
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:164
+msgid "Sticky bubble live. Greeting:"
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:315
+msgid "Theme Customizer"
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:218
+msgid "Theme breadcrumb yields to the SEO plugin’s rendered breadcrumb. Schema and meta keys auto-detected."
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:225
+msgid "Theme falls back to its own breadcrumb markup."
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:262
+msgid "Theme respects the cache plugin’s headers; AI surface endpoints are marked no-store at the plugin layer."
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:252
+msgid "Theme yields header/footer to Theme Builder when configured. Custom Elementor widgets registered."
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:328
+msgid "Token usage"
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:240
+msgid "Topbar language pill renders %s. Hreflang tags auto-injected when the SEO plugin doesn’t emit them."
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:236
+msgid "Translation"
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:168
+msgid "Tune chat settings →"
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:206
+msgid "What it gains the storefront"
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:141
+msgid "What’s live on the storefront"
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:310
+msgid "Where to tune things"
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:113
+msgid "WooCommerce"
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:55
+#: inc/migration.php:597
+msgid "You do not have permission to view this page."
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:96
+msgid "Your theme reads from the LuwiPress plugin’s AI engine, knowledge graph, and plugin detector. Every friendly plugin you activate amplifies a feature on the storefront."
+msgstr ""
+
+#: inc/ecosystem-dashboard.php:224
+msgid "none detected"
+msgstr ""
+
+#: inc/elementor-compat.php:39
+msgid "Install Elementor"
+msgstr ""
+
+#: inc/elementor-compat.php:38
+msgid "Install Elementor (free) to use the LuwiPress Amber templates: %s."
+msgstr ""
+
+#: inc/elementor-compat.php:34
+msgid "LuwiPress Amber needs Elementor."
+msgstr ""
+
+#: inc/elementor-kit-sync.php:38
+msgid "Elementor is not active — kit sync skipped."
+msgstr ""
+
+#: inc/elementor-kit-sync.php:52
+msgid "No active Elementor kit found."
+msgstr ""
+
+#: inc/enqueue.php:86
+msgid "Couldn't load more — try again."
+msgstr ""
+
+#: inc/enqueue.php:83
+#: inc/loadmore.php:60
+#: inc/loadmore.php:95
+msgid "Load more"
+msgstr ""
+
+#: inc/enqueue.php:84
+#: inc/loadmore.php:96
+msgid "Loading…"
+msgstr ""
+
+#: inc/enqueue.php:85
+msgid "You've reached the end."
+msgstr ""
+
+#: inc/featured-products.php:170
+msgid "Feature across the site"
+msgstr ""
+
+#: inc/featured-products.php:227
+#: inc/featured-products.php:250
+msgid "Feature this product"
+msgstr ""
+
+#: inc/featured-products.php:191
+msgid "Last featured: %s ago"
+msgstr ""
+
+#: inc/featured-products.php:152
+msgid "LuwiPress · Feature this product"
+msgstr ""
+
+#: inc/featured-products.php:179
+msgid "Operator note (optional)"
+msgstr ""
+
+#: inc/featured-products.php:172
+msgid "Surfaces this product inside the Mega Menu featured panel, the homepage Featured strip, and any other widget that reads the featured registry."
+msgstr ""
+
+#: inc/featured-products.php:227
+#: inc/featured-products.php:249
+msgid "Unfeature this"
+msgstr ""
+
+#: inc/featured-products.php:183
+msgid "e.g. Boxing Week pick · New arrival · Just dropped"
+msgstr ""
+
+#: inc/footer-enhancements.php:65
+msgid "%s URL"
+msgstr ""
+
+#: inc/footer-enhancements.php:397
+msgid "30-day returns"
+msgstr ""
+
+#: inc/footer-enhancements.php:549
+msgid "Accepted payment methods"
+msgstr ""
+
+#: inc/footer-enhancements.php:173
+msgid "Adds a 5th footer column listing the top WooCommerce product categories by sales count. Hidden when WC is inactive or no categories exist."
+msgstr ""
+
+#: inc/footer-enhancements.php:215
+msgid "Contact — VAT / company no."
+msgstr ""
+
+#: inc/footer-enhancements.php:204
+msgid "Contact — address"
+msgstr ""
+
+#: inc/footer-enhancements.php:213
+msgid "Contact — email"
+msgstr ""
+
+#: inc/footer-enhancements.php:212
+msgid "Contact — mobile"
+msgstr ""
+
+#: inc/footer-enhancements.php:211
+msgid "Contact — phone"
+msgstr ""
+
+#: inc/footer-enhancements.php:214
+msgid "Contact — working hours"
+msgstr ""
+
+#: inc/footer-enhancements.php:96
+msgid "Form input \"name\" attribute. Mailchimp uses EMAIL, ConvertKit uses email_address, native WP \"Subscribe\" plugins typically use email."
+msgstr ""
+
+#: inc/footer-enhancements.php:186
+msgid "How many top product categories to list. Range 3–12, default 6."
+msgstr ""
+
+#: inc/footer-enhancements.php:530
+msgid "Includes: %s"
+msgstr ""
+
+#: inc/footer-enhancements.php:104
+#: inc/footer-enhancements.php:351
+msgid "Letters from the atelier"
+msgstr ""
+
+#: inc/footer-enhancements.php:117
+#: inc/footer-enhancements.php:354
+msgid "New pieces, master profiles and field notes — once a month, no spam."
+msgstr ""
+
+#: inc/footer-enhancements.php:122
+msgid "Newsletter blurb"
+msgstr ""
+
+#: inc/footer-enhancements.php:95
+msgid "Newsletter field name"
+msgstr ""
+
+#: inc/footer-enhancements.php:81
+msgid "Newsletter form action URL"
+msgstr ""
+
+#: inc/footer-enhancements.php:109
+msgid "Newsletter headline"
+msgstr ""
+
+#: inc/footer-enhancements.php:357
+msgid "Newsletter signup"
+msgstr ""
+
+#: inc/footer-enhancements.php:82
+msgid "POST endpoint that receives the email address — Mailchimp action URL, ConvertKit form URL, or any service that accepts a single \"EMAIL\" or \"email\" field. Leave empty to hide the newsletter strip."
+msgstr ""
+
+#: inc/footer-enhancements.php:205
+msgid "Postal address under the footer logo (multi-line OK). Leave the whole contact group empty to hide it."
+msgstr ""
+
+#: inc/footer-enhancements.php:158
+msgid "Renders the names of every active WooCommerce payment gateway as a discreet row in the footer bottom. Multi-method processors (e.g. WooPayments with Card / Alipay / iDEAL …) are grouped under one brand pill so the row stays readable. Hidden when WC is inactive or no gateway is enabled."
+msgstr ""
+
+#: inc/footer-enhancements.php:395
+msgid "Secure checkout"
+msgstr ""
+
+#: inc/footer-enhancements.php:446
+#: inc/widgets/lib/class-footer-column.php:34
+#: woocommerce/archive-product.php:71
+#: woocommerce/single-product.php:39
+msgid "Shop"
+msgstr ""
+
+#: inc/footer-enhancements.php:185
+msgid "Shop column item count"
+msgstr ""
+
+#: inc/footer-enhancements.php:138
+msgid "Short value-prop lines (e.g. \"Free DHL over €450\", \"Hand-tuned in our atelier\", \"30-day returns\"). Empty = hide."
+msgstr ""
+
+#: inc/footer-enhancements.php:172
+msgid "Show \"Shop\" column"
+msgstr ""
+
+#: inc/footer-enhancements.php:157
+msgid "Show payment-method row"
+msgstr ""
+
+#: inc/footer-enhancements.php:137
+msgid "Trust signal %d"
+msgstr ""
+
+#: inc/footer-enhancements.php:454
+msgid "View all collections →"
+msgstr ""
+
+#: inc/footer-enhancements.php:396
+msgid "Worldwide shipping"
+msgstr ""
+
+#: inc/footer-enhancements.php:229
+msgid "e.g. %s — leave empty to hide this line."
+msgstr ""
+
+#: inc/footer-enhancements.php:369
+msgid "you@example.com"
+msgstr ""
+
+#: inc/luwipress-bridge.php:782
+#: inc/mega-menu-customizer.php:105
+#: inc/widgets/lib/class-mega-menu.php:77
+msgid "2 columns"
+msgstr ""
+
+#: inc/luwipress-bridge.php:783
+#: inc/mega-menu-customizer.php:106
+#: inc/widgets/lib/class-mega-menu.php:78
+msgid "3 columns"
+msgstr ""
+
+#: inc/luwipress-bridge.php:864
+msgid "301-redirect URLs to match the site's permalink_structure (with or without trailing slash). Skips REST, sitemap, and asset paths."
+msgstr ""
+
+#: inc/luwipress-bridge.php:784
+#: inc/mega-menu-customizer.php:107
+#: inc/widgets/lib/class-mega-menu.php:79
+msgid "4 columns"
+msgstr ""
+
+#: inc/luwipress-bridge.php:714
+msgid "Adds a 5th footer column listing top-level product categories."
+msgstr ""
+
+#: inc/luwipress-bridge.php:841
+msgid "Archive — forced Elementor template ID"
+msgstr ""
+
+#: inc/luwipress-bridge.php:353
+msgid "Audit Kit CSS size, headroom against the 412 KB silent-truncation threshold, and verify every layer marker has a matching BEGIN/end pair."
+msgstr ""
+
+#: inc/luwipress-bridge.php:781
+msgid "Auto"
+msgstr ""
+
+#: inc/luwipress-bridge.php:445
+msgid "Auto-create placeholder translated product_cat terms for every default-language term that has missing translations. Inserts a term in the target language, links it via WPML's trid, and uses parent inheritance so menu pages resolve correctly. Operator can rename the placeholder names afterwards in WPML → Taxonomy Translation."
+msgstr ""
+
+#: inc/luwipress-bridge.php:704
+msgid "Auto-redirect page slugs that collide with product categories. Includes WPML cross-language and Levenshtein-1 fuzzy match."
+msgstr ""
+
+#: inc/luwipress-bridge.php:887
+msgid "Block orphan SEO landings (410 Gone)"
+msgstr ""
+
+#: inc/luwipress-bridge.php:810
+msgid "Block orphan SEO landings on the front-end"
+msgstr ""
+
+#: inc/luwipress-bridge.php:542
+msgid "Broken Internal Links"
+msgstr ""
+
+#: inc/luwipress-bridge.php:914
+msgid "Button — manual click"
+msgstr ""
+
+#: inc/luwipress-bridge.php:603
+msgid "Canonical URL Audit"
+msgstr ""
+
+#: inc/luwipress-bridge.php:430
+msgid "Consolidated single-call audit of the three pillars: WooCommerce core pages translated, Elementor Theme Builder templates assigned (PDP + archive), WPML menu/structure drift, subcategory parity, orphan SEO landings. Each finding cites the dedicated tool that resolves it."
+msgstr ""
+
+#: inc/luwipress-bridge.php:735
+msgid "Default ON since 1.7.5 — social icons render on the right side of the footer bottom strip, balancing the © copy on the left. Turn OFF to hide entirely."
+msgstr ""
+
+#: inc/luwipress-bridge.php:494
+msgid "Detect translated posts whose body content is still in the source language (the silent failure mode that makes existence-based coverage report 100% even when blogs are broken English). Scans posts + pages by default; execute clears the Elementor \"already-translated\" guard meta and re-fires the AI translation pipeline against the drifted languages. Pre-execution body snapshots are stored so restore can roll back individual posts."
+msgstr ""
+
+#: inc/luwipress-bridge.php:649
+msgid "Discover the active sitemap (Rank Math / Yoast / AIOSEO / WP core), HEAD-check up to 80 entries, flag any URL that's 301/4xx or sits in the slug-conflict redirect map. Resolve at the SEO plugin level."
+msgstr ""
+
+#: inc/luwipress-bridge.php:429
+msgid "Elementor + WC + WPML Triangle Health"
+msgstr ""
+
+#: inc/luwipress-bridge.php:288
+msgid "Elementor Shell Cleanup"
+msgstr ""
+
+#: inc/luwipress-bridge.php:510
+msgid "Elementor → Default Editor"
+msgstr ""
+
+#: inc/luwipress-bridge.php:874
+msgid "Emit <meta name=\"robots\" content=\"noindex,follow\"> on product_cat archives flagged by the empty_term_archives audit. Cached 6h; busts on tool execute."
+msgstr ""
+
+#: inc/luwipress-bridge.php:557
+msgid "Empty Term Archives in Menu"
+msgstr ""
+
+#: inc/luwipress-bridge.php:928
+msgid "Facebook URL"
+msgstr ""
+
+#: inc/luwipress-bridge.php:398
+msgid "Find legacy SEO landing pages with long keyword-stuffed slugs and near-empty bodies that aren't reachable from any nav menu. Default execute mode trashes (recoverable); pass mode=delete in args for a hard delete (still backed up). WPML-aware — siblings expanded automatically."
+msgstr ""
+
+#: inc/luwipress-bridge.php:289
+msgid "Find posts whose Elementor data is an empty skeleton hiding real Gutenberg content underneath. Strips the shell so the underlying content renders normally. Backs up every stripped meta value for one-click restore."
+msgstr ""
+
+#: inc/luwipress-bridge.php:336
+msgid "Find posts/pages assigned the Hello Elementor canvas / header-footer page templates. The theme already routes post_type=post to single.php at request time via a template_include filter, but execute strips the legacy meta entirely so it stops polluting exports + 3rd-party tooling. Pages are skipped by default (canvas builds use those legitimately) — pass args[allow_page]=true to include them."
+msgstr ""
+
+#: inc/luwipress-bridge.php:558
+msgid "Find product_cat terms with zero published products that nonetheless appear in a navigation menu. Either add products or drop the menu link."
+msgstr ""
+
+#: inc/luwipress-bridge.php:713
+msgid "Footer shop column"
+msgstr ""
+
+#: inc/luwipress-bridge.php:734
+msgid "Footer — show social icons in bottom strip"
+msgstr ""
+
+#: inc/luwipress-bridge.php:744
+msgid "Footer — simple Atelier column (email only)"
+msgstr ""
+
+#: inc/luwipress-bridge.php:462
+msgid "For each source-language menu, append top-level items missing in sibling-language menus. Conservative: depth 0 only. Backed up; restore drops the propagated items."
+msgstr ""
+
+#: inc/luwipress-bridge.php:863
+msgid "Force trailing-slash consistency"
+msgstr ""
+
+#: inc/luwipress-bridge.php:543
+msgid "HEAD-check every internal href appearing in published post content. Skips assets and external domains; capped at 60 URLs per scan to stay within request budget."
+msgstr ""
+
+#: inc/luwipress-bridge.php:415
+msgid "HEAD-check every product_cat archive in every active language. Surfaces 404s and 5xxs — typically a WPML term-translation gap where the menu drawer shows the term but the archive URL itself is broken."
+msgstr ""
+
+#: inc/luwipress-bridge.php:66
+msgid "Hi! How can I help you today?"
+msgstr ""
+
+#: inc/luwipress-bridge.php:745
+msgid "Hides location and phone in the Atelier column; shows email only. Turn OFF to surface the full address line."
+msgstr ""
+
+#: inc/luwipress-bridge.php:618
+msgid "Hreflang Reciprocity Audit"
+msgstr ""
+
+#: inc/luwipress-bridge.php:913
+msgid "Infinite scroll (default)"
+msgstr ""
+
+#: inc/luwipress-bridge.php:909
+msgid "Infinite: auto-fetch when the sentinel scrolls into view (prefers-reduced-motion users always see the button instead). Button: visitor clicks \"Load more\" each time."
+msgstr ""
+
+#: inc/luwipress-bridge.php:926
+msgid "Instagram URL"
+msgstr ""
+
+#: inc/luwipress-bridge.php:352
+msgid "Kit CSS Health"
+msgstr ""
+
+#: inc/luwipress-bridge.php:493
+msgid "Language Drift Sweep"
+msgstr ""
+
+#: inc/luwipress-bridge.php:335
+msgid "Legacy Canvas Migration"
+msgstr ""
+
+#: inc/luwipress-bridge.php:933
+msgid "LinkedIn URL"
+msgstr ""
+
+#: inc/luwipress-bridge.php:573
+msgid "List entries in the WPML String Translation table whose status isn't 10 (translated). Resolve in WPML → String Translation."
+msgstr ""
+
+#: inc/luwipress-bridge.php:479
+msgid "List every published product missing in one or more languages. Read-only — pass the IDs to LuwiPress's /translation/batch endpoint to queue AI translation."
+msgstr ""
+
+#: inc/luwipress-bridge.php:321
+msgid "List translated posts whose source has been edited since the last sync. Output is read-only — use the Translation Manager to re-sync."
+msgstr ""
+
+#: inc/luwipress-bridge.php:205
+msgid "LuwiPress Amber:"
+msgstr ""
+
+#: inc/luwipress-bridge.php:101
+msgid "LuwiPress is not active."
+msgstr ""
+
+#: inc/luwipress-bridge.php:801
+msgid "Mega menu — auto-inject blog categories"
+msgstr ""
+
+#: inc/luwipress-bridge.php:765
+msgid "Mega menu — child count threshold"
+msgstr ""
+
+#: inc/luwipress-bridge.php:777
+msgid "Mega menu — columns"
+msgstr ""
+
+#: inc/luwipress-bridge.php:754
+msgid "Mega menu — menu ID"
+msgstr ""
+
+#: inc/luwipress-bridge.php:792
+msgid "Mega menu — show product counts"
+msgstr ""
+
+#: inc/luwipress-bridge.php:461
+msgid "Menu Translation Propagate"
+msgstr ""
+
+#: inc/luwipress-bridge.php:766
+msgid "Minimum children before a top-level menu item flips to mega-panel rendering."
+msgstr ""
+
+#: inc/luwipress-bridge.php:367
+msgid "Orphan Media Scan"
+msgstr ""
+
+#: inc/luwipress-bridge.php:854
+msgid "Override Rank Math / Yoast / AIOSEO canonical with the page's own permalink. Stops cross-page canonicals that hurt indexation."
+msgstr ""
+
+#: inc/luwipress-bridge.php:842
+msgid "Override the Elementor Pro Products Archive template selection. Set 0 to defer to Elementor."
+msgstr ""
+
+#: inc/luwipress-bridge.php:831
+msgid "Override the Elementor Pro Single Product template selection. Set 0 to defer to Elementor's own conditions. Useful when WPML duplicates a template per language and the wrong one wins."
+msgstr ""
+
+#: inc/luwipress-bridge.php:830
+msgid "PDP — forced Elementor template ID"
+msgstr ""
+
+#: inc/luwipress-bridge.php:587
+msgid "Page Speed Signals"
+msgstr ""
+
+#: inc/luwipress-bridge.php:693
+#: inc/page-loader.php:219
+msgid "Page loader overlay"
+msgstr ""
+
+#: inc/luwipress-bridge.php:604
+msgid "Per-URL rel=canonical health: present, self-pointing, same domain, target resolves 200 without chain. Surfaces SEO-plugin overrides that point off-page."
+msgstr ""
+
+#: inc/luwipress-bridge.php:931
+msgid "Pinterest URL"
+msgstr ""
+
+#: inc/luwipress-bridge.php:145
+msgid "Please provide a valid email."
+msgstr ""
+
+#: inc/luwipress-bridge.php:588
+msgid "Probe wp_options autoload size, expired transient cruft, and object cache health. Catches the silent option-truncation bug + autoload bloat early."
+msgstr ""
+
+#: inc/luwipress-bridge.php:478
+msgid "Product Translation Completeness"
+msgstr ""
+
+#: inc/luwipress-bridge.php:942
+msgid "Public %s profile URL. Powers footer icons, the YouTube/Instagram homepage widgets and one-click Subscribe / Follow buttons."
+msgstr ""
+
+#: inc/luwipress-bridge.php:383
+msgid "Read-only audit of WPML/Polylang drift across menus (item count + depth), nav-menu locations (assigned per language?), and tracked theme_mods (any per-language value differences?). Surfaces gaps so the operator can fix them in the appropriate UI."
+msgstr ""
+
+#: inc/luwipress-bridge.php:368
+msgid "Read-only scan for uploaded media not referenced in any post content. Cross-check before deleting from the Media library."
+msgstr ""
+
+#: inc/luwipress-bridge.php:306
+msgid "Read-only view of the current slug-conflict redirect map. Shows every page slug that auto-redirects to a product category and the discovery pass that found it."
+msgstr ""
+
+#: inc/luwipress-bridge.php:633
+msgid "Redirect Chain Detector"
+msgstr ""
+
+#: inc/luwipress-bridge.php:899
+msgid "Replaces the page-numbers pagination on shop / category / tag archives with a Load More flow (theme-side, no Elementor dep). The pagination markup is kept in the DOM (visually hidden) so SEO crawlers still discover paginated URLs."
+msgstr ""
+
+#: inc/luwipress-bridge.php:703
+msgid "Resolve slug conflicts"
+msgstr ""
+
+#: inc/luwipress-bridge.php:663
+msgid "SEO Triangle Health"
+msgstr ""
+
+#: inc/luwipress-bridge.php:888
+msgid "Same toggle as under WPML — duplicated here so operators discover it under SEO. Pages flagged by the unwanted_landing_pages audit return 410 instead of rendering."
+msgstr ""
+
+#: inc/luwipress-bridge.php:694
+msgid "Server-side loader overlay rendered before content paints; dismissed on window.load."
+msgstr ""
+
+#: inc/luwipress-bridge.php:723
+msgid "Shop column item limit"
+msgstr ""
+
+#: inc/luwipress-bridge.php:898
+msgid "Shop — Load More instead of pagination"
+msgstr ""
+
+#: inc/luwipress-bridge.php:908
+msgid "Shop — Load More mode"
+msgstr ""
+
+#: inc/luwipress-bridge.php:528
+msgid "Show the active Elementor Pro PDP / archive template binding (forced via theme_mod or deferred to Elementor conditions) plus a list of candidate templates. Apply via the Settings tab — pdp_template_id / archive_template_id."
+msgstr ""
+
+#: inc/luwipress-bridge.php:664
+msgid "Single-call audit over six SEO pillars (canonical, hreflang, redirect chains, sitemap parity, broken internal links, slug-conflict map). Returns a weighted 0-100 score plus per-pillar drill-downs that link to the dedicated tool."
+msgstr ""
+
+#: inc/luwipress-bridge.php:648
+msgid "Sitemap Indexation Parity"
+msgstr ""
+
+#: inc/luwipress-bridge.php:305
+msgid "Slug Conflict Audit"
+msgstr ""
+
+#: inc/luwipress-bridge.php:853
+msgid "Strict canonical = permalink"
+msgstr ""
+
+#: inc/luwipress-bridge.php:511
+msgid "Strip _elementor_edit_mode from posts whose Elementor build hijacks the atelier single-post layout. _elementor_data is preserved (reversible). Equivalent to clicking \"Use Default Editor\" in WP admin, but for many posts at once. Targets post_type=post by default."
+msgstr ""
+
+#: inc/luwipress-bridge.php:414
+msgid "Subcategory Template Parity"
+msgstr ""
+
+#: inc/luwipress-bridge.php:209
+msgid "This theme requires the LuwiPress plugin (AI engine, chat, knowledge graph). %1$sInstall it%2$s to unlock the full storefront experience."
+msgstr ""
+
+#: inc/luwipress-bridge.php:930
+msgid "TikTok URL"
+msgstr ""
+
+#: inc/luwipress-bridge.php:153
+msgid "Too many attempts. Try again later."
+msgstr ""
+
+#: inc/luwipress-bridge.php:932
+msgid "Twitter / X URL"
+msgstr ""
+
+#: inc/luwipress-bridge.php:397
+msgid "Unwanted Landing Pages"
+msgstr ""
+
+#: inc/luwipress-bridge.php:619
+msgid "Verify every translated page emits the full hreflang set (incl. x-default) AND each alternate reciprocates. Catches WPML/Polylang drift after translations are unlinked."
+msgstr ""
+
+#: inc/luwipress-bridge.php:527
+msgid "WC Template Assignment"
+msgstr ""
+
+#: inc/luwipress-bridge.php:572
+msgid "WPML String Translation Pending"
+msgstr ""
+
+#: inc/luwipress-bridge.php:382
+msgid "WPML Structural Sync Audit"
+msgstr ""
+
+#: inc/luwipress-bridge.php:444
+msgid "WPML Term Repair"
+msgstr ""
+
+#: inc/luwipress-bridge.php:320
+msgid "WPML Translation Drift"
+msgstr ""
+
+#: inc/luwipress-bridge.php:820
+msgid "WPML — fail loud on missing translated subcategory"
+msgstr ""
+
+#: inc/luwipress-bridge.php:634
+msgid "Walk every URL in the slug-conflict redirect map plus a sample of internal hrefs; flag 2+ hop chains and any 4xx/5xx final status. Single-hop 200 endings are healthy."
+msgstr ""
+
+#: inc/luwipress-bridge.php:929
+#: inc/widgets/lib/class-tour-booking-box.php:53
+msgid "WhatsApp URL"
+msgstr ""
+
+#: inc/luwipress-bridge.php:821
+msgid "When a translated product_cat resolves to 404, render an explicit \"Translation pending\" banner instead of WP's generic 404. Helps catch WPML term-translation gaps in QA."
+msgstr ""
+
+#: inc/luwipress-bridge.php:811
+msgid "When on, pages flagged by the Unwanted Landing Pages tool return a 410 Gone for visitors and search bots. Lets you defer the actual delete while neutralising the SEO leak."
+msgstr ""
+
+#: inc/luwipress-bridge.php:755
+msgid "WordPress nav-menu ID to render in the mega menu. Set 0 to disable."
+msgstr ""
+
+#: inc/luwipress-bridge.php:927
+msgid "YouTube channel URL"
+msgstr ""
+
+#: inc/luwipress-bridge.php:873
+msgid "noindex empty term archives"
+msgstr ""
+
+#: inc/maintenance/class-extra-audit-tools.php:314
+msgid "Autoload payload above safe threshold"
+msgstr ""
+
+#: inc/maintenance/class-extra-audit-tools.php:321
+msgid "Expired transients not garbage-collected"
+msgstr ""
+
+#: inc/maintenance/class-extra-audit-tools.php:328
+msgid "Object cache write/read failed"
+msgstr ""
+
+#: inc/maintenance/elementor-template-force.php:134
+msgid "This page has been retired."
+msgstr ""
+
+#: inc/mega-menu-admin.php:79
+msgid "Auto fallback: most-popular product matching this menu item's URL slug."
+msgstr ""
+
+#: inc/mega-menu-admin.php:74
+msgid "Currently featured: %s"
+msgstr ""
+
+#: inc/mega-menu-admin.php:61
+msgid "Mega menu — Featured product (override)"
+msgstr ""
+
+#: inc/mega-menu-admin.php:68
+msgid "Product or post ID — leave empty for auto best-seller"
+msgstr ""
+
+#: inc/mega-menu-admin.php:55
+msgid "post not found"
+msgstr ""
+
+#: inc/mega-menu-customizer.php:82
+msgid "A top-level item becomes a multi-column mega panel when it has at least this many children, OR when any of its children has its own children. Default: 4."
+msgstr ""
+
+#: inc/mega-menu-customizer.php:104
+#: inc/widgets/lib/class-mega-menu.php:76
+msgid "Auto (2 or 3 by item count)"
+msgstr ""
+
+#: inc/mega-menu-customizer.php:155
+msgid "Auto-fill BLOG menu with post categories"
+msgstr ""
+
+#: inc/mega-menu-customizer.php:66
+msgid "Build the menu in Görünüm → Menüler, then pick it here. Used as the default for header mega menu widgets that have no explicit menu set."
+msgstr ""
+
+#: inc/mega-menu-customizer.php:142
+#: inc/widgets/lib/class-mega-menu.php:102
+msgid "In-place accordion"
+msgstr ""
+
+#: inc/mega-menu-customizer.php:47
+msgid "Mega menu"
+msgstr ""
+
+#: inc/mega-menu-customizer.php:100
+#: inc/widgets/lib/class-mega-menu.php:72
+msgid "Mega panel columns"
+msgstr ""
+
+#: inc/mega-menu-customizer.php:81
+#: inc/widgets/lib/class-mega-menu.php:60
+msgid "Mega panel threshold"
+msgstr ""
+
+#: inc/mega-menu-customizer.php:137
+#: inc/widgets/lib/class-mega-menu.php:97
+msgid "Mobile mode"
+msgstr ""
+
+#: inc/mega-menu-customizer.php:141
+#: inc/widgets/lib/class-mega-menu.php:101
+msgid "Off-canvas drawer (hamburger)"
+msgstr ""
+
+#: inc/mega-menu-customizer.php:121
+msgid "Show \"(47)\"-style product / page counts next to category-style menu items."
+msgstr ""
+
+#: inc/mega-menu-customizer.php:120
+#: inc/widgets/lib/class-mega-menu.php:87
+msgid "Show item counts"
+msgstr ""
+
+#: inc/mega-menu-customizer.php:50
+msgid "These settings act as defaults — the per-instance Elementor widget options always win when set."
+msgstr ""
+
+#: inc/mega-menu-customizer.php:156
+msgid "When the BLOG / Journal / News top-level menu item has no manual children, automatically fill it with every published post category (excluding Uncategorized). Uncheck to leave manual control."
+msgstr ""
+
+#: inc/mega-menu-customizer.php:54
+#: inc/widgets/lib/class-mega-menu.php:159
+msgid "— Pick a menu —"
+msgstr ""
+
+#: inc/migration.php:745
+#: inc/widgets/lib/class-header-actions.php:27
+msgid "Actions"
+msgstr ""
+
+#: inc/migration.php:692
+msgid "After swap"
+msgstr ""
+
+#: inc/migration.php:729
+msgid "Archive browser"
+msgstr ""
+
+#: inc/migration.php:666
+msgid "Archive selected"
+msgstr ""
+
+#: inc/migration.php:744
+msgid "Archived"
+msgstr ""
+
+#: inc/migration.php:822
+msgid "Archiving…"
+msgstr ""
+
+#: inc/migration.php:675
+msgid "Canonical reserves"
+msgstr ""
+
+#: inc/migration.php:743
+msgid "Current slug"
+msgstr ""
+
+#: inc/migration.php:688
+msgid "Customer page"
+msgstr ""
+
+#: inc/migration.php:614
+msgid "Detected slug collisions"
+msgstr ""
+
+#: inc/migration.php:831
+#: inc/migration.php:863
+msgid "Done. Reloading…"
+msgstr ""
+
+#: inc/migration.php:828
+#: inc/migration.php:860
+msgid "Failed."
+msgstr ""
+
+#: inc/migration.php:540
+#: inc/migration.php:550
+#: inc/migration.php:564
+#: inc/migration.php:578
+msgid "Forbidden"
+msgstr ""
+
+#: inc/migration.php:608
+msgid "Gracefully retire legacy static pages whose URLs collide with the theme’s canonical archive structure. Renamed pages are kept published at <slug>-legacy so you can pull content from them, and a one-click restore brings the original slug back any time."
+msgstr ""
+
+#: inc/migration.php:689
+msgid "Holds slug"
+msgstr ""
+
+#: inc/migration.php:636
+#: inc/migration.php:690
+msgid "Lang"
+msgstr ""
+
+#: inc/migration.php:97
+#: inc/migration.php:98
+msgid "LuwiPress Migration"
+msgstr ""
+
+#: inc/migration.php:607
+msgid "LuwiPress Migration Archive"
+msgstr ""
+
+#: inc/migration.php:582
+msgid "Missing page id."
+msgstr ""
+
+#: inc/migration.php:734
+msgid "No pages archived yet."
+msgstr ""
+
+#: inc/migration.php:555
+msgid "No pages selected."
+msgstr ""
+
+#: inc/migration.php:569
+msgid "No pairs selected."
+msgstr ""
+
+#: inc/migration.php:742
+msgid "Original slug"
+msgstr ""
+
+#: inc/migration.php:461
+msgid "Original slug \"%1$s\" is currently held by another page (#%2$d \"%3$s\"). Move that one out of the way first."
+msgstr ""
+
+#: inc/migration.php:691
+msgid "Our shadow"
+msgstr ""
+
+#: inc/migration.php:634
+#: inc/migration.php:740
+#: inc/wizard/views/wizard.php:175
+msgid "Page"
+msgstr ""
+
+#: inc/migration.php:430
+msgid "Page is not in the archive registry."
+msgstr ""
+
+#: inc/migration.php:435
+msgid "Page no longer exists."
+msgstr ""
+
+#: inc/migration.php:730
+msgid "Pages you’ve archived. Each one is still published at its <slug>-legacy URL — pull content from it any time, or restore the original slug with one click."
+msgstr ""
+
+#: inc/migration.php:820
+msgid "Rename slugs of selected pages? They stay published — only the URL slot is freed."
+msgstr ""
+
+#: inc/migration.php:772
+msgid "Restore"
+msgstr ""
+
+#: inc/migration.php:877
+msgid "Restore failed."
+msgstr ""
+
+#: inc/migration.php:872
+msgid "Restore the original slug for this page?"
+msgstr ""
+
+#: inc/migration.php:817
+msgid "Select at least one page first."
+msgstr ""
+
+#: inc/migration.php:849
+msgid "Select at least one pair first."
+msgstr ""
+
+#: inc/migration.php:635
+#: inc/widgets/lib/class-taxonomy-terms.php:105
+#: inc/wizard/views/wizard.php:174
+msgid "Slug"
+msgstr ""
+
+#: inc/migration.php:639
+#: woocommerce/myaccount/dashboard.php:131
+msgid "Status"
+msgstr ""
+
+#: inc/migration.php:662
+msgid "Suffix:"
+msgstr ""
+
+#: inc/migration.php:720
+msgid "Swap selected pairs"
+msgstr ""
+
+#: inc/migration.php:852
+msgid "Swap selected pairs? Customer pages move to <slug>-legacy and our shadow pages take the canonical slugs."
+msgstr ""
+
+#: inc/migration.php:854
+msgid "Swapping…"
+msgstr ""
+
+#: inc/migration.php:638
+msgid "Term · products"
+msgstr ""
+
+#: inc/migration.php:676
+msgid "These slugs (about, contact, journal, masters, …) belong to the theme’s canonical structure and the theme has shipped a *-gold shadow page for each. Run the swap to archive the customer’s legacy page and promote our shadow into the canonical slot in one atomic move."
+msgstr ""
+
+#: inc/migration.php:741
+msgid "Type"
+msgstr ""
+
+#: inc/migration.php:754
+msgid "Type A · WC archive"
+msgstr ""
+
+#: inc/migration.php:675
+msgid "Type B · shadow-page swap"
+msgstr ""
+
+#: inc/migration.php:754
+msgid "Type B · swap"
+msgstr ""
+
+#: inc/migration.php:771
+#: inc/widgets/lib/class-tour-grid.php:188
+#: woocommerce/myaccount/dashboard.php:165
+#: woocommerce/myaccount/orders.php:88
+msgid "View"
+msgstr ""
+
+#: inc/migration.php:637
+msgid "Will become"
+msgstr ""
+
+#: inc/migration.php:762
+msgid "paired with #%d"
+msgstr ""
+
+#: inc/migration.php:648
+msgid "view"
+msgstr ""
+
+#: inc/migration.php:680
+msgid "✓ No canonical-reserve swaps pending. Either no shadow pages exist, or the canonical slugs are already ours."
+msgstr ""
+
+#: inc/migration.php:626
+msgid "✓ No collisions found. Your slug structure is already canonical."
+msgstr ""
+
+#: inc/page-loader.php:179
+#: woocommerce/archive-product.php:247
+msgid "Loading"
+msgstr ""
+
+#: inc/page-loader.php:220
+msgid "Show a brand-aligned loader overlay until the page finishes painting. Server-rendered, so it appears on the first frame instead of after the page has flashed."
+msgstr ""
+
+#: inc/setup.php:51
+msgid "Footer — Explore column"
+msgstr ""
+
+#: inc/setup.php:50
+msgid "Footer — Quick Links column"
+msgstr ""
+
+#: inc/setup.php:52
+msgid "Footer — bottom-bar legal links"
+msgstr ""
+
+#: inc/setup.php:49
+msgid "Mobile drawer (header fallback)"
+msgstr ""
+
+#: inc/setup.php:48
+msgid "Primary navigation (header + drawer)"
+msgstr ""
+
+#: inc/smart-filters.php:97
+msgid "Active filters"
+msgstr ""
+
+#: inc/smart-filters.php:67
+msgid "Filter results"
+msgstr ""
+
+#: inc/smart-filters.php:260
+msgid "In stock only"
+msgstr ""
+
+#: inc/smart-filters.php:256
+msgid "On sale only"
+msgstr ""
+
+#: inc/smart-filters.php:226
+msgid "Popular tags"
+msgstr ""
+
+#: inc/smart-filters.php:109
+#: inc/widgets/lib/class-shop-filters.php:60
+#: inc/widgets/lib/class-wc-price.php:28
+#: inc/widgets/lib/class-wc-related.php:53
+msgid "Price"
+msgstr ""
+
+#: inc/smart-filters.php:277
+msgid "Quick filters"
+msgstr ""
+
+#: inc/template-redirects.php:989
+msgid "No page/product-category slug conflicts detected. Toggle is harmless to leave on — it only redirects when a conflict actually exists."
+msgstr ""
+
+#: inc/template-redirects.php:992
+msgid "Resolve page/category slug conflicts"
+msgstr ""
+
+#: inc/wc-pdp-gallery-override.php:84
+msgid "%s product images"
+msgstr ""
+
+#: inc/wc-pdp-gallery-override.php:121
+msgid "View image %d"
+msgstr ""
+
+#: inc/wc-pdp-hooks.php:79
+msgid "Save %s"
+msgstr ""
+
+#: inc/wc-pdp-hooks.php:40
+#: inc/widgets/lib/class-product-card.php:224
+#: woocommerce/cart/cart.php:80
+#: woocommerce/content-product.php:99
+#: woocommerce/myaccount/view-order.php:96
+msgid "by %s"
+msgstr ""
+
+#: inc/widgets/lib/class-404-hero.php:18
+msgid "404 Hero"
+msgstr ""
+
+#: inc/widgets/lib/class-404-hero.php:58
+msgid "Back home"
+msgstr ""
+
+#: inc/widgets/lib/class-404-hero.php:28
+msgid "Big number"
+msgstr ""
+
+#: inc/widgets/lib/class-404-hero.php:68
+msgid "Big number color"
+msgstr ""
+
+#: inc/widgets/lib/class-404-hero.php:56
+msgid "Browse the catalogue →"
+msgstr ""
+
+#: inc/widgets/lib/class-404-hero.php:57
+msgid "CTA 1 URL"
+msgstr ""
+
+#: inc/widgets/lib/class-404-hero.php:56
+msgid "CTA 1 label"
+msgstr ""
+
+#: inc/widgets/lib/class-404-hero.php:59
+msgid "CTA 2 URL"
+msgstr ""
+
+#: inc/widgets/lib/class-404-hero.php:58
+msgid "CTA 2 label"
+msgstr ""
+
+#: inc/widgets/lib/class-404-hero.php:26
+#: inc/widgets/lib/class-ai-search.php:37
+#: inc/widgets/lib/class-contact-cta.php:35
+#: inc/widgets/lib/class-cta-banner.php:27
+#: inc/widgets/lib/class-newsletter.php:31
+msgid "Copy"
+msgstr ""
+
+#: inc/widgets/lib/class-404-hero.php:29
+#: inc/widgets/lib/class-activity-cards.php:30
+#: inc/widgets/lib/class-cta-banner.php:29
+#: inc/widgets/lib/class-editorial-grid.php:78
+#: inc/widgets/lib/class-featured-product.php:57
+msgid "Eyebrow"
+msgstr ""
+
+#: inc/widgets/lib/class-404-hero.php:33
+#: inc/widgets/lib/class-activity-cards.php:29
+#: inc/widgets/lib/class-activity-cards.php:31
+#: inc/widgets/lib/class-contact-cta.php:46
+#: inc/widgets/lib/class-editorial-grid.php:86
+msgid "Heading"
+msgstr ""
+
+#: inc/widgets/lib/class-404-hero.php:70
+#: inc/widgets/lib/class-contact-cta.php:114
+#: inc/widgets/lib/class-footer-column.php:76
+#: inc/widgets/lib/class-post-content.php:104
+#: inc/widgets/lib/class-product-grid.php:151
+msgid "Heading color"
+msgstr ""
+
+#: inc/widgets/lib/class-404-hero.php:72
+msgid "Italic accent color"
+msgstr ""
+
+#: inc/widgets/lib/class-404-hero.php:43
+#: inc/widgets/lib/class-contact-cta.php:52
+#: inc/widgets/lib/class-cta-banner.php:37
+#: inc/widgets/lib/class-newsletter.php:35
+msgid "Lead"
+msgstr ""
+
+#: inc/widgets/lib/class-404-hero.php:74
+#: inc/widgets/lib/class-contact-cta.php:121
+msgid "Lead color"
+msgstr ""
+
+#: inc/widgets/lib/class-404-hero.php:52
+msgid "Search placeholder"
+msgstr ""
+
+#: inc/widgets/lib/class-404-hero.php:52
+msgid "Search the site…"
+msgstr ""
+
+#: inc/widgets/lib/class-404-hero.php:49
+msgid "Show search input"
+msgstr ""
+
+#: inc/widgets/lib/class-404-hero.php:65
+#: inc/widgets/lib/class-ai-search.php:80
+#: inc/widgets/lib/class-byline-card.php:67
+#: inc/widgets/lib/class-contact-cta.php:104
+#: inc/widgets/lib/class-countdown.php:72
+msgid "Style"
+msgstr ""
+
+#: inc/widgets/lib/class-404-hero.php:46
+msgid "The link you followed may be broken — but the catalogue, the journal and the masters page are all just one click away."
+msgstr ""
+
+#: inc/widgets/lib/class-404-hero.php:37
+msgid "This [em]tune[/em] is not in our songbook."
+msgstr ""
+
+#: inc/widgets/lib/class-404-hero.php:34
+msgid "Use [em]…[/em] for italic-gold accent."
+msgstr ""
+
+#: inc/widgets/lib/class-activity-cards.php:56
+msgid "Activities"
+msgstr ""
+
+#: inc/widgets/lib/class-activity-cards.php:22
+msgid "Activity Cards"
+msgstr ""
+
+#: inc/widgets/lib/class-activity-cards.php:50
+#: inc/widgets/lib/class-perks-list.php:50
+#: inc/widgets/lib/class-post-content.php:62
+#: inc/widgets/lib/class-process-steps.php:32
+#: inc/widgets/lib/class-story-split.php:150
+msgid "Body"
+msgstr ""
+
+#: inc/widgets/lib/class-activity-cards.php:116
+msgid "Book"
+msgstr ""
+
+#: inc/widgets/lib/class-activity-cards.php:35
+msgid "Cards"
+msgstr ""
+
+#: inc/widgets/lib/class-activity-cards.php:43
+msgid "City sky"
+msgstr ""
+
+#: inc/widgets/lib/class-activity-cards.php:62
+msgid "Desert Safari"
+msgstr ""
+
+#: inc/widgets/lib/class-activity-cards.php:44
+msgid "Desert dunes"
+msgstr ""
+
+#: inc/widgets/lib/class-activity-cards.php:52
+msgid "Duration chip"
+msgstr ""
+
+#: inc/widgets/lib/class-activity-cards.php:49
+#: inc/widgets/lib/class-activity-cards.php:61
+msgid "Helicopter Tours"
+msgstr ""
+
+#: inc/widgets/lib/class-activity-cards.php:37
+#: inc/widgets/lib/class-featured-product.php:70
+#: inc/widgets/lib/class-hero-split.php:109
+#: inc/widgets/lib/class-post-featured-image.php:31
+#: inc/widgets/lib/class-story-split.php:56
+msgid "Image"
+msgstr ""
+
+#: inc/widgets/lib/class-activity-cards.php:53
+#: inc/widgets/lib/class-post-featured-image.php:44
+#: inc/widgets/lib/class-post-title.php:52
+msgid "Link"
+msgstr ""
+
+#: inc/widgets/lib/class-activity-cards.php:91
+msgid "Next"
+msgstr ""
+
+#: inc/widgets/lib/class-activity-cards.php:90
+msgid "Previous"
+msgstr ""
+
+#: inc/widgets/lib/class-activity-cards.php:51
+msgid "Price chip"
+msgstr ""
+
+#: inc/widgets/lib/class-activity-cards.php:39
+msgid "Scene fallback"
+msgstr ""
+
+#: inc/widgets/lib/class-activity-cards.php:45
+msgid "Sea"
+msgstr ""
+
+#: inc/widgets/lib/class-activity-cards.php:32
+msgid "Show arrows"
+msgstr ""
+
+#: inc/widgets/lib/class-activity-cards.php:31
+msgid "The best adventures Dubai has to offer"
+msgstr ""
+
+#: inc/widgets/lib/class-activity-cards.php:49
+#: inc/widgets/lib/class-category-grid.php:77
+#: inc/widgets/lib/class-featured-product.php:71
+#: inc/widgets/lib/class-info-bar.php:40
+#: inc/widgets/lib/class-post-title.php:33
+msgid "Title"
+msgstr ""
+
+#: inc/widgets/lib/class-activity-cards.php:30
+msgid "Top activities in Dubai"
+msgstr ""
+
+#: inc/widgets/lib/class-activity-cards.php:63
+msgid "Yacht Tour"
+msgstr ""
+
+#: inc/widgets/lib/class-activity-cards.php:74
+msgid "[Activity Cards] Add at least one activity."
+msgstr ""
+
+#: inc/widgets/lib/class-ai-search.php:29
+msgid "AI Search Bar"
+msgstr ""
+
+#: inc/widgets/lib/class-ai-search.php:46
+msgid "Badge label"
+msgstr ""
+
+#: inc/widgets/lib/class-ai-search.php:70
+msgid "Best sellers"
+msgstr ""
+
+#: inc/widgets/lib/class-ai-search.php:61
+msgid "Chip label"
+msgstr ""
+
+#: inc/widgets/lib/class-ai-search.php:65
+msgid "Chips"
+msgstr ""
+
+#: inc/widgets/lib/class-ai-search.php:85
+#: inc/widgets/lib/class-countdown.php:77
+#: inc/widgets/lib/class-featured-product.php:97
+#: inc/widgets/lib/class-newsletter.php:73
+#: inc/widgets/lib/class-section-head.php:131
+msgid "Dark"
+msgstr ""
+
+#: inc/widgets/lib/class-ai-search.php:73
+msgid "Gift ideas"
+msgstr ""
+
+#: inc/widgets/lib/class-ai-search.php:93
+msgid "Large (hero-style)"
+msgstr ""
+
+#: inc/widgets/lib/class-ai-search.php:85
+#: inc/widgets/lib/class-countdown.php:77
+#: inc/widgets/lib/class-cta-banner.php:63
+#: inc/widgets/lib/class-featured-product.php:97
+#: inc/widgets/lib/class-newsletter.php:73
+msgid "Light"
+msgstr ""
+
+#: inc/widgets/lib/class-ai-search.php:92
+#: inc/widgets/lib/class-cta-banner.php:64
+msgid "Medium"
+msgstr ""
+
+#: inc/widgets/lib/class-ai-search.php:72
+#: inc/wizard/views/wizard.php:63
+msgid "On sale"
+msgstr ""
+
+#: inc/widgets/lib/class-ai-search.php:40
+msgid "Placeholder text"
+msgstr ""
+
+#: inc/widgets/lib/class-ai-search.php:54
+msgid "Quick-tap suggested searches shown under the bar."
+msgstr ""
+
+#: inc/widgets/lib/class-ai-search.php:42
+msgid "Search products, categories, posts…"
+msgstr ""
+
+#: inc/widgets/lib/class-ai-search.php:62
+msgid "Search query"
+msgstr ""
+
+#: inc/widgets/lib/class-ai-search.php:53
+msgid "Show suggestion chips"
+msgstr ""
+
+#: inc/widgets/lib/class-ai-search.php:88
+msgid "Size"
+msgstr ""
+
+#: inc/widgets/lib/class-ai-search.php:47
+msgid "Small pill on the right side of the bar. Defaults to \"AI\" — only renders when LuwiPress AI is active."
+msgstr ""
+
+#: inc/widgets/lib/class-ai-search.php:82
+#: inc/widgets/lib/class-countdown.php:74
+#: inc/widgets/lib/class-cpt-grid.php:201
+#: inc/widgets/lib/class-featured-product.php:94
+#: inc/widgets/lib/class-hero.php:36
+msgid "Variant"
+msgstr ""
+
+#: inc/widgets/lib/class-byline-card.php:47
+#: inc/widgets/lib/class-testimonials.php:34
+msgid "Author name"
+msgstr ""
+
+#: inc/widgets/lib/class-byline-card.php:51
+msgid "Author role / byline sub"
+msgstr ""
+
+#: inc/widgets/lib/class-byline-card.php:36
+msgid "Auto (current post)"
+msgstr ""
+
+#: inc/widgets/lib/class-byline-card.php:43
+msgid "Avatar image"
+msgstr ""
+
+#: inc/widgets/lib/class-byline-card.php:27
+#: inc/widgets/lib/class-youtube-channel.php:130
+msgid "Byline"
+msgstr ""
+
+#: inc/widgets/lib/class-byline-card.php:19
+msgid "Byline Card"
+msgstr ""
+
+#: inc/widgets/lib/class-byline-card.php:55
+msgid "Date (free text)"
+msgstr ""
+
+#: inc/widgets/lib/class-byline-card.php:74
+msgid "Fallback avatar gradient"
+msgstr ""
+
+#: inc/widgets/lib/class-byline-card.php:37
+#: inc/widgets/lib/class-topbar.php:73
+msgid "Manual"
+msgstr ""
+
+#: inc/widgets/lib/class-byline-card.php:72
+msgid "Meta color"
+msgstr ""
+
+#: inc/widgets/lib/class-byline-card.php:70
+msgid "Name color"
+msgstr ""
+
+#: inc/widgets/lib/class-byline-card.php:60
+msgid "Show read time"
+msgstr ""
+
+#: inc/widgets/lib/class-byline-card.php:32
+#: inc/widgets/lib/class-category-grid.php:31
+#: inc/widgets/lib/class-category-grid.php:36
+#: inc/widgets/lib/class-cpt-grid.php:92
+#: inc/widgets/lib/class-featured-post.php:32
+msgid "Source"
+msgstr ""
+
+#: inc/widgets/lib/class-category-grid.php:80
+#: inc/widgets/lib/class-cta-banner.php:49
+msgid "Background image (optional)"
+msgstr ""
+
+#: inc/widgets/lib/class-category-grid.php:92
+msgid "Category 1"
+msgstr ""
+
+#: inc/widgets/lib/class-category-grid.php:93
+msgid "Category 2"
+msgstr ""
+
+#: inc/widgets/lib/class-category-grid.php:94
+msgid "Category 3"
+msgstr ""
+
+#: inc/widgets/lib/class-category-grid.php:95
+msgid "Category 4"
+msgstr ""
+
+#: inc/widgets/lib/class-category-grid.php:23
+msgid "Category Grid"
+msgstr ""
+
+#: inc/widgets/lib/class-category-grid.php:103
+#: inc/widgets/lib/class-cpt-grid.php:191
+#: inc/widgets/lib/class-info-bar.php:57
+#: inc/widgets/lib/class-master-grid.php:133
+#: inc/widgets/lib/class-product-grid.php:116
+msgid "Columns"
+msgstr ""
+
+#: inc/widgets/lib/class-category-grid.php:76
+msgid "Eyebrow / count line"
+msgstr ""
+
+#: inc/widgets/lib/class-category-grid.php:59
+#: inc/widgets/lib/class-taxonomy-terms.php:154
+msgid "Eyebrow label after the count"
+msgstr ""
+
+#: inc/widgets/lib/class-category-grid.php:82
+#: inc/widgets/lib/class-hero-split.php:119
+msgid "Gradient end (fallback)"
+msgstr ""
+
+#: inc/widgets/lib/class-category-grid.php:81
+#: inc/widgets/lib/class-hero-split.php:114
+msgid "Gradient start (fallback)"
+msgstr ""
+
+#: inc/widgets/lib/class-category-grid.php:40
+#: inc/widgets/lib/class-spec-list.php:38
+msgid "Manual list"
+msgstr ""
+
+#: inc/widgets/lib/class-category-grid.php:48
+msgid "Number of tiles (when pulling from WC)"
+msgstr ""
+
+#: inc/widgets/lib/class-category-grid.php:78
+msgid "Sub line"
+msgstr ""
+
+#: inc/widgets/lib/class-category-grid.php:71
+#: inc/widgets/lib/class-category-grid.php:87
+msgid "Tiles"
+msgstr ""
+
+#: inc/widgets/lib/class-category-grid.php:79
+#: inc/widgets/lib/class-footer-bottom.php:41
+#: inc/widgets/lib/class-footer-brand.php:111
+#: inc/widgets/lib/class-footer-column.php:40
+#: inc/widgets/lib/class-section-head.php:90
+msgid "URL"
+msgstr ""
+
+#: inc/widgets/lib/class-category-grid.php:41
+msgid "WooCommerce top-level categories"
+msgstr ""
+
+#: inc/widgets/lib/class-category-grid.php:60
+msgid "e.g. \"instruments\" → \"62 instruments\". Leave empty to hide the count line."
+msgstr ""
+
+#: inc/widgets/lib/class-category-grid.php:62
+msgid "instruments"
+msgstr ""
+
+#: inc/widgets/lib/class-contact-cta.php:66
+msgid "Address footnote (optional)"
+msgstr ""
+
+#: inc/widgets/lib/class-contact-cta.php:149
+#: inc/widgets/lib/class-post-featured-image.php:113
+msgid "Border radius"
+msgstr ""
+
+#: inc/widgets/lib/class-contact-cta.php:75
+msgid "Browse the catalog →"
+msgstr ""
+
+#: inc/widgets/lib/class-contact-cta.php:79
+msgid "CTA button URL"
+msgstr ""
+
+#: inc/widgets/lib/class-contact-cta.php:128
+msgid "CTA button bg"
+msgstr ""
+
+#: inc/widgets/lib/class-contact-cta.php:73
+msgid "CTA button label"
+msgstr ""
+
+#: inc/widgets/lib/class-contact-cta.php:135
+msgid "CTA button text"
+msgstr ""
+
+#: inc/widgets/lib/class-contact-cta.php:107
+#: inc/widgets/lib/class-product-card.php:111
+#: inc/widgets/lib/class-youtube-channel.php:195
+msgid "Card background"
+msgstr ""
+
+#: inc/widgets/lib/class-contact-cta.php:142
+msgid "Card padding"
+msgstr ""
+
+#: inc/widgets/lib/class-contact-cta.php:27
+msgid "Contact CTA Card"
+msgstr ""
+
+#: inc/widgets/lib/class-contact-cta.php:58
+#: woocommerce/myaccount/form-edit-account.php:46
+msgid "Email address"
+msgstr ""
+
+#: inc/widgets/lib/class-contact-cta.php:48
+msgid "Send us a note."
+msgstr ""
+
+#: inc/widgets/lib/class-contact-cta.php:97
+msgid "Show CTA button"
+msgstr ""
+
+#: inc/widgets/lib/class-contact-cta.php:93
+msgid "Show Email"
+msgstr ""
+
+#: inc/widgets/lib/class-contact-cta.php:89
+msgid "Show Telegram"
+msgstr ""
+
+#: inc/widgets/lib/class-contact-cta.php:85
+msgid "Show WhatsApp"
+msgstr ""
+
+#: inc/widgets/lib/class-contact-cta.php:59
+msgid "Used in the email row. Leave empty to hide."
+msgstr ""
+
+#: inc/widgets/lib/class-contact-cta.php:54
+msgid "We reply within 1 working day · usually faster. Same-day on WhatsApp."
+msgstr ""
+
+#: inc/widgets/lib/class-contact-cta.php:41
+msgid "WhatsApp number + Telegram username come from LuwiPress → Customer Chat. Update once there; this widget and the chat launcher both refresh."
+msgstr ""
+
+#: inc/widgets/lib/class-countdown.php:80
+#: inc/widgets/lib/class-post-featured-image.php:120
+#: inc/widgets/lib/class-post-title.php:65
+#: inc/widgets/lib/class-pullquote.php:66
+#: inc/widgets/lib/class-trust-badges.php:59
+msgid "Alignment"
+msgstr ""
+
+#: inc/widgets/lib/class-countdown.php:83
+#: inc/widgets/lib/class-cta-banner.php:75
+#: inc/widgets/lib/class-post-featured-image.php:124
+#: inc/widgets/lib/class-post-title.php:69
+#: inc/widgets/lib/class-pullquote.php:70
+msgid "Center"
+msgstr ""
+
+#: inc/widgets/lib/class-countdown.php:20
+msgid "Countdown Timer"
+msgstr ""
+
+#: inc/widgets/lib/class-countdown.php:48
+msgid "Days"
+msgstr ""
+
+#: inc/widgets/lib/class-countdown.php:43
+msgid "Days · Hours · Minutes"
+msgstr ""
+
+#: inc/widgets/lib/class-countdown.php:42
+msgid "Days · Hours · Minutes · Seconds"
+msgstr ""
+
+#: inc/widgets/lib/class-countdown.php:49
+msgid "Hours"
+msgstr ""
+
+#: inc/widgets/lib/class-countdown.php:44
+msgid "Hours · Minutes · Seconds"
+msgstr ""
+
+#: inc/widgets/lib/class-countdown.php:57
+msgid "It's live. Browse the sale →"
+msgstr ""
+
+#: inc/widgets/lib/class-countdown.php:48
+msgid "Label — days"
+msgstr ""
+
+#: inc/widgets/lib/class-countdown.php:49
+msgid "Label — hours"
+msgstr ""
+
+#: inc/widgets/lib/class-countdown.php:50
+msgid "Label — minutes"
+msgstr ""
+
+#: inc/widgets/lib/class-countdown.php:51
+msgid "Label — seconds"
+msgstr ""
+
+#: inc/widgets/lib/class-countdown.php:83
+#: inc/widgets/lib/class-cta-banner.php:74
+#: inc/widgets/lib/class-featured-product.php:91
+#: inc/widgets/lib/class-post-featured-image.php:123
+#: inc/widgets/lib/class-post-title.php:68
+msgid "Left"
+msgstr ""
+
+#: inc/widgets/lib/class-countdown.php:50
+msgid "Minutes"
+msgstr ""
+
+#: inc/widgets/lib/class-countdown.php:32
+msgid "Picked in your site timezone (WP general settings) and rendered live in the visitor's browser."
+msgstr ""
+
+#: inc/widgets/lib/class-countdown.php:60
+msgid "Post-expiry button URL (optional)"
+msgstr ""
+
+#: inc/widgets/lib/class-countdown.php:65
+msgid "Post-expiry button label (optional)"
+msgstr ""
+
+#: inc/widgets/lib/class-countdown.php:54
+msgid "Post-expiry message"
+msgstr ""
+
+#: inc/widgets/lib/class-countdown.php:83
+#: inc/widgets/lib/class-cta-banner.php:76
+#: inc/widgets/lib/class-featured-product.php:91
+#: inc/widgets/lib/class-post-featured-image.php:125
+#: inc/widgets/lib/class-post-title.php:70
+msgid "Right"
+msgstr ""
+
+#: inc/widgets/lib/class-countdown.php:51
+msgid "Seconds"
+msgstr ""
+
+#: inc/widgets/lib/class-countdown.php:28
+msgid "Target"
+msgstr ""
+
+#: inc/widgets/lib/class-countdown.php:31
+msgid "Target date & time"
+msgstr ""
+
+#: inc/widgets/lib/class-countdown.php:38
+msgid "Units to show"
+msgstr ""
+
+#: inc/widgets/lib/class-cpt-grid.php:257
+#: inc/widgets/lib/class-master-grid.php:188
+msgid "\"View all\" label"
+msgstr ""
+
+#: inc/widgets/lib/class-cpt-grid.php:247
+msgid "Adds a CTA below the grid linking to the type archive. Useful when the grid is capped."
+msgstr ""
+
+#: inc/widgets/lib/class-cpt-grid.php:217
+msgid "Available field keys per type:"
+msgstr ""
+
+#: inc/widgets/lib/class-cpt-grid.php:28
+msgid "CPT Grid"
+msgstr ""
+
+#: inc/widgets/lib/class-cpt-grid.php:149
+msgid "Comma-separated post IDs to show in this order. Leave empty to auto-query."
+msgstr ""
+
+#: inc/widgets/lib/class-cpt-grid.php:105
+msgid "Content type"
+msgstr ""
+
+#: inc/widgets/lib/class-cpt-grid.php:148
+#: inc/widgets/lib/class-master-grid.php:90
+msgid "Curated IDs (optional)"
+msgstr ""
+
+#: inc/widgets/lib/class-cpt-grid.php:205
+#: inc/widgets/lib/class-master-grid.php:147
+msgid "Dark (for #1A1612 section bg)"
+msgstr ""
+
+#: inc/widgets/lib/class-cpt-grid.php:164
+#: inc/widgets/lib/class-master-grid.php:106
+msgid "Date published"
+msgstr ""
+
+#: inc/widgets/lib/class-cpt-grid.php:186
+#: inc/widgets/lib/class-master-grid.php:128
+#: inc/widgets/lib/class-taxonomy-terms.php:144
+msgid "Display"
+msgstr ""
+
+#: inc/widgets/lib/class-cpt-grid.php:126
+msgid "Filter by taxonomy"
+msgstr ""
+
+#: inc/widgets/lib/class-cpt-grid.php:206
+#: inc/widgets/lib/class-master-grid.php:148
+msgid "Light (for cream section bg)"
+msgstr ""
+
+#: inc/widgets/lib/class-cpt-grid.php:163
+#: inc/widgets/lib/class-master-grid.php:105
+msgid "Manual (menu order)"
+msgstr ""
+
+#: inc/widgets/lib/class-cpt-grid.php:115
+msgid "Max entries"
+msgstr ""
+
+#: inc/widgets/lib/class-cpt-grid.php:227
+msgid "Meta key shown under the title (e.g. _lwp_vendor_location). Leave empty to hide."
+msgstr ""
+
+#: inc/widgets/lib/class-cpt-grid.php:159
+#: inc/widgets/lib/class-editorial-grid.php:49
+#: inc/widgets/lib/class-master-grid.php:101
+#: inc/widgets/lib/class-product-grid.php:78
+#: inc/widgets/lib/class-taxonomy-terms.php:99
+msgid "Order by"
+msgstr ""
+
+#: inc/widgets/lib/class-cpt-grid.php:175
+#: inc/widgets/lib/class-master-grid.php:117
+#: inc/widgets/lib/class-taxonomy-terms.php:112
+msgid "Order direction"
+msgstr ""
+
+#: inc/widgets/lib/class-cpt-grid.php:98
+msgid "Pulls live from a LuwiPress CPT Engine type. Add or edit entries under LuwiPress → the matching CPT; this grid updates automatically."
+msgstr ""
+
+#: inc/widgets/lib/class-cpt-grid.php:166
+#: inc/widgets/lib/class-editorial-grid.php:55
+#: inc/widgets/lib/class-master-grid.php:108
+#: inc/widgets/lib/class-product-grid.php:89
+#: inc/widgets/lib/class-wc-related.php:51
+msgid "Random"
+msgstr ""
+
+#: inc/widgets/lib/class-cpt-grid.php:237
+msgid "Second meta key (e.g. _lwp_vendor_specialty). Leave empty to hide."
+msgstr ""
+
+#: inc/widgets/lib/class-cpt-grid.php:246
+#: inc/widgets/lib/class-master-grid.php:177
+msgid "Show \"View all\" link"
+msgstr ""
+
+#: inc/widgets/lib/class-cpt-grid.php:138
+msgid "Slug of the term in the chosen taxonomy (e.g. luthiers). Leave empty to show all."
+msgstr ""
+
+#: inc/widgets/lib/class-cpt-grid.php:226
+msgid "Sub-line 1 — meta key"
+msgstr ""
+
+#: inc/widgets/lib/class-cpt-grid.php:236
+msgid "Sub-line 2 — meta key"
+msgstr ""
+
+#: inc/widgets/lib/class-cpt-grid.php:137
+msgid "Term slug"
+msgstr ""
+
+#: inc/widgets/lib/class-cpt-grid.php:165
+msgid "Title (A→Z)"
+msgstr ""
+
+#: inc/widgets/lib/class-cpt-grid.php:54
+msgid "Vendor"
+msgstr ""
+
+#: inc/widgets/lib/class-cpt-grid.php:259
+#: inc/widgets/lib/class-cpt-grid.php:260
+#: inc/widgets/lib/class-cpt-grid.php:369
+#: inc/widgets/lib/class-mega-menu.php:465
+#: woocommerce/myaccount/dashboard.php:122
+msgid "View all →"
+msgstr ""
+
+#: inc/widgets/lib/class-cpt-grid.php:319
+msgid "[CPT Grid] No %s published yet."
+msgstr ""
+
+#: inc/widgets/lib/class-cpt-grid.php:277
+msgid "[CPT Grid] Pick a content type. None is registered — add one in LuwiPress → CPT types."
+msgstr ""
+
+#: inc/widgets/lib/class-cpt-grid.php:66
+msgid "— No taxonomy filter —"
+msgstr ""
+
+#: inc/widgets/lib/class-cta-banner.php:46
+#: inc/widgets/lib/class-megabar.php:88
+#: inc/widgets/lib/class-timeline.php:98
+#: inc/widgets/lib/class-topbar.php:127
+#: inc/widgets/lib/class-wc-add-to-cart.php:65
+msgid "Background"
+msgstr ""
+
+#: inc/widgets/lib/class-cta-banner.php:35
+msgid "Build the instrument you have always wanted."
+msgstr ""
+
+#: inc/widgets/lib/class-cta-banner.php:19
+msgid "CTA Banner"
+msgstr ""
+
+#: inc/widgets/lib/class-cta-banner.php:70
+msgid "Content alignment"
+msgstr ""
+
+#: inc/widgets/lib/class-cta-banner.php:54
+msgid "Gradient end"
+msgstr ""
+
+#: inc/widgets/lib/class-cta-banner.php:53
+msgid "Gradient start"
+msgstr ""
+
+#: inc/widgets/lib/class-cta-banner.php:31
+msgid "Headline"
+msgstr ""
+
+#: inc/widgets/lib/class-cta-banner.php:57
+msgid "Image overlay strength"
+msgstr ""
+
+#: inc/widgets/lib/class-cta-banner.php:62
+#: inc/widgets/lib/class-megabar.php:74
+#: inc/widgets/lib/class-post-featured-image.php:107
+#: inc/widgets/lib/class-post-featured-image.php:48
+#: inc/widgets/lib/class-post-featured-image.php:62
+msgid "None"
+msgstr ""
+
+#: inc/widgets/lib/class-cta-banner.php:58
+msgid "Only applies when a background image is set."
+msgstr ""
+
+#: inc/widgets/lib/class-cta-banner.php:40
+#: inc/widgets/lib/class-hero-split.php:67
+#: inc/widgets/lib/class-hero.php:89
+msgid "Primary CTA — URL"
+msgstr ""
+
+#: inc/widgets/lib/class-cta-banner.php:39
+#: inc/widgets/lib/class-hero-split.php:62
+#: inc/widgets/lib/class-hero.php:81
+msgid "Primary CTA — label"
+msgstr ""
+
+#: inc/widgets/lib/class-cta-banner.php:42
+#: inc/widgets/lib/class-hero-split.php:77
+#: inc/widgets/lib/class-hero.php:106
+msgid "Secondary CTA — URL"
+msgstr ""
+
+#: inc/widgets/lib/class-cta-banner.php:41
+#: inc/widgets/lib/class-hero-split.php:72
+#: inc/widgets/lib/class-hero.php:98
+msgid "Secondary CTA — label"
+msgstr ""
+
+#: inc/widgets/lib/class-cta-banner.php:39
+msgid "Start a custom order →"
+msgstr ""
+
+#: inc/widgets/lib/class-cta-banner.php:65
+msgid "Strong"
+msgstr ""
+
+#: inc/widgets/lib/class-cta-banner.php:32
+#: inc/widgets/lib/class-hero-split.php:49
+msgid "Use Enter for line breaks. Wrap with [em]…[/em] for italic gold accent."
+msgstr ""
+
+#: inc/widgets/lib/class-editorial-grid.php:105
+msgid "All articles →"
+msgstr ""
+
+#: inc/widgets/lib/class-editorial-grid.php:18
+msgid "Editorial Grid"
+msgstr ""
+
+#: inc/widgets/lib/class-editorial-grid.php:67
+msgid "Leave empty for all."
+msgstr ""
+
+#: inc/widgets/lib/class-editorial-grid.php:56
+msgid "Most discussed"
+msgstr ""
+
+#: inc/widgets/lib/class-editorial-grid.php:53
+#: inc/widgets/lib/class-product-grid.php:84
+msgid "Newest first"
+msgstr ""
+
+#: inc/widgets/lib/class-editorial-grid.php:144
+msgid "No posts found."
+msgstr ""
+
+#: inc/widgets/lib/class-editorial-grid.php:89
+msgid "Notes from the workshop."
+msgstr ""
+
+#: inc/widgets/lib/class-editorial-grid.php:39
+msgid "Number of posts"
+msgstr ""
+
+#: inc/widgets/lib/class-editorial-grid.php:30
+#: inc/widgets/lib/class-featured-post.php:60
+msgid "Post type"
+msgstr ""
+
+#: inc/widgets/lib/class-editorial-grid.php:25
+#: inc/widgets/lib/class-product-grid.php:39
+msgid "Query"
+msgstr ""
+
+#: inc/widgets/lib/class-editorial-grid.php:54
+msgid "Recently updated"
+msgstr ""
+
+#: inc/widgets/lib/class-editorial-grid.php:74
+msgid "Section heading"
+msgstr ""
+
+#: inc/widgets/lib/class-editorial-grid.php:103
+msgid "View all label"
+msgstr ""
+
+#: inc/widgets/lib/class-editorial-grid.php:95
+msgid "View all link"
+msgstr ""
+
+#: inc/widgets/lib/class-faq.php:53
+msgid "Add your support email, hours and average response time here."
+msgstr ""
+
+#: inc/widgets/lib/class-faq.php:66
+msgid "Allow multiple open at once"
+msgstr ""
+
+#: inc/widgets/lib/class-faq.php:36
+msgid "Answer"
+msgstr ""
+
+#: inc/widgets/lib/class-faq.php:51
+msgid "Describe your return / refund policy here — common answers convert best."
+msgstr ""
+
+#: inc/widgets/lib/class-faq.php:52
+msgid "Do you ship worldwide?"
+msgstr ""
+
+#: inc/widgets/lib/class-faq.php:24
+msgid "FAQ Accordion"
+msgstr ""
+
+#: inc/widgets/lib/class-faq.php:53
+msgid "How can I contact customer support?"
+msgstr ""
+
+#: inc/widgets/lib/class-faq.php:50
+msgid "How long does shipping take?"
+msgstr ""
+
+#: inc/widgets/lib/class-faq.php:52
+msgid "List the regions you ship to and any restrictions."
+msgstr ""
+
+#: inc/widgets/lib/class-faq.php:38
+msgid "Open by default"
+msgstr ""
+
+#: inc/widgets/lib/class-faq.php:58
+msgid "Output FAQPage schema (JSON-LD)"
+msgstr ""
+
+#: inc/widgets/lib/class-faq.php:35
+msgid "Question"
+msgstr ""
+
+#: inc/widgets/lib/class-faq.php:32
+msgid "Questions"
+msgstr ""
+
+#: inc/widgets/lib/class-faq.php:50
+msgid "Replace this answer with your real shipping timeline + carriers + insurance details."
+msgstr ""
+
+#: inc/widgets/lib/class-faq.php:59
+msgid "Required for Google FAQ rich result. Disable if you already have FAQPage schema on the page via Rank Math / Yoast."
+msgstr ""
+
+#: inc/widgets/lib/class-faq.php:51
+msgid "What is your return policy?"
+msgstr ""
+
+#: inc/widgets/lib/class-featured-post.php:41
+msgid "Auto: first sticky post"
+msgstr ""
+
+#: inc/widgets/lib/class-featured-post.php:42
+msgid "Auto: latest post"
+msgstr ""
+
+#: inc/widgets/lib/class-featured-post.php:101
+msgid "CTA color"
+msgstr ""
+
+#: inc/widgets/lib/class-featured-post.php:87
+#: inc/widgets/lib/class-featured-product.php:80
+#: inc/widgets/lib/class-instagram-channel.php:66
+#: inc/widgets/lib/class-section-head.php:64
+#: inc/widgets/lib/class-story-split.php:135
+msgid "CTA label"
+msgstr ""
+
+#: inc/widgets/lib/class-featured-post.php:99
+msgid "Eyebrow color"
+msgstr ""
+
+#: inc/widgets/lib/class-featured-post.php:24
+msgid "Featured Post"
+msgstr ""
+
+#: inc/widgets/lib/class-featured-post.php:74
+msgid "Image left"
+msgstr ""
+
+#: inc/widgets/lib/class-featured-post.php:74
+msgid "Image right"
+msgstr ""
+
+#: inc/widgets/lib/class-featured-post.php:71
+#: inc/widgets/lib/class-featured-product.php:88
+#: inc/widgets/lib/class-story-split.php:38
+msgid "Image side"
+msgstr ""
+
+#: inc/widgets/lib/class-featured-post.php:43
+msgid "Manual: pick post by ID"
+msgstr ""
+
+#: inc/widgets/lib/class-featured-post.php:145
+msgid "No featured post found."
+msgstr ""
+
+#: inc/widgets/lib/class-featured-post.php:50
+msgid "Post ID"
+msgstr ""
+
+#: inc/widgets/lib/class-featured-post.php:87
+msgid "Read on →"
+msgstr ""
+
+#: inc/widgets/lib/class-featured-post.php:79
+msgid "Show excerpt"
+msgstr ""
+
+#: inc/widgets/lib/class-featured-post.php:83
+msgid "Show meta (category · read time)"
+msgstr ""
+
+#: inc/widgets/lib/class-featured-post.php:97
+#: inc/widgets/lib/class-info-bar.php:99
+#: inc/widgets/lib/class-instagram-channel.php:197
+#: inc/widgets/lib/class-youtube-channel.php:213
+msgid "Title color"
+msgstr ""
+
+#: inc/widgets/lib/class-featured-product.php:78
+msgid "CTA"
+msgstr ""
+
+#: inc/widgets/lib/class-featured-product.php:45
+msgid "Custom (title + image + CTA only)"
+msgstr ""
+
+#: inc/widgets/lib/class-featured-product.php:66
+msgid "Custom content"
+msgstr ""
+
+#: inc/widgets/lib/class-featured-product.php:28
+msgid "Featured Product"
+msgstr ""
+
+#: inc/widgets/lib/class-featured-product.php:43
+msgid "Featured registry (latest flagged product)"
+msgstr ""
+
+#: inc/widgets/lib/class-featured-product.php:44
+msgid "Manual pick — specific product"
+msgstr ""
+
+#: inc/widgets/lib/class-featured-product.php:50
+msgid "Pick product"
+msgstr ""
+
+#: inc/widgets/lib/class-featured-product.php:73
+msgid "Price (display string)"
+msgstr ""
+
+#: inc/widgets/lib/class-featured-product.php:74
+msgid "Product URL"
+msgstr ""
+
+#: inc/widgets/lib/class-featured-product.php:72
+msgid "Short description"
+msgstr ""
+
+#: inc/widgets/lib/class-featured-product.php:82
+msgid "View product →"
+msgstr ""
+
+#: inc/widgets/lib/class-featured-product.php:103
+msgid "WooCommerce inactive"
+msgstr ""
+
+#: inc/widgets/lib/class-featured-product.php:104
+msgid "— pick a product —"
+msgstr ""
+
+#: inc/widgets/lib/class-featured-strip.php:46
+msgid "Best-selling products"
+msgstr ""
+
+#: inc/widgets/lib/class-featured-strip.php:41
+msgid "Fallback when registry is empty"
+msgstr ""
+
+#: inc/widgets/lib/class-featured-strip.php:22
+msgid "Featured Strip"
+msgstr ""
+
+#: inc/widgets/lib/class-featured-strip.php:65
+msgid "Featured products."
+msgstr ""
+
+#: inc/widgets/lib/class-featured-strip.php:64
+msgid "Hand-picked"
+msgstr ""
+
+#: inc/widgets/lib/class-featured-strip.php:63
+#: inc/widgets/lib/class-product-grid.php:42
+msgid "Heading (optional)"
+msgstr ""
+
+#: inc/widgets/lib/class-featured-strip.php:49
+msgid "Hide the strip"
+msgstr ""
+
+#: inc/widgets/lib/class-featured-strip.php:33
+msgid "Max items"
+msgstr ""
+
+#: inc/widgets/lib/class-featured-strip.php:47
+msgid "On-sale products"
+msgstr ""
+
+#: inc/widgets/lib/class-featured-strip.php:48
+msgid "Recently added"
+msgstr ""
+
+#: inc/widgets/lib/class-featured-strip.php:55
+msgid "Renders the operator note from the meta box (\"Boxing Week pick\", \"New arrival\") as a small chip on each card."
+msgstr ""
+
+#: inc/widgets/lib/class-featured-strip.php:54
+msgid "Show operator note chips"
+msgstr ""
+
+#: inc/widgets/lib/class-featured-strip.php:42
+msgid "What to show when no products are flipped to featured. Falls back automatically — the operator does not see the strip disappear during onboarding."
+msgstr ""
+
+#: inc/widgets/lib/class-footer-bottom.php:53
+msgid "Cookies"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-bottom.php:27
+msgid "Copyright + Legal"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-bottom.php:32
+msgid "Copyright line"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-bottom.php:19
+msgid "Footer Bottom"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-bottom.php:40
+#: inc/widgets/lib/class-footer-column.php:39
+#: inc/widgets/lib/class-hero-split.php:89
+#: inc/widgets/lib/class-hero.php:144
+#: inc/widgets/lib/class-load-more.php:48
+msgid "Label"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-bottom.php:46
+msgid "Legal links"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-bottom.php:111
+#: inc/widgets/lib/class-footer-column.php:94
+msgid "Link hover color"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-bottom.php:73
+msgid "Method"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-bottom.php:78
+msgid "Methods"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-bottom.php:120
+msgid "Pay badge bg"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-bottom.php:129
+msgid "Pay badge border"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-bottom.php:66
+msgid "Payment label"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-bottom.php:61
+msgid "Payment methods"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-bottom.php:51
+msgid "Privacy"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-bottom.php:68
+msgid "Secure payments"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-bottom.php:52
+msgid "Terms"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-bottom.php:102
+#: inc/widgets/lib/class-footer-brand.php:155
+#: inc/widgets/lib/class-load-more.php:81
+#: inc/widgets/lib/class-logo.php:88
+#: inc/widgets/lib/class-post-content.php:67
+msgid "Text color"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-bottom.php:33
+msgid "Use %YEAR% to insert the current year automatically."
+msgstr ""
+
+#: inc/widgets/lib/class-footer-brand.php:75
+msgid "A short brand line that explains what your store does and where you ship from."
+msgstr ""
+
+#: inc/widgets/lib/class-footer-brand.php:49
+msgid "Accent character position (0-indexed)"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-brand.php:146
+#: inc/widgets/lib/class-logo.php:97
+#: inc/wizard/views/wizard.php:297
+msgid "Accent color"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-brand.php:84
+msgid "Address line"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-brand.php:19
+msgid "Footer Brand"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-brand.php:33
+msgid "If set, replaces the text logo."
+msgstr ""
+
+#: inc/widgets/lib/class-footer-brand.php:27
+#: inc/widgets/lib/class-logo.php:19
+#: inc/widgets/lib/class-logo.php:27
+#: inc/wizard/views/wizard.php:272
+msgid "Logo"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-brand.php:137
+msgid "Logo color"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-brand.php:32
+msgid "Logo image (optional)"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-brand.php:59
+msgid "Logo link"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-brand.php:41
+msgid "Logo text"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-brand.php:94
+msgid "Network"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-brand.php:82
+#: inc/widgets/lib/class-perks-list.php:45
+msgid "Phone"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-brand.php:88
+msgid "Social icons"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-brand.php:117
+msgid "Social links"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-brand.php:68
+msgid "Tagline"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-brand.php:72
+msgid "Tagline / description"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-brand.php:50
+msgid "Which character to italicise + accent-tint. -1 = none."
+msgstr ""
+
+#: inc/widgets/lib/class-footer-column.php:27
+msgid "Column"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-column.php:19
+msgid "Footer Column"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-column.php:44
+msgid "Highlight (sale / promo)"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-column.php:103
+msgid "Hot link color"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-column.php:59
+msgid "Link 1"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-column.php:60
+msgid "Link 2"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-column.php:61
+msgid "Link 3"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-column.php:85
+#: inc/widgets/lib/class-megabar.php:97
+#: inc/widgets/lib/class-post-content.php:74
+msgid "Link color"
+msgstr ""
+
+#: inc/widgets/lib/class-footer-column.php:54
+msgid "Links"
+msgstr ""
+
+#: inc/widgets/lib/class-header-actions.php:35
+msgid "Account URL"
+msgstr ""
+
+#: inc/widgets/lib/class-header-actions.php:65
+#: inc/widgets/lib/class-instagram-channel.php:74
+#: inc/widgets/lib/class-section-head.php:72
+#: inc/widgets/lib/class-story-split.php:142
+#: inc/widgets/lib/class-youtube-channel.php:73
+msgid "CTA URL"
+msgstr ""
+
+#: inc/widgets/lib/class-header-actions.php:97
+msgid "CTA background"
+msgstr ""
+
+#: inc/widgets/lib/class-header-actions.php:56
+msgid "CTA label (optional)"
+msgstr ""
+
+#: inc/widgets/lib/class-header-actions.php:102
+msgid "CTA text color"
+msgstr ""
+
+#: inc/widgets/lib/class-header-actions.php:46
+msgid "Cart URL"
+msgstr ""
+
+#: inc/widgets/lib/class-header-actions.php:107
+msgid "Cart badge bg"
+msgstr ""
+
+#: inc/widgets/lib/class-header-actions.php:57
+msgid "Empty = no CTA button."
+msgstr ""
+
+#: inc/widgets/lib/class-header-actions.php:19
+msgid "Header Actions"
+msgstr ""
+
+#: inc/widgets/lib/class-header-actions.php:92
+msgid "Hover accent"
+msgstr ""
+
+#: inc/widgets/lib/class-header-actions.php:87
+msgid "Icon border"
+msgstr ""
+
+#: inc/widgets/lib/class-header-actions.php:82
+#: inc/widgets/lib/class-perks-list.php:74
+#: inc/widgets/lib/class-trust-badges.php:69
+msgid "Icon color"
+msgstr ""
+
+#: inc/widgets/lib/class-header-actions.php:31
+msgid "Show account"
+msgstr ""
+
+#: inc/widgets/lib/class-header-actions.php:42
+msgid "Show cart"
+msgstr ""
+
+#: inc/widgets/lib/class-header-actions.php:71
+msgid "Show mobile burger"
+msgstr ""
+
+#: inc/widgets/lib/class-header-actions.php:29
+msgid "Show search"
+msgstr ""
+
+#: inc/widgets/lib/class-hero-split.php:148
+msgid "Avatar image (optional)"
+msgstr ""
+
+#: inc/widgets/lib/class-hero-split.php:153
+msgid "Avatar initial (fallback)"
+msgstr ""
+
+#: inc/widgets/lib/class-hero-split.php:40
+msgid "Copy (left column)"
+msgstr ""
+
+#: inc/widgets/lib/class-hero-split.php:132
+msgid "Featured tag — eyebrow"
+msgstr ""
+
+#: inc/widgets/lib/class-hero-split.php:137
+msgid "Featured tag — title"
+msgstr ""
+
+#: inc/widgets/lib/class-hero-split.php:48
+msgid "Heading (H1)"
+msgstr ""
+
+#: inc/widgets/lib/class-hero-split.php:31
+msgid "Hero Split"
+msgstr ""
+
+#: inc/widgets/lib/class-hero-split.php:106
+msgid "Image (right column)"
+msgstr ""
+
+#: inc/widgets/lib/class-hero-split.php:55
+#: inc/widgets/lib/class-hero.php:71
+#: inc/widgets/lib/class-story-split.php:127
+msgid "Lead paragraph"
+msgstr ""
+
+#: inc/widgets/lib/class-hero-split.php:74
+msgid "Learn more →"
+msgstr ""
+
+#: inc/widgets/lib/class-hero-split.php:125
+msgid "Live status pill text"
+msgstr ""
+
+#: inc/widgets/lib/class-hero-split.php:145
+msgid "Master quote card"
+msgstr ""
+
+#: inc/widgets/lib/class-hero-split.php:158
+#: inc/widgets/lib/class-master-profile.php:48
+msgid "Name"
+msgstr ""
+
+#: inc/widgets/lib/class-hero-split.php:88
+#: inc/widgets/lib/class-stat-counter.php:31
+msgid "Number"
+msgstr ""
+
+#: inc/widgets/lib/class-hero-split.php:168
+#: inc/widgets/lib/class-pullquote.php:27
+#: inc/widgets/lib/class-testimonials.php:33
+msgid "Quote"
+msgstr ""
+
+#: inc/widgets/lib/class-hero-split.php:163
+msgid "Role"
+msgstr ""
+
+#: inc/widgets/lib/class-hero-split.php:64
+msgid "Shop now →"
+msgstr ""
+
+#: inc/widgets/lib/class-hero-split.php:126
+msgid "Small pulsing-dot pill above the image. Leave empty to hide."
+msgstr ""
+
+#: inc/widgets/lib/class-hero-split.php:92
+#: inc/widgets/lib/class-hero.php:125
+#: inc/widgets/lib/class-stat-counter.php:28
+msgid "Stats"
+msgstr ""
+
+#: inc/widgets/lib/class-hero-split.php:85
+msgid "Stats row"
+msgstr ""
+
+#: inc/widgets/lib/class-hero-split.php:52
+msgid "Your headline goes here\\nin [em]two lines[/em]."
+msgstr ""
+
+#: inc/widgets/lib/class-hero.php:74
+msgid "A short paragraph explaining who you are and what you make. Replace this copy from the widget editor."
+msgstr ""
+
+#: inc/widgets/lib/class-hero.php:41
+msgid "Centered (headline above image)"
+msgstr ""
+
+#: inc/widgets/lib/class-hero.php:49
+#: inc/widgets/lib/class-master-profile.php:27
+#: inc/widgets/lib/class-post-content.php:34
+#: inc/wizard/views/wizard.php:78
+msgid "Content"
+msgstr ""
+
+#: inc/widgets/lib/class-hero.php:156
+#: inc/widgets/lib/class-stat-counter.php:45
+msgid "Countries shipped"
+msgstr ""
+
+#: inc/widgets/lib/class-hero.php:83
+msgid "Explore the collection"
+msgstr ""
+
+#: inc/widgets/lib/class-hero.php:42
+msgid "Full-bleed (image cover + text overlay)"
+msgstr ""
+
+#: inc/widgets/lib/class-hero.php:61
+msgid "Headline (HTML allowed)"
+msgstr ""
+
+#: inc/widgets/lib/class-hero.php:25
+msgid "Hero"
+msgstr ""
+
+#: inc/widgets/lib/class-hero.php:203
+msgid "Image overlay (full-bleed only)"
+msgstr ""
+
+#: inc/widgets/lib/class-hero.php:154
+msgid "Instruments"
+msgstr ""
+
+#: inc/widgets/lib/class-hero.php:32
+#: inc/widgets/lib/class-kg-stats.php:32
+#: inc/widgets/lib/class-kg-trending.php:32
+#: inc/widgets/lib/class-master-profile.php:98
+#: inc/widgets/lib/class-product-grid.php:113
+msgid "Layout"
+msgstr ""
+
+#: inc/widgets/lib/class-hero.php:100
+msgid "Learn more"
+msgstr ""
+
+#: inc/widgets/lib/class-hero.php:171
+msgid "Master avatar"
+msgstr ""
+
+#: inc/widgets/lib/class-hero.php:155
+msgid "Master makers"
+msgstr ""
+
+#: inc/widgets/lib/class-hero.php:180
+msgid "Master name"
+msgstr ""
+
+#: inc/widgets/lib/class-hero.php:165
+msgid "Master overlay"
+msgstr ""
+
+#: inc/widgets/lib/class-hero.php:188
+msgid "Master role"
+msgstr ""
+
+#: inc/widgets/lib/class-hero.php:190
+msgid "Role · Location"
+msgstr ""
+
+#: inc/widgets/lib/class-hero.php:131
+msgid "Show stats row"
+msgstr ""
+
+#: inc/widgets/lib/class-hero.php:40
+msgid "Split (text + visual side-by-side)"
+msgstr ""
+
+#: inc/widgets/lib/class-hero.php:174
+msgid "Square portrait — anything from 96×96 up. Empty to disable the overlay."
+msgstr ""
+
+#: inc/widgets/lib/class-hero.php:149
+msgid "Stat cards"
+msgstr ""
+
+#: inc/widgets/lib/class-hero.php:65
+msgid "Use <em>…</em> for italic emphasis (gold) and <span class=\"underline\">…</span> for the underline accent."
+msgstr ""
+
+#: inc/widgets/lib/class-hero.php:118
+msgid "Used in split + centered + full-bleed variants. Falls back to a gradient."
+msgstr ""
+
+#: inc/widgets/lib/class-hero.php:140
+#: inc/widgets/lib/class-spec-list.php:46
+msgid "Value"
+msgstr ""
+
+#: inc/widgets/lib/class-hero.php:115
+msgid "Visual"
+msgstr ""
+
+#: inc/widgets/lib/class-hero.php:55
+msgid "Welcome · Worldwide shipping"
+msgstr ""
+
+#: inc/widgets/lib/class-hero.php:64
+msgid "Your headline<br>in <em>two lines</em> with a <span class=\"underline\">highlighted phrase</span>."
+msgstr ""
+
+#: inc/widgets/lib/class-hero.php:182
+msgid "Yıldırım Palabıyık"
+msgstr ""
+
+#: inc/widgets/lib/class-info-bar.php:65
+msgid "100% secure"
+msgstr ""
+
+#: inc/widgets/lib/class-info-bar.php:63
+msgid "15-day warranty"
+msgstr ""
+
+#: inc/widgets/lib/class-info-bar.php:80
+msgid "Bar background"
+msgstr ""
+
+#: inc/widgets/lib/class-info-bar.php:64
+msgid "Before every shipment"
+msgstr ""
+
+#: inc/widgets/lib/class-info-bar.php:48
+#: inc/widgets/lib/class-wc-short-description.php:28
+msgid "Description"
+msgstr ""
+
+#: inc/widgets/lib/class-info-bar.php:108
+msgid "Description color"
+msgstr ""
+
+#: inc/widgets/lib/class-info-bar.php:63
+msgid "Easy returns, no questions"
+msgstr ""
+
+#: inc/widgets/lib/class-info-bar.php:42
+#: inc/widgets/lib/class-info-bar.php:62
+msgid "Free shipping"
+msgstr ""
+
+#: inc/widgets/lib/class-info-bar.php:64
+#: inc/widgets/lib/class-perks-list.php:60
+msgid "Hand-tuned"
+msgstr ""
+
+#: inc/widgets/lib/class-info-bar.php:32
+msgid "Icon"
+msgstr ""
+
+#: inc/widgets/lib/class-info-bar.php:89
+msgid "Icon circle background"
+msgstr ""
+
+#: inc/widgets/lib/class-info-bar.php:19
+msgid "Info Bar"
+msgstr ""
+
+#: inc/widgets/lib/class-info-bar.php:90
+msgid "Pick a flat color. Leave empty to keep the theme default (gradient gold)."
+msgstr ""
+
+#: inc/widgets/lib/class-info-bar.php:65
+msgid "Trusted checkout"
+msgstr ""
+
+#: inc/widgets/lib/class-info-bar.php:50
+#: inc/widgets/lib/class-info-bar.php:62
+msgid "Worldwide · DHL Express"
+msgstr ""
+
+#: inc/widgets/lib/class-instagram-channel.php:132
+#: inc/widgets/lib/class-post-featured-image.php:58
+msgid "Caption"
+msgstr ""
+
+#: inc/widgets/lib/class-instagram-channel.php:156
+#: inc/widgets/lib/class-instagram-channel.php:171
+msgid "Carousel"
+msgstr ""
+
+#: inc/widgets/lib/class-instagram-channel.php:180
+#: inc/widgets/lib/class-stat-counter.php:52
+#: inc/widgets/lib/class-youtube-channel.php:178
+msgid "Columns (desktop)"
+msgstr ""
+
+#: inc/widgets/lib/class-instagram-channel.php:264
+#: inc/widgets/lib/class-instagram-channel.php:99
+msgid "Follow"
+msgstr ""
+
+#: inc/widgets/lib/class-instagram-channel.php:289
+msgid "Follow %s on Instagram"
+msgstr ""
+
+#: inc/widgets/lib/class-instagram-channel.php:97
+msgid "Follow label"
+msgstr ""
+
+#: inc/widgets/lib/class-instagram-channel.php:49
+msgid "Follow us"
+msgstr ""
+
+#: inc/widgets/lib/class-instagram-channel.php:123
+msgid "Full post URL, e.g. https://www.instagram.com/p/AbC123XyZ/"
+msgstr ""
+
+#: inc/widgets/lib/class-instagram-channel.php:33
+msgid "Instagram Channel"
+msgstr ""
+
+#: inc/widgets/lib/class-instagram-channel.php:122
+msgid "Instagram post URL"
+msgstr ""
+
+#: inc/widgets/lib/class-instagram-channel.php:68
+msgid "Instagram profile →"
+msgstr ""
+
+#: inc/widgets/lib/class-instagram-channel.php:59
+msgid "Latest posts\\non Instagram."
+msgstr ""
+
+#: inc/widgets/lib/class-instagram-channel.php:75
+msgid "Leave empty to pull the profile URL from Customize → LuwiPress Amber → Footer → Instagram URL (or LuwiPress admin → Theme → Settings → Social)."
+msgstr ""
+
+#: inc/widgets/lib/class-instagram-channel.php:141
+msgid "Meta line"
+msgstr ""
+
+#: inc/widgets/lib/class-instagram-channel.php:89
+#: inc/widgets/lib/class-section-head.php:98
+#: inc/widgets/lib/class-youtube-channel.php:88
+msgid "No"
+msgstr ""
+
+#: inc/widgets/lib/class-instagram-channel.php:317
+msgid "No Instagram posts configured yet."
+msgstr ""
+
+#: inc/widgets/lib/class-instagram-channel.php:86
+msgid "Only renders if a profile URL is set (here or in Customize → Footer → Instagram URL)."
+msgstr ""
+
+#: inc/widgets/lib/class-instagram-channel.php:329
+msgid "Open Instagram post"
+msgstr ""
+
+#: inc/widgets/lib/class-instagram-channel.php:329
+msgid "Open Instagram post — %s"
+msgstr ""
+
+#: inc/widgets/lib/class-instagram-channel.php:318
+msgid "Open this widget and upload a square thumbnail + paste the Instagram post URL for each Posts row. This notice is only visible to logged-in editors."
+msgstr ""
+
+#: inc/widgets/lib/class-instagram-channel.php:142
+msgid "Optional small badge (e.g. \"Reel · 12k likes\" or \"📷 Photo\")."
+msgstr ""
+
+#: inc/widgets/lib/class-instagram-channel.php:154
+#: inc/widgets/lib/class-instagram-channel.php:169
+#: inc/widgets/lib/class-instagram-channel.php:172
+msgid "Photo"
+msgstr ""
+
+#: inc/widgets/lib/class-instagram-channel.php:150
+msgid "Post type icon"
+msgstr ""
+
+#: inc/widgets/lib/class-instagram-channel.php:107
+#: inc/widgets/lib/class-instagram-channel.php:164
+#: inc/wizard/views/wizard.php:82
+msgid "Posts"
+msgstr ""
+
+#: inc/widgets/lib/class-instagram-channel.php:155
+#: inc/widgets/lib/class-instagram-channel.php:170
+msgid "Reel"
+msgstr ""
+
+#: inc/widgets/lib/class-instagram-channel.php:133
+msgid "Short overlay text shown on hover."
+msgstr ""
+
+#: inc/widgets/lib/class-instagram-channel.php:85
+msgid "Show Follow button"
+msgstr ""
+
+#: inc/widgets/lib/class-instagram-channel.php:113
+msgid "Thumbnail (square)"
+msgstr ""
+
+#: inc/widgets/lib/class-instagram-channel.php:114
+msgid "Upload a square crop (recommended 600×600 or 1080×1080). Falls back to a solid tile if blank."
+msgstr ""
+
+#: inc/widgets/lib/class-instagram-channel.php:56
+msgid "Use Enter for a 2-line title."
+msgstr ""
+
+#: inc/widgets/lib/class-instagram-channel.php:88
+#: inc/widgets/lib/class-section-head.php:97
+#: inc/widgets/lib/class-youtube-channel.php:87
+msgid "Yes"
+msgstr ""
+
+#: inc/widgets/lib/class-kg-stats.php:44
+msgid "Authors label"
+msgstr ""
+
+#: inc/widgets/lib/class-kg-stats.php:43
+#: inc/widgets/lib/class-search-overlay.php:77
+#: inc/widgets/lib/class-wc-meta.php:101
+#: inc/widgets/lib/class-wc-meta.php:46
+msgid "Categories"
+msgstr ""
+
+#: inc/widgets/lib/class-kg-stats.php:43
+#: inc/widgets/lib/class-wc-meta.php:45
+msgid "Categories label"
+msgstr ""
+
+#: inc/widgets/lib/class-kg-stats.php:45
+msgid "Countries label"
+msgstr ""
+
+#: inc/widgets/lib/class-kg-stats.php:45
+msgid "Countries shipped to"
+msgstr ""
+
+#: inc/widgets/lib/class-kg-stats.php:109
+#: inc/widgets/lib/class-kg-trending.php:162
+msgid "Install LuwiPress (free) →"
+msgstr ""
+
+#: inc/widgets/lib/class-kg-stats.php:99
+msgid "Install LuwiPress to enable live store stats"
+msgstr ""
+
+#: inc/widgets/lib/class-kg-stats.php:106
+msgid "Install the free LuwiPress plugin to surface live product counts, category coverage, master roster and countries-shipped on this widget — pulled directly from your store data."
+msgstr ""
+
+#: inc/widgets/lib/class-kg-stats.php:24
+msgid "Knowledge Graph · Stats"
+msgstr ""
+
+#: inc/widgets/lib/class-kg-stats.php:35
+msgid "Live store stats."
+msgstr ""
+
+#: inc/widgets/lib/class-kg-stats.php:145
+#: inc/widgets/lib/class-kg-trending.php:189
+msgid "Live · LuwiPress KG"
+msgstr ""
+
+#: inc/widgets/lib/class-kg-stats.php:144
+msgid "Powered by LuwiPress Knowledge Graph"
+msgstr ""
+
+#: inc/widgets/lib/class-kg-stats.php:42
+#: inc/widgets/lib/class-stat-counter.php:34
+msgid "Products in catalogue"
+msgstr ""
+
+#: inc/widgets/lib/class-kg-stats.php:42
+msgid "Products label"
+msgstr ""
+
+#: inc/widgets/lib/class-kg-stats.php:39
+msgid "Show Authors/Team counter"
+msgstr ""
+
+#: inc/widgets/lib/class-kg-stats.php:38
+msgid "Show Categories counter"
+msgstr ""
+
+#: inc/widgets/lib/class-kg-stats.php:40
+msgid "Show Countries-shipped counter"
+msgstr ""
+
+#: inc/widgets/lib/class-kg-stats.php:37
+msgid "Show Products counter"
+msgstr ""
+
+#: inc/widgets/lib/class-kg-stats.php:34
+msgid "Store at a glance"
+msgstr ""
+
+#: inc/widgets/lib/class-kg-stats.php:44
+#: inc/widgets/lib/class-stat-counter.php:46
+msgid "Team members"
+msgstr ""
+
+#: inc/widgets/lib/class-kg-stats.php:103
+msgid "Unlock live Knowledge Graph data."
+msgstr ""
+
+#: inc/widgets/lib/class-kg-stats.php:101
+#: inc/widgets/lib/class-kg-trending.php:154
+msgid "— LuwiPress required"
+msgstr ""
+
+#: inc/widgets/lib/class-kg-trending.php:44
+#: inc/widgets/lib/class-megabar.php:44
+msgid "How many"
+msgstr ""
+
+#: inc/widgets/lib/class-kg-trending.php:24
+msgid "Knowledge Graph · Trending"
+msgstr ""
+
+#: inc/widgets/lib/class-kg-trending.php:159
+msgid "LuwiPress reads your store + reviews + traffic signals and ranks categories and products on a live KG score. Install the free plugin to surface it on this widget."
+msgstr ""
+
+#: inc/widgets/lib/class-kg-trending.php:58
+msgid "Picking up momentum"
+msgstr ""
+
+#: inc/widgets/lib/class-kg-trending.php:39
+msgid "Product categories"
+msgstr ""
+
+#: inc/widgets/lib/class-kg-trending.php:40
+#: inc/widgets/lib/class-stat-counter.php:44
+#: inc/wizard/views/wizard.php:177
+#: inc/wizard/views/wizard.php:50
+#: search.php:18
+msgid "Products"
+msgstr ""
+
+#: inc/widgets/lib/class-kg-trending.php:156
+msgid "See what is trending — powered by the Knowledge Graph."
+msgstr ""
+
+#: inc/widgets/lib/class-kg-trending.php:51
+msgid "Show KG score"
+msgstr ""
+
+#: inc/widgets/lib/class-kg-trending.php:52
+msgid "Small pill on each card showing the KG ranking score. Useful in editorial contexts to signal \"data-driven\"."
+msgstr ""
+
+#: inc/widgets/lib/class-kg-trending.php:35
+#: inc/widgets/lib/class-search-overlay.php:76
+msgid "Trending"
+msgstr ""
+
+#: inc/widgets/lib/class-kg-trending.php:59
+msgid "Trending right now."
+msgstr ""
+
+#: inc/widgets/lib/class-load-more.php:41
+msgid "AJAX (in-place append)"
+msgstr ""
+
+#: inc/widgets/lib/class-load-more.php:31
+#: inc/widgets/lib/class-wc-add-to-cart.php:62
+msgid "Button"
+msgstr ""
+
+#: inc/widgets/lib/class-load-more.php:67
+msgid "Hide when no more pages"
+msgstr ""
+
+#: inc/widgets/lib/class-load-more.php:83
+msgid "Hover background"
+msgstr ""
+
+#: inc/widgets/lib/class-load-more.php:51
+msgid "Load %d more posts"
+msgstr ""
+
+#: inc/widgets/lib/class-load-more.php:22
+msgid "Load More"
+msgstr ""
+
+#: inc/widgets/lib/class-load-more.php:36
+#: inc/widgets/lib/class-megabar.php:31
+msgid "Mode"
+msgstr ""
+
+#: inc/widgets/lib/class-load-more.php:40
+msgid "Plain link (SEO-friendly)"
+msgstr ""
+
+#: inc/widgets/lib/class-load-more.php:57
+msgid "Target container (AJAX mode)"
+msgstr ""
+
+#: inc/widgets/lib/class-load-more.php:49
+msgid "Use %d for remaining count placeholder."
+msgstr ""
+
+#: inc/widgets/lib/class-load-more.php:58
+msgid "Where to append new posts. Default catches WC / WP loops."
+msgstr ""
+
+#: inc/widgets/lib/class-logo.php:62
+msgid "Accent character index (0-based, -1 = none)"
+msgstr ""
+
+#: inc/widgets/lib/class-logo.php:106
+msgid "Accent hover color"
+msgstr ""
+
+#: inc/widgets/lib/class-logo.php:32
+msgid "Image (optional)"
+msgstr ""
+
+#: inc/widgets/lib/class-logo.php:41
+msgid "Image max height"
+msgstr ""
+
+#: inc/widgets/lib/class-logo.php:72
+msgid "Link URL"
+msgstr ""
+
+#: inc/widgets/lib/class-logo.php:53
+msgid "Text wordmark"
+msgstr ""
+
+#: inc/widgets/lib/class-logo.php:33
+msgid "When set, replaces the text wordmark."
+msgstr ""
+
+#: inc/widgets/lib/class-master-grid.php:178
+msgid "Adds a CTA below the grid linking to the full Vendors archive (e.g. /luthiers/). Useful when the grid is capped at 4–8 and visitors need a path to the rest."
+msgstr ""
+
+#: inc/widgets/lib/class-master-grid.php:91
+msgid "Comma-separated CPT IDs to show in this order. Leave empty to auto-query (menu_order ASC)."
+msgstr ""
+
+#: inc/widgets/lib/class-master-grid.php:167
+msgid "Counts WC products attributed to this vendor via _lwp_vendor_ids meta."
+msgstr ""
+
+#: inc/widgets/lib/class-master-grid.php:79
+msgid "Filter to one vendor group (Luthiers, Team, etc.). Manage groups under LuwiPress → Vendors → Vendor Groups."
+msgstr ""
+
+#: inc/widgets/lib/class-master-grid.php:27
+msgid "Master Grid"
+msgstr ""
+
+#: inc/widgets/lib/class-master-grid.php:48
+msgid "Max profiles"
+msgstr ""
+
+#: inc/widgets/lib/class-master-grid.php:107
+#: inc/widgets/lib/class-taxonomy-terms.php:104
+msgid "Name (A→Z)"
+msgstr ""
+
+#: inc/widgets/lib/class-master-grid.php:41
+msgid "Pulls live from the Vendors CPT (LuwiPress → Vendors). Add or edit profiles there; this grid updates automatically."
+msgstr ""
+
+#: inc/widgets/lib/class-master-grid.php:155
+msgid "Show location"
+msgstr ""
+
+#: inc/widgets/lib/class-master-grid.php:166
+msgid "Show product count"
+msgstr ""
+
+#: inc/widgets/lib/class-master-grid.php:160
+msgid "Show specialty"
+msgstr ""
+
+#: inc/widgets/lib/class-master-grid.php:78
+msgid "Vendor group"
+msgstr ""
+
+#: inc/widgets/lib/class-master-grid.php:190
+#: inc/widgets/lib/class-master-grid.php:191
+#: inc/widgets/lib/class-master-grid.php:330
+msgid "View all vendors →"
+msgstr ""
+
+#: inc/widgets/lib/class-master-grid.php:206
+msgid "[Master Grid] LuwiPress Vendors module is inactive — enable it in LuwiPress → Vendors."
+msgstr ""
+
+#: inc/widgets/lib/class-master-grid.php:245
+msgid "[Master Grid] No profiles yet. Add them in LuwiPress → Vendors."
+msgstr ""
+
+#: inc/widgets/lib/class-master-grid.php:61
+msgid "— All vendors —"
+msgstr ""
+
+#: inc/widgets/lib/class-master-profile.php:210
+msgid "%d instruments"
+msgstr ""
+
+#: inc/widgets/lib/class-master-profile.php:102
+msgid "Compact card (homepage grid)"
+msgstr ""
+
+#: inc/widgets/lib/class-master-profile.php:72
+#: inc/widgets/lib/class-shop-filters.php:84
+msgid "Count"
+msgstr ""
+
+#: inc/widgets/lib/class-master-profile.php:126
+msgid "Fallback gradient — end"
+msgstr ""
+
+#: inc/widgets/lib/class-master-profile.php:118
+msgid "Fallback gradient — start"
+msgstr ""
+
+#: inc/widgets/lib/class-master-profile.php:40
+msgid "Fallback initial"
+msgstr ""
+
+#: inc/widgets/lib/class-master-profile.php:103
+msgid "Featured profile (hero portrait + bio)"
+msgstr ""
+
+#: inc/widgets/lib/class-master-profile.php:185
+msgid "Instruments at the atelier"
+msgstr ""
+
+#: inc/widgets/lib/class-master-profile.php:56
+#: inc/widgets/lib/class-testimonials.php:35
+msgid "Location"
+msgstr ""
+
+#: inc/widgets/lib/class-master-profile.php:20
+msgid "Master Profile"
+msgstr ""
+
+#: inc/widgets/lib/class-master-profile.php:176
+msgid "Master luthier · %s"
+msgstr ""
+
+#: inc/widgets/lib/class-master-profile.php:32
+msgid "Portrait"
+msgstr ""
+
+#: inc/widgets/lib/class-master-profile.php:89
+msgid "Profile URL"
+msgstr ""
+
+#: inc/widgets/lib/class-master-profile.php:50
+msgid "Profile name"
+msgstr ""
+
+#: inc/widgets/lib/class-master-profile.php:81
+msgid "Show instrument count"
+msgstr ""
+
+#: inc/widgets/lib/class-master-profile.php:42
+msgid "Shown when no portrait is set. Auto-derived from name if empty."
+msgstr ""
+
+#: inc/widgets/lib/class-master-profile.php:64
+msgid "Specialty"
+msgstr ""
+
+#: inc/widgets/lib/class-mega-menu.php:65
+msgid "A top-level item becomes a mega panel when it has at least this many children, or when any child has its own children."
+msgstr ""
+
+#: inc/widgets/lib/class-mega-menu.php:53
+msgid "Build the menu in Appearance → Menus, then pick it here. The widget auto-detects which top-level items deserve a mega panel."
+msgstr ""
+
+#: inc/widgets/lib/class-mega-menu.php:37
+msgid "Mega Menu"
+msgstr ""
+
+#: inc/widgets/lib/class-mega-menu.php:527
+msgid "Open →"
+msgstr ""
+
+#: inc/widgets/lib/class-mega-menu.php:137
+#: inc/widgets/lib/class-search-overlay.php:130
+msgid "Panel background"
+msgstr ""
+
+#: inc/widgets/lib/class-mega-menu.php:181
+msgid "Pick a menu in the panel → (or set the global default in Customize → LuwiPress Amber → Mega menu)"
+msgstr ""
+
+#: inc/widgets/lib/class-mega-menu.php:519
+msgid "Read"
+msgstr ""
+
+#: inc/widgets/lib/class-mega-menu.php:187
+msgid "This menu has no items yet."
+msgstr ""
+
+#: inc/widgets/lib/class-mega-menu.php:117
+msgid "Top item color"
+msgstr ""
+
+#: inc/widgets/lib/class-mega-menu.php:127
+msgid "Top item hover color"
+msgstr ""
+
+#: inc/widgets/lib/class-mega-menu.php:90
+msgid "When a menu item points at a product category, show that category's product count next to the link."
+msgstr ""
+
+#: inc/widgets/lib/class-megabar.php:35
+msgid "Auto (top sub-categories by product count)"
+msgstr ""
+
+#: inc/widgets/lib/class-megabar.php:106
+msgid "Hover color"
+msgstr ""
+
+#: inc/widgets/lib/class-megabar.php:36
+msgid "Manual (specific slugs)"
+msgstr ""
+
+#: inc/widgets/lib/class-megabar.php:19
+msgid "Megabar (sub-cat strip)"
+msgstr ""
+
+#: inc/widgets/lib/class-megabar.php:145
+msgid "No sub-categories yet."
+msgstr ""
+
+#: inc/widgets/lib/class-megabar.php:59
+msgid "One slug per line. Order is preserved."
+msgstr ""
+
+#: inc/widgets/lib/class-megabar.php:67
+msgid "Separator"
+msgstr ""
+
+#: inc/widgets/lib/class-megabar.php:56
+msgid "Slugs"
+msgstr ""
+
+#: inc/widgets/lib/class-newsletter.php:35
+msgid "A short letter, once a month. No spam, no resellers."
+msgstr ""
+
+#: inc/widgets/lib/class-newsletter.php:38
+msgid "Button label"
+msgstr ""
+
+#: inc/widgets/lib/class-newsletter.php:63
+msgid "Couldn't subscribe. Please try again."
+msgstr ""
+
+#: inc/widgets/lib/class-newsletter.php:37
+msgid "Email placeholder"
+msgstr ""
+
+#: inc/widgets/lib/class-newsletter.php:61
+msgid "Error message"
+msgstr ""
+
+#: inc/widgets/lib/class-newsletter.php:47
+msgid "GDPR consent text"
+msgstr ""
+
+#: inc/widgets/lib/class-newsletter.php:50
+msgid "I agree to receive your newsletter. I can unsubscribe at any time."
+msgstr ""
+
+#: inc/widgets/lib/class-newsletter.php:34
+msgid "New arrivals + offers,\\ndelivered to your inbox."
+msgstr ""
+
+#: inc/widgets/lib/class-newsletter.php:23
+msgid "Newsletter Signup"
+msgstr ""
+
+#: inc/widgets/lib/class-newsletter.php:41
+msgid "Show GDPR consent checkbox"
+msgstr ""
+
+#: inc/widgets/lib/class-newsletter.php:55
+msgid "Success message"
+msgstr ""
+
+#: inc/widgets/lib/class-newsletter.php:58
+msgid "Thanks for subscribing. Check your inbox to confirm."
+msgstr ""
+
+#: inc/widgets/lib/class-newsletter.php:37
+msgid "your@email.com"
+msgstr ""
+
+#: inc/widgets/lib/class-perks-list.php:62
+msgid "+ lifetime tuning support"
+msgstr ""
+
+#: inc/widgets/lib/class-perks-list.php:62
+msgid "2-year warranty"
+msgstr ""
+
+#: inc/widgets/lib/class-perks-list.php:78
+msgid "Body color"
+msgstr ""
+
+#: inc/widgets/lib/class-perks-list.php:76
+msgid "Bold color"
+msgstr ""
+
+#: inc/widgets/lib/class-perks-list.php:49
+msgid "Bold lead"
+msgstr ""
+
+#: inc/widgets/lib/class-perks-list.php:37
+msgid "Check"
+msgstr ""
+
+#: inc/widgets/lib/class-perks-list.php:61
+msgid "Free DHL shipping"
+msgstr ""
+
+#: inc/widgets/lib/class-perks-list.php:44
+msgid "Gift"
+msgstr ""
+
+#: inc/widgets/lib/class-perks-list.php:42
+msgid "Heart"
+msgstr ""
+
+#: inc/widgets/lib/class-perks-list.php:33
+msgid "Icon style"
+msgstr ""
+
+#: inc/widgets/lib/class-perks-list.php:43
+msgid "Leaf"
+msgstr ""
+
+#: inc/widgets/lib/class-perks-list.php:27
+#: inc/widgets/lib/class-perks-list.php:55
+msgid "Perks"
+msgstr ""
+
+#: inc/widgets/lib/class-perks-list.php:19
+msgid "Perks List"
+msgstr ""
+
+#: inc/widgets/lib/class-perks-list.php:39
+msgid "Shield"
+msgstr ""
+
+#: inc/widgets/lib/class-perks-list.php:41
+msgid "Star"
+msgstr ""
+
+#: inc/widgets/lib/class-perks-list.php:40
+msgid "Tool"
+msgstr ""
+
+#: inc/widgets/lib/class-perks-list.php:38
+msgid "Truck"
+msgstr ""
+
+#: inc/widgets/lib/class-perks-list.php:60
+msgid "in our atelier before shipping"
+msgstr ""
+
+#: inc/widgets/lib/class-perks-list.php:61
+msgid "on orders over €450"
+msgstr ""
+
+#: inc/widgets/lib/class-post-content.php:99
+msgid "Headings"
+msgstr ""
+
+#: inc/widgets/lib/class-post-content.php:47
+#: inc/widgets/lib/class-wc-short-description.php:49
+msgid "Max width"
+msgstr ""
+
+#: inc/widgets/lib/class-post-content.php:89
+msgid "Paragraph spacing"
+msgstr ""
+
+#: inc/widgets/lib/class-post-content.php:26
+msgid "Post Content"
+msgstr ""
+
+#: inc/widgets/lib/class-post-content.php:40
+msgid "Renders the current post body (the_content). No content controls here — edit the post itself."
+msgstr ""
+
+#: inc/widgets/lib/class-post-content.php:128
+msgid "[Post content goes here.]"
+msgstr ""
+
+#: inc/widgets/lib/class-post-featured-image.php:63
+msgid "Attachment caption"
+msgstr ""
+
+#: inc/widgets/lib/class-post-featured-image.php:105
+msgid "Contain"
+msgstr ""
+
+#: inc/widgets/lib/class-post-featured-image.php:104
+msgid "Cover"
+msgstr ""
+
+#: inc/widgets/lib/class-post-featured-image.php:106
+msgid "Fill"
+msgstr ""
+
+#: inc/widgets/lib/class-post-featured-image.php:50
+msgid "Image file"
+msgstr ""
+
+#: inc/widgets/lib/class-post-featured-image.php:89
+msgid "Max height"
+msgstr ""
+
+#: inc/widgets/lib/class-post-featured-image.php:100
+msgid "Object fit"
+msgstr ""
+
+#: inc/widgets/lib/class-post-featured-image.php:23
+msgid "Post Featured Image"
+msgstr ""
+
+#: inc/widgets/lib/class-post-featured-image.php:49
+#: inc/widgets/lib/class-post-title.php:57
+msgid "Post URL"
+msgstr ""
+
+#: inc/widgets/lib/class-post-featured-image.php:77
+msgid "Width"
+msgstr ""
+
+#: inc/widgets/lib/class-post-featured-image.php:141
+msgid "[Featured image]"
+msgstr ""
+
+#: inc/widgets/lib/class-post-featured-image.php:147
+msgid "[No featured image]"
+msgstr ""
+
+#: inc/widgets/lib/class-post-title.php:88
+#: inc/widgets/lib/class-wc-short-description.php:40
+#: inc/widgets/lib/class-wc-title.php:60
+msgid "Color"
+msgstr ""
+
+#: inc/widgets/lib/class-post-title.php:38
+#: inc/widgets/lib/class-wc-title.php:31
+msgid "HTML tag"
+msgstr ""
+
+#: inc/widgets/lib/class-post-title.php:71
+msgid "Justify"
+msgstr ""
+
+#: inc/widgets/lib/class-post-title.php:106
+msgid "Margin"
+msgstr ""
+
+#: inc/widgets/lib/class-post-title.php:126
+#: inc/widgets/lib/class-post-title.php:25
+msgid "Post Title"
+msgstr ""
+
+#: inc/widgets/lib/class-process-steps.php:41
+msgid "Describe the first step of your customer journey here."
+msgstr ""
+
+#: inc/widgets/lib/class-process-steps.php:44
+msgid "Final step — delivery / handoff / after-sale."
+msgstr ""
+
+#: inc/widgets/lib/class-process-steps.php:59
+msgid "Horizontal (cards in a row)"
+msgstr ""
+
+#: inc/widgets/lib/class-process-steps.php:33
+msgid "Icon (optional, overrides number)"
+msgstr ""
+
+#: inc/widgets/lib/class-process-steps.php:55
+msgid "Orientation"
+msgstr ""
+
+#: inc/widgets/lib/class-process-steps.php:20
+msgid "Process Steps"
+msgstr ""
+
+#: inc/widgets/lib/class-process-steps.php:42
+msgid "Second step — what happens after the customer takes step 1."
+msgstr ""
+
+#: inc/widgets/lib/class-process-steps.php:49
+msgid "Show connecting arrows"
+msgstr ""
+
+#: inc/widgets/lib/class-process-steps.php:41
+msgid "Step 1"
+msgstr ""
+
+#: inc/widgets/lib/class-process-steps.php:42
+msgid "Step 2"
+msgstr ""
+
+#: inc/widgets/lib/class-process-steps.php:43
+msgid "Step 3"
+msgstr ""
+
+#: inc/widgets/lib/class-process-steps.php:44
+msgid "Step 4"
+msgstr ""
+
+#: inc/widgets/lib/class-process-steps.php:28
+#: inc/widgets/lib/class-process-steps.php:36
+msgid "Steps"
+msgstr ""
+
+#: inc/widgets/lib/class-process-steps.php:43
+msgid "Third step — the build / fulfillment / processing phase."
+msgstr ""
+
+#: inc/widgets/lib/class-process-steps.php:60
+msgid "Vertical (left-aligned list)"
+msgstr ""
+
+#: inc/widgets/lib/class-product-card.php:98
+msgid "Card corner radius"
+msgstr ""
+
+#: inc/widgets/lib/class-product-card.php:157
+msgid "Install WooCommerce to pick products"
+msgstr ""
+
+#: inc/widgets/lib/class-product-card.php:181
+msgid "Pick a product in the panel →"
+msgstr ""
+
+#: inc/widgets/lib/class-product-card.php:42
+msgid "Pick the product to render."
+msgstr ""
+
+#: inc/widgets/lib/class-product-card.php:135
+#: inc/widgets/lib/class-wc-price.php:46
+msgid "Price color"
+msgstr ""
+
+#: inc/widgets/lib/class-product-card.php:39
+msgid "Product"
+msgstr ""
+
+#: inc/widgets/lib/class-product-card.php:22
+msgid "Product Card"
+msgstr ""
+
+#: inc/widgets/lib/class-product-card.php:186
+msgid "Product not found."
+msgstr ""
+
+#: inc/widgets/lib/class-product-card.php:213
+msgid "Quick add"
+msgstr ""
+
+#: inc/widgets/lib/class-product-card.php:80
+msgid "Reads the pa_luthier attribute if available."
+msgstr ""
+
+#: inc/widgets/lib/class-product-card.php:200
+#: inc/widgets/lib/class-product-grid.php:264
+#: inc/widgets/lib/class-wc-related.php:130
+#: woocommerce/content-product.php:79
+msgid "Sale"
+msgstr ""
+
+#: inc/widgets/lib/class-product-card.php:123
+msgid "Sale badge color"
+msgstr ""
+
+#: inc/widgets/lib/class-product-card.php:209
+#: inc/widgets/lib/class-tour-grid.php:172
+msgid "Save"
+msgstr ""
+
+#: inc/widgets/lib/class-product-card.php:59
+msgid "Show favourite heart"
+msgstr ""
+
+#: inc/widgets/lib/class-product-card.php:77
+msgid "Show maker name"
+msgstr ""
+
+#: inc/widgets/lib/class-product-card.php:68
+msgid "Show quick-add on hover"
+msgstr ""
+
+#: inc/widgets/lib/class-product-card.php:50
+msgid "Show sale badge"
+msgstr ""
+
+#: inc/widgets/lib/class-product-card.php:175
+msgid "WooCommerce required."
+msgstr ""
+
+#: inc/widgets/lib/class-product-card.php:166
+msgid "— Select a product —"
+msgstr ""
+
+#: inc/widgets/lib/class-product-grid.php:53
+msgid "Auto query (by orderby)"
+msgstr ""
+
+#: inc/widgets/lib/class-product-grid.php:83
+msgid "Average rating"
+msgstr ""
+
+#: inc/widgets/lib/class-product-grid.php:138
+msgid "Extra wrapper class"
+msgstr ""
+
+#: inc/widgets/lib/class-product-grid.php:54
+msgid "Featured products only"
+msgstr ""
+
+#: inc/widgets/lib/class-product-grid.php:129
+msgid "Grid gap"
+msgstr ""
+
+#: inc/widgets/lib/class-product-grid.php:104
+msgid "Hide out-of-stock"
+msgstr ""
+
+#: inc/widgets/lib/class-product-grid.php:95
+msgid "Limit to category (slug, optional)"
+msgstr ""
+
+#: inc/widgets/lib/class-product-grid.php:55
+msgid "Manual ID list"
+msgstr ""
+
+#: inc/widgets/lib/class-product-grid.php:88
+msgid "Menu order"
+msgstr ""
+
+#: inc/widgets/lib/class-product-grid.php:69
+#: inc/widgets/lib/class-wc-related.php:36
+msgid "Number of products"
+msgstr ""
+
+#: inc/widgets/lib/class-product-grid.php:65
+msgid "Order in this list is preserved. Limit + Orderby ignored."
+msgstr ""
+
+#: inc/widgets/lib/class-product-grid.php:82
+msgid "Popularity (sales count)"
+msgstr ""
+
+#: inc/widgets/lib/class-product-grid.php:142
+msgid "Preserves legacy CSS hooks when migrating from a [products] shortcode (e.g. \"tap-products\"). Optional."
+msgstr ""
+
+#: inc/widgets/lib/class-product-grid.php:86
+msgid "Price (high → low)"
+msgstr ""
+
+#: inc/widgets/lib/class-product-grid.php:85
+msgid "Price (low → high)"
+msgstr ""
+
+#: inc/widgets/lib/class-product-grid.php:30
+msgid "Product Grid"
+msgstr ""
+
+#: inc/widgets/lib/class-product-grid.php:60
+msgid "Product IDs (comma or space separated)"
+msgstr ""
+
+#: inc/widgets/lib/class-product-grid.php:100
+msgid "Single product_cat slug. Leave empty for all categories."
+msgstr ""
+
+#: inc/widgets/lib/class-product-grid.php:87
+msgid "Title A → Z"
+msgstr ""
+
+#: inc/widgets/lib/class-product-grid.php:182
+msgid "[Product Grid] No products match the current query."
+msgstr ""
+
+#: inc/widgets/lib/class-product-grid.php:45
+msgid "e.g. Most popular"
+msgstr ""
+
+#: inc/widgets/lib/class-pullquote.php:35
+msgid "A short, punchy quote that captures the essence of the piece in a single line."
+msgstr ""
+
+#: inc/widgets/lib/class-pullquote.php:41
+msgid "Attribution (optional)"
+msgstr ""
+
+#: inc/widgets/lib/class-pullquote.php:87
+msgid "Attribution color"
+msgstr ""
+
+#: inc/widgets/lib/class-pullquote.php:49
+msgid "Citation URL (optional)"
+msgstr ""
+
+#: inc/widgets/lib/class-pullquote.php:85
+msgid "Mark color"
+msgstr ""
+
+#: inc/widgets/lib/class-pullquote.php:19
+msgid "Pullquote"
+msgstr ""
+
+#: inc/widgets/lib/class-pullquote.php:83
+msgid "Quote color"
+msgstr ""
+
+#: inc/widgets/lib/class-pullquote.php:32
+msgid "Quote text"
+msgstr ""
+
+#: inc/widgets/lib/class-pullquote.php:57
+msgid "Show decorative quote mark"
+msgstr ""
+
+#: inc/widgets/lib/class-reading-progress.php:73
+msgid "Bar color"
+msgstr ""
+
+#: inc/widgets/lib/class-reading-progress.php:56
+msgid "Bar height (px)"
+msgstr ""
+
+#: inc/widgets/lib/class-reading-progress.php:29
+msgid "Behavior"
+msgstr ""
+
+#: inc/widgets/lib/class-reading-progress.php:35
+msgid "CSS selector of the content area to track. Empty = whole page."
+msgstr ""
+
+#: inc/widgets/lib/class-reading-progress.php:49
+msgid "Inline (no stick)"
+msgstr ""
+
+#: inc/widgets/lib/class-reading-progress.php:43
+msgid "Position"
+msgstr ""
+
+#: inc/widgets/lib/class-reading-progress.php:20
+msgid "Reading Progress"
+msgstr ""
+
+#: inc/widgets/lib/class-reading-progress.php:48
+msgid "Sticky bottom"
+msgstr ""
+
+#: inc/widgets/lib/class-reading-progress.php:47
+msgid "Sticky top"
+msgstr ""
+
+#: inc/widgets/lib/class-reading-progress.php:71
+msgid "Track color"
+msgstr ""
+
+#: inc/widgets/lib/class-reading-progress.php:34
+msgid "Track selector (optional)"
+msgstr ""
+
+#: inc/widgets/lib/class-search-overlay.php:140
+#: inc/widgets/lib/class-shop-filters.php:134
+msgid "Accent"
+msgstr ""
+
+#: inc/widgets/lib/class-search-overlay.php:56
+msgid "Block label"
+msgstr ""
+
+#: inc/widgets/lib/class-search-overlay.php:135
+msgid "Chip background"
+msgstr ""
+
+#: inc/widgets/lib/class-search-overlay.php:60
+msgid "Chips (label|url, one per line)"
+msgstr ""
+
+#: inc/widgets/lib/class-search-overlay.php:109
+msgid "Drawer header label"
+msgstr ""
+
+#: inc/widgets/lib/class-search-overlay.php:61
+msgid "Each line: label|url. Example: \"Turkish Oud|/?s=turkish+oud\""
+msgstr ""
+
+#: inc/widgets/lib/class-search-overlay.php:39
+msgid "Form action URL"
+msgstr ""
+
+#: inc/widgets/lib/class-search-overlay.php:85
+msgid "Mobile drawer"
+msgstr ""
+
+#: inc/widgets/lib/class-search-overlay.php:100
+msgid "Mobile menu"
+msgstr ""
+
+#: inc/widgets/lib/class-search-overlay.php:125
+msgid "Overlay background"
+msgstr ""
+
+#: inc/widgets/lib/class-search-overlay.php:230
+msgid "Pick a menu in the widget settings."
+msgstr ""
+
+#: inc/widgets/lib/class-search-overlay.php:35
+#: inc/widgets/lib/class-wc-gallery.php:130
+msgid "Placeholder"
+msgstr ""
+
+#: inc/widgets/lib/class-search-overlay.php:22
+msgid "Search Overlay"
+msgstr ""
+
+#: inc/widgets/lib/class-search-overlay.php:32
+msgid "Search panel"
+msgstr ""
+
+#: inc/widgets/lib/class-search-overlay.php:48
+msgid "Search query param"
+msgstr ""
+
+#: inc/widgets/lib/class-search-overlay.php:87
+msgid "Show mobile drawer"
+msgstr ""
+
+#: inc/widgets/lib/class-search-overlay.php:71
+msgid "Suggestion blocks"
+msgstr ""
+
+#: inc/widgets/lib/class-search-overlay.php:35
+msgid "Try a product, master, or category…"
+msgstr ""
+
+#: inc/widgets/lib/class-search-overlay.php:49
+msgid "WP default = \"s\". WooCommerce-specific can use \"post_type=product&s\"."
+msgstr ""
+
+#: inc/widgets/lib/class-search-overlay.php:40
+msgid "Where the form submits. Default is the site root with ?s=…"
+msgstr ""
+
+#: inc/widgets/lib/class-search-overlay.php:102
+msgid "— Choose —"
+msgstr ""
+
+#: inc/widgets/lib/class-search-overlay.php:96
+msgid "— No menus found —"
+msgstr ""
+
+#: inc/widgets/lib/class-section-head.php:54
+msgid "Heading tag"
+msgstr ""
+
+#: inc/widgets/lib/class-section-head.php:126
+msgid "Light = dark text on light bg. Dark = light text on dark bg (e.g. for the masters section)."
+msgstr ""
+
+#: inc/widgets/lib/class-section-head.php:95
+msgid "Mark as active"
+msgstr ""
+
+#: inc/widgets/lib/class-section-head.php:81
+msgid "Pill tabs (optional)"
+msgstr ""
+
+#: inc/widgets/lib/class-section-head.php:107
+msgid "Pills"
+msgstr ""
+
+#: inc/widgets/lib/class-section-head.php:23
+msgid "Section Head"
+msgstr ""
+
+#: inc/widgets/lib/class-section-head.php:45
+msgid "Use Enter for a multi-line title. Wrap a phrase with [em]…[/em] to italicise + gold-tint it."
+msgstr ""
+
+#: inc/widgets/lib/class-shop-filters.php:114
+msgid "Apply button label"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-filters.php:114
+msgid "Apply filters"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-filters.php:36
+msgid "Auto blocks (WC)"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-filters.php:73
+msgid "Availability"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-filters.php:71
+msgid "Availability facet label"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-filters.php:88
+msgid "Block heading"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-filters.php:128
+msgid "Block heading color"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-filters.php:45
+msgid "Category facet label"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-filters.php:118
+msgid "Clear all"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-filters.php:118
+msgid "Clear button label"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-filters.php:132
+#: inc/widgets/lib/class-wc-rating.php:61
+msgid "Count color"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-filters.php:80
+msgid "Custom blocks"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-filters.php:104
+msgid "Custom filter blocks"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-filters.php:47
+msgid "Family"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-filters.php:276
+msgid "In stock"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-filters.php:130
+msgid "Item color"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-filters.php:278
+msgid "Made to order"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-filters.php:277
+msgid "Pre-order"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-filters.php:58
+msgid "Price facet label"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-filters.php:89
+msgid "Query parameter"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-filters.php:27
+msgid "Shop Filters"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-filters.php:65
+msgid "Show availability"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-filters.php:39
+msgid "Show category facet"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-filters.php:52
+msgid "Show price range"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-filters.php:85
+msgid "Value (URL param)"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-toolbar.php:40
+msgid "%d results"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-toolbar.php:57
+msgid "Count strong color"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-toolbar.php:37
+msgid "Count template"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-toolbar.php:67
+msgid "Default sorting"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-toolbar.php:123
+msgid "Grid view"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-toolbar.php:126
+msgid "List view"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-toolbar.php:22
+msgid "Shop Toolbar"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-toolbar.php:45
+msgid "Show grid/list toggle"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-toolbar.php:33
+msgid "Show result count"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-toolbar.php:46
+msgid "Show sort dropdown"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-toolbar.php:69
+msgid "Sort by average rating"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-toolbar.php:70
+msgid "Sort by latest"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-toolbar.php:68
+msgid "Sort by popularity"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-toolbar.php:72
+msgid "Sort by price: high to low"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-toolbar.php:71
+msgid "Sort by price: low to high"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-toolbar.php:59
+msgid "Toggle active bg"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-toolbar.php:31
+#: inc/widgets/lib/class-tour-toolbar.php:29
+msgid "Toolbar"
+msgstr ""
+
+#: inc/widgets/lib/class-shop-toolbar.php:38
+msgid "Use %d for number, %s for filter text."
+msgstr ""
+
+#: inc/widgets/lib/class-shop-toolbar.php:122
+msgid "View mode"
+msgstr ""
+
+#: inc/widgets/lib/class-spec-list.php:39
+msgid "Auto: current product attributes (WC)"
+msgstr ""
+
+#: inc/widgets/lib/class-spec-list.php:80
+#: inc/widgets/lib/class-wc-add-to-cart.php:105
+#: inc/widgets/lib/class-wc-meta.php:65
+msgid "Label color"
+msgstr ""
+
+#: inc/widgets/lib/class-spec-list.php:56
+msgid "Material"
+msgstr ""
+
+#: inc/widgets/lib/class-spec-list.php:84
+msgid "Row border"
+msgstr ""
+
+#: inc/widgets/lib/class-spec-list.php:51
+#: inc/widgets/lib/class-timeline.php:26
+#: inc/widgets/lib/class-wc-meta.php:28
+msgid "Rows"
+msgstr ""
+
+#: inc/widgets/lib/class-spec-list.php:69
+msgid "Single column"
+msgstr ""
+
+#: inc/widgets/lib/class-spec-list.php:21
+msgid "Spec List"
+msgstr ""
+
+#: inc/widgets/lib/class-spec-list.php:29
+msgid "Specs"
+msgstr ""
+
+#: inc/widgets/lib/class-spec-list.php:69
+msgid "Two columns"
+msgstr ""
+
+#: inc/widgets/lib/class-spec-list.php:82
+#: inc/widgets/lib/class-wc-meta.php:69
+msgid "Value color"
+msgstr ""
+
+#: inc/widgets/lib/class-spec-list.php:57
+msgid "Weight"
+msgstr ""
+
+#: inc/widgets/lib/class-stat-counter.php:59
+msgid "Count-up duration (ms)"
+msgstr ""
+
+#: inc/widgets/lib/class-stat-counter.php:36
+msgid "Icon (optional)"
+msgstr ""
+
+#: inc/widgets/lib/class-stat-counter.php:47
+msgid "In business"
+msgstr ""
+
+#: inc/widgets/lib/class-stat-counter.php:32
+msgid "Prefix (e.g. €)"
+msgstr ""
+
+#: inc/widgets/lib/class-stat-counter.php:20
+msgid "Stat Counter"
+msgstr ""
+
+#: inc/widgets/lib/class-stat-counter.php:35
+msgid "Sub line (optional)"
+msgstr ""
+
+#: inc/widgets/lib/class-stat-counter.php:33
+msgid "Suffix (e.g. + or k)"
+msgstr ""
+
+#: inc/widgets/lib/class-stat-counter.php:76
+msgid "Vertical dividers"
+msgstr ""
+
+#: inc/widgets/lib/class-story-split.php:160
+msgid "A short paragraph that explains your first key value."
+msgstr ""
+
+#: inc/widgets/lib/class-story-split.php:163
+msgid "After-sale support."
+msgstr ""
+
+#: inc/widgets/lib/class-story-split.php:161
+msgid "Direct from us to you."
+msgstr ""
+
+#: inc/widgets/lib/class-story-split.php:80
+msgid "Floating card — eyebrow"
+msgstr ""
+
+#: inc/widgets/lib/class-story-split.php:96
+msgid "Floating card — sub line"
+msgstr ""
+
+#: inc/widgets/lib/class-story-split.php:88
+msgid "Floating card — title"
+msgstr ""
+
+#: inc/widgets/lib/class-story-split.php:163
+msgid "Fourth value — what happens after the customer buys."
+msgstr ""
+
+#: inc/widgets/lib/class-story-split.php:72
+msgid "Gradient end (when no image)"
+msgstr ""
+
+#: inc/widgets/lib/class-story-split.php:64
+msgid "Gradient start (when no image)"
+msgstr ""
+
+#: inc/widgets/lib/class-story-split.php:42
+msgid "Image on left"
+msgstr ""
+
+#: inc/widgets/lib/class-story-split.php:43
+msgid "Image on right"
+msgstr ""
+
+#: inc/widgets/lib/class-story-split.php:51
+msgid "Image tile"
+msgstr ""
+
+#: inc/widgets/lib/class-story-split.php:155
+msgid "Numbered bullets"
+msgstr ""
+
+#: inc/widgets/lib/class-story-split.php:160
+msgid "Quality first."
+msgstr ""
+
+#: inc/widgets/lib/class-story-split.php:161
+msgid "Second value proposition — replace this copy from the widget editor."
+msgstr ""
+
+#: inc/widgets/lib/class-story-split.php:104
+msgid "Story"
+msgstr ""
+
+#: inc/widgets/lib/class-story-split.php:25
+msgid "Story Split"
+msgstr ""
+
+#: inc/widgets/lib/class-story-split.php:162
+msgid "Third value — what makes your delivery / fulfillment story strong."
+msgstr ""
+
+#: inc/widgets/lib/class-story-split.php:118
+msgid "Use Enter for multi-line. Wrap with [em]…[/em] for italic gold accent."
+msgstr ""
+
+#: inc/widgets/lib/class-story-split.php:162
+msgid "Worldwide shipping."
+msgstr ""
+
+#: inc/widgets/lib/class-taxonomy-terms.php:78
+msgid "All terms (flat)"
+msgstr ""
+
+#: inc/widgets/lib/class-taxonomy-terms.php:79
+msgid "Children of a specific term"
+msgstr ""
+
+#: inc/widgets/lib/class-taxonomy-terms.php:131
+msgid "Comma-separated. Overrides scope/order — shows exactly these, in this order."
+msgstr ""
+
+#: inc/widgets/lib/class-taxonomy-terms.php:135
+msgid "Exclude these slugs (optional)"
+msgstr ""
+
+#: inc/widgets/lib/class-taxonomy-terms.php:92
+msgid "Hide empty terms"
+msgstr ""
+
+#: inc/widgets/lib/class-taxonomy-terms.php:106
+msgid "Manual term order"
+msgstr ""
+
+#: inc/widgets/lib/class-taxonomy-terms.php:119
+msgid "Max terms"
+msgstr ""
+
+#: inc/widgets/lib/class-taxonomy-terms.php:107
+msgid "Menu order (WC)"
+msgstr ""
+
+#: inc/widgets/lib/class-taxonomy-terms.php:127
+msgid "Only these slugs (optional)"
+msgstr ""
+
+#: inc/widgets/lib/class-taxonomy-terms.php:84
+msgid "Parent term (ID or slug)"
+msgstr ""
+
+#: inc/widgets/lib/class-taxonomy-terms.php:103
+msgid "Product / post count"
+msgstr ""
+
+#: inc/widgets/lib/class-taxonomy-terms.php:169
+msgid "Show description sub-line"
+msgstr ""
+
+#: inc/widgets/lib/class-taxonomy-terms.php:161
+msgid "Show term image"
+msgstr ""
+
+#: inc/widgets/lib/class-taxonomy-terms.php:66
+msgid "Taxonomy"
+msgstr ""
+
+#: inc/widgets/lib/class-taxonomy-terms.php:29
+msgid "Taxonomy Terms"
+msgstr ""
+
+#: inc/widgets/lib/class-taxonomy-terms.php:77
+msgid "Top-level only (no children)"
+msgstr ""
+
+#: inc/widgets/lib/class-taxonomy-terms.php:162
+msgid "Uses the term thumbnail (WooCommerce category/brand images). Falls back to a gold gradient."
+msgstr ""
+
+#: inc/widgets/lib/class-taxonomy-terms.php:73
+msgid "Which terms"
+msgstr ""
+
+#: inc/widgets/lib/class-taxonomy-terms.php:256
+msgid "[Taxonomy Terms] No terms match the current settings."
+msgstr ""
+
+#: inc/widgets/lib/class-taxonomy-terms.php:157
+msgid "e.g. \"items\" → \"11 items\". Leave empty to hide the count line."
+msgstr ""
+
+#: inc/widgets/lib/class-taxonomy-terms.php:156
+msgid "items"
+msgstr ""
+
+#: inc/widgets/lib/class-testimonials.php:81
+msgid "%d out of 5 stars"
+msgstr ""
+
+#: inc/widgets/lib/class-testimonials.php:54
+msgid "A third quote rounds out the social-proof block. Photo + first name + city + product gives the most credibility."
+msgstr ""
+
+#: inc/widgets/lib/class-testimonials.php:53
+msgid "Add a second testimonial here. Quotes that mention specific products tend to convert best."
+msgstr ""
+
+#: inc/widgets/lib/class-testimonials.php:36
+msgid "Avatar (optional)"
+msgstr ""
+
+#: inc/widgets/lib/class-testimonials.php:63
+msgid "Carousel (scroll-snap)"
+msgstr ""
+
+#: inc/widgets/lib/class-testimonials.php:52
+#: inc/widgets/lib/class-testimonials.php:53
+#: inc/widgets/lib/class-testimonials.php:54
+msgid "Customer name"
+msgstr ""
+
+#: inc/widgets/lib/class-testimonials.php:64
+msgid "Grid (3-up desktop)"
+msgstr ""
+
+#: inc/widgets/lib/class-testimonials.php:69
+msgid "Output Review schema"
+msgstr ""
+
+#: inc/widgets/lib/class-testimonials.php:70
+msgid "Outputs Schema.org Review JSON-LD so Google + Rank Math can show stars in SERP. Disable if your SEO plugin handles it separately."
+msgstr ""
+
+#: inc/widgets/lib/class-testimonials.php:37
+msgid "Product purchased (optional)"
+msgstr ""
+
+#: inc/widgets/lib/class-testimonials.php:52
+msgid "Replace this with a real customer review — it is the single biggest conversion lever you control."
+msgstr ""
+
+#: inc/widgets/lib/class-testimonials.php:44
+msgid "Review date (YYYY-MM-DD, optional)"
+msgstr ""
+
+#: inc/widgets/lib/class-testimonials.php:30
+#: inc/widgets/lib/class-testimonials.php:47
+msgid "Reviews"
+msgstr ""
+
+#: inc/widgets/lib/class-testimonials.php:39
+msgid "Star rating"
+msgstr ""
+
+#: inc/widgets/lib/class-testimonials.php:22
+msgid "Testimonials"
+msgstr ""
+
+#: inc/widgets/lib/class-testimonials.php:139
+msgid "Testimonials navigation"
+msgstr ""
+
+#: inc/widgets/lib/class-timeline.php:81
+msgid "A second milestone — replace this copy."
+msgstr ""
+
+#: inc/widgets/lib/class-timeline.php:33
+msgid "A short history"
+msgstr ""
+
+#: inc/widgets/lib/class-timeline.php:68
+msgid "A short paragraph describing this milestone — replace from the widget editor."
+msgstr ""
+
+#: inc/widgets/lib/class-timeline.php:82
+msgid "A third milestone — replace this copy."
+msgstr ""
+
+#: inc/widgets/lib/class-timeline.php:80
+msgid "Describe how the story started — replace this copy."
+msgstr ""
+
+#: inc/widgets/lib/class-timeline.php:41
+msgid "Eleven years, four chapters."
+msgstr ""
+
+#: inc/widgets/lib/class-timeline.php:83
+msgid "Final milestone — replace this copy."
+msgstr ""
+
+#: inc/widgets/lib/class-timeline.php:81
+msgid "First milestone"
+msgstr ""
+
+#: inc/widgets/lib/class-timeline.php:59
+msgid "Milestone title"
+msgstr ""
+
+#: inc/widgets/lib/class-timeline.php:82
+msgid "Scaling up"
+msgstr ""
+
+#: inc/widgets/lib/class-timeline.php:80
+msgid "The beginning"
+msgstr ""
+
+#: inc/widgets/lib/class-timeline.php:19
+msgid "Timeline"
+msgstr ""
+
+#: inc/widgets/lib/class-timeline.php:75
+msgid "Timeline rows"
+msgstr ""
+
+#: inc/widgets/lib/class-timeline.php:83
+msgid "Where we are today"
+msgstr ""
+
+#: inc/widgets/lib/class-timeline.php:49
+msgid "Year"
+msgstr ""
+
+#: inc/widgets/lib/class-timeline.php:107
+msgid "Year color"
+msgstr ""
+
+#: inc/widgets/lib/class-topbar.php:137
+msgid "Accent (active / hover)"
+msgstr ""
+
+#: inc/widgets/lib/class-topbar.php:81
+#: inc/wizard/views/wizard.php:391
+msgid "Active"
+msgstr ""
+
+#: inc/widgets/lib/class-topbar.php:73
+msgid "Auto (WPML/Polylang)"
+msgstr ""
+
+#: inc/widgets/lib/class-topbar.php:70
+msgid "Auto = read from WPML/Polylang if active. Manual = use the langs repeater below."
+msgstr ""
+
+#: inc/widgets/lib/class-topbar.php:79
+msgid "Code"
+msgstr ""
+
+#: inc/widgets/lib/class-topbar.php:55
+msgid "Language switcher"
+msgstr ""
+
+#: inc/widgets/lib/class-topbar.php:32
+#: inc/widgets/lib/class-topbar.php:41
+msgid "Left items"
+msgstr ""
+
+#: inc/widgets/lib/class-topbar.php:86
+msgid "Manual languages"
+msgstr ""
+
+#: inc/widgets/lib/class-topbar.php:111
+msgid "Right links"
+msgstr ""
+
+#: inc/widgets/lib/class-topbar.php:102
+msgid "Right utility links"
+msgstr ""
+
+#: inc/widgets/lib/class-topbar.php:60
+msgid "Show language switcher"
+msgstr ""
+
+#: inc/widgets/lib/class-topbar.php:69
+msgid "Switcher source"
+msgstr ""
+
+#: inc/widgets/lib/class-topbar.php:35
+msgid "Text"
+msgstr ""
+
+#: inc/widgets/lib/class-topbar.php:115
+msgid "Track order →"
+msgstr ""
+
+#: inc/widgets/lib/class-topbar.php:36
+msgid "URL (optional)"
+msgstr ""
+
+#: inc/widgets/lib/class-topbar.php:46
+msgid "— Atelier"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-booking-box.php:31
+msgid "Booking box"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-booking-box.php:35
+msgid "Leave empty to use the current product (on a Single Product template)."
+msgstr ""
+
+#: inc/widgets/lib/class-tour-booking-box.php:63
+msgid "Reserve button color"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-booking-box.php:41
+msgid "Reserve button label"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-booking-box.php:47
+msgid "Show \"Ask on WhatsApp\""
+msgstr ""
+
+#: inc/widgets/lib/class-tour-booking-box.php:68
+msgid "Total amount color"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-booking-box.php:23
+msgid "Tour Booking Box"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-booking-box.php:34
+msgid "Tour product"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-booking-box.php:88
+msgid "[Tour Booking Box] Place this on a Single Product template for a product marked “Bookable tour”, or set a Tour product above."
+msgstr ""
+
+#: inc/widgets/lib/class-tour-filters.php:32
+msgid "Category filter"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-filters.php:33
+msgid "Category label"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-filters.php:36
+msgid "Duration"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-filters.php:35
+msgid "Duration filter"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-filters.php:36
+msgid "Duration label"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-filters.php:43
+#: inc/widgets/lib/class-tour-grid.php:74
+#: inc/widgets/lib/class-tour-toolbar.php:34
+msgid "Filter group"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-filters.php:30
+#: inc/widgets/lib/class-tour-filters.php:58
+#: inc/widgets/lib/class-tour-toolbar.php:47
+#: woocommerce/archive-product.php:175
+msgid "Filters"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-filters.php:39
+msgid "Max price"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-filters.php:44
+msgid "Must match the Tour Grid + Toolbar."
+msgstr ""
+
+#: inc/widgets/lib/class-tour-filters.php:38
+msgid "Price filter"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-filters.php:39
+msgid "Price label"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-filters.php:41
+#: inc/widgets/lib/class-tour-filters.php:59
+msgid "Reset all"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-filters.php:41
+msgid "Reset label"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-filters.php:22
+msgid "Tour Filters"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-grid.php:37
+msgid "All bookable tours"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-grid.php:44
+msgid "Category slug"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-grid.php:39
+msgid "Featured products"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-grid.php:40
+msgid "Manual IDs"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-grid.php:75
+msgid "Match this on the Tour Filters + Toolbar widgets to wire them together. Leave blank if there is only one set on the page."
+msgstr ""
+
+#: inc/widgets/lib/class-tour-grid.php:66
+msgid "Newest"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-grid.php:115
+msgid "No experiences match your filters."
+msgstr ""
+
+#: inc/widgets/lib/class-tour-grid.php:54
+msgid "Number of tours"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-grid.php:65
+#: inc/widgets/lib/class-wc-related.php:54
+msgid "Popularity"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-grid.php:68
+msgid "Price (high→low)"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-grid.php:67
+msgid "Price (low→high)"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-grid.php:49
+msgid "Product IDs (comma separated)"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-grid.php:38
+msgid "Product category"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-grid.php:69
+#: inc/widgets/lib/class-wc-rating.php:28
+#: inc/widgets/lib/class-wc-related.php:55
+msgid "Rating"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-grid.php:22
+msgid "Tour Grid"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-grid.php:179
+msgid "Up to %d"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-grid.php:99
+msgid "[Tour Grid] No tours match — mark products as “Bookable tour” or adjust the query."
+msgstr ""
+
+#: inc/widgets/lib/class-tour-grid.php:186
+msgid "person"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-toolbar.php:30
+msgid "Count suffix"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-toolbar.php:32
+msgid "Mobile filter toggle"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-toolbar.php:53
+msgid "Most popular"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-toolbar.php:35
+msgid "Must match the Tour Grid + Filters."
+msgstr ""
+
+#: inc/widgets/lib/class-tour-toolbar.php:55
+msgid "Price: high to low"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-toolbar.php:54
+msgid "Price: low to high"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-toolbar.php:31
+msgid "Sort by"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-toolbar.php:31
+msgid "Sort label"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-toolbar.php:56
+msgid "Top rated"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-toolbar.php:21
+msgid "Tour Toolbar"
+msgstr ""
+
+#: inc/widgets/lib/class-tour-toolbar.php:30
+msgid "experiences found"
+msgstr ""
+
+#: inc/widgets/lib/class-trust-badges.php:30
+#: inc/widgets/lib/class-trust-badges.php:39
+msgid "Badges"
+msgstr ""
+
+#: inc/widgets/lib/class-trust-badges.php:34
+msgid "Icon (fallback)"
+msgstr ""
+
+#: inc/widgets/lib/class-trust-badges.php:75
+msgid "Icon size (px)"
+msgstr ""
+
+#: inc/widgets/lib/class-trust-badges.php:33
+msgid "Image (preferred)"
+msgstr ""
+
+#: inc/widgets/lib/class-trust-badges.php:35
+msgid "Label (optional)"
+msgstr ""
+
+#: inc/widgets/lib/class-trust-badges.php:36
+msgid "Link (optional)"
+msgstr ""
+
+#: inc/widgets/lib/class-trust-badges.php:53
+msgid "Show labels under icons"
+msgstr ""
+
+#: inc/widgets/lib/class-trust-badges.php:22
+msgid "Trust Badges"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-add-to-cart.php:120
+#: inc/widgets/lib/class-wc-add-to-cart.php:42
+msgid "Add to Cart"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-add-to-cart.php:69
+msgid "Background (hover)"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-add-to-cart.php:46
+msgid "Form type is auto-detected from the product (simple / variable / grouped / external). Variation JS + AJAX add inherit from WooCommerce core."
+msgstr ""
+
+#: inc/widgets/lib/class-wc-add-to-cart.php:94
+msgid "Full width"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-add-to-cart.php:109
+msgid "Input border color"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-add-to-cart.php:88
+#: inc/widgets/lib/class-wc-tabs.php:81
+msgid "Padding"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-add-to-cart.php:102
+#: inc/widgets/lib/class-wc-add-to-cart.php:128
+#: inc/widgets/lib/class-wc-add-to-cart.php:56
+msgid "Quantity"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-add-to-cart.php:55
+msgid "Quantity label"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-add-to-cart.php:82
+msgid "Radius"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-add-to-cart.php:50
+msgid "Show quantity label"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-add-to-cart.php:28
+msgid "WC Add to Cart"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-gallery.php:44
+msgid "Enable click-to-lightbox"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-gallery.php:40
+msgid "Enable hover zoom"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-gallery.php:54
+msgid "Full"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-gallery.php:37
+msgid "Gallery"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-gallery.php:53
+msgid "Large"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-gallery.php:63
+msgid "Main image max height"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-gallery.php:71
+msgid "Main image radius"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-gallery.php:48
+msgid "Main image size"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-gallery.php:86
+msgid "Thumb radius"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-gallery.php:78
+msgid "Thumb size"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-gallery.php:22
+msgid "WC Product Gallery"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-gallery.php:52
+msgid "WC Single (default)"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-gallery.php:99
+msgid "[Product gallery]"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-meta.php:36
+#: inc/widgets/lib/class-wc-meta.php:92
+msgid "SKU"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-meta.php:35
+msgid "SKU label"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-meta.php:31
+msgid "Show SKU"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-meta.php:41
+msgid "Show categories"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-meta.php:51
+msgid "Show tags"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-meta.php:111
+#: inc/widgets/lib/class-wc-meta.php:56
+msgid "Tags"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-meta.php:55
+msgid "Tags label"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-meta.php:21
+msgid "WC Product Meta"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-price.php:51
+msgid "Sale price color"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-price.php:56
+msgid "Strikethrough color"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-price.php:21
+msgid "WC Product Price"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-rating.php:36
+msgid "Hide when no reviews"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-rating.php:97
+msgid "No reviews yet"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-rating.php:31
+msgid "Show review count"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-rating.php:56
+msgid "Star color"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-rating.php:66
+msgid "Star size"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-rating.php:21
+msgid "WC Product Rating"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-related.php:28
+msgid "Related"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-related.php:21
+msgid "WC Related Products"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-related.php:32
+msgid "You may also enjoy"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-related.php:79
+msgid "[Related products will render here on a product page.]"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-short-description.php:32
+msgid "Renders the product short description (excerpt). Edit on the product page itself."
+msgstr ""
+
+#: inc/widgets/lib/class-wc-short-description.php:21
+msgid "WC Product Short Description"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-short-description.php:62
+msgid "[Product short description goes here.]"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-tabs.php:37
+msgid "Accordion"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-tabs.php:63
+msgid "Active tab color"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-tabs.php:46
+msgid "Hide Additional Info tab"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-tabs.php:42
+msgid "Hide Description tab"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-tabs.php:50
+msgid "Hide Reviews tab"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-tabs.php:36
+msgid "Horizontal tabs"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-tabs.php:59
+msgid "Inactive tab color"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-tabs.php:163
+msgid "No content."
+msgstr ""
+
+#: inc/widgets/lib/class-wc-tabs.php:73
+msgid "Panel"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-tabs.php:29
+#: inc/widgets/lib/class-wc-tabs.php:56
+msgid "Tabs"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-tabs.php:22
+msgid "WC Product Tabs"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-tabs.php:93
+msgid "[Product tabs]"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-title.php:38
+msgid "Link to product page"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-title.php:79
+msgid "Product Title"
+msgstr ""
+
+#: inc/widgets/lib/class-wc-title.php:21
+msgid "WC Product Title"
+msgstr ""
+
+#: inc/widgets/lib/class-youtube-channel.php:333
+msgid "%s on YouTube"
+msgstr ""
+
+#: inc/widgets/lib/class-youtube-channel.php:204
+msgid "Card border"
+msgstr ""
+
+#: inc/widgets/lib/class-youtube-channel.php:139
+msgid "Duration badge"
+msgstr ""
+
+#: inc/widgets/lib/class-youtube-channel.php:167
+msgid "Featured video 1"
+msgstr ""
+
+#: inc/widgets/lib/class-youtube-channel.php:168
+msgid "Featured video 2"
+msgstr ""
+
+#: inc/widgets/lib/class-youtube-channel.php:169
+msgid "Featured video 3"
+msgstr ""
+
+#: inc/widgets/lib/class-youtube-channel.php:170
+msgid "Featured video 4"
+msgstr ""
+
+#: inc/widgets/lib/class-youtube-channel.php:58
+msgid "Featured videos\\nfrom our YouTube channel."
+msgstr ""
+
+#: inc/widgets/lib/class-youtube-channel.php:48
+msgid "From our channel"
+msgstr ""
+
+#: inc/widgets/lib/class-youtube-channel.php:152
+msgid "HQ (480×360)"
+msgstr ""
+
+#: inc/widgets/lib/class-youtube-channel.php:74
+msgid "Leave empty to pull the channel URL from Customize → LuwiPress Amber → Footer → YouTube URL."
+msgstr ""
+
+#: inc/widgets/lib/class-youtube-channel.php:154
+msgid "Maxres (1280×720, may 404 on old videos)"
+msgstr ""
+
+#: inc/widgets/lib/class-youtube-channel.php:356
+msgid "No YouTube videos configured yet."
+msgstr ""
+
+#: inc/widgets/lib/class-youtube-channel.php:85
+msgid "Only renders if a channel URL is set (here or in Customize → Footer → YouTube URL)."
+msgstr ""
+
+#: inc/widgets/lib/class-youtube-channel.php:357
+msgid "Open this widget and paste a YouTube URL or video ID into each Videos row. This notice is only visible to logged-in editors."
+msgstr ""
+
+#: inc/widgets/lib/class-youtube-channel.php:140
+msgid "Optional. Shown as a small badge on the thumbnail (e.g. \"3:42\"). Leave empty to hide."
+msgstr ""
+
+#: inc/widgets/lib/class-youtube-channel.php:113
+msgid "Paste the full URL (youtu.be/… or youtube.com/watch?v=…) or just the 11-char ID."
+msgstr ""
+
+#: inc/widgets/lib/class-youtube-channel.php:373
+msgid "Play video"
+msgstr ""
+
+#: inc/widgets/lib/class-youtube-channel.php:373
+msgid "Play video — %s"
+msgstr ""
+
+#: inc/widgets/lib/class-youtube-channel.php:84
+msgid "Show Subscribe button"
+msgstr ""
+
+#: inc/widgets/lib/class-youtube-channel.php:153
+msgid "Standard (320×180)"
+msgstr ""
+
+#: inc/widgets/lib/class-youtube-channel.php:96
+msgid "Subscribe label"
+msgstr ""
+
+#: inc/widgets/lib/class-youtube-channel.php:148
+msgid "Thumbnail quality"
+msgstr ""
+
+#: inc/widgets/lib/class-youtube-channel.php:55
+msgid "Use a line break (Enter) for a 2-line title."
+msgstr ""
+
+#: inc/widgets/lib/class-youtube-channel.php:106
+#: inc/widgets/lib/class-youtube-channel.php:162
+msgid "Videos"
+msgstr ""
+
+#: inc/widgets/lib/class-youtube-channel.php:32
+msgid "YouTube Channel"
+msgstr ""
+
+#: inc/widgets/lib/class-youtube-channel.php:112
+msgid "YouTube URL or ID"
+msgstr ""
+
+#: inc/widgets/lib/class-youtube-channel.php:67
+msgid "YouTube channel →"
+msgstr ""
+
+#: inc/widgets/lib/class-youtube-channel.php:131
+msgid "e.g. \"Channel name · 14k views\""
+msgstr ""
+
+#: inc/wizard/bootstrap.php:169
+msgid "All done!"
+msgstr ""
+
+#: inc/wizard/bootstrap.php:168
+msgid "Almost there…"
+msgstr ""
+
+#: inc/wizard/bootstrap.php:167
+msgid "Importing templates…"
+msgstr ""
+
+#: inc/wizard/bootstrap.php:64
+#: inc/wizard/views/wizard.php:21
+msgid "LuwiPress Amber setup"
+msgstr ""
+
+#: inc/wizard/bootstrap.php:74
+msgid "LuwiPress Amber setup (re-run)"
+msgstr ""
+
+#: inc/wizard/bootstrap.php:166
+msgid "Mapping content to templates…"
+msgstr ""
+
+#: inc/wizard/bootstrap.php:111
+msgid "Run the setup wizard — we'll detect what you have and adapt the theme to it (no data is overwritten)."
+msgstr ""
+
+#: inc/wizard/bootstrap.php:165
+msgid "Scanning your site…"
+msgstr ""
+
+#: inc/wizard/bootstrap.php:118
+msgid "Skip for now"
+msgstr ""
+
+#: inc/wizard/bootstrap.php:170
+msgid "Something went wrong. Check the WP debug log."
+msgstr ""
+
+#: inc/wizard/bootstrap.php:115
+msgid "Start setup wizard"
+msgstr ""
+
+#: inc/wizard/bootstrap.php:107
+msgid "Welcome to LuwiPress Amber."
+msgstr ""
+
+#: inc/wizard/lib/class-ai-content.php:52
+msgid "About — short brand story"
+msgstr ""
+
+#: inc/wizard/lib/class-ai-content.php:64
+msgid "Contact — FAQ intro"
+msgstr ""
+
+#: inc/wizard/lib/class-ai-content.php:46
+msgid "Hero — lead paragraph"
+msgstr ""
+
+#: inc/wizard/lib/class-ai-content.php:70
+msgid "Info-bar — shipping note"
+msgstr ""
+
+#: inc/wizard/lib/class-ai-content.php:58
+msgid "Master profile — short bio"
+msgstr ""
+
+#: inc/wizard/lib/class-ai-content.php:163
+msgid "hand-crafted goods"
+msgstr ""
+
+#: inc/wizard/lib/class-detector.php:521
+msgid "Fresh install — perfect for the demo content path."
+msgstr ""
+
+#: inc/wizard/lib/class-detector.php:526
+msgid "We detected: %s."
+msgstr ""
+
+#: inc/wizard/lib/class-detector.php:493
+msgid "no WooCommerce yet"
+msgstr ""
+
+#: inc/wizard/lib/class-importer.php:438
+msgid "Install the \"WordPress Importer\" plugin from wp-admin → Tools → Import → WordPress."
+msgstr ""
+
+#: inc/wizard/lib/class-mapper.php:224
+msgid "%s detected. New pages will be created in the default language only — duplicate them via your translation manager when ready."
+msgstr ""
+
+#: inc/wizard/lib/class-mapper.php:360
+#: woocommerce/myaccount/form-login.php:105
+msgid "About"
+msgstr ""
+
+#: inc/wizard/lib/class-mapper.php:332
+msgid "Demo content will be tagged with _lwp_demo_data so you can remove it later via Tools → LuwiPress Amber → Clean demo data."
+msgstr ""
+
+#: inc/wizard/lib/class-mapper.php:146
+msgid "Existing \"%1$s\" left untouched. A parallel \"%2$s\" page was created so you can compare layouts side by side."
+msgstr ""
+
+#: inc/wizard/lib/class-mapper.php:361
+#: search.php:19
+msgid "Masters"
+msgstr ""
+
+#: inc/wizard/lib/class-mapper.php:347
+msgid "No pages or products will be imported. You can re-run this wizard later or manually import templates from Elementor → Tools → Kit Library."
+msgstr ""
+
+#: inc/wizard/lib/class-mapper.php:234
+msgid "Switching from Hello Elementor — your menus and Elementor pages will be preserved. Header / footer locations will be re-assigned to the LuwiPress Amber templates."
+msgstr ""
+
+#: inc/wizard/lib/class-tgm-bridge.php:47
+msgid "E-commerce backbone — required for the shop, single product, cart, checkout, and account templates."
+msgstr ""
+
+#: inc/wizard/lib/class-tgm-bridge.php:39
+msgid "Header builder + mega menu — bundled kit relies on this for the sticky header."
+msgstr ""
+
+#: inc/wizard/lib/class-tgm-bridge.php:31
+msgid "Page builder — required for the LuwiPress Amber templates."
+msgstr ""
+
+#: inc/wizard/views/wizard.php:241
+msgid "15 long-form journal posts"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:320
+msgid "AI-generated copy (optional)"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:393
+msgid "Activate"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:102
+msgid "Active languages"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:242
+msgid "All 22 page templates pre-populated"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:454
+msgid "All set 🎉"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:32
+#: woocommerce/cart/cart.php:141
+msgid "Apply"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:405
+msgid "Apply →"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:411
+msgid "Applying changes…"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:59
+msgid "Attributes"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:267
+msgid "Brand override."
+msgstr ""
+
+#: inc/wizard/views/wizard.php:299
+msgid "Bright accent for hero underlines and footer headings."
+msgstr ""
+
+#: inc/wizard/views/wizard.php:277
+msgid "Change in Customizer →"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:29
+msgid "Choose path"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:361
+msgid "Clear AI cache"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:376
+msgid "Click \"Install\" on each missing plugin. We'll wait for them all to be active before applying the theme."
+msgstr ""
+
+#: inc/wizard/views/wizard.php:133
+msgid "Coming from"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:308
+msgid "Contact email"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:200
+#: inc/wizard/views/wizard.php:261
+#: inc/wizard/views/wizard.php:369
+msgid "Continue →"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:65
+msgid "Currency"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:28
+msgid "Detect"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:118
+msgid "Detected"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:275
+msgid "Detected an existing logo — we'll use it."
+msgstr ""
+
+#: inc/wizard/views/wizard.php:440
+msgid "Each /<slug>/ URL 301-redirects to /product-category/<slug>/. Pages stay editable in admin."
+msgstr ""
+
+#: inc/wizard/views/wizard.php:250
+msgid "Empty theme"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:227
+msgid "Existing master luthiers wired into the homepage maker grid"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:84
+msgid "Front page"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:228
+msgid "Front page is left alone if you already have one"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:358
+msgid "Generate now"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:336
+msgid "Generate static text with AI"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:226
+msgid "Header / footer / single product templates assigned site-wide"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:137
+msgid "Hello Elementor pages will be preserved."
+msgstr ""
+
+#: inc/wizard/views/wizard.php:38
+msgid "Here's what we found."
+msgstr ""
+
+#: inc/wizard/views/wizard.php:395
+msgid "Install"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:337
+msgid "Install LuwiPress to enable AI generation"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:251
+msgid "Just the global colors and fonts. No pages, no products, no menus — perfect if you already know exactly what you want to build."
+msgstr ""
+
+#: inc/wizard/views/wizard.php:89
+msgid "Latest posts (default)"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:322
+msgid "LuwiPress AI detected"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:324
+msgid "LuwiPress not installed"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:208
+msgid "No data is overwritten in any path. Pick the one that fits — you can always re-run the wizard."
+msgstr ""
+
+#: inc/wizard/views/wizard.php:72
+msgid "Not active yet — install on the next step."
+msgstr ""
+
+#: inc/wizard/views/wizard.php:136
+#: woocommerce/myaccount/view-order.php:130
+msgid "Note"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:458
+msgid "Open Customizer"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:455
+msgid "Open the front of the site to verify everything looks right. You can re-run this wizard from Tools → Site Health any time."
+msgstr ""
+
+#: inc/wizard/views/wizard.php:384
+msgid "Optional"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:268
+msgid "Optional. Skip if you want to use the defaults — you can change these later from Customizer."
+msgstr ""
+
+#: inc/wizard/views/wizard.php:285
+msgid "Otherwise we use the site title as a wordmark."
+msgstr ""
+
+#: inc/wizard/views/wizard.php:80
+msgid "Pages"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:207
+msgid "Pick a setup path."
+msgstr ""
+
+#: inc/wizard/views/wizard.php:31
+msgid "Plugins"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:291
+msgid "Primary color"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:218
+#: inc/wizard/views/wizard.php:236
+msgid "Recommended"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:375
+msgid "Required plugins."
+msgstr ""
+
+#: inc/wizard/views/wizard.php:464
+msgid "Run apply"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:238
+msgid "Sample products + posts + master profiles + a fully designed homepage. Everything tagged with _lwp_demo_data so you can clean it up later."
+msgstr ""
+
+#: inc/wizard/views/wizard.php:87
+msgid "Set, no title"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:26
+msgid "Setup steps"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:253
+msgid "Site Settings only (palette + fonts + buttons)"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:237
+msgid "Start with the Tapadum demo"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:57
+#: woocommerce/archive-product.php:142
+msgid "Sub-categories"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:225
+msgid "Sub-categories auto-fill the megabar"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:221
+msgid "The wizard adapts the theme to whatever's already in your DB — your products, categories, posts, masters and menus all stay where they are."
+msgstr ""
+
+#: inc/wizard/views/wizard.php:131
+msgid "Theme switch"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:169
+msgid "These pages share their URL with a WooCommerce category. Visitors clicking the menu reach the page, not the live commerce archive — so the category template never renders. The Apply step can 301-redirect each one to its matching /product-category/ archive. The original page posts are kept editable in admin."
+msgstr ""
+
+#: inc/wizard/views/wizard.php:52
+msgid "Top categories"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:120
+msgid "Top makers"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:224
+msgid "Top sellers auto-fill the homepage Featured grid"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:303
+msgid "Topbar phone"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:283
+msgid "Upload a logo via Customizer →"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:219
+msgid "Use my existing content"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:293
+msgid "Used for italic emphasis, prices, and the gold gradient. Default is the heritage gold #735c00."
+msgstr ""
+
+#: inc/wizard/views/wizard.php:457
+msgid "View site →"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:176
+msgid "Will redirect to"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:328
+msgid "Your products, posts, categories and menu stay exactly as they are. The few static lines that ship with the theme — hero lead, about story, master bio template, FAQ intro — can be drafted by AI in your brand voice using the LuwiPress AI engine."
+msgstr ""
+
+#: inc/wizard/views/wizard.php:240
+msgid "~50 sample products across 5 categories"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:260
+#: inc/wizard/views/wizard.php:368
+#: inc/wizard/views/wizard.php:403
+#: inc/wizard/views/wizard.php:463
+msgid "← Back"
+msgstr ""
+
+#: inc/wizard/views/wizard.php:404
+msgid "↻ Re-check plugins"
+msgstr ""
+
+#: index.php:58
+msgid "Nothing here yet."
+msgstr ""
+
+#: index.php:17
+msgid "Search results for: %s"
+msgstr ""
+
+#: page-about.php:84
+msgid "01 · The mission"
+msgstr ""
+
+#: page-about.php:99
+msgid "02 · Timeline"
+msgstr ""
+
+#: page-about.php:120
+msgid "03 · The team"
+msgstr ""
+
+#: page-about.php:151
+msgid "04 · Inside the atelier"
+msgstr ""
+
+#: page-about.php:124
+msgid "A few hands in <em>one room</em>"
+msgstr ""
+
+#: page-about.php:48
+msgid "Brisighella · Italy"
+msgstr ""
+
+#: page-about.php:154
+msgid "From <em>raw wood</em> to first pluck"
+msgstr ""
+
+#: page-about.php:102
+msgid "Years on the bench, <em>line by line</em>"
+msgstr ""
+
+#: page-contact.php:52
+msgid "24h reply"
+msgstr ""
+
+#: page-contact.php:44
+msgid "A custom build"
+msgstr ""
+
+#: page-contact.php:43
+msgid "An instrument"
+msgstr ""
+
+#: page-contact.php:45
+msgid "An order"
+msgstr ""
+
+#: page-contact.php:58
+msgid "Closed"
+msgstr ""
+
+#: page-contact.php:67
+msgid "Get in touch"
+msgstr ""
+
+#: page-contact.php:79
+msgid "I'm writing about"
+msgstr ""
+
+#: page-contact.php:46
+msgid "Lessons"
+msgstr ""
+
+#: page-contact.php:51
+msgid "Mon–Sat"
+msgstr ""
+
+#: page-contact.php:147
+msgid "Opening hours"
+msgstr ""
+
+#: page-contact.php:47
+msgid "Press"
+msgstr ""
+
+#: page-contact.php:80
+msgid "Reason for contact"
+msgstr ""
+
+#: page-contact.php:57
+msgid "Saturday"
+msgstr ""
+
+#: page-contact.php:58
+msgid "Sun & Mon"
+msgstr ""
+
+#: page-contact.php:56
+msgid "Tue – Fri"
+msgstr ""
+
+#: search.php:73
+msgid "AI-powered search"
+msgstr ""
+
+#: search.php:17
+msgid "All"
+msgstr ""
+
+#: search.php:67
+msgid "Back"
+msgstr ""
+
+#: search.php:159
+msgid "No results"
+msgstr ""
+
+#: search.php:162
+msgid "Nothing for \"%s\" yet."
+msgstr ""
+
+#: search.php:152
+msgid "Older →"
+msgstr ""
+
+#: search.php:79
+msgid "Search filters"
+msgstr ""
+
+#: search.php:164
+msgid "Try a wider search, or browse from the home page."
+msgstr ""
+
+#: search.php:151
+msgid "← Newer"
+msgstr ""
+
+#: single-lwp-cpt.php:32
+#: woocommerce/myaccount/dashboard.php:129
+msgid "Item"
+msgstr ""
+
+#: single-lwp-cpt.php:152
+msgid "Related to this %s"
+msgstr ""
+
+#: single-lwp_vendor.php:175
+msgid "Made by this %s"
+msgstr ""
+
+#: single-lwp_vendor.php:48
+msgid "Website"
+msgstr ""
+
+#: single-lwp_vendor.php:128
+msgid "specialty"
+msgstr ""
+
+#: single-lwp_vendor.php:134
+msgid "works"
+msgstr ""
+
+#: single-lwp_vendor.php:122
+msgid "years active"
+msgstr ""
+
+#: single-master.php:99
+msgid "Bio"
+msgstr ""
+
+#: single-master.php:135
+msgid "Browse all from %s →"
+msgstr ""
+
+#: single-master.php:31
+msgid "Hicaz"
+msgstr ""
+
+#: single-master.php:93
+msgid "Joined"
+msgstr ""
+
+#: single-master.php:142
+msgid "Listen"
+msgstr ""
+
+#: single-master.php:59
+msgid "Master luthier"
+msgstr ""
+
+#: single-master.php:87
+msgid "Pieces"
+msgstr ""
+
+#: single-master.php:148
+msgid "Play audio sample"
+msgstr ""
+
+#: single-master.php:107
+msgid "Signature instruments"
+msgstr ""
+
+#: single-master.php:145
+msgid "Tuning sample · %s"
+msgstr ""
+
+#: single-master.php:164
+msgid "Visit %s's atelier →"
+msgstr ""
+
+#: single-master.php:81
+msgid "Years"
+msgstr ""
+
+#: single.php:65
+msgid "By %s"
+msgstr ""
+
+#: single.php:96
+msgid "Tagged"
+msgstr ""
+
+#: woocommerce/archive-product.php:106
+msgid "Collection"
+msgstr ""
+
+#: woocommerce/archive-product.php:246
+msgid "Load more products"
+msgstr ""
+
+#: woocommerce/archive-product.php:105
+msgid "Sub-category"
+msgstr ""
+
+#: woocommerce/cart/cart-empty.php:55
+msgid "Browse the collection"
+msgstr ""
+
+#: woocommerce/cart/cart-empty.php:29
+msgid "Empty cart"
+msgstr ""
+
+#: woocommerce/cart/cart-empty.php:50
+msgid "Hand-picked instruments are waiting in the atelier. Browse the collection or pick up where you left off."
+msgstr ""
+
+#: woocommerce/cart/cart-empty.php:57
+msgid "My orders"
+msgstr ""
+
+#: woocommerce/cart/cart-empty.php:43
+msgid "Your cart is empty"
+msgstr ""
+
+#: woocommerce/cart/cart.php:38
+msgid "Cart items"
+msgstr ""
+
+#: woocommerce/cart/cart.php:185
+msgid "Cart total and checkout"
+msgstr ""
+
+#: woocommerce/cart/cart.php:193
+msgid "Checkout →"
+msgstr ""
+
+#: woocommerce/cart/cart.php:140
+msgid "Coupon code"
+msgstr ""
+
+#: woocommerce/cart/cart.php:153
+#: woocommerce/checkout/form-checkout.php:109
+msgid "Order summary"
+msgstr ""
+
+#: woocommerce/cart/cart.php:122
+msgid "Remove %s from cart"
+msgstr ""
+
+#: woocommerce/cart/cart.php:145
+msgid "Update cart"
+msgstr ""
+
+#: woocommerce/checkout/form-checkout.php:92
+msgid "All transactions are encrypted. We never store your card."
+msgstr ""
+
+#: woocommerce/checkout/form-checkout.php:60
+msgid "Already a customer? %s"
+msgstr ""
+
+#: woocommerce/checkout/form-checkout.php:77
+msgid "DHL Express · arrives in 3–7 working days worldwide."
+msgstr ""
+
+#: woocommerce/checkout/form-checkout.php:168
+msgid "Pay total"
+msgstr ""
+
+#: woocommerce/checkout/form-checkout.php:166
+msgid "Pay total and place order"
+msgstr ""
+
+#: woocommerce/checkout/form-checkout.php:91
+#: woocommerce/checkout/thankyou.php:75
+msgid "Payment"
+msgstr ""
+
+#: woocommerce/checkout/form-checkout.php:171
+msgid "Place order →"
+msgstr ""
+
+#: woocommerce/checkout/form-checkout.php:145
+#: woocommerce/myaccount/my-address.php:16
+#: woocommerce/myaccount/view-order.php:155
+msgid "Shipping"
+msgstr ""
+
+#: woocommerce/checkout/form-checkout.php:76
+#: woocommerce/myaccount/form-edit-address.php:21
+msgid "Shipping address"
+msgstr ""
+
+#: woocommerce/checkout/form-checkout.php:140
+msgid "Subtotal"
+msgstr ""
+
+#: woocommerce/checkout/form-checkout.php:56
+msgid "We'll send the order confirmation here."
+msgstr ""
+
+#: woocommerce/checkout/form-checkout.php:21
+msgid "You must be logged in to checkout."
+msgstr ""
+
+#: woocommerce/checkout/form-checkout.php:110
+msgid "Your order"
+msgstr ""
+
+#: woocommerce/checkout/thankyou.php:54
+msgid "A confirmation has been sent to <strong>%s</strong>. Our atelier prepares each instrument by hand before dispatching with the carrier of your choice."
+msgstr ""
+
+#: woocommerce/checkout/thankyou.php:109
+#: woocommerce/myaccount/view-order.php:173
+msgid "Continue browsing ↗"
+msgstr ""
+
+#: woocommerce/checkout/thankyou.php:90
+#: woocommerce/myaccount/view-order.php:31
+msgid "Delivered"
+msgstr ""
+
+#: woocommerce/checkout/thankyou.php:89
+#: woocommerce/myaccount/view-order.php:30
+msgid "Dispatched"
+msgstr ""
+
+#: woocommerce/checkout/thankyou.php:32
+#: woocommerce/myaccount/my-account.php:25
+msgid "My account"
+msgstr ""
+
+#: woocommerce/checkout/thankyou.php:38
+msgid "On account"
+msgstr ""
+
+#: woocommerce/checkout/thankyou.php:63
+msgid "Order number"
+msgstr ""
+
+#: woocommerce/checkout/thankyou.php:30
+msgid "Pay"
+msgstr ""
+
+#: woocommerce/checkout/thankyou.php:88
+#: woocommerce/myaccount/view-order.php:29
+msgid "Processing"
+msgstr ""
+
+#: woocommerce/checkout/thankyou.php:46
+msgid "Thank you, %s."
+msgstr ""
+
+#: woocommerce/checkout/thankyou.php:118
+msgid "Thank you. Your order has been received."
+msgstr ""
+
+#: woocommerce/checkout/thankyou.php:71
+msgid "Total paid"
+msgstr ""
+
+#: woocommerce/checkout/thankyou.php:107
+msgid "Track this order →"
+msgstr ""
+
+#: woocommerce/checkout/thankyou.php:26
+msgid "Unfortunately your order cannot be processed as the originating bank/merchant has declined your transaction. Please attempt your purchase again."
+msgstr ""
+
+#: woocommerce/checkout/thankyou.php:94
+msgid "What happens next"
+msgstr ""
+
+#: woocommerce/checkout/thankyou.php:48
+msgid "Your instrument is in good hands."
+msgstr ""
+
+#: woocommerce/checkout/thankyou.php:42
+msgid "— Order received"
+msgstr ""
+
+#: woocommerce/myaccount/dashboard.php:110
+msgid "Active addresses"
+msgstr ""
+
+#: woocommerce/myaccount/dashboard.php:203
+msgid "Default address"
+msgstr ""
+
+#: woocommerce/myaccount/dashboard.php:204
+msgid "Edit →"
+msgstr ""
+
+#: woocommerce/myaccount/dashboard.php:114
+msgid "Lifetime spend"
+msgstr ""
+
+#: woocommerce/myaccount/dashboard.php:89
+msgid "Member since %s"
+msgstr ""
+
+#: woocommerce/myaccount/dashboard.php:175
+msgid "Open shop →"
+msgstr ""
+
+#: woocommerce/myaccount/dashboard.php:127
+msgid "Order"
+msgstr ""
+
+#: woocommerce/myaccount/dashboard.php:121
+#: woocommerce/myaccount/dashboard.php:173
+msgid "Recent orders"
+msgstr ""
+
+#: woocommerce/myaccount/dashboard.php:106
+msgid "Saved instruments"
+msgstr ""
+
+#: woocommerce/myaccount/dashboard.php:102
+msgid "Total orders"
+msgstr ""
+
+#: woocommerce/myaccount/dashboard.php:80
+msgid "Welcome back, <em>%s</em>."
+msgstr ""
+
+#: woocommerce/myaccount/dashboard.php:174
+msgid "You haven't placed any orders yet. Browse the catalogue to get started."
+msgstr ""
+
+#: woocommerce/myaccount/dashboard.php:20
+msgid "You must be logged in to view your account."
+msgstr ""
+
+#: woocommerce/myaccount/form-edit-account.php:67
+msgid "Confirm new password"
+msgstr ""
+
+#: woocommerce/myaccount/form-edit-account.php:59
+msgid "Current password"
+msgstr ""
+
+#: woocommerce/myaccount/form-edit-account.php:41
+msgid "Display name"
+msgstr ""
+
+#: woocommerce/myaccount/form-edit-account.php:33
+msgid "First name"
+msgstr ""
+
+#: woocommerce/myaccount/form-edit-account.php:43
+msgid "How your name appears on the account section and reviews."
+msgstr ""
+
+#: woocommerce/myaccount/form-edit-account.php:37
+msgid "Last name"
+msgstr ""
+
+#: woocommerce/myaccount/form-edit-account.php:56
+msgid "Leave blank to keep the current password."
+msgstr ""
+
+#: woocommerce/myaccount/form-edit-account.php:63
+msgid "New password"
+msgstr ""
+
+#: woocommerce/myaccount/form-edit-account.php:55
+msgid "Password change"
+msgstr ""
+
+#: woocommerce/myaccount/form-edit-account.php:30
+msgid "Personal info"
+msgstr ""
+
+#: woocommerce/myaccount/form-edit-account.php:75
+msgid "Save changes"
+msgstr ""
+
+#: woocommerce/myaccount/form-edit-account.php:75
+msgid "Save changes →"
+msgstr ""
+
+#: woocommerce/myaccount/form-edit-account.php:23
+msgid "Update your name, email and password. Marketing preferences are stored separately under the newsletter section below."
+msgstr ""
+
+#: woocommerce/myaccount/form-edit-address.php:21
+msgid "Billing address"
+msgstr ""
+
+#: woocommerce/myaccount/form-edit-address.php:52
+msgid "Save address"
+msgstr ""
+
+#: woocommerce/myaccount/form-edit-address.php:52
+msgid "Save address →"
+msgstr ""
+
+#: woocommerce/myaccount/form-edit-address.php:26
+msgid "Update the details we use to ship and bill your orders. Required fields are marked with an asterisk."
+msgstr ""
+
+#: woocommerce/myaccount/form-edit-address.php:53
+msgid "← Cancel"
+msgstr ""
+
+#: woocommerce/myaccount/form-login.php:109
+msgid "%s · members."
+msgstr ""
+
+#: woocommerce/myaccount/form-login.php:61
+msgid "Create an account to track orders, save instruments to your wishlist, and check out faster next time."
+msgstr ""
+
+#: woocommerce/myaccount/form-login.php:49
+msgid "Forgot your password?"
+msgstr ""
+
+#: woocommerce/myaccount/form-login.php:102
+msgid "Hand-crafted instruments shipped from our atelier in Brisighella. Sign in to keep track of orders, save the pieces you're watching, and check out faster."
+msgstr ""
+
+#: woocommerce/myaccount/form-login.php:42
+msgid "Log in"
+msgstr ""
+
+#: woocommerce/myaccount/form-login.php:59
+msgid "New to %s"
+msgstr ""
+
+#: woocommerce/myaccount/form-login.php:45
+msgid "Remember me"
+msgstr ""
+
+#: woocommerce/myaccount/form-login.php:23
+msgid "Sign in to view orders, saved instruments and addresses."
+msgstr ""
+
+#: woocommerce/myaccount/form-login.php:68
+msgid "Username"
+msgstr ""
+
+#: woocommerce/myaccount/form-login.php:22
+msgid "Welcome back"
+msgstr ""
+
+#: woocommerce/myaccount/form-login.php:106
+msgid "— Why sign in"
+msgstr ""
+
+#: woocommerce/myaccount/form-login.php:116
+msgid "✓  Early access to new arrivals"
+msgstr ""
+
+#: woocommerce/myaccount/form-login.php:115
+msgid "✓  One-click checkout with stored addresses"
+msgstr ""
+
+#: woocommerce/myaccount/form-login.php:114
+msgid "✓  Save instruments to your wishlist for later"
+msgstr ""
+
+#: woocommerce/myaccount/form-login.php:113
+msgid "✓  Track every order from atelier to door"
+msgstr ""
+
+#: woocommerce/myaccount/my-account.php:22
+msgid "My Account"
+msgstr ""
+
+#: woocommerce/myaccount/my-address.php:56
+msgid "Add address →"
+msgstr ""
+
+#: woocommerce/myaccount/my-address.php:15
+#: woocommerce/myaccount/view-order.php:146
+msgid "Billing"
+msgstr ""
+
+#: woocommerce/myaccount/my-address.php:44
+msgid "Default · %s"
+msgstr ""
+
+#: woocommerce/myaccount/my-address.php:56
+msgid "Edit address →"
+msgstr ""
+
+#: woocommerce/myaccount/my-address.php:25
+msgid "Saved addresses"
+msgstr ""
+
+#: woocommerce/myaccount/my-address.php:30
+msgid "The following addresses will be used on the checkout page by default."
+msgstr ""
+
+#: woocommerce/myaccount/my-address.php:26
+msgid "These addresses are used by default at checkout. You can update them at any time, or add a new address from the cart."
+msgstr ""
+
+#: woocommerce/myaccount/my-address.php:53
+msgid "You have not set up this type of address yet."
+msgstr ""
+
+#: woocommerce/myaccount/orders.php:23
+msgid "All orders"
+msgstr ""
+
+#: woocommerce/myaccount/orders.php:115
+msgid "Browse instruments"
+msgstr ""
+
+#: woocommerce/myaccount/orders.php:24
+msgid "Every order you've placed. Click any row to see line items, tracking and the invoice."
+msgstr ""
+
+#: woocommerce/myaccount/orders.php:117
+msgid "No order has been made yet."
+msgstr ""
+
+#: woocommerce/myaccount/orders.php:88
+msgid "Track"
+msgstr ""
+
+#: woocommerce/myaccount/view-order.php:19
+msgid "Invalid order."
+msgstr ""
+
+#: woocommerce/myaccount/view-order.php:38
+msgid "Order #%s"
+msgstr ""
+
+#: woocommerce/myaccount/view-order.php:45
+msgid "Placed on %1$s · %2$s"
+msgstr ""
+
+#: woocommerce/myaccount/view-order.php:115
+msgid "Summary"
+msgstr ""
+
+#: woocommerce/myaccount/view-order.php:54
+msgid "Tracking"
+msgstr ""
+
+#: woocommerce/single-product.php:75
+msgid "24/7 concierge support before & during your trip"
+msgstr ""
+
+#: woocommerce/single-product.php:74
+msgid "Free cancellation up to 24 hours before"
+msgstr ""
+
+#: woocommerce/single-product.php:73
+msgid "Hand-picked experiences, vetted by our team"
+msgstr ""
+
+#: woocommerce/single-product.php:72
+msgid "Instant confirmation — book with confidence"
+msgstr ""
+

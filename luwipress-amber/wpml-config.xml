@@ -1,0 +1,45 @@
+<wpml-config>
+
+	<!--
+		Amber tour-booking meta (_fbd_*) translation rules.
+
+		The booking module stores tour config on the WooCommerce product. Without
+		these rules a WPML/Polylang product translation loses its tour config:
+		the box stops rendering on the translated PDP and prices/labels go blank.
+
+		copy      → language-neutral (flags, numbers): same value on every translation.
+		translate → human-facing strings: sent to the translation editor.
+
+		_fbd_time_slots / _fbd_addons are serialized arrays. WPML translates the
+		inner string values via the <key> notation below (the per-person price
+		inside an add-on stays numeric and is not exposed for translation — the
+		whole field is copied structurally and only the label keys are translated).
+	-->
+	<custom-fields>
+		<!-- Language-neutral: flag, bucket, pax range, pickup, deposit. -->
+		<custom-field action="copy">_fbd_is_tour</custom-field>
+		<custom-field action="copy">_fbd_duration_bucket</custom-field>
+		<custom-field action="copy">_fbd_pax_min</custom-field>
+		<custom-field action="copy">_fbd_pax_max</custom-field>
+		<custom-field action="copy">_fbd_pax_default</custom-field>
+		<custom-field action="copy">_fbd_pickup_included</custom-field>
+		<custom-field action="copy">_fbd_deposit_pct</custom-field>
+
+		<!-- Human-facing single strings. -->
+		<custom-field action="translate">_fbd_duration</custom-field>
+		<custom-field action="translate">_fbd_cancellation</custom-field>
+	</custom-fields>
+
+	<!-- Serialized arrays: translate the label strings, leave structure/prices intact. -->
+	<custom-fields-texts>
+		<key name="_fbd_time_slots">
+			<key name="*" />
+		</key>
+		<key name="_fbd_addons">
+			<key name="*">
+				<key name="label" />
+			</key>
+		</key>
+	</custom-fields-texts>
+
+</wpml-config>

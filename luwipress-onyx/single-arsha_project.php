@@ -62,17 +62,79 @@ while ( have_posts() ) :
 	$amenities = array_filter( array_map( 'strval', (array) $g( 'amenities', array() ) ) );
 	$payplan   = $g( 'payment_plan', array() ); // array of milestones [{label,pct,amount}] or a string
 
+	// AI-generated FAQ (content/generate task=faq → _luwipress_faq); JSON-LD is
+	// rendered centrally by LuwiPress_AEO (post type opted in via
+	// luwipress_aeo_schema_post_types) — this tab is just the visible accordion.
+	$faqs_raw = get_post_meta( $pid, '_luwipress_faq', true );
+	$faqs     = array();
+	if ( is_array( $faqs_raw ) ) {
+		foreach ( $faqs_raw as $f ) {
+			if ( ! empty( $f['question'] ) && ! empty( $f['answer'] ) ) {
+				$faqs[] = $f;
+			}
+		}
+	}
+
+	// Web-researched enrichment (apply pipeline): CPT meta wins over DLD live detail.
+	$web_gal_ids = json_decode( (string) get_post_meta( $pid, '_arsha_gallery_ids', true ), true );
+	$web_amens   = json_decode( (string) get_post_meta( $pid, '_arsha_amenities', true ), true );
+	if ( is_array( $web_amens ) && $web_amens ) {
+		$amenities = array_filter( array_map( 'strval', $web_amens ) );
+	}
+
+	// Structured enrichment facts (facts.py → _arsha_* meta): specs / unit types /
+	// connectivity / nearby / schools / clean developer name. Pure extracted data —
+	// rendered as sections below. All optional; each section hides when empty.
+	$dec = function ( $key ) use ( $pid ) {
+		$v = json_decode( (string) get_post_meta( $pid, $key, true ), true );
+		return is_array( $v ) ? $v : array();
+	};
+	$specs_meta   = $dec( '_arsha_specs' );
+	$unit_types_m = $dec( '_arsha_unit_types' );
+	$connectivity = $dec( '_arsha_connectivity' );
+	$nearby       = $dec( '_arsha_nearby' );
+	$schools_m    = $dec( '_arsha_schools' );
+	$dev_clean    = (string) get_post_meta( $pid, '_arsha_developer_clean', true );
+	if ( '' !== $dev_clean ) {
+		$dev = $dev_clean; // human-readable name over the raw DLD legal string
+	}
+	if ( $units <= 0 && ! empty( $specs_meta['total_units'] ) ) {
+		$units = (int) $specs_meta['total_units'];
+	}
+
+	// ── Honesty gates — never present synthetic/placeholder DLD data as real. ──
+	// The DLD feed returns a mock rental yield (rental.source = 'fallback_mock'), a
+	// synthetic escrow account ("ESC-DLD-<n>"), and a flat default developer rating;
+	// none are verifiable, so they are suppressed rather than shown as fact.
+	$show_yield  = ( $yield > 0 && '' !== $rsource && 'fallback_mock' !== $rsource );
+	$escrow_real = ( ! empty( $escrow['account'] ) && ! preg_match( '/^ESC-DLD-\d+$/i', (string) $escrow['account'] ) );
+	// Calculator seed: a real yield when we have one, else a neutral 6% ASSUMPTION the
+	// user edits — never seed the ROI tool with the mock figure as if it were this project's.
+	$calc_yield  = $show_yield ? $yield : 6;
+	$has_location = ( ( $lat && $lng ) || $connectivity || $nearby || $schools_m );
+
 	$calc_price = 0;
 	foreach ( $ptmix as $row ) {
 		if ( ! empty( $row['avg_price_aed'] ) ) { $calc_price = (int) $row['avg_price_aed']; break; }
 	}
 	if ( ! $calc_price ) { $calc_price = $area_avg ?: 2000000; }
 
-	// Build the gallery image list (gallery → hero fallback).
+	// Build the gallery image list (web-researched attachments → DLD gallery → hero fallback).
 	$imgs = array();
-	foreach ( $gallery as $it ) {
-		$u = (string) ( $it['url'] ?? '' );
-		if ( $u ) { $imgs[] = array( 'url' => $u, 'thumb' => (string) ( $it['thumbnail'] ?? $u ) ); }
+	if ( is_array( $web_gal_ids ) && $web_gal_ids ) {
+		foreach ( array_map( 'intval', $web_gal_ids ) as $aid ) {
+			$u = wp_get_attachment_image_url( $aid, 'full' );
+			if ( $u ) {
+				$t      = wp_get_attachment_image_url( $aid, 'large' );
+				$imgs[] = array( 'url' => $u, 'thumb' => $t ? $t : $u );
+			}
+		}
+	}
+	if ( ! $imgs ) {
+		foreach ( $gallery as $it ) {
+			$u = (string) ( $it['url'] ?? '' );
+			if ( $u ) { $imgs[] = array( 'url' => $u, 'thumb' => (string) ( $it['thumbnail'] ?? $u ) ); }
+		}
 	}
 	if ( ! $imgs && $hero ) { $imgs[] = array( 'url' => $hero, 'thumb' => $hero ); }
 	// Featured Image (operator-set in the editor) wins for the hero, so the
@@ -87,7 +149,7 @@ while ( have_posts() ) :
 	$archive_url = get_post_type_archive_link( LWP_ONYX_PROJECT_PT );
 	?>
 
-	<main class="pdp" data-onyx-proj data-price="<?php echo esc_attr( $calc_price ); ?>" data-yield="<?php echo esc_attr( $yield ?: 6 ); ?>">
+	<main class="pdp" data-onyx-proj data-price="<?php echo esc_attr( $calc_price ); ?>" data-yield="<?php echo esc_attr( $calc_yield ); ?>">
 
 		<!-- ============ CINEMATIC HERO ============ -->
 		<section class="pdp-hero<?php echo $hero_bg ? ' has-img' : ''; ?>"<?php echo $hero_bg ? ' style="--pdp-hero-img:url(\'' . esc_url( $hero_bg ) . '\')"' : ''; ?>>
@@ -101,12 +163,12 @@ while ( have_posts() ) :
 				<h1 class="pdp-hero-title"><?php echo esc_html( $name ); ?></h1>
 				<div class="pdp-hero-chips">
 					<?php if ( $area ) : ?><span class="pdp-chip"><?php echo onyx_icon( 'pin', 14 ); // phpcs:ignore ?> <?php echo esc_html( $area ); ?></span><?php endif; ?>
-					<?php if ( $dev ) : ?><span class="pdp-chip"><?php echo esc_html( $dev ); ?><?php if ( $rating > 0 ) : ?> · ★ <?php echo esc_html( number_format( $rating, 1 ) ); ?><?php endif; ?></span><?php endif; ?>
+					<?php if ( $dev ) : ?><span class="pdp-chip"><?php echo esc_html( $dev ); ?></span><?php endif; ?>
 					<?php if ( $status ) : ?><span class="pdp-chip pdp-chip--gold"><?php echo esc_html( $status ); ?></span><?php endif; ?>
 				</div>
 				<div class="pdp-hero-stats">
 					<?php if ( $calc_price > 0 ) : ?><div class="pdp-stat"><span class="pdp-stat-v"><?php echo esc_html( $aed( $calc_price ) ); ?></span><span class="pdp-stat-l"><?php esc_html_e( 'Area avg price', 'luwipress-onyx' ); ?></span></div><?php endif; ?>
-					<?php if ( $yield > 0 ) : ?><div class="pdp-stat"><span class="pdp-stat-v"><?php echo esc_html( number_format( $yield, 1 ) ); ?>%</span><span class="pdp-stat-l"><?php esc_html_e( 'Gross yield', 'luwipress-onyx' ); ?></span></div><?php endif; ?>
+					<?php if ( $show_yield ) : ?><div class="pdp-stat"><span class="pdp-stat-v"><?php echo esc_html( number_format( $yield, 1 ) ); ?>%</span><span class="pdp-stat-l"><?php esc_html_e( 'Gross yield', 'luwipress-onyx' ); ?></span></div><?php endif; ?>
 					<?php if ( $units > 0 ) : ?><div class="pdp-stat"><span class="pdp-stat-v"><?php echo esc_html( number_format_i18n( $units ) ); ?></span><span class="pdp-stat-l"><?php esc_html_e( 'Units', 'luwipress-onyx' ); ?></span></div><?php endif; ?>
 					<?php if ( $handover ) : ?><div class="pdp-stat"><span class="pdp-stat-v"><?php echo esc_html( $handover ); ?></span><span class="pdp-stat-l"><?php esc_html_e( 'Handover', 'luwipress-onyx' ); ?></span></div><?php endif; ?>
 					<?php if ( $progress > 0 ) : ?><div class="pdp-stat"><span class="pdp-stat-v"><?php echo esc_html( round( $progress ) ); ?>%</span><span class="pdp-stat-l"><?php esc_html_e( 'Built', 'luwipress-onyx' ); ?></span></div><?php endif; ?>
@@ -125,7 +187,8 @@ while ( have_posts() ) :
 					<button class="pdp-tab on" data-tab="overview" role="tab"><?php esc_html_e( 'Overview', 'luwipress-onyx' ); ?></button>
 					<button class="pdp-tab" data-tab="market" role="tab"><?php esc_html_e( 'Market & valuation', 'luwipress-onyx' ); ?></button>
 					<button class="pdp-tab" data-tab="calc" role="tab"><?php esc_html_e( 'Calculators', 'luwipress-onyx' ); ?></button>
-					<?php if ( $lat && $lng ) : ?><button class="pdp-tab" data-tab="location" role="tab"><?php esc_html_e( 'Location', 'luwipress-onyx' ); ?></button><?php endif; ?>
+					<?php if ( $has_location ) : ?><button class="pdp-tab" data-tab="location" role="tab"><?php esc_html_e( 'Location &amp; area', 'luwipress-onyx' ); ?></button><?php endif; ?>
+					<?php if ( $faqs ) : ?><button class="pdp-tab" data-tab="faq" role="tab"><?php esc_html_e( 'FAQ', 'luwipress-onyx' ); ?></button><?php endif; ?>
 				</nav>
 
 				<!-- OVERVIEW -->
@@ -134,12 +197,16 @@ while ( have_posts() ) :
 						<?php
 						$facts = array();
 						if ( $status ) { $facts[] = array( __( 'Status', 'luwipress-onyx' ), $status ); }
-						if ( $progress > 0 ) { $facts[] = array( __( 'Construction', 'luwipress-onyx' ), round( $progress ) . '%' ); }
+						if ( $progress > 0 && $progress < 100 ) { $facts[] = array( __( 'Construction', 'luwipress-onyx' ), round( $progress ) . '%' ); }
+						if ( ! empty( $specs_meta['storeys'] ) ) { $facts[] = array( __( 'Storeys', 'luwipress-onyx' ), (int) $specs_meta['storeys'] ); }
 						if ( $units > 0 ) { $facts[] = array( __( 'Total units', 'luwipress-onyx' ), number_format_i18n( $units ) ); }
 						if ( $handover ) { $facts[] = array( __( 'Handover', 'luwipress-onyx' ), $handover ); }
+						elseif ( ! empty( $specs_meta['completion'] ) ) { $facts[] = array( __( 'Completed', 'luwipress-onyx' ), $specs_meta['completion'] ); }
 						if ( $start ) { $facts[] = array( __( 'Started', 'luwipress-onyx' ), $start ); }
+						elseif ( ! empty( $specs_meta['construction_started'] ) ) { $facts[] = array( __( 'Started', 'luwipress-onyx' ), $specs_meta['construction_started'] ); }
+						if ( ! empty( $specs_meta['architect'] ) ) { $facts[] = array( __( 'Architect', 'luwipress-onyx' ), $specs_meta['architect'] ); }
 						if ( $reg ) { $facts[] = array( __( 'Registered', 'luwipress-onyx' ), $reg ); }
-						if ( ! empty( $escrow['account'] ) ) { $facts[] = array( __( 'Escrow a/c', 'luwipress-onyx' ), $escrow['account'] ); }
+						if ( $escrow_real ) { $facts[] = array( __( 'Escrow a/c', 'luwipress-onyx' ), $escrow['account'] ); }
 						if ( ! empty( $escrow['agent'] ) ) { $facts[] = array( __( 'Escrow bank', 'luwipress-onyx' ), $escrow['agent'] ); }
 						foreach ( $facts as $f ) : ?>
 							<div class="pdp-fact"><span class="pdp-fact-l"><?php echo esc_html( $f[0] ); ?></span><span class="pdp-fact-v"><?php echo esc_html( $f[1] ); ?></span></div>
@@ -148,6 +215,15 @@ while ( have_posts() ) :
 
 					<?php $bio = get_the_content(); if ( trim( wp_strip_all_tags( $bio ) ) !== '' ) : ?>
 						<div class="pdp-bio"><?php the_content(); ?></div>
+					<?php endif; ?>
+
+					<?php if ( $unit_types_m ) : ?>
+					<h3 class="pdp-h3"><?php esc_html_e( 'Unit types', 'luwipress-onyx' ); ?></h3>
+					<div class="pdp-amenities">
+						<?php foreach ( $unit_types_m as $ut ) : ?>
+							<span class="pdp-amenity"><?php echo esc_html( (string) $ut ); ?></span>
+						<?php endforeach; ?>
+					</div>
 					<?php endif; ?>
 
 					<?php if ( $amenities ) : ?>
@@ -178,7 +254,7 @@ while ( have_posts() ) :
 						<?php if ( ! empty( $txn['count'] ) ) : ?>
 						<div class="pdp-card"><span class="pdp-card-l"><?php esc_html_e( 'Recorded transactions', 'luwipress-onyx' ); ?></span><span class="pdp-card-v"><?php echo esc_html( number_format_i18n( (int) $txn['count'] ) ); ?></span><span class="pdp-card-s"><?php echo esc_html( __( 'avg', 'luwipress-onyx' ) . ' ' . $aed( $txn['avg_value_aed'] ?? 0 ) ); ?></span></div>
 						<?php endif; ?>
-						<?php if ( $yield > 0 ) : ?>
+						<?php if ( $show_yield ) : ?>
 						<div class="pdp-card pdp-card--gold"><span class="pdp-card-l"><?php esc_html_e( 'Gross rental yield', 'luwipress-onyx' ); ?></span><span class="pdp-card-v"><?php echo esc_html( number_format( $yield, 1 ) ); ?>%</span><span class="pdp-card-s"><?php echo $avg_rent ? esc_html( $aed( $avg_rent ) . '/' . __( 'yr', 'luwipress-onyx' ) ) : ''; echo ( 'official_portal' !== $rsource ) ? ' · ' . esc_html__( 'indicative', 'luwipress-onyx' ) : ''; ?></span></div>
 						<?php endif; ?>
 					</div>
@@ -227,7 +303,7 @@ while ( have_posts() ) :
 							<h3 class="pdp-h3"><?php esc_html_e( 'Investment / ROI', 'luwipress-onyx' ); ?></h3>
 							<div class="pdp-calc-inputs">
 								<label class="pdp-field"><span><?php esc_html_e( 'Purchase price (AED)', 'luwipress-onyx' ); ?></span><input type="number" data-roi="price" value="<?php echo esc_attr( $calc_price ); ?>" min="100000" step="50000"></label>
-								<label class="pdp-field"><span><?php esc_html_e( 'Gross yield (%)', 'luwipress-onyx' ); ?></span><input type="number" data-roi="yield" value="<?php echo esc_attr( $yield ?: 6 ); ?>" min="0" max="20" step="0.1"></label>
+								<label class="pdp-field"><span><?php esc_html_e( 'Gross yield (%)', 'luwipress-onyx' ); ?></span><input type="number" data-roi="yield" value="<?php echo esc_attr( $calc_yield ); ?>" min="0" max="20" step="0.1"></label>
 								<label class="pdp-field"><span><?php esc_html_e( 'Occupancy (%)', 'luwipress-onyx' ); ?></span><input type="number" data-roi="occ" value="95" min="0" max="100" step="1"></label>
 								<label class="pdp-field"><span><?php esc_html_e( 'Annual appreciation (%)', 'luwipress-onyx' ); ?></span><input type="number" data-roi="apx" value="5" min="0" max="20" step="0.5"></label>
 							</div>
@@ -257,11 +333,71 @@ while ( have_posts() ) :
 					</div>
 				</div>
 
-				<!-- LOCATION -->
-				<?php if ( $lat && $lng ) : ?>
+				<!-- LOCATION & AREA -->
+				<?php if ( $has_location ) : ?>
 				<div class="pdp-panel" data-panel="location" hidden>
+					<?php if ( $lat && $lng ) : ?>
 					<div class="pdp-map">
 						<iframe loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="<?php echo esc_attr( $name ); ?>" src="https://www.google.com/maps?q=<?php echo esc_attr( $lat . ',' . $lng ); ?>&z=14&output=embed"></iframe>
+					</div>
+					<?php endif; ?>
+
+					<?php if ( $connectivity ) : ?>
+					<h3 class="pdp-h3"><?php esc_html_e( 'Getting around', 'luwipress-onyx' ); ?></h3>
+					<table class="pdp-table">
+						<thead><tr><th><?php esc_html_e( 'Destination', 'luwipress-onyx' ); ?></th><th><?php esc_html_e( 'Drive time', 'luwipress-onyx' ); ?></th></tr></thead>
+						<tbody>
+						<?php foreach ( $connectivity as $c ) :
+							$c_to  = isset( $c['to'] ) ? (string) $c['to'] : '';
+							$c_min = isset( $c['min'] ) ? (int) $c['min'] : 0;
+							if ( '' === $c_to || $c_min <= 0 ) { continue; } ?>
+							<tr><td><?php echo esc_html( $c_to ); ?></td><td><?php echo esc_html( sprintf( /* translators: %d = minutes */ _n( '%d min', '%d min', $c_min, 'luwipress-onyx' ), $c_min ) ); ?></td></tr>
+						<?php endforeach; ?>
+						</tbody>
+					</table>
+					<p class="pdp-note"><?php esc_html_e( 'Approximate driving times, traffic dependent.', 'luwipress-onyx' ); ?></p>
+					<?php endif; ?>
+
+					<?php if ( $nearby ) : ?>
+					<h3 class="pdp-h3"><?php esc_html_e( 'Nearby places', 'luwipress-onyx' ); ?></h3>
+					<table class="pdp-table">
+						<tbody>
+						<?php foreach ( $nearby as $nb ) :
+							$nb_name = isset( $nb['name'] ) ? (string) $nb['name'] : '';
+							$nb_km   = isset( $nb['km'] ) ? (float) $nb['km'] : 0;
+							if ( '' === $nb_name ) { continue; } ?>
+							<tr><td><?php echo esc_html( $nb_name ); ?></td><td style="text-align:right"><?php echo $nb_km > 0 ? esc_html( sprintf( '%s km', rtrim( rtrim( number_format( $nb_km, 1 ), '0' ), '.' ) ) ) : ''; ?></td></tr>
+						<?php endforeach; ?>
+						</tbody>
+					</table>
+					<?php endif; ?>
+
+					<?php if ( $schools_m ) : ?>
+					<h3 class="pdp-h3"><?php esc_html_e( 'Schools nearby', 'luwipress-onyx' ); ?></h3>
+					<table class="pdp-table">
+						<tbody>
+						<?php foreach ( $schools_m as $sc ) :
+							$sc_name = isset( $sc['name'] ) ? (string) $sc['name'] : '';
+							$sc_km   = isset( $sc['km'] ) ? (float) $sc['km'] : 0;
+							if ( '' === $sc_name ) { continue; } ?>
+							<tr><td><?php echo esc_html( $sc_name ); ?></td><td style="text-align:right"><?php echo $sc_km > 0 ? esc_html( sprintf( '%s km', rtrim( rtrim( number_format( $sc_km, 1 ), '0' ), '.' ) ) ) : ''; ?></td></tr>
+						<?php endforeach; ?>
+						</tbody>
+					</table>
+					<?php endif; ?>
+				</div>
+				<?php endif; ?>
+
+				<!-- FAQ -->
+				<?php if ( $faqs ) : ?>
+				<div class="pdp-panel" data-panel="faq" hidden>
+					<div class="faq-list">
+						<?php foreach ( $faqs as $k => $f ) : ?>
+							<div class="faq-item<?php echo 0 === $k ? ' open' : ''; ?>">
+								<button class="faq-q" type="button" aria-expanded="<?php echo 0 === $k ? 'true' : 'false'; ?>"><?php echo esc_html( $f['question'] ); ?><span class="faq-sign" aria-hidden="true"></span></button>
+								<div class="faq-a"><div class="faq-a-inner"><?php echo wp_kses_post( wpautop( $f['answer'] ) ); ?></div></div>
+							</div>
+						<?php endforeach; ?>
 					</div>
 				</div>
 				<?php endif; ?>
